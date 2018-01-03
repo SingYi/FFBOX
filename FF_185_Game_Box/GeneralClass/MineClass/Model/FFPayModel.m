@@ -8,6 +8,7 @@
 
 #import "FFPayModel.h"
 #import "FFMapModel.h"
+#import "FFUserModel.h"
 
 #define MAP_URL [FFMapModel map]
 
@@ -64,10 +65,10 @@ static FFPayModel *model = nil;
         return;
     }
 
-    [dict setObject:@"1" forKey:@"serverID"];
-    [dict setObject:@"1" forKey:@"serverNAME"];
-    [dict setObject:@"1" forKey:@"roleID"];
-    [dict setObject:@"1" forKey:@"roleNAME"];
+    [dict setObject:Channel forKey:@"serverID"];
+    [dict setObject:@"游戏盒子" forKey:@"serverNAME"];
+    [dict setObject:[FFUserModel currentUser].uid forKey:@"roleID"];
+    [dict setObject:[FFUserModel currentUser].username forKey:@"roleNAME"];
 
     [dict setObject:productID forKey:@"productID"];
     [dict setObject:@"VIP充值" forKey:@"productNAME"];

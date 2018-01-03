@@ -20,6 +20,7 @@
 
 #import "SYKeychain.h"
 #import "UIBarButtonItem+FFSubscript.h"
+//#import <PTFakeTouch/PTFakeTouch.h>
 
 @interface FFHomeViewController ()<FFOpenServerSelectViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, FFSearchShowDelegate>
 
@@ -65,6 +66,27 @@
     [super viewDidLoad];
     [self initDataSource];
     [self initUserInterface];
+
+//    [PTFakeMetaTouch fakeTouchId:1 AtPoint:CGPointMake(kSCREEN_WIDTH / 2, 600) withTouchPhase:[PTFakeMetaTouch getAvailablePointId]];
+
+//    NSInteger test = [PTFakeMetaTouch getAvailablePointId];
+//    dispatch_after(dispatcq'qh_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        syLog(@"touch began ");
+//
+//        [PTFakeMetaTouch fakeTouchId:test AtPoint:CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT * 0.8) withTouchPhase:UITouchPhaseBegan];
+//
+//        syLog(@"touch end");
+//    });
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [PTFakeMetaTouch fakeTouchId:test AtPoint:CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT * 0.8 - 10) withTouchPhase:UITouchPhaseMoved];
+//    });
+//
+//
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [PTFakeMetaTouch fakeTouchId:test AtPoint:CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT * 0.8 - 10) withTouchPhase:UITouchPhaseEnded];
+//    });
+
 }
 
 - (void)initDataSource {

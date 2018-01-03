@@ -98,6 +98,7 @@
 		B5971F661FAC7BA600246640 /* FFBasicSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5971F651FAC7BA600246640 /* FFBasicSelectView.m */; };
 		B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */; };
 		B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */; };
+		B5A335821FF6414B00A4526F /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A335811FF6414B00A4526F /* IOKit.framework */; };
 		B5A5D4DE1FC272EB00EC951F /* FFRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D4DD1FC272EB00EC951F /* FFRegisterViewController.m */; };
 		B5A5D4E11FC2737D00EC951F /* FFForgetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D4E01FC2737D00EC951F /* FFForgetPasswordViewController.m */; };
 		B5A5D4E41FC27D4700EC951F /* FFNewPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D4E31FC27D4700EC951F /* FFNewPasswordViewController.m */; };
@@ -210,6 +211,19 @@
 		B5C1FC361FBAE73F004A779B /* FFNewCustomizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1FC341FBAE73F004A779B /* FFNewCustomizeCell.m */; };
 		B5C1FC3C1FBB0B20004A779B /* FFPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1FC3B1FBB0B20004A779B /* FFPackageModel.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B5A3357F1FF6407400A4526F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B51379981FB1E4080025F00B /* FFMineSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMineSelectView.h; sourceTree = "<group>"; };
@@ -380,6 +394,8 @@
 		B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = NewImage.xcassets; sourceTree = "<group>"; };
 		B5A1EEC81FCC4538003FC031 /* FFClassifyDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFClassifyDetailController.h; sourceTree = "<group>"; };
 		B5A1EEC91FCC4538003FC031 /* FFClassifyDetailController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFClassifyDetailController.m; sourceTree = "<group>"; };
+		B5A335811FF6414B00A4526F /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = IOKit.framework; sourceTree = "<group>"; };
+		B5A335831FF6427700A4526F /* PTFakeTouch.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PTFakeTouch.framework; sourceTree = "<group>"; };
 		B5A5D4DC1FC272EB00EC951F /* FFRegisterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFRegisterViewController.h; sourceTree = "<group>"; };
 		B5A5D4DD1FC272EB00EC951F /* FFRegisterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFRegisterViewController.m; sourceTree = "<group>"; };
 		B5A5D4DF1FC2737D00EC951F /* FFForgetPasswordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFForgetPasswordViewController.h; sourceTree = "<group>"; };
@@ -599,6 +615,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5A335821FF6414B00A4526F /* IOKit.framework in Frameworks */,
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5B95E9D1FBE8D6500ACD7F7 /* libChangyanSDK.a in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
@@ -1037,6 +1054,8 @@
 		B5A5D51D1FC5242800EC951F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5A335831FF6427700A4526F /* PTFakeTouch.framework */,
+				B5A335811FF6414B00A4526F /* IOKit.framework */,
 				B5A5D53D1FC5293E00EC951F /* libz.tbd */,
 				B5A5D5331FC5284300EC951F /* CoreTelephony.framework */,
 				B5A5D5311FC5274900EC951F /* libsqlite3.tbd */,
@@ -1665,6 +1684,7 @@
 				B556B0CF1FA6BD88005DC871 /* Sources */,
 				B556B0D01FA6BD88005DC871 /* Frameworks */,
 				B556B0D11FA6BD88005DC871 /* Resources */,
+				B5A3357F1FF6407400A4526F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

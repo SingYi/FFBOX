@@ -221,7 +221,16 @@ static FFGameViewController *controller = nil;
 
 - (void)FFGameFooterView:(FFGameFooterView *)detailFooter clickDownLoadBtn:(UIButton *)sender {
     syLog(@"download game ===== %@",self.gameinfo);
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.gameinfo[@"ios_url"]]];
+    if ([Channel isEqualToString:@"185"]) {
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.gameinfo[@"ios_url"]]];
+    } else {
+        [FFGameModel gameDownloadWithTag:self.gameinfo[@"tag"] Comoletion:^(NSDictionary *content, BOOL success) {
+            NSString *url = content[@"data"][@"download_url"];
+            syLog(@"downLoadUrl == %@",url);
+            ([url isKindOfClass:[NSString class]]) ? ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) : (BOX_MESSAGE(@"链接出错,请稍后尝试"));
+
+        }];
+    }
 }
 
 - (void)FFGameFooterView:(FFGameFooterView *)detailFooter clickCollecBtn:(UIButton *)sender {

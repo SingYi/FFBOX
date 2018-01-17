@@ -75,6 +75,15 @@
     }];
 }
 
++ (void)gameDownloadWithTag:(NSString *)gameTag Comoletion:(void (^)(NSDictionary *, BOOL))completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"2" forKey:@"system"];
+    [dict setObject:gameTag forKey:@"tag"];
+    [dict setObject:Channel forKey:@"channel"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].GAME_CHANNEL_DOWNLOAD params:dict completion:^(NSDictionary *content, BOOL success) {
+        REQUEST_COMPLETION;
+    }];
+}
 
 
 

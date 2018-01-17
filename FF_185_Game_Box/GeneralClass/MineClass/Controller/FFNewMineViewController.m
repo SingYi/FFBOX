@@ -212,17 +212,13 @@ break;\
                 syLog(@"coin ======= %@",content);
                 NSDictionary *dict = content[@"data"];
                 [self setUserCenterInfo:dict];
-                syLog(@"box test 1");
             }
-            syLog(@"box test 3");
             [self.tableView.mj_header endRefreshing];
-            syLog(@"box test 4");
         }];
     }
 }
 
 - (void)setUserCenterInfo:(NSDictionary *)dict {
-    syLog(@"box test 2");
     //金币
     self.coinView.goldCoinNumber = dict[@"coin"];
     //平台币

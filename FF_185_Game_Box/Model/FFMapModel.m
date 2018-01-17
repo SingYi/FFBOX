@@ -144,7 +144,17 @@ static FFMapModel *model = nil;
                      @"MESSAGE_INFO":@"http://api.185sy.com/index.php?g=api&m=message&a=get_message_info",
                      @"MESSAGE_DELETE":@"http://api.185sy.com/index.php?g=api&m=message&a=delete_message",
                      @"MESSAGE_UNREAD":@"http://api.185sy.com/index.php?g=api&m=message&a=unread_counts",
-                     @"GET_PATCH":@"http://api.185sy.com/index.php?g=api&m=userbox&a=get_patch"
+                     @"GET_PATCH":@"http://api.185sy.com/index.php?g=api&m=userbox&a=get_patch",
+                     @"PUBLISH_DYNAMICS":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=publishDynamics",
+                     @"USER_DESC":@"http://api.185sy.com/index.php?g=api&m=userbox&a=user_desc",
+                     @"DYNAMICS_LIKE":@"http://api.185sy.com/index.php?g=api&m=likeinfo&a=dynamics_like",
+                     @"FOLLOW_LIST":@"http://api.185sy.com/index.php?g=api&m=userbox&a=follow_list",
+                     @"USER_EDIT":@"http://api.185sy.com/index.php?g=api&m=userbox&a=edit_desc",
+                     @"COMMENT_LIKE":@"http://api.185sy.com/index.php?g=api&m=likeinfo&a=comment_like",
+                     @"GET_DYNAMICS":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=getDynamics",
+                     @"COMMENT":@"http://api.185sy.com/index.php?g=api&m=comment&a=do_comment",
+                     @"COMMENT_LIST":@"http://api.185sy.com/index.php?g=api&m=comment&a=comment_list",
+                     @"COMMENT_DEL":@"http://api.185sy.com/index.php?g=api&m=comment&a=delete_comment",
                      };
     return mapDict;
 }

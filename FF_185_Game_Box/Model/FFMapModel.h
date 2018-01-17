@@ -90,7 +90,23 @@
 @property (nonatomic, strong) NSString *GET_PATCH;
 @property (nonatomic, strong) NSString *PLAT_REG_BONUS;
 
+
+//new community
+@property (nonatomic, strong) NSString *PUBLISH_DYNAMICS;
+@property (nonatomic, strong) NSString *USER_DESC;
+@property (nonatomic, strong) NSString *DYNAMICS_LIKE;
+@property (nonatomic, strong) NSString *FOLLOW_LIST;
+@property (nonatomic, strong) NSString *USER_EDIT;
+@property (nonatomic, strong) NSString *COMMENT_LIKE;
+@property (nonatomic, strong) NSString *GET_DYNAMICS;
+@property (nonatomic, strong) NSString *COMMENT;
+@property (nonatomic, strong) NSString *COMMENT_LIST;
+@property (nonatomic, strong) NSString *COMMENT_DEL;
+
+
+
 + (instancetype)map;
+
 
 + (void)getMap;
 

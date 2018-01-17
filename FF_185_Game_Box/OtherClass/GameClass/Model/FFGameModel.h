@@ -22,4 +22,8 @@
 /** 评论获取金币 */
 + (void)writeCommentGetCoinComoletion:(void(^)(NSDictionary *  content, BOOL success))completion;
 
+/** 子渠道下载 */
++ (void)gameDownloadWithTag:(NSString *)gameTag Comoletion:(void(^)(NSDictionary *  content, BOOL success))completion;
+
+
 @end

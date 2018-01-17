@@ -42,6 +42,7 @@
         NSURL *url = [NSURL URLWithString:imagePath];
         
         WeakSelf;
+
         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
             
             
@@ -54,7 +55,8 @@
                     [self.label removeFromSuperview];
                 }
             });
-            
+
+
             
             
         }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
@@ -62,14 +64,16 @@
                 
             //缓存 gif 图
             [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    
-                    weakSelf.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:data];
 
-                });
-                
+
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:data];
+            });
+
+
         }];
+
+
 
     }
     

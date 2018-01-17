@@ -227,8 +227,10 @@
                 cell.gifImageView.image = image;
                 //缓存 gif 图
                 NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
+
                 [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
-                }];
+            }];
+
         }
 
 

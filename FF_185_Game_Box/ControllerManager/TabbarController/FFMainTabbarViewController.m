@@ -37,8 +37,10 @@
 }
 
 - (void)initializeDataSource {
-    NSArray *viewControllerNames = @[@"FFHomeViewController", @"FFRankListViewController", @"FFOpenServerViewController", @"FFNewMineViewController"];
-    NSArray *titles = @[@"游戏", @"排行榜", @"开服表", @"我的"];
+    NSArray *viewControllerNames = @[@"FFHomeViewController", @"FFOpenServerViewController", @"FFDriveController", @"FFNewMineViewController"];
+//    NSArray *viewControllerNames = @[@"FFHomeViewController", @"FFRankListViewController", @"FFOpenServerViewController", @"FFNewMineViewController"];
+    NSArray *titles = @[@"游戏", @"开服表", @"开车", @"我的"];
+//    NSArray *titles = @[@"游戏", @"排行榜", @"开服表", @"我的"];
     NSArray *images = @[@"d_youxi_an", @"b_paihangbang_an-", @"a_libao_an", @"c_wode_an"];
     NSArray *selectImages = @[@"d_youxi_liang", @"b_paihangbang_liang", @"a_libao_liang", @"c_wode_liang"];
     NSMutableArray *viewControllers = [NSMutableArray arrayWithCapacity:4];

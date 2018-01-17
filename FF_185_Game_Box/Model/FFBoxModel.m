@@ -89,23 +89,34 @@
 
 + (BOOL)isFirstInstall {
     NSString *isFirstInstall = [[NSUserDefaults standardUserDefaults] stringForKey:@"isFirstInstall"];
+
     syLog(@"uploadFirstInstallSuccess f");
+
     if (!isFirstInstall) {
         //每次启动统计
         NSString *uploadFirstInstallSuccess = [[NSUserDefaults standardUserDefaults] stringForKey:@"uploadFirstInstallSuccess"];
         syLog(@"uploadFirstInstallSuccess f2");
+
         if (uploadFirstInstallSuccess) {
             return NO;
         } else {
             syLog(@"uploadFirstInstallSuccess ing ");
-            [FFBoxModel gameBoxStarUpWithCompletion:^(NSDictionary * _Nullable content, BOOL success) {
 
+            [FFBoxModel gameBoxStarUpWithCompletion:^(NSDictionary * _Nullable content, BOOL success) {
+                syLog(@"upload  gamebox star === %@",content);
                 [FFBoxModel gameBoxInstallWithCompletion:^(NSDictionary * _Nullable content, BOOL success) {
+                    syLog(@"upload  gamebox install === %@",content);
                     if (success) {
                         SAVEOBJECT_AT_USERDEFAULTS(@"1", @"isFirstInstall");
                         SAVEOBJECT_AT_USERDEFAULTS(@"1", @"uploadFirstInstallSuccess");
                         [FFUserModel signOut];
                         syLog(@"uploadFirstInstallSuccess success");
+                    } else {
+                        syLog(@"上传第一次安装失败, 3秒后重新发送请求");
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            syLog(@"重新发送第一次安装请求");
+                            [FFBoxModel isFirstInstall];
+                        });
                     }
 
                 }];

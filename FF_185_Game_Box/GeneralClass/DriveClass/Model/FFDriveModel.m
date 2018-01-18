@@ -101,12 +101,13 @@
 }
 
 
-
-
 /** get dynamic */
 + (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page Complete:(CompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    if (SSKEYCHAIN_UID) {
+        [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    }
     [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
     [dict setObject:page forKey:@"page"];
     [dict setObject:(BOX_SIGN(dict, (@[@"type",@"page"]))) forKey:@"sign"];
@@ -116,6 +117,31 @@
     }];
 
 }
+
+/** like or dislike */
++ (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id type:(LikeOrDislike)type Complete:(CompleteBlock)completion {
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    if (SSKEYCHAIN_UID != nil && SSKEYCHAIN_UID.length != 0) {
+        [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    } else {
+        if (completion) {
+            completion(@{@"status":@"没有登录"},NO);
+        }
+        return;
+    }
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:dynamics_id forKey:@"dynamics_id"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"dynamics_id",@"type"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].DYNAMICS_LIKE params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+
+}
+
+
 
 
 

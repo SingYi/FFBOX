@@ -11,6 +11,8 @@
 #import "UIView+XLExtension.h"
 #import "XLPhotoBrowser.h"
 
+#import "FFDriveModel.h"
+
 @interface DriveInfoCell () <XLPhotoBrowserDelegate, XLPhotoBrowserDatasource>
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
@@ -64,6 +66,11 @@
     self.rowHeight = 78;
 
     imageContentViewWidth = kSCREEN_WIDTH - 32;
+
+    [self addRespondsToButton:self.sharedButton];
+    [self addRespondsToButton:self.commentButton];
+
+    [self.FavorButton setTintColor:[UIColor redColor]];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -72,7 +79,38 @@
     // Configure the view for the selected state
 }
 
+#pragma mark - button add target
+- (void)addRespondsToButton:(UIButton *)button {
+    [button addTarget:self action:@selector(respondsToButton:) forControlEvents:(UIControlEventTouchUpInside)];
+}
 
+- (void)removeRespondsToButton:(UIButton *)button {
+    [button removeTarget:self action:@selector(respondsToButton:) forControlEvents:(UIControlEventTouchUpInside)];
+}
+
+#pragma mark - responds
+- (void)respondsToButton:(UIButton *)sender {
+    if (sender == self.FavorButton) {
+        syLog(@"1");
+
+        [FFDriveModel userLikeOrDislikeWithDynamicsID:_dict[@"dynamics"][@"id"] type:like Complete:^(NSDictionary *content, BOOL success) {
+            syLog(@"like === %@",content);
+            syLog(@"dict == %@",_dict);
+        }];
+        
+    } else if (sender == self.unFavorButton) {
+        syLog(@"2");
+
+        [FFDriveModel userLikeOrDislikeWithDynamicsID:_dict[@"dynamics"][@"id"] type:dislike Complete:^(NSDictionary *content, BOOL success) {
+            syLog(@"dislike === %@",content);
+        }];
+    } else if (sender == self.sharedButton) {
+        syLog(@"3");
+    } else if (sender == self.commentButton) {
+        syLog(@"4");
+    }
+
+}
 
 #pragma mark - set
 - (void)setDict:(NSDictionary *)dict {
@@ -89,6 +127,12 @@
     [self setIconImageWith:dict[@"user"][@"icon_url"]];
     //nick name
     [self setNickNameWith:dict[@"user"][@"nick_name"]];
+    //sex
+    [self setSexWith:dict[@"user"][@"sex"]];
+    //sex
+    [self setVipWith:dict[@"user"][@"sex"]];
+    //time label
+    [self setTimeWith:dict[@"dynamics"][@"create_time"]];
     //content
     [self setcontentWith:dict[@"dynamics"][@"content"]];
     //images
@@ -98,6 +142,17 @@
     }
     [self setImagesWith:array];
 
+    //like
+    [self setLikeWith:dict[@"dynamics"][@"likes"]];
+    //unlie
+    [self setUnLikeWith:dict[@"dynamics"][@"dislike"]];
+    //shared
+    [self setSharedWith:dict[@"dynamics"][@"share"]];
+    //comment
+    [self setCommentWith:dict[@"dynamics"][@"comment"]];
+
+    //operate
+    [self setOperateWith:dict[@"user"][@"operate"]];
 }
 
 - (void)setIconImageWith:(NSString *)url {
@@ -107,6 +162,35 @@
 - (void)setNickNameWith:(NSString *)Str {
     self.nickNameLabel.text = [NSString stringWithFormat:@"%@",Str];
     [self.nickNameLabel sizeToFit];
+}
+
+- (void)setSexWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]] && str!= nil && str.boolValue) {
+        self.vipImageView.hidden = NO;
+    } else {
+        self.vipImageView.hidden = YES;
+    }
+}
+
+- (void)setVipWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        self.sexImageVIew.hidden = NO;
+        if (str.integerValue == 1) {
+            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
+        } else {
+            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
+        }
+    } else {
+        self.sexImageVIew.hidden = YES;
+    }
+}
+
+- (void)setTimeWith:(NSString *)str {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:str.integerValue];
+    NSString *timeString = [formatter stringFromDate:date];
+    self.timeLabel.text  = timeString;
 }
 
 - (void)setcontentWith:(NSString *)content {
@@ -216,6 +300,51 @@
     [browser setActionSheetWithTitle:@"这是一个类似微信/微博的图片浏览器组件" delegate:self cancelButtonTitle:nil deleteButtonTitle:@"删除" otherButtonTitles:@"发送给朋友",@"保存图片",@"收藏",@"投诉",nil];
 
 }
+
+- (void)setLikeWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        [self.FavorButton setTitle:[NSString stringWithFormat:@"  %@赞",str] forState:(UIControlStateNormal)];
+    }
+}
+
+- (void)setUnLikeWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        [self.unFavorButton setTitle:[NSString stringWithFormat:@"  %@踩",str] forState:(UIControlStateNormal)];
+    }
+}
+
+- (void)setSharedWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        [self.sharedButton setTitle:[NSString stringWithFormat:@"  %@分享",str] forState:(UIControlStateNormal)];
+    }
+}
+
+- (void)setCommentWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        [self.commentButton setTitle:[NSString stringWithFormat:@"  %@评论",str] forState:(UIControlStateNormal)];
+    }
+}
+
+- (void)setOperateWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]] && str != nil) {
+        if (str.integerValue == 2) {
+            [self addRespondsToButton:self.FavorButton];
+            [self addRespondsToButton:self.unFavorButton];
+        } else {
+            [self removeRespondsToButton:self.FavorButton];
+            [self removeRespondsToButton:self.unFavorButton];
+            if (str.boolValue) {
+                self.FavorButton.tintColor = [UIColor redColor];
+            } else {
+                self.unFavorButton.tintColor = [UIColor redColor];
+            }
+        }
+    } else {
+        [self removeRespondsToButton:self.FavorButton];
+        [self removeRespondsToButton:self.unFavorButton];
+    }
+}
+
 
 #pragma mark - getter
 

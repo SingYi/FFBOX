@@ -16,11 +16,6 @@
 
 @interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource>
 
-/** table View */
-@property (nonatomic, strong) UITableView *tableView;
-
-/** table view data source */
-@property (nonatomic, strong) NSMutableArray *showArray;
 
 @property (nonatomic, assign) NSUInteger currentPage;
 
@@ -60,6 +55,14 @@
         if (success) {
             self.showArray = [content[@"data"] mutableCopy];
         }
+
+        if (self.showArray.count == 0) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
+            imageView.image = [UIImage imageNamed:@"Community_NoData"];
+            self.tableView.backgroundView = imageView;
+        } else {
+            self.tableView.backgroundView = nil;
+        }
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
@@ -81,6 +84,16 @@
         } else {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
+
+        if (self.showArray.count == 0) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
+            imageView.image = [UIImage imageNamed:@"Community_NoData"];
+            self.tableView.backgroundView = imageView;
+        } else {
+            self.tableView.backgroundView = nil;
+        }
+
+        
     }];
 }
 

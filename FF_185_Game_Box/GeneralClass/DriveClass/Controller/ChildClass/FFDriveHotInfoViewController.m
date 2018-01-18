@@ -19,10 +19,6 @@
 }
 
 
-
-
-
-
 #pragma mark - getter
 - (DynamicType)dynamicType {
     return hotDynamic;

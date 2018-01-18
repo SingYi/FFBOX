@@ -47,7 +47,7 @@
 			<string>185GameBox</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>App-Prefs</string>
+				<string>185GameBox</string>
 			</array>
 		</dict>
 	</array>

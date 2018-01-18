@@ -11,8 +11,14 @@
 
 @interface FFDriveAllInfoViewController : UIViewController
 
+/** table View */
+@property (nonatomic, strong) UITableView *tableView;
+
+/** table view data source */
+@property (nonatomic, strong) NSMutableArray *showArray;
+
 @property (nonatomic, assign) DynamicType dynamicType;
 
-
+- (void)initUserInterface;
 
 @end

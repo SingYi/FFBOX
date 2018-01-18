@@ -15,6 +15,11 @@ typedef enum : NSUInteger {
     attentionDynamic
 } DynamicType;
 
+typedef enum : NSUInteger {
+    like,
+    dislike,
+} LikeOrDislike;
+
 
 typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
@@ -30,12 +35,15 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 + (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page Complete:(CompleteBlock)completion;
 
 
-
+/** 发布动态 */
 + (void)userUploadPortraitWithContent:(NSString *)content
                                 Image:(NSArray *)images
                            Completion:(CompleteBlock)completion;
 
-
+/** 赞或者踩 */
++ (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
+                                   type:(LikeOrDislike)type
+                               Complete:(CompleteBlock)completion;
 
 @end
 

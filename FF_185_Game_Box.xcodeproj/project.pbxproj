@@ -87,6 +87,8 @@
 		B58DB705200EFC8D00DBE381 /* UIAlertController+FFAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = B58DB703200EFC8D00DBE381 /* UIAlertController+FFAlertController.h */; };
 		B58DB706200EFC8D00DBE381 /* UIAlertController+FFAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB704200EFC8D00DBE381 /* UIAlertController+FFAlertController.m */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
+		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
+		B58DB70F20104F2E00DBE381 /* FFThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */; };
 		B59555A5200C55E1007F3CC7 /* NSBundle+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553B200C55E0007F3CC7 /* NSBundle+CTAssetsPickerController.m */; };
 		B59555A6200C55E1007F3CC7 /* NSDateFormatter+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553D200C55E0007F3CC7 /* NSDateFormatter+CTAssetsPickerController.m */; };
 		B59555A7200C55E1007F3CC7 /* NSIndexSet+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553F200C55E0007F3CC7 /* NSIndexSet+CTAssetsPickerController.m */; };
@@ -456,6 +458,10 @@
 		B58DB704200EFC8D00DBE381 /* UIAlertController+FFAlertController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+FFAlertController.m"; sourceTree = "<group>"; };
 		B58DB707200F399C00DBE381 /* FFDriveHotInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveHotInfoViewController.h; sourceTree = "<group>"; };
 		B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveHotInfoViewController.m; sourceTree = "<group>"; };
+		B58DB70A20103DE500DBE381 /* FFDriveAttentionInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAttentionInfoViewController.h; sourceTree = "<group>"; };
+		B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAttentionInfoViewController.m; sourceTree = "<group>"; };
+		B58DB70D20104F2E00DBE381 /* FFThroughInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFThroughInfoViewController.h; sourceTree = "<group>"; };
+		B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFThroughInfoViewController.m; sourceTree = "<group>"; };
 		B5955538200C55E0007F3CC7 /* CTAssetsPageViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPageViewController+Internal.h"; sourceTree = "<group>"; };
 		B5955539200C55E0007F3CC7 /* CTAssetsPickerController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPickerController+Internal.h"; sourceTree = "<group>"; };
 		B595553A200C55E0007F3CC7 /* NSBundle+CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+CTAssetsPickerController.h"; sourceTree = "<group>"; };
@@ -2211,6 +2217,10 @@
 				B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */,
 				B58DB707200F399C00DBE381 /* FFDriveHotInfoViewController.h */,
 				B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */,
+				B58DB70A20103DE500DBE381 /* FFDriveAttentionInfoViewController.h */,
+				B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */,
+				B58DB70D20104F2E00DBE381 /* FFThroughInfoViewController.h */,
+				B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */,
 			);
 			path = ChildClass;
 			sourceTree = "<group>";
@@ -2500,6 +2510,7 @@
 				B5B95E1F1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m in Sources */,
 				B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */,
 				B59555AB200C55E1007F3CC7 /* UICollectionView+CTAssetsPickerController.m in Sources */,
+				B58DB70F20104F2E00DBE381 /* FFThroughInfoViewController.m in Sources */,
 				B595568A200CAC65007F3CC7 /* TADotView.m in Sources */,
 				B5B95E821FBD742000ACD7F7 /* FFGameViewController.m in Sources */,
 				B5B95E981FBDB05900ACD7F7 /* FFRaidersCell.m in Sources */,
@@ -2585,6 +2596,7 @@
 				B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */,
 				B59555B2200C55E1007F3CC7 /* CTAssetScrollView.m in Sources */,
 				B59555B4200C55E1007F3CC7 /* CTAssetSelectionLabel.m in Sources */,
+				B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */,
 				B59555A7200C55E1007F3CC7 /* NSIndexSet+CTAssetsPickerController.m in Sources */,
 				B51379BC1FB2E0520025F00B /* FFChangePasswordViewController.m in Sources */,
 				B51967531FAAC9000046E391 /* FFRHeightVipViewController.m in Sources */,

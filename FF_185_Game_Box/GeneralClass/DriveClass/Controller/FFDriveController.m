@@ -14,7 +14,7 @@
 
 #import "UIAlertController+FFAlertController.h"
 #import "UIButton+FFButton.h"
-
+#import "FFThroughInfoViewController.h"
 
 @interface FFDriveController ()<FFSelectHeaderViewDelegate,UIScrollViewDelegate>
 
@@ -24,6 +24,11 @@
 @property (nonatomic, strong) NSMutableArray<UIViewController *> *fChildControllers;
 
 @property (nonatomic, strong) UIButton *postStatusButton;
+
+@property (nonatomic, strong) UIBarButtonItem *throughtBarbutton;
+
+@property (nonatomic, strong) FFThroughInfoViewController *throughtViewController;
+
 @end
 
 @implementation FFDriveController {
@@ -47,7 +52,7 @@
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
-
+    self.navigationItem.title = @"秋名山";
     [self addSubViews];
 }
 
@@ -57,16 +62,22 @@
                                               @"FFDriveHotInfoViewController",
                                               @"FFDriveAttentionInfoViewController",
                                               @"attention"]];
-
 }
 
-
 - (void)addSubViews {
+    self.navigationItem.rightBarButtonItem = self.throughtBarbutton;
     [self.view addSubview:self.selectHeaderView];
     [self.view addSubview:self.scrollView];
     [self.view addSubview:self.postStatusButton];
     [self addChildViewController:self.fChildControllers[0]];
     [self.scrollView addSubview:self.self.fChildControllers[0].view];
+}
+
+#pragma mark - responds
+- (void)respondsToThroughtButton {
+    HIDE_TABBAR;
+    [self.navigationController pushViewController:self.throughtViewController animated:YES];
+    SHOW_TABBAR;
 }
 
 #pragma mark - select view delegate
@@ -195,7 +206,7 @@
 #pragma mark - getter
 - (FFSelectHeaderView *)selectHeaderView {
     if (!_selectHeaderView) {
-        _selectHeaderView = [[FFSelectHeaderView alloc] initWithFrame:CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 50) WithHeaderTitleArray:@[@"全部",@"图片",@"关注",@"我的"]];
+        _selectHeaderView = [[FFSelectHeaderView alloc] initWithFrame:CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 50) WithHeaderTitleArray:@[@"全部",@"热门",@"关注",@"我的"]];
         _selectHeaderView.delegate = self;
     }
     return _selectHeaderView;
@@ -215,13 +226,27 @@
 - (UIButton *)postStatusButton {
     if (!_postStatusButton) {
         
-        _postStatusButton = [UIButton createButtonBounds:CGRectMake(0, 0, 80, 80) center:CGPointMake(kSCREEN_WIDTH / 4 * 3, self.view.bounds.size.height * 0.7) title:@"开车" imageName:@"Community_Post_Status" action:^(UIButton *button) {
+        _postStatusButton = [UIButton createButtonBounds:CGRectMake(0, 0, 80, 80) center:CGPointMake(kSCREEN_WIDTH - 50, self.view.bounds.size.height - 100) title:nil imageName:@"Community_Post_Status" action:^(UIButton *button) {
             [self respondsToPostStatusButton];
         }];
 
         [_postStatusButton layoutButtonWithImageStyle:(FFButtonImageOnTop) imageTitleSpace:0];
     }
     return _postStatusButton;
+}
+
+- (UIBarButtonItem *)throughtBarbutton {
+    if (!_throughtBarbutton) {
+        _throughtBarbutton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"Community_Send"] style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToThroughtButton)];
+    }
+    return _throughtBarbutton;
+}
+
+- (FFThroughInfoViewController *)throughtViewController {
+    if (!_throughtViewController) {
+        _throughtViewController = [[FFThroughInfoViewController alloc] init];
+    }
+    return _throughtViewController;
 }
 
 

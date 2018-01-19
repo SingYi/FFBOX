@@ -135,10 +135,32 @@
     [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
     [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"dynamics_id",@"type"]))) forKey:@"sign"];
 
+
+    syLog(@"send like or dis like === %@",dict);
     [FFBasicModel postRequestWithURL:[FFMapModel map].DYNAMICS_LIKE params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
     }];
 
+}
+
+/** comment  */
++ (void)userComeentListWithDynamicsID:(NSString *)dynamicsID type:(CommentType)type page:(NSString *)page Complete:(CompleteBlock)completion {
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    if (SSKEYCHAIN_UID != nil && SSKEYCHAIN_UID.length != 0) {
+        [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    } else {
+        [dict setObject:@"0" forKey:@"uid"];
+    }
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:dynamicsID forKey:@"dynamics_id"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
+    [dict setObject:page forKey:@"page"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"dynamics_id",@"type",@"page"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_LIST params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
 }
 
 

@@ -16,10 +16,14 @@ typedef enum : NSUInteger {
 } DynamicType;
 
 typedef enum : NSUInteger {
-    like,
-    dislike,
+    dislike = 0,
+    like
 } LikeOrDislike;
 
+typedef enum : NSUInteger {
+    timeType = 1,
+    hotType
+} CommentType;
 
 typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
@@ -44,6 +48,13 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 + (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
                                    type:(LikeOrDislike)type
                                Complete:(CompleteBlock)completion;
+
+/** 请求评论 */
++ (void)userComeentListWithDynamicsID:(NSString *)dynamicsID
+                                 type:(CommentType)type
+                                 page:(NSString *)page
+                             Complete:(CompleteBlock)completion;
+
 
 @end
 

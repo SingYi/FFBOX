@@ -14,7 +14,7 @@
 
 #import "UIAlertController+FFAlertController.h"
 #import "UIButton+FFButton.h"
-#import "FFThroughInfoViewController.h"
+#import "FFDriveThroughInfoViewController.h"
 
 @interface FFDriveController ()<FFSelectHeaderViewDelegate,UIScrollViewDelegate>
 
@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) UIBarButtonItem *throughtBarbutton;
 
-@property (nonatomic, strong) FFThroughInfoViewController *throughtViewController;
+@property (nonatomic, strong) FFDriveThroughInfoViewController *throughtViewController;
 
 @end
 
@@ -242,9 +242,9 @@
     return _throughtBarbutton;
 }
 
-- (FFThroughInfoViewController *)throughtViewController {
+- (FFDriveThroughInfoViewController *)throughtViewController {
     if (!_throughtViewController) {
-        _throughtViewController = [[FFThroughInfoViewController alloc] init];
+        _throughtViewController = [[FFDriveThroughInfoViewController alloc] init];
     }
     return _throughtViewController;
 }

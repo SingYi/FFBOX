@@ -8,6 +8,6 @@
 
 #import "FFDriveAllInfoViewController.h"
 
-@interface FFThroughInfoViewController : FFDriveAllInfoViewController
+@interface FFDriveThroughInfoViewController : FFDriveAllInfoViewController
 
 @end

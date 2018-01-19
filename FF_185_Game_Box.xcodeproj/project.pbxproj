@@ -88,7 +88,11 @@
 		B58DB706200EFC8D00DBE381 /* UIAlertController+FFAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB704200EFC8D00DBE381 /* UIAlertController+FFAlertController.m */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
-		B58DB70F20104F2E00DBE381 /* FFThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */; };
+		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
+		B58DB71220118DE000DBE381 /* FFDriveDetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB71120118DE000DBE381 /* FFDriveDetailInfoViewController.m */; };
+		B58DB7152011C1C600DBE381 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB7142011C1C600DBE381 /* MBProgressHUD.m */; };
+		B58DB7182011C8F100DBE381 /* FFDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB7172011C8F100DBE381 /* FFDetailHeaderView.m */; };
+		B58DB71D2011EA7400DBE381 /* FFDetailFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB71C2011EA7400DBE381 /* FFDetailFooterView.m */; };
 		B59555A5200C55E1007F3CC7 /* NSBundle+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553B200C55E0007F3CC7 /* NSBundle+CTAssetsPickerController.m */; };
 		B59555A6200C55E1007F3CC7 /* NSDateFormatter+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553D200C55E0007F3CC7 /* NSDateFormatter+CTAssetsPickerController.m */; };
 		B59555A7200C55E1007F3CC7 /* NSIndexSet+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B595553F200C55E0007F3CC7 /* NSIndexSet+CTAssetsPickerController.m */; };
@@ -460,8 +464,16 @@
 		B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveHotInfoViewController.m; sourceTree = "<group>"; };
 		B58DB70A20103DE500DBE381 /* FFDriveAttentionInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAttentionInfoViewController.h; sourceTree = "<group>"; };
 		B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAttentionInfoViewController.m; sourceTree = "<group>"; };
-		B58DB70D20104F2E00DBE381 /* FFThroughInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFThroughInfoViewController.h; sourceTree = "<group>"; };
-		B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFThroughInfoViewController.m; sourceTree = "<group>"; };
+		B58DB70D20104F2E00DBE381 /* FFDriveThroughInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveThroughInfoViewController.h; sourceTree = "<group>"; };
+		B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveThroughInfoViewController.m; sourceTree = "<group>"; };
+		B58DB71020118DE000DBE381 /* FFDriveDetailInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveDetailInfoViewController.h; sourceTree = "<group>"; };
+		B58DB71120118DE000DBE381 /* FFDriveDetailInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveDetailInfoViewController.m; sourceTree = "<group>"; };
+		B58DB7132011C1C600DBE381 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		B58DB7142011C1C600DBE381 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		B58DB7162011C8F100DBE381 /* FFDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailHeaderView.h; sourceTree = "<group>"; };
+		B58DB7172011C8F100DBE381 /* FFDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailHeaderView.m; sourceTree = "<group>"; };
+		B58DB71B2011EA7400DBE381 /* FFDetailFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailFooterView.h; sourceTree = "<group>"; };
+		B58DB71C2011EA7400DBE381 /* FFDetailFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailFooterView.m; sourceTree = "<group>"; };
 		B5955538200C55E0007F3CC7 /* CTAssetsPageViewController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPageViewController+Internal.h"; sourceTree = "<group>"; };
 		B5955539200C55E0007F3CC7 /* CTAssetsPickerController+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CTAssetsPickerController+Internal.h"; sourceTree = "<group>"; };
 		B595553A200C55E0007F3CC7 /* NSBundle+CTAssetsPickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+CTAssetsPickerController.h"; sourceTree = "<group>"; };
@@ -1704,6 +1716,10 @@
 				B5D75A8A2008526C00600B3D /* DriveInfoCell.h */,
 				B5D75A8B2008526C00600B3D /* DriveInfoCell.m */,
 				B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */,
+				B58DB7162011C8F100DBE381 /* FFDetailHeaderView.h */,
+				B58DB7172011C8F100DBE381 /* FFDetailHeaderView.m */,
+				B58DB71B2011EA7400DBE381 /* FFDetailFooterView.h */,
+				B58DB71C2011EA7400DBE381 /* FFDetailFooterView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2074,6 +2090,8 @@
 		B5BC04DC1FA7140F0091EE4B /* ThiredLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				B58DB7132011C1C600DBE381 /* MBProgressHUD.h */,
+				B58DB7142011C1C600DBE381 /* MBProgressHUD.m */,
 				B5137A281FB44C710025F00B /* SYKeychain.h */,
 				B5137A271FB44C710025F00B /* SYKeychain.m */,
 				B5B28E0B1FD7B1E5008A9BCD /* Reachability.h */,
@@ -2219,8 +2237,10 @@
 				B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */,
 				B58DB70A20103DE500DBE381 /* FFDriveAttentionInfoViewController.h */,
 				B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */,
-				B58DB70D20104F2E00DBE381 /* FFThroughInfoViewController.h */,
-				B58DB70E20104F2E00DBE381 /* FFThroughInfoViewController.m */,
+				B58DB70D20104F2E00DBE381 /* FFDriveThroughInfoViewController.h */,
+				B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */,
+				B58DB71020118DE000DBE381 /* FFDriveDetailInfoViewController.h */,
+				B58DB71120118DE000DBE381 /* FFDriveDetailInfoViewController.m */,
 			);
 			path = ChildClass;
 			sourceTree = "<group>";
@@ -2422,6 +2442,7 @@
 				B5A5D4F51FC3C39800EC951F /* FFGoldCenterViewController.m in Sources */,
 				B519671B1FA99A360046E391 /* FFCustomizeCell.m in Sources */,
 				B5B95E571FBC3A1800ACD7F7 /* FFGameGifTableViewCell.m in Sources */,
+				B58DB71D2011EA7400DBE381 /* FFDetailFooterView.m in Sources */,
 				B5BC05541FA714870091EE4B /* MJRefreshNormalHeader.m in Sources */,
 				B5A5D5521FC69D4B00EC951F /* FFMyNewsViewController.m in Sources */,
 				B5137A541FB5466D0025F00B /* FFTransferServerNotesController.m in Sources */,
@@ -2510,7 +2531,7 @@
 				B5B95E1F1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m in Sources */,
 				B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */,
 				B59555AB200C55E1007F3CC7 /* UICollectionView+CTAssetsPickerController.m in Sources */,
-				B58DB70F20104F2E00DBE381 /* FFThroughInfoViewController.m in Sources */,
+				B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */,
 				B595568A200CAC65007F3CC7 /* TADotView.m in Sources */,
 				B5B95E821FBD742000ACD7F7 /* FFGameViewController.m in Sources */,
 				B5B95E981FBDB05900ACD7F7 /* FFRaidersCell.m in Sources */,
@@ -2519,10 +2540,12 @@
 				B59555A8200C55E1007F3CC7 /* NSNumberFormatter+CTAssetsPickerController.m in Sources */,
 				B5A5D5111FC452C700EC951F /* FFPlatformCell.m in Sources */,
 				B59555C1200C55E1007F3CC7 /* CTAssetsViewControllerTransition.m in Sources */,
+				B58DB7182011C8F100DBE381 /* FFDetailHeaderView.m in Sources */,
 				B5A5D5421FC59F2400EC951F /* FFTransferNotesCell.m in Sources */,
 				B513799D1FB29C910025F00B /* FFMineCoinView.m in Sources */,
 				B51379CA1FB2FCE00025F00B /* FFpackageCell.m in Sources */,
 				B595568D200CAC65007F3CC7 /* XLProgressView.m in Sources */,
+				B58DB71220118DE000DBE381 /* FFDriveDetailInfoViewController.m in Sources */,
 				B595563E200C854A007F3CC7 /* SDWebImageDownloader.m in Sources */,
 				B5B95E8B1FBD8B5000ACD7F7 /* FFGameDetailViewController.m in Sources */,
 				B5A5D5661FC6AD6700EC951F /* FFMyNewsCell.m in Sources */,
@@ -2579,6 +2602,7 @@
 				B5B28DBF1FD55460008A9BCD /* FFAdvertisingView.m in Sources */,
 				B519672C1FA9AD230046E391 /* FFClassifyController.m in Sources */,
 				B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */,
+				B58DB7152011C1C600DBE381 /* MBProgressHUD.m in Sources */,
 				B5BC04D51FA70F930091EE4B /* FFRankListViewController.m in Sources */,
 				B5A5D5001FC401D300EC951F /* FFLotteryViewController.m in Sources */,
 				B556B0F11FA6C930005DC871 /* FFMainTabbarViewController.m in Sources */,

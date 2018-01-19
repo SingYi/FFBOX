@@ -44,6 +44,8 @@
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *images;
 
+@property (nonatomic, strong) NSString *dynamicsID;
+
 @end
 
 
@@ -51,6 +53,9 @@
 @implementation DriveInfoCell {
     CGFloat imageContentViewWidth;
     CGFloat imageviewWidth;
+    CellButtonType buttonType;
+    BOOL delegateCallBack;
+    BOOL isNoonButton;
 }
 
 - (void)awakeFromNib {
@@ -70,7 +75,26 @@
     [self addRespondsToButton:self.sharedButton];
     [self addRespondsToButton:self.commentButton];
 
-    [self.FavorButton setTintColor:[UIColor redColor]];
+    [self.FavorButton setTintColor:[UIColor grayColor]];
+    [self.unFavorButton setTintColor:[UIColor grayColor]];
+    [self.sharedButton setTintColor:[UIColor grayColor]];
+    [self.commentButton setTintColor:[UIColor grayColor]];
+
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondsToIcon)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    self.iconImageView.userInteractionEnabled = YES;
+    [self.iconImageView addGestureRecognizer:tap];
+
+}
+
+- (void)respondsToIcon {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickIconWithUid:)]) {
+        NSString *uid = [NSString stringWithFormat:@"%@",self.dict[@"dynamics"][@"uid"]];
+        if (uid.length > 0) {
+            [self.delegate DriveInfoCell:self didClickIconWithUid:uid];
+        }
+    }
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -88,35 +112,32 @@
     [button removeTarget:self action:@selector(respondsToButton:) forControlEvents:(UIControlEventTouchUpInside)];
 }
 
+
 #pragma mark - responds
 - (void)respondsToButton:(UIButton *)sender {
     if (sender == self.FavorButton) {
-        syLog(@"1");
-
-        [FFDriveModel userLikeOrDislikeWithDynamicsID:_dict[@"dynamics"][@"id"] type:like Complete:^(NSDictionary *content, BOOL success) {
-            syLog(@"like === %@",content);
-            syLog(@"dict == %@",_dict);
-        }];
-        
+        isNoonButton ? (buttonType = noonButton) : (buttonType = likeButton);
     } else if (sender == self.unFavorButton) {
-        syLog(@"2");
-
-        [FFDriveModel userLikeOrDislikeWithDynamicsID:_dict[@"dynamics"][@"id"] type:dislike Complete:^(NSDictionary *content, BOOL success) {
-            syLog(@"dislike === %@",content);
-        }];
+        isNoonButton ? (buttonType = noonButton) : (buttonType = dislikeButton);
     } else if (sender == self.sharedButton) {
-        syLog(@"3");
+        buttonType = sharedButton;
     } else if (sender == self.commentButton) {
-        syLog(@"4");
+        buttonType = commentButoon;
     }
 
+    [self delegateCallBackWithType:buttonType];
+
+}
+
+- (void)delegateCallBackWithType:(CellButtonType)type {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickButtonWithType:)]) {
+        [self.delegate DriveInfoCell:self didClickButtonWithType:type];
+    }
 }
 
 #pragma mark - set
 - (void)setDict:(NSDictionary *)dict {
 
-//    NSLog(@"set")
-    syLog(@"set dist ==== !!!!!");
     if (dict) {
         _dict = dict;
     } else {
@@ -150,6 +171,8 @@
     [self setSharedWith:dict[@"dynamics"][@"share"]];
     //comment
     [self setCommentWith:dict[@"dynamics"][@"comment"]];
+    //dynamics id
+    [self setDynamicsID:dict[@"dynamics"][@"id"]];
 
     //operate
     [self setOperateWith:dict[@"user"][@"operate"]];
@@ -297,8 +320,13 @@
     browser.browserStyle = XLPhotoBrowserStyleIndexLabel; // 微博样式
 
     // 设置长按手势弹出的地步ActionSheet数据,不实现此方法则没有长按手势
-    [browser setActionSheetWithTitle:@"这是一个类似微信/微博的图片浏览器组件" delegate:self cancelButtonTitle:nil deleteButtonTitle:@"删除" otherButtonTitles:@"发送给朋友",@"保存图片",@"收藏",@"投诉",nil];
+//    [browser setActionSheetWithTitle:@"这是一个类似微信/微博的图片浏览器组件" delegate:self cancelButtonTitle:nil deleteButtonTitle:@"删除" otherButtonTitles:@"发送给朋友",@"保存图片",@"收藏",@"投诉",nil];
 
+}
+
+- (void)setDynamicsID:(NSString *)dynamicsID {
+    NSString *string = [NSString stringWithFormat:@"%@",dynamicsID];
+    (string.length > 0) ? (_dynamicsID = string) : (_dynamicsID = nil);
 }
 
 - (void)setLikeWith:(NSString *)str {
@@ -326,23 +354,53 @@
 }
 
 - (void)setOperateWith:(NSString *)str {
-    if ([str isKindOfClass:[NSString class]] && str != nil) {
-        if (str.integerValue == 2) {
-            [self addRespondsToButton:self.FavorButton];
-            [self addRespondsToButton:self.unFavorButton];
-        } else {
-            [self removeRespondsToButton:self.FavorButton];
-            [self removeRespondsToButton:self.unFavorButton];
-            if (str.boolValue) {
-                self.FavorButton.tintColor = [UIColor redColor];
-            } else {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    if (string != nil && string.length != 0) {
+        syLog(@"operate string === %@",str);
+        switch (string.integerValue) {
+            case 0: {
+                [self removeLikeButtonAndeDisLikeButtonSelect];
                 self.unFavorButton.tintColor = [UIColor redColor];
+                self.FavorButton.tintColor = [UIColor grayColor];
+                isNoonButton = YES;
             }
+                break;
+            case 1: {
+                [self removeLikeButtonAndeDisLikeButtonSelect];
+                self.unFavorButton.tintColor = [UIColor grayColor];
+                self.FavorButton.tintColor = [UIColor redColor];
+                isNoonButton = YES;
+            }
+                break;
+            case 2: {
+                [self addRespondsToButton:self.FavorButton];
+                [self addRespondsToButton:self.unFavorButton];
+                self.unFavorButton.tintColor = [UIColor grayColor];
+                self.FavorButton.tintColor = [UIColor grayColor];
+                isNoonButton = NO;
+            }
+                break;
+
+            default: {
+                [self canNotRespondsToLikeButtonAndDislikeButton];
+            }
+                break;
         }
     } else {
-        [self removeRespondsToButton:self.FavorButton];
-        [self removeRespondsToButton:self.unFavorButton];
+        [self canNotRespondsToLikeButtonAndDislikeButton];
     }
+}
+
+- (void)canNotRespondsToLikeButtonAndDislikeButton {
+    [self removeLikeButtonAndeDisLikeButtonSelect];
+    self.unFavorButton.tintColor = [UIColor grayColor];
+    self.FavorButton.tintColor = [UIColor grayColor];
+    isNoonButton = YES;
+}
+
+- (void)removeLikeButtonAndeDisLikeButtonSelect {
+    [self removeRespondsToButton:self.FavorButton];
+    [self removeRespondsToButton:self.unFavorButton];
 }
 
 

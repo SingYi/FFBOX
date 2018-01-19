@@ -7,6 +7,26 @@
 //
 
 #import <UIKit/UIKit.h>
+@class DriveInfoCell;
+
+typedef enum : NSUInteger {
+    likeButton,
+    dislikeButton,
+    sharedButton,
+    commentButoon,
+    noonButton
+} CellButtonType;
+
+@protocol DriveInfoCellDelegate <NSObject>
+
+- (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid;
+
+@optional
+- (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type;
+
+
+
+@end
 
 @interface DriveInfoCell : UITableViewCell
 
@@ -14,5 +34,16 @@
 
 @property (nonatomic, strong) NSDictionary *dict;
 
+@property (nonatomic, strong, readonly) NSString *dynamicsID;
+
+@property (nonatomic, weak) id<DriveInfoCellDelegate> delegate;
 
 @end
+
+
+
+
+
+
+
+

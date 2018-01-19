@@ -6,13 +6,13 @@
 //  Copyright © 2018年 Yi Shi. All rights reserved.
 //
 
-#import "FFThroughInfoViewController.h"
+#import "FFDriveThroughInfoViewController.h"
 
-@interface FFThroughInfoViewController ()
+@interface FFDriveThroughInfoViewController ()
 
 @end
 
-@implementation FFThroughInfoViewController
+@implementation FFDriveThroughInfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

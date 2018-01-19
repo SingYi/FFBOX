@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "FFDriveModel.h"
+#import "FFViewFactory.h"
+#import "MBProgressHUD.h"
+
 
 @interface FFDriveAllInfoViewController : UIViewController
 
@@ -17,8 +20,21 @@
 /** table view data source */
 @property (nonatomic, strong) NSMutableArray *showArray;
 
+
 @property (nonatomic, assign) DynamicType dynamicType;
+
 
 - (void)initUserInterface;
 
+- (void)initDataSource;
+
+- (void)refreshNewData;
+
+- (void)loadMoreData;
+
 @end
+
+
+
+
+

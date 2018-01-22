@@ -10,8 +10,12 @@
 #import "FFDetailHeaderView.h"
 #import "FFDetailFooterView.h"
 #import "DriveInfoCell.h"
+#import "FFDriveReplyView.h"
+#import "FFDriveCommentCell.h"
 
-@interface FFDriveDetailInfoViewController ()<UITableViewDelegate,FFDetailFooterViewDelegate>
+#define CELL_IDE @"FFDriveCommentCell"
+
+@interface FFDriveDetailInfoViewController ()<UITableViewDelegate,UITableViewDataSource,FFDetailFooterViewDelegate>
 
 
 @property (nonatomic, strong) FFDetailHeaderView *headerView;
@@ -40,10 +44,12 @@
     self.navigationItem.title = @"动态详情";
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.footerView];
+    [self.tableView registerNib:[UINib nibWithNibName:CELL_IDE bundle:nil] forCellReuseIdentifier:CELL_IDE];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void)initDataSource {
-    
+
 }
 
 - (void)viewDidLayoutSubviews {
@@ -79,6 +85,23 @@
     [self.tableView.mj_footer endRefreshing];
 }
 
+#pragma mark - table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.showArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    FFDriveCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
+
+    cell.dict = self.showArray[indexPath.row];
+
+    return cell;
+}
+
 #pragma mark - table view delegate
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return 44;
@@ -98,16 +121,58 @@
     return view;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+}
+
+
+#pragma mark - responds
+- (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type {
+    [FFDriveModel userLikeOrDislikeWithDynamicsID:dynamicsID type:type Complete:^(NSDictionary *content, BOOL success) {
+        if (success) {
+            [self replaceDictWithtype:type];
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+    }];
+}
+
+- (void)replaceDictWithtype:(LikeOrDislike)type {
+    NSMutableDictionary *dict = [self.dict mutableCopy];
+    NSMutableDictionary *dynamics = [dict[@"dynamics"] mutableCopy];
+    NSMutableDictionary *user = [dict[@"user"] mutableCopy];
+    if (type == like) {
+        NSString *like = dynamics[@"likes"];
+        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"likes"];
+        [user setObject:@"1" forKey:@"operate"];
+    } else {
+        NSString *like = dynamics[@"dislike"];
+        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"dislike"];
+        [user setObject:@"0" forKey:@"operate"];
+    }
+
+    [dict setObject:dynamics forKey:@"dynamics"];
+    [dict setObject:user forKey:@"user"];
+
+    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDriveDetailController:replaceDict:indexPath:)]) {
+        [self.delegate FFDriveDetailController:self replaceDict:dict indexPath:self.indexPath];
+        syLog(@"点赞");
+    }
+
+    [self setDataDict:dict];
+    [self refreshNewData];
+}
+
 #pragma mark - footer view delegate
 - (void)FFDetailFooterView:(FFDetailFooterView *)view didClickButton:(NSUInteger)idx {
     syLog(@"click button %ld",idx);
     switch (idx) {
         case 0: {
-
+            [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:like];
         }
             break;
         case 1: {
-
+            [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:dislike];
         }
             break;
         case 2: {
@@ -125,7 +190,8 @@
 }
 
 - (void)showWirteReview {
-
+    syLog(@"评论");
+    [FFDriveReplyView showReplyViewWithDynamicID:dynamicsID ToUid:nil];
 }
 
 #pragma mark - setter
@@ -134,20 +200,34 @@
 }
 
 - (void)setDict:(NSDictionary *)dict {
-    _dict = dict;
 
     if (dict == nil) {
         return;
     }
 
-    self.footerView.dict = dict;
-    [self setCommentNUmber:dict[@"dynamics"][@"comment"]];
+    syLog(@"dict == %@", dict);
+    _dict = dict;
+    [self setDataDict:dict];
 
+    self.showArray = [NSMutableArray array];
+    [self.tableView reloadData];
+
+    self.tableView.tableHeaderView = self.headerView;
+    [self refreshNewData];
+
+}
+
+- (void)setDataDict:(NSDictionary *)dict {
+    [self setFooterDict:dict];
     dynamicsID = [NSString stringWithFormat:@"%@",dict[@"dynamics"][@"id"]];
     commentType = timeType;
-    [self refreshNewData];
+
+}
+
+- (void)setFooterDict:(NSDictionary *)dict {
+    self.footerView.dict = dict;
     self.headerView.dict = dict;
-    self.tableView.tableHeaderView = self.headerView;
+    [self setCommentNUmber:dict[@"dynamics"][@"comment"]];
 }
 
 - (void)setCommentNUmber:(NSString *)str {

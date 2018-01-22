@@ -278,18 +278,25 @@
             imageView.userInteractionEnabled = YES;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)]];
 
-            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:[UIImage new] options:(SDWebImageHighPriority) completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
 
                 if (image != nil) {
                     [_images addObject:image];
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-                        [[[SDWebImageManager sharedManager] imageCache]storeImage:image forKey:obj completion:nil];
-
-                    });
                 }
-
             }];
+
+//            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:nil options:(SDWebImageHighPriority) completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+//
+//                if (image != nil) {
+//                    [_images addObject:image];
+////                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+//
+////                        [[[SDWebImageManager sharedManager] imageCache]storeImage:image forKey:obj completion:nil];
+//
+////                    });
+//                }
+//
+//            }];
 
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.masksToBounds = YES;

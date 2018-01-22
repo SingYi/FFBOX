@@ -7,6 +7,19 @@
 //
 
 #import "FFDriveAllInfoViewController.h"
+@class FFDriveDetailInfoViewController;
+
+@protocol FFDriveDetailDelegate <NSObject>
+
+
+- (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller
+                    replaceDict:(NSDictionary *)dict
+                      indexPath:(NSIndexPath *)indexPath;
+
+
+@end
+
+
 
 @interface FFDriveDetailInfoViewController : FFDriveAllInfoViewController
 
@@ -15,6 +28,9 @@
 
 @property (nonatomic, strong) NSDictionary *dict;
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
+
+@property (nonatomic, weak) id <FFDriveDetailDelegate> delegate;
 
 
 @end

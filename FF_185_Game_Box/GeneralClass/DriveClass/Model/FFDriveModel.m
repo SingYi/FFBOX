@@ -164,6 +164,25 @@
 }
 
 
+/** 发布评论 */
++ (void)userSendCommentWithjDynamicsID:(NSString *)dynamicsID ToUid:(NSString *)toUid Comment:(NSString *)comment Complete:(CompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    (toUid != nil) ? [dict setObject:toUid forKey:@"to_uid"] : [dict setObject:@"0" forKey:@"to_uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:dynamicsID forKey:@"dynamics_id"];
+    [dict setObject:comment forKey:@"content"];
+
+    syLog(@"dict == %@",dict);
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"to_uid",@"channel",@"dynamics_id",@"content"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+
+}
+
 
 
 

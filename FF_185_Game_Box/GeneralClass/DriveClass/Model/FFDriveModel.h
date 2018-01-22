@@ -49,11 +49,17 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
                                    type:(LikeOrDislike)type
                                Complete:(CompleteBlock)completion;
 
-/** 请求评论 */
+/** 请求评论(请求动态详情) */
 + (void)userComeentListWithDynamicsID:(NSString *)dynamicsID
                                  type:(CommentType)type
                                  page:(NSString *)page
                              Complete:(CompleteBlock)completion;
+
+/** 发送评论 */
++ (void)userSendCommentWithjDynamicsID:(NSString *)dynamicsID
+                                 ToUid:(NSString *)toUid
+                               Comment:(NSString *)comment
+                              Complete:(CompleteBlock)completion;
 
 
 @end

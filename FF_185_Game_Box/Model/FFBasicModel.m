@@ -172,6 +172,8 @@
 //        }
 //        NSString *strP = [pValues componentsJoinedByString:@"&"];
 //        [request setHTTPBody:[strP dataUsingEncoding:NSUTF8StringEncoding]];
+////        [request setHTTPBody:[strP dataUsingEncoding:NSUTF16StringEncoding]];
+////        nsutf
 //    }
 //
 //    request.timeoutInterval = 5.f;
@@ -277,7 +279,7 @@
         [signString appendString:obj];
         [signString appendString:@"="];
         if (params[obj] == nil) {
-            NSLog(@"尚未登录");
+            syLog(@"尚未登录或者 参数错误");
             return ;
         }
 

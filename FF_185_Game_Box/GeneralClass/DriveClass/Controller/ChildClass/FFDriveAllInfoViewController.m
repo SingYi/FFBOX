@@ -13,7 +13,7 @@
 
 #define CELL_IDE @"DriveInfoCell"
 
-@interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate>
+@interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate,FFDriveDetailDelegate>
 
 
 @property (nonatomic, assign) NSUInteger currentPage;
@@ -23,6 +23,11 @@
 @end
 
 @implementation FFDriveAllInfoViewController
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+//    [self.tableView reloadData];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -157,8 +162,9 @@
     [self pushDetailControllerWith:indexPath Comment:NO];
 }
 
-- (void)pushDetailControllerWith:(NSIndexPath *)indexPaht Comment:(BOOL)isComment {
-    self.detailController.dict = self.showArray[indexPaht.row];
+- (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {
+    self.detailController.dict = self.showArray[indexPath.row];
+    self.detailController.indexPath = indexPath;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
     SHOW_PARNENT_TABBAR;
@@ -198,6 +204,14 @@
     syLog(@"click icon with uid == %@", uid);
 }
 
+#pragma mark - detail delegate
+- (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller replaceDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath {
+
+    syLog(@"点赞????");
+    [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
+    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+
 #pragma mark - getter
 - (UITableView *)tableView {
     if (!_tableView) {
@@ -234,6 +248,7 @@
 - (FFDriveDetailInfoViewController *)detailController {
     if (!_detailController) {
         _detailController = [[FFDriveDetailInfoViewController alloc] init];
+        _detailController.delegate = self;
     }
     return _detailController;
 }

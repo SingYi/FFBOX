@@ -25,6 +25,8 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *likeButton;
+
 @end
 
 @implementation FFDriveCommentCell
@@ -36,6 +38,8 @@
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderColor = [UIColor orangeColor].CGColor;
     self.iconImage.layer.borderWidth = 2;
+
+    self.likeButton.tintColor = [UIColor grayColor];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -53,6 +57,10 @@
     [self setIconImageWith:dict[@"uid_iconurl"]];
     [self setNickNameWith:dict[@"uid_nickname"]];
     [self setToUidWith:dict[@"to_uid"]];
+    [self setContentWith:dict[@"content"]];
+    [self setTimeWith:dict[@"create_time"]];
+    [self setToNickNameWith:dict[@"touid_nickname"]];
+    [self setLikeWith:dict[@"likes"]];
 }
 
 - (void)setIconImageWith:(NSString *)str {
@@ -63,6 +71,19 @@
 - (void)setNickNameWith:(NSString *)str {
     NSString *string = [NSString stringWithFormat:@"%@",str];
     self.nickNameLabel.text = string;
+}
+
+- (void)setToNickNameWith:(NSString *)str {
+    if (str == nil) {
+        self.replayLabel.hidden = YES;
+        self.toUserNickNameLabel.hidden = YES;
+    } else {
+        NSString *string = [NSString stringWithFormat:@"%@",str];
+        self.replayLabel.hidden = NO;
+        self.toUserNickNameLabel.hidden = NO;
+        self.toUserNickNameLabel.text = string;
+    }
+
 }
 
 - (void)setToUidWith:(NSString *)str {
@@ -81,8 +102,62 @@
     self.toUserNickNameLabel.text = string;
 }
 
+- (void)setContentWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    self.contentLabel.text = string;
+}
+
+- (void)setTimeWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:string.integerValue];
+    self.timeLabel.text = [formatter stringFromDate:date];
+}
+
+- (void)setLikeWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    [self.likeButton setTitle:string forState:(UIControlStateNormal)];
+}
+
+- (void)setLikeTypeWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    switch (string.integerValue) {
+        case 0: {
+            self.likeButton.tintColor = [UIColor grayColor];
+            [self removeTargetButton:self.likeButton];
+        }
+            break;
+        case 1: {
+            self.likeButton.tintColor = [UIColor redColor];
+            [self removeTargetButton:self.likeButton];
+        }
+            break;
+        case 2: {
+            self.likeButton.tintColor = [UIColor grayColor];
+            [self addTargetButton:self.likeButton];
+        }
+            break;
+
+        default:
+            break;
+    }
+}
+
+- (void)addTargetButton:(UIButton *)button {
+    [button addTarget:self action:@selector(respondsToLikeButton) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)removeTargetButton:(UIButton *)button {
+    [button removeTarget:self action:@selector(respondsToLikeButton) forControlEvents:(UIControlEventTouchUpInside)];
+}
 
 
+
+#pragma mark - responds
+- (void)respondsToLikeButton {
+
+}
 
 
 

@@ -8,6 +8,8 @@
 
 #import "FFDriveReplyView.h"
 #import "FFDriveModel.h"
+#import "FFViewFactory.h"
+
 @class ReplyViewController;
 
 static FFDriveReplyView *window = nil;
@@ -30,7 +32,10 @@ static ReplyViewController *rootViewController = nil;
 @end
 
 
-@implementation ReplyViewController
+@implementation ReplyViewController {
+    bool sendCommentSuccess;
+    BOOL isReply;
+}
 
 
 + (instancetype)controller {
@@ -49,6 +54,8 @@ static ReplyViewController *rootViewController = nil;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
+        sendCommentSuccess = false;
+        isReply = NO;
     }
     return self;
 }
@@ -73,6 +80,10 @@ static ReplyViewController *rootViewController = nil;
     CGFloat time = [duration floatValue];
     [UIView animateWithDuration:time animations:^{
         self.backGroundView.frame = CGRectMake(0, kSCREEN_HEIGHT * 0.78, kSCREEN_WIDTH, kSCREEN_HEIGHT * 0.22);
+    } completion:^(BOOL finished) {
+        if (sendCommentSuccess && finished) {
+            [self.backGroundView removeFromSuperview];
+        }
     }];
 
 }
@@ -108,6 +119,9 @@ static ReplyViewController *rootViewController = nil;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length > 199) {
+        textView.text = [textView.text substringToIndex:199];
+    }
     [self setSendButtonColorWith:textView.text];
 }
 
@@ -121,6 +135,8 @@ static ReplyViewController *rootViewController = nil;
     }
 }
 
+
+
 #pragma mark - responds tap
 - (void)respondsToTap {
     [window resignKeyWindow];
@@ -130,10 +146,21 @@ static ReplyViewController *rootViewController = nil;
 
 - (void)respondsToSendButton {
     syLog(@"发送");
+    if (isReply) {
+        return;
+    }
+    isReply = YES;
     [FFDriveModel userSendCommentWithjDynamicsID:self.dynamicID ToUid:self.toUid Comment:self.textView.text Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
-            syLog(@"comment content === %@",content);
+            sendCommentSuccess = YES;
+            [self.textView resignFirstResponder];
+            [[NSNotificationCenter defaultCenter] postNotificationName:SendCommentNotificationName object:nil userInfo:content];
+
+            [self respondsToTap];
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
         }
+        isReply = NO;
     }];
 }
 
@@ -185,7 +212,11 @@ static ReplyViewController *rootViewController = nil;
 
 - (void)dealloc {
     syLog(@"销毁通知");
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 

@@ -31,6 +31,36 @@
 
 }
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendMessageCallBackNotification:) name:SendCommentNotificationName object:nil];
+    }
+    return self;
+}
+
+- (void)sendMessageCallBackNotification:(NSNotification *)notification {
+
+    syLog(@"发送评论 : %@",notification.userInfo);
+    NSDictionary *dict = notification.userInfo;
+    NSString *status = dict[@"status"];
+    if (status.integerValue == 1) {
+
+        [self refreshNewData];
+
+        NSString *data = [NSString stringWithFormat:@"%@",dict[@"data"]];
+        if (data.integerValue > 0) {
+            NSString *msg = [NSString stringWithFormat:@"评论成功\n 奖励%@金币",data];
+            BOX_MESSAGE(msg);
+        } else {
+            BOX_MESSAGE(@"发送评论成功");
+        }
+    } else {
+        BOX_MESSAGE(dict[@"msg"]);
+    }
+}
+
 
 
 - (void)viewDidLoad {
@@ -61,12 +91,13 @@
 - (void)refreshNewData {
     syLog(@"刷新");
     currentPage = 1;
-    [FFDriveModel userComeentListWithDynamicsID:dynamicsID type:commentType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userComeentListWithDynamicsID:dynamicsID type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"comment list === %@",content);
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             self.showArray = [array mutableCopy];
             [self.tableView reloadData];
+            [self setCommentNUmber:[NSString stringWithFormat:@"%lu",self.showArray.count]];
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }
@@ -218,19 +249,22 @@
 }
 
 - (void)setDataDict:(NSDictionary *)dict {
-    [self setFooterDict:dict];
     dynamicsID = [NSString stringWithFormat:@"%@",dict[@"dynamics"][@"id"]];
     commentType = timeType;
-
-}
-
-- (void)setFooterDict:(NSDictionary *)dict {
-    self.footerView.dict = dict;
-    self.headerView.dict = dict;
     [self setCommentNUmber:dict[@"dynamics"][@"comment"]];
 }
 
+
 - (void)setCommentNUmber:(NSString *)str {
+    id tmpDict = _dict;
+    if (![str isEqualToString:_dict[@"dynamics"][@"comment"]]) {
+        tmpDict = [_dict mutableCopy];
+        NSMutableDictionary *dynamics = [tmpDict[@"dynamics"] mutableCopy];
+        [dynamics setObject:[NSString stringWithFormat:@"%@",str] forKey:@"comment"];
+        [tmpDict setObject:dynamics forKey:@"dynamics"];
+    }
+    self.footerView.dict = tmpDict;
+    self.headerView.dict = tmpDict;
     self.commentNumberLabel.text = [NSString stringWithFormat:@" 评论 : %@",str];
 }
 
@@ -264,6 +298,10 @@
     return _commentNumberLabel;
 }
 
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SendCommentNotificationName object:nil];
+}
 
 
 @end

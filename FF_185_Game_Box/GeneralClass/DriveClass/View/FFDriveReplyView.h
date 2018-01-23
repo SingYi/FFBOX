@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#define SendCommentNotificationName @"SendCommentNotificationName"
+
 @interface FFDriveReplyView : UIWindow
 
 

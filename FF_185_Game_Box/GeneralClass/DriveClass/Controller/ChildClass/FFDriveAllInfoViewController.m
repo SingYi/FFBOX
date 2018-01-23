@@ -56,7 +56,7 @@
 - (void)refreshNewData {
     _currentPage = 1;
 
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
 
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"get dynamic == %@",content);

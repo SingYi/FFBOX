@@ -323,7 +323,7 @@
 - (UIView *)grayLayer {
     if (!_grayLayer) {
         _grayLayer = [[UIView alloc] init];
-        _grayLayer.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+        _grayLayer.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
         _grayLayer.bounds = CGRectMake(0, 0, kSCREEN_WIDTH, 20);
     }
     return _grayLayer;

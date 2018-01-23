@@ -151,7 +151,7 @@
     //sex
     [self setSexWith:dict[@"user"][@"sex"]];
     //sex
-    [self setVipWith:dict[@"user"][@"sex"]];
+    [self setVipWith:dict[@"user"][@"vip"]];
     //time label
     [self setTimeWith:dict[@"dynamics"][@"create_time"]];
     //content
@@ -188,23 +188,25 @@
 }
 
 - (void)setSexWith:(NSString *)str {
-    if ([str isKindOfClass:[NSString class]] && str!= nil && str.boolValue) {
-        self.vipImageView.hidden = NO;
-    } else {
-        self.vipImageView.hidden = YES;
-    }
-}
-
-- (void)setVipWith:(NSString *)str {
     if ([str isKindOfClass:[NSString class]]) {
         self.sexImageVIew.hidden = NO;
         if (str.integerValue == 1) {
+            self.sexImageVIew.tintColor = [UIColor redColor];
             self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
         } else {
+            self.sexImageVIew.tintColor = [UIColor blueColor];
             self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
         }
     } else {
         self.sexImageVIew.hidden = YES;
+    }
+}
+
+- (void)setVipWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]] && str!= nil && str.boolValue) {
+        self.vipImageView.hidden = NO;
+    } else {
+        self.vipImageView.hidden = YES;
     }
 }
 

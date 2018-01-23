@@ -7,11 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FFDriveCommentCell;
+
+
+@protocol FFDriveCommentCellDelegate <NSObject>
+
+
+
+@end
 
 @interface FFDriveCommentCell : UITableViewCell
 
 
 @property (nonatomic, strong) NSDictionary *dict;
+
+@property (nonatomic, weak) id<FFDriveCommentCellDelegate> delegate;
 
 
 @end

@@ -12,15 +12,18 @@
 #import "DriveInfoCell.h"
 #import "FFDriveReplyView.h"
 #import "FFDriveCommentCell.h"
+#import "UIAlertController+FFAlertController.h"
 
 #define CELL_IDE @"FFDriveCommentCell"
 
-@interface FFDriveDetailInfoViewController ()<UITableViewDelegate,UITableViewDataSource,FFDetailFooterViewDelegate>
-
+@interface FFDriveDetailInfoViewController ()<UITableViewDelegate,UITableViewDataSource,FFDetailFooterViewDelegate,FFDriveCommentCellDelegate,FFDetailHeaderViewDelegate>
 
 @property (nonatomic, strong) FFDetailHeaderView *headerView;
 @property (nonatomic, strong) FFDetailFooterView *footerView;
 @property (nonatomic, strong) UILabel *commentNumberLabel;
+@property (nonatomic, strong) UILabel *hotLabel;
+@property (nonatomic, strong) NSMutableArray *hotListArray;
+
 
 @end
 
@@ -28,7 +31,8 @@
     NSString *dynamicsID;
     CommentType commentType;
     NSUInteger currentPage;
-
+    NSString *attentionString;
+    NSString *attentionUid;
 }
 
 - (instancetype)init
@@ -96,8 +100,15 @@
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             self.showArray = [array mutableCopy];
+            NSArray *hotArray = content[@"data"][@"hot_list"];
+            self.hotListArray = [hotArray mutableCopy];
             [self.tableView reloadData];
-            [self setCommentNUmber:[NSString stringWithFormat:@"%lu",self.showArray.count]];
+            NSDictionary *dict = content[@"data"][@"dynamics_info"];
+            [self setCommentNUmber:[NSString stringWithFormat:@"%@",dict[@"comment"]]];
+            attentionString = [NSString stringWithFormat:@"%@",dict[@"is_follow"]];
+            [self.headerView setAttentionWith:attentionString];
+            attentionUid = [NSString stringWithFormat:@"%@",dict[@"uid"]];
+
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }
@@ -118,18 +129,26 @@
 
 #pragma mark - table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.showArray.count;
+    if (section == 0) {
+        return self.hotListArray.count;
+    } else {
+        return self.showArray.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FFDriveCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
 
-    cell.dict = self.showArray[indexPath.row];
-
+    cell.delegate = self;
+    if (indexPath.section == 0) {
+        cell.dict = self.hotListArray[indexPath.row];
+    } else {
+        cell.dict = self.showArray[indexPath.row];
+    }
     return cell;
 }
 
@@ -139,26 +158,123 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView *view =[[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44)];
+    return (section == 0) ? [self creatViewWithLabel:self.hotLabel] : [self creatViewWithLabel:self.commentNumberLabel];
+}
 
+
+
+- (UIView *)creatViewWithLabel:(UILabel *)label {
+    UIView *view =[[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44)];
     view.backgroundColor = [UIColor whiteColor];
-    [view addSubview:self.commentNumberLabel];
+    [view addSubview:label];
+
+    CALayer *layer1 = [[CALayer alloc] init];
+    layer1.frame = CGRectMake(0, 0, kSCREEN_WIDTH, 1);
+    layer1.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
+    [view.layer addSublayer:layer1];
 
     CALayer *layer = [[CALayer alloc] init];
     layer.frame = CGRectMake(0, 43, kSCREEN_WIDTH, 1);
     layer.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1].CGColor;
     [view.layer addSublayer:layer];
-
     return view;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [self didSelectRowShowAlertWith:indexPath];
+}
+
+- (void)didSelectRowShowAlertWith:(NSIndexPath *)indexPath {
+    FF_is_login;
+    NSDictionary *dict = (indexPath.section == 0) ? self.hotListArray[indexPath.row] : self.showArray[indexPath.row];
+    NSString *uid = dict[@"uid"];
+    if ([uid isEqualToString:SSKEYCHAIN_UID]) {
+        [UIAlertController showAlertControllerWithViewController:self alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除" CallBackBlock:^(NSInteger btnIndex) {
+            [self didSelectCellWithButtonIndex:btnIndex WithIndexPaht:indexPath isSelfComment:YES];
+        } otherButtonTitles:@"点赞", nil];
+    } else {
+        [UIAlertController showAlertControllerWithViewController:self alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil CallBackBlock:^(NSInteger btnIndex) {
+            [self didSelectCellWithButtonIndex:btnIndex WithIndexPaht:indexPath isSelfComment:NO];
+        } otherButtonTitles:@"评论",@"点赞", nil];
+    }
+}
+
+#pragma mark - cell click
+- (void)didSelectCellWithButtonIndex:(NSUInteger)index WithIndexPaht:(NSIndexPath *)indexPath isSelfComment:(BOOL)isSelfComment {
+    syLog(@"select button index : %lu",index);
+    switch (index) {
+        case 0:
+            break;
+        case 1: {
+            isSelfComment ? [self deleteCommentWith:indexPath] : [self replyCommentWint:indexPath];
+        }
+            break;
+        case 2: {
+            [self commentLikeWith:indexPath];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
 
+#pragma mark - cell delegate
+- (void)FFDriveCommentCell:(FFDriveCommentCell *)cell didClickLikeButtonWith:(NSDictionary *)dict {
+    syLog(@"like button ");
+    FF_is_login;
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    [self commentLikeWith:indexPath];
+}
+
+- (void)commentLikeWith:(NSIndexPath *)indexPath {
+    FFDriveCommentCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    NSMutableDictionary *mdict = cell.dict.mutableCopy;
+    NSString *likeType = [NSString stringWithFormat:@"%@",mdict[@"like_type"]];
+    if ([likeType isEqualToString:@"2"]) {
+        [FFDriveModel userLikeOrDislikeComment:mdict[@"id"] Type:like Complete:^(NSDictionary *content, BOOL success) {
+            if (success) {
+                [mdict setObject:@"1" forKey:@"like_type"];
+                NSString *likes = mdict[@"likes"];
+                [mdict setObject:[NSString stringWithFormat:@"%lu",(likes.integerValue + 1)] forKey:@"likes"];
+                [self.showArray replaceObjectAtIndex:indexPath.row withObject:mdict];
+                [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+            } else {
+                BOX_MESSAGE(content[@"msg"]);
+            }
+        }];
+    } else {
+        BOX_MESSAGE(@"已经赞过该评论.");
+    }
+}
+
+#pragma mark - delete comment
+- (void)deleteCommentWith:(NSIndexPath *)indexPath {
+    syLog(@"删除评论");
+    NSDictionary *dict = (indexPath.section == 0) ? self.hotListArray[indexPath.row] : self.showArray[indexPath.row];
+    NSString *commentID = dict[@"id"];
+    [FFDriveModel userDeleteCommentWith:commentID Complete:^(NSDictionary *content, BOOL success) {
+        if (success) {
+            [self refreshNewData];
+            BOX_MESSAGE(@"删除成功");
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+    }];
+}
+
+#pragma mark - reply comment
+- (void)replyCommentWint:(NSIndexPath *)indexPath  {
+    syLog(@"回复评论");
+    NSDictionary *dict = (indexPath.section == 0) ? self.hotListArray[indexPath.row] : self.showArray[indexPath.row];
+    NSString *toUid = dict[@"uid"];
+    [FFDriveReplyView showReplyViewWithDynamicID:dynamicsID ToUid:toUid];
+}
+
 #pragma mark - responds
 - (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type {
+    FF_is_login;
     [FFDriveModel userLikeOrDislikeWithDynamicsID:dynamicsID type:type Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             [self replaceDictWithtype:type];
@@ -167,6 +283,7 @@
         }
     }];
 }
+
 
 - (void)replaceDictWithtype:(LikeOrDislike)type {
     NSMutableDictionary *dict = [self.dict mutableCopy];
@@ -192,6 +309,22 @@
 
     [self setDataDict:dict];
     [self refreshNewData];
+}
+
+#pragma mark - header view delegate
+- (void)FFDetailHeaderView:(FFDetailHeaderView *)view clickAttentionButton:(id)info {
+    FF_is_login;
+    syLog(@"关注");
+    [FFDriveModel userAttentionWith:attentionUid Type:(attentionString.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"attention === %@",content);
+        if (success) {
+            [self refreshNewData];
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+    }];
+
+
 }
 
 #pragma mark - footer view delegate
@@ -220,8 +353,11 @@
     }
 }
 
+
+
 - (void)showWirteReview {
     syLog(@"评论");
+    FF_is_login;
     [FFDriveReplyView showReplyViewWithDynamicID:dynamicsID ToUid:nil];
 }
 
@@ -275,6 +411,7 @@
 - (FFDetailHeaderView *)headerView {
     if (!_headerView) {
         _headerView = [[FFDetailHeaderView alloc] init];
+        _headerView.delegate = self;
     }
     return _headerView;
 }
@@ -298,10 +435,24 @@
     return _commentNumberLabel;
 }
 
+- (UILabel *)hotLabel {
+    if (!_hotLabel) {
+        _hotLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, kSCREEN_WIDTH / 2 - 10, 44)];
+        _hotLabel.textAlignment = NSTextAlignmentLeft;
+        _hotLabel.font = [UIFont systemFontOfSize:16];
+        _hotLabel.textColor = [UIColor darkGrayColor];
+        _hotLabel.text = @" 热门评论 :";
+    }
+    return _hotLabel;
+}
+
+
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SendCommentNotificationName object:nil];
 }
+
 
 
 @end

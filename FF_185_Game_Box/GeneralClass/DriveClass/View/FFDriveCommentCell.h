@@ -12,7 +12,7 @@
 
 @protocol FFDriveCommentCellDelegate <NSObject>
 
-
+- (void)FFDriveCommentCell:(FFDriveCommentCell *)cell didClickLikeButtonWith:(NSDictionary *)dict;
 
 @end
 

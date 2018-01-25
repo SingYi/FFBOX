@@ -13,7 +13,7 @@
 
 #define CELL_IDE @"DriveInfoCell"
 
-@interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate,FFDriveDetailDelegate>
+@interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate,FFDriveDetailDelegate, UIScrollViewDelegate>
 
 
 @property (nonatomic, assign) NSUInteger currentPage;
@@ -108,6 +108,7 @@
 
 #pragma mark - responds
 - (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type index:(NSIndexPath *)indexPath {
+    FF_is_login;
     [FFDriveModel userLikeOrDislikeWithDynamicsID:dynamicsID type:type Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             [self replaceShowArrayDataWith:indexPath type:type];
@@ -170,6 +171,22 @@
     SHOW_PARNENT_TABBAR;
 }
 
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+//    syLog(@"!!!!!!!!!!1");
+////    NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
+////    if (cells.count > 0) {
+////        [cells.firstObject stopGif];
+////        [cells.lastObject stopGif];
+////    }
+////
+////    if (cells.count > 1) {
+////        [cells[1] starGif];
+////        [cells[cells.count - 2] starGif];
+////    }
+//
+//}
+
+
 #pragma mark - cell dele gate
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
@@ -206,7 +223,6 @@
 
 #pragma mark - detail delegate
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller replaceDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath {
-
     syLog(@"点赞????");
     [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];

@@ -40,6 +40,7 @@
     self.iconImage.layer.borderWidth = 2;
 
     self.likeButton.tintColor = [UIColor grayColor];
+    [self.likeButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -61,6 +62,8 @@
     [self setTimeWith:dict[@"create_time"]];
     [self setToNickNameWith:dict[@"touid_nickname"]];
     [self setLikeWith:dict[@"likes"]];
+    [self setLikeTypeWith:dict[@"like_type"]];
+    [self setVipWith:dict[@"uid_vip"]];
 }
 
 - (void)setIconImageWith:(NSString *)str {
@@ -116,7 +119,7 @@
 }
 
 - (void)setLikeWith:(NSString *)str {
-    NSString *string = [NSString stringWithFormat:@"%@",str];
+    NSString *string = [NSString stringWithFormat:@" %@",str];
     [self.likeButton setTitle:string forState:(UIControlStateNormal)];
 }
 
@@ -153,11 +156,23 @@
 }
 
 
+- (void)setVipWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    if (string.integerValue == 1) {
+        self.vipImage.hidden = NO;
+    } else {
+        self.vipImage.hidden = YES;
+    }
+}
 
 #pragma mark - responds
 - (void)respondsToLikeButton {
-
+    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDriveCommentCell:didClickLikeButtonWith:)]) {
+        [self.delegate FFDriveCommentCell:self didClickLikeButtonWith:self.dict];
+    }
 }
+
+
 
 
 

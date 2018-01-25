@@ -22,11 +22,19 @@
 #define QQAPPID @"1106099979"
 
 
-@interface AppDelegate () <UNUserNotificationCenterDelegate>
+@interface AppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
 
 @end
 
 @implementation AppDelegate
+
+- (void)onReq:(BaseReq*)req {
+    syLog(@"????????????????????????????????????????");
+}
+
+- (void)onResp:(BaseResp*)resp {
+    syLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -63,10 +71,33 @@
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
-
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    syLog(@"open url == %@",url);
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    syLog(@"open url == %@",url);
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    syLog(@"open url == %@",url);
+    [WXApi handleOpenURL:url delegate:self];
+    return YES;
+}
+
+
+
+
+
 
 #pragma mark - method
 - (void)initializeUserInterface {
@@ -137,7 +168,6 @@
 //    NSURL *url = [NSURL URLWithString:@"App-Prefs:root=App-Prefs:root=General&path=DeviceManagement"];
 //    [[UIApplication sharedApplication] openURL:url];
 
-
 }
 
 /** 注册通知 */
@@ -163,24 +193,29 @@
     }
 }
 
+
+
+
+
+
 #pragma mark - UNUserNotificationCenterDelegate
 //在展示通知前进行处理，即有机会在展示通知前再修改通知内容。
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-    completionHandler(UNNotificationPresentationOptionAlert);
-
-    syLog(@"================================================ \n ======================== 收到通知!!!!======================== \n======================== ======================== \n");
-}
-
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
-    syLog(@"================================================ \n ======================== 收到通知 ????======================== \n======================== ======================== \n");
-}
-
-- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    NSLog(@"iOS7及以上系统，收到通知:%@", userInfo);
-
-    completionHandler(UIBackgroundFetchResultNewData);
-
-}
+//- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
+//    completionHandler(UNNotificationPresentationOptionAlert);
+//
+//    syLog(@"================================================ \n ======================== 收到通知!!!!======================== \n======================== ======================== \n");
+//}
+//
+//- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
+//    syLog(@"================================================ \n ======================== 收到通知 ????======================== \n======================== ======================== \n");
+//}
+//
+//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
+//    NSLog(@"iOS7及以上系统，收到通知:%@", userInfo);
+//
+//    completionHandler(UIBackgroundFetchResultNewData);
+//
+//}
 
 
 

@@ -174,7 +174,6 @@
     [dict setObject:dynamicsID forKey:@"dynamics_id"];
     [dict setObject:comment forKey:@"content"];
 
-    syLog(@"dict == %@",dict);
     [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"to_uid",@"channel",@"dynamics_id",@"content"]))) forKey:@"sign"];
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT params:dict completion:^(NSDictionary *content, BOOL success) {
@@ -183,7 +182,47 @@
 
 }
 
+/** 赞或者踩评论 */
++ (void)userLikeOrDislikeComment:(NSString *)comment_id Type:(LikeOrDislike)type Complete:(CompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:comment_id forKey:@"comment_id"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
 
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"comment_id",@"type"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_LIKE params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+
+}
+
+/** 删除评论 */
++ (void)userDeleteCommentWith:(NSString *)comment_id Complete:(CompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:comment_id forKey:@"comment_id"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"comment_id"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_DEL params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+/** 关注用户 */
++ (void)userAttentionWith:(NSString *)attentionUid Type:(AttentionType)type Complete:(CompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:attentionUid forKey:@"buid"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"buid",@"type"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].FOLLOW_OR_CANCEL params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
 
 
 

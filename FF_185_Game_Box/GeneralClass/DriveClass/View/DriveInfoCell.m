@@ -10,8 +10,10 @@
 #import "UIImageView+WebCache.h"
 #import "UIView+XLExtension.h"
 #import "XLPhotoBrowser.h"
-
 #import "FFDriveModel.h"
+#import "FLAnimatedImage.h"
+#import "ZLPhotoActionSheet.h"
+#import "ZLPhotoManager.h"
 
 @interface DriveInfoCell () <XLPhotoBrowserDelegate, XLPhotoBrowserDatasource>
 
@@ -56,6 +58,8 @@
     CellButtonType buttonType;
     BOOL delegateCallBack;
     BOOL isNoonButton;
+    NSMutableArray *gifImages;
+    BOOL isGifImage;
 }
 
 - (void)awakeFromNib {
@@ -192,10 +196,10 @@
         self.sexImageVIew.hidden = NO;
         if (str.integerValue == 1) {
             self.sexImageVIew.tintColor = [UIColor redColor];
-            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
+            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
         } else {
             self.sexImageVIew.tintColor = [UIColor blueColor];
-            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
+            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
         }
     } else {
         self.sexImageVIew.hidden = YES;
@@ -273,33 +277,51 @@
 
     _imageViews = [NSMutableArray arrayWithCapacity:images.count];
     _images = [NSMutableArray arrayWithCapacity:images.count];
+
     if (images.count > 0) {
-        [images enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            UIImageView *imageView = [[UIImageView alloc] init];
+        [images enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIImageView *imageView = nil;
+            imageView = [[FLAnimatedImageView alloc] init];
+            
+            if ([obj hasSuffix:@".gif"]) {
+                isGifImage = YES;
+                dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    NSData *iamgeData = [self imageDataFromDiskCacheWithKey:obj];
+                    if (iamgeData) {
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            imageView.image = [ZLPhotoManager transformToGifImageWithData:iamgeData];
+                            [_images addObject:imageView.image];
+        
+                        });
+                    } else {
+                        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+                        }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                            [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:obj];
+                            dispatch_async(dispatch_get_main_queue(), ^{
+                                imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                                [_images addObject:imageView.image];
+
+                            });
+
+                        }];
+                    }
+                });
+
+            } else {
+                isGifImage = NO;
+                [imageView sd_setImageWithURL:[NSURL URLWithString:obj] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    if ([obj hasSuffix:@".gif"]) {
+                        NSData *data = UIImagePNGRepresentation(image);
+                        imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                    }
+                    [_images addObject:imageView.image];
+                }];
+            }
+
+
             imageView.tag = idx + 10086;
             imageView.userInteractionEnabled = YES;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)]];
-
-            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-
-                if (image != nil) {
-                    [_images addObject:image];
-                }
-            }];
-
-//            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:nil options:(SDWebImageHighPriority) completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-//
-//                if (image != nil) {
-//                    [_images addObject:image];
-////                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-//
-////                        [[[SDWebImageManager sharedManager] imageCache]storeImage:image forKey:obj completion:nil];
-//
-////                    });
-//                }
-//
-//            }];
-
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.masksToBounds = YES;
             CGFloat y = 0;
@@ -313,10 +335,10 @@
             } else {
 
             }
-
-            imageView.frame = CGRectMake(x, y, imageviewWidth, imageviewWidth);
             [_imageViews addObject:imageView];
+            imageView.frame = CGRectMake(x, y, imageviewWidth, imageviewWidth);
             [self.ImageContentView addSubview:imageView];
+
         }];
     }
 
@@ -324,13 +346,9 @@
 
 - (void)clickImage:(UITapGestureRecognizer *)sender {
     syLog(@"点击图片");
+    [[self getPas] previewPhotos:self.images index:sender.view.tag - 10086 hideToolBar:YES complete:^(NSArray * _Nonnull photos) {
 
-    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithImages:self.images currentImageIndex:sender.view.tag - 10086];
-    browser.browserStyle = XLPhotoBrowserStyleIndexLabel; // 微博样式
-
-    // 设置长按手势弹出的地步ActionSheet数据,不实现此方法则没有长按手势
-//    [browser setActionSheetWithTitle:@"这是一个类似微信/微博的图片浏览器组件" delegate:self cancelButtonTitle:nil deleteButtonTitle:@"删除" otherButtonTitles:@"发送给朋友",@"保存图片",@"收藏",@"投诉",nil];
-
+    }];
 }
 
 - (void)setDynamicsID:(NSString *)dynamicsID {
@@ -415,10 +433,37 @@
 
 #pragma mark - getter
 
+- (ZLPhotoActionSheet *)getPas {
+    ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
+    actionSheet.sender = [UIApplication sharedApplication].keyWindow.rootViewController;
+    actionSheet.configuration.allowSelectGif = YES;
+    actionSheet.configuration.navBarColor = NAVGATION_BAR_COLOR;
+    actionSheet.configuration.bottomViewBgColor = NAVGATION_BAR_COLOR;
+    return actionSheet;
+}
 
 
 
+- (NSData *)imageDataFromDiskCacheWithKey:(NSString *)key {
+    NSString *path = [[[SDWebImageManager sharedManager] imageCache] defaultCachePathForKey:key];
+    return [NSData dataWithContentsOfFile:path];
+}
 
+- (void)starGif {
+    if (isGifImage) {
+        [_imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj startAnimating];
+        }];
+    }
+}
+
+- (void)stopGif {
+    if (isGifImage) {
+        [_imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj stopAnimating];
+        }];
+    }
+}
 
 
 

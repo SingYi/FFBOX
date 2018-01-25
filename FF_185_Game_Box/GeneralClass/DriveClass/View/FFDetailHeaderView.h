@@ -7,10 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FFDetailHeaderView;
+
+@protocol FFDetailHeaderViewDelegate <NSObject>
+
+- (void)FFDetailHeaderView:(FFDetailHeaderView *)view clickAttentionButton:(id)info;
+
+@end
 
 @interface FFDetailHeaderView : UIView
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, weak) id<FFDetailHeaderViewDelegate> delegate;
+
+- (void)setAttentionWith:(NSString *)str;
 
 
 @end

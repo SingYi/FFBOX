@@ -103,6 +103,10 @@
 @property (nonatomic, strong) NSString *COMMENT_LIST;
 @property (nonatomic, strong) NSString *COMMENT_DEL;
 
+///
+@property (nonatomic, strong) NSString *FOLLOW_OR_CANCEL;
+@property (nonatomic, strong) NSString *DYNAMICS_WAP_INFO;
+@property (nonatomic, strong) NSString *SHARE_DYNAMICS;
 
 
 + (instancetype)map;

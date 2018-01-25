@@ -304,6 +304,7 @@
     if (indexPath.section == 2) {
         FFGameGifTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         if (cell.isLoadGif) {
+
         } else {
             cell.gifUrl = _gifUrl;
             cell.isLoadGif = YES;

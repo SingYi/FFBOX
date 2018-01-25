@@ -25,6 +25,11 @@ typedef enum : NSUInteger {
     hotType
 } CommentType;
 
+typedef enum : NSUInteger {
+    attention = 1,
+    cancel
+} AttentionType;
+
 typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
 
@@ -44,7 +49,7 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
                                 Image:(NSArray *)images
                            Completion:(CompleteBlock)completion;
 
-/** 赞或者踩 */
+/** 赞或者踩动态 */
 + (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
                                    type:(LikeOrDislike)type
                                Complete:(CompleteBlock)completion;
@@ -60,6 +65,20 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
                                  ToUid:(NSString *)toUid
                                Comment:(NSString *)comment
                               Complete:(CompleteBlock)completion;
+
+/** 赞或者踩评论 */
++ (void)userLikeOrDislikeComment:(NSString *)comment_id
+                            Type:(LikeOrDislike)type
+                        Complete:(CompleteBlock)completion;
+
+/** 删除评论 */
++ (void)userDeleteCommentWith:(NSString *)comment_id
+                     Complete:(CompleteBlock)completion;
+
+/** 关注用户 */
++ (void)userAttentionWith:(NSString *)attentionUid
+                     Type:(AttentionType)type
+                 Complete:(CompleteBlock)completion;
 
 
 @end

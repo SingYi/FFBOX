@@ -64,6 +64,34 @@
 		B52B110720158CF80002475D /* FFDriveReplyView.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B110620158CF80002475D /* FFDriveReplyView.m */; };
 		B52B110C2015D4460002475D /* FFDriveCommentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B110A2015D4460002475D /* FFDriveCommentCell.m */; };
 		B52B110D2015D4460002475D /* FFDriveCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52B110B2015D4460002475D /* FFDriveCommentCell.xib */; };
+		B52B113F201835900002475D /* NSBundle+ZLPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1111201835900002475D /* NSBundle+ZLPhotoBrowser.m */; };
+		B52B1140201835900002475D /* ZLPhotoActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52B1113201835900002475D /* ZLPhotoActionSheet.xib */; };
+		B52B1141201835900002475D /* ZLPhotoBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B52B1114201835900002475D /* ZLPhotoBrowser.bundle */; };
+		B52B1142201835900002475D /* ZLPhotoBrowserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B52B1115201835900002475D /* ZLPhotoBrowserCell.xib */; };
+		B52B1143201835900002475D /* ToastUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1117201835900002475D /* ToastUtils.m */; };
+		B52B1144201835900002475D /* UIButton+EnlargeTouchArea.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1119201835900002475D /* UIButton+EnlargeTouchArea.m */; };
+		B52B1145201835900002475D /* UIImage+ZLPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B111B201835900002475D /* UIImage+ZLPhotoBrowser.m */; };
+		B52B1146201835900002475D /* ZLBigImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B111D201835900002475D /* ZLBigImageCell.m */; };
+		B52B1147201835900002475D /* ZLCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B111F201835900002475D /* ZLCollectionCell.m */; };
+		B52B1148201835900002475D /* ZLCustomCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1121201835900002475D /* ZLCustomCamera.m */; };
+		B52B1149201835900002475D /* ZLEditVideoController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1124201835900002475D /* ZLEditVideoController.m */; };
+		B52B114A201835900002475D /* ZLEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1126201835900002475D /* ZLEditViewController.m */; };
+		B52B114B201835900002475D /* ZLForceTouchPreviewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1128201835900002475D /* ZLForceTouchPreviewController.m */; };
+		B52B114C201835900002475D /* ZLNoAuthorityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B112A201835900002475D /* ZLNoAuthorityViewController.m */; };
+		B52B114D201835900002475D /* ZLPhotoActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B112C201835900002475D /* ZLPhotoActionSheet.m */; };
+		B52B114E201835900002475D /* ZLPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B112E201835900002475D /* ZLPhotoBrowser.m */; };
+		B52B114F201835900002475D /* ZLPhotoBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1130201835900002475D /* ZLPhotoBrowserCell.m */; };
+		B52B1150201835900002475D /* ZLPhotoConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1132201835900002475D /* ZLPhotoConfiguration.m */; };
+		B52B1151201835900002475D /* ZLPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1134201835900002475D /* ZLPhotoManager.m */; };
+		B52B1152201835900002475D /* ZLPhotoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1136201835900002475D /* ZLPhotoModel.m */; };
+		B52B1153201835900002475D /* ZLPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B1138201835900002475D /* ZLPlayer.m */; };
+		B52B1154201835900002475D /* ZLProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B113A201835900002475D /* ZLProgressHUD.m */; };
+		B52B1155201835900002475D /* ZLShowBigImgViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B113C201835900002475D /* ZLShowBigImgViewController.m */; };
+		B52B1156201835900002475D /* ZLThumbnailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B113E201835900002475D /* ZLThumbnailViewController.m */; };
+		B52B1158201835BA0002475D /* PhotosUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52B1157201835B20002475D /* PhotosUI.framework */; };
+		B52B115A201835C60002475D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52B1159201835C10002475D /* Photos.framework */; };
+		B52B115D20185B6B0002475D /* FFPostStatusImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */; };
+		B52B116020188BA40002475D /* FFGifThumbnailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */; };
 		B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B535C6651FB05E8B0090DCC9 /* FFWebViewController.m */; };
 		B53685991FA71B75001836DC /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685901FA71B75001836DC /* AFHTTPSessionManager.m */; };
 		B536859A1FA71B75001836DC /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685921FA71B75001836DC /* AFSecurityPolicy.m */; };
@@ -377,6 +405,58 @@
 		B52B11092015D4460002475D /* FFDriveCommentCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveCommentCell.h; sourceTree = "<group>"; };
 		B52B110A2015D4460002475D /* FFDriveCommentCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveCommentCell.m; sourceTree = "<group>"; };
 		B52B110B2015D4460002475D /* FFDriveCommentCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FFDriveCommentCell.xib; sourceTree = "<group>"; };
+		B52B1110201835900002475D /* NSBundle+ZLPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+ZLPhotoBrowser.h"; sourceTree = "<group>"; };
+		B52B1111201835900002475D /* NSBundle+ZLPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+ZLPhotoBrowser.m"; sourceTree = "<group>"; };
+		B52B1113201835900002475D /* ZLPhotoActionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZLPhotoActionSheet.xib; sourceTree = "<group>"; };
+		B52B1114201835900002475D /* ZLPhotoBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ZLPhotoBrowser.bundle; sourceTree = "<group>"; };
+		B52B1115201835900002475D /* ZLPhotoBrowserCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ZLPhotoBrowserCell.xib; sourceTree = "<group>"; };
+		B52B1116201835900002475D /* ToastUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastUtils.h; sourceTree = "<group>"; };
+		B52B1117201835900002475D /* ToastUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ToastUtils.m; sourceTree = "<group>"; };
+		B52B1118201835900002475D /* UIButton+EnlargeTouchArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+EnlargeTouchArea.h"; sourceTree = "<group>"; };
+		B52B1119201835900002475D /* UIButton+EnlargeTouchArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+EnlargeTouchArea.m"; sourceTree = "<group>"; };
+		B52B111A201835900002475D /* UIImage+ZLPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ZLPhotoBrowser.h"; sourceTree = "<group>"; };
+		B52B111B201835900002475D /* UIImage+ZLPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ZLPhotoBrowser.m"; sourceTree = "<group>"; };
+		B52B111C201835900002475D /* ZLBigImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBigImageCell.h; sourceTree = "<group>"; };
+		B52B111D201835900002475D /* ZLBigImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLBigImageCell.m; sourceTree = "<group>"; };
+		B52B111E201835900002475D /* ZLCollectionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCollectionCell.h; sourceTree = "<group>"; };
+		B52B111F201835900002475D /* ZLCollectionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLCollectionCell.m; sourceTree = "<group>"; };
+		B52B1120201835900002475D /* ZLCustomCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCustomCamera.h; sourceTree = "<group>"; };
+		B52B1121201835900002475D /* ZLCustomCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLCustomCamera.m; sourceTree = "<group>"; };
+		B52B1122201835900002475D /* ZLDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLDefine.h; sourceTree = "<group>"; };
+		B52B1123201835900002475D /* ZLEditVideoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLEditVideoController.h; sourceTree = "<group>"; };
+		B52B1124201835900002475D /* ZLEditVideoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLEditVideoController.m; sourceTree = "<group>"; };
+		B52B1125201835900002475D /* ZLEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLEditViewController.h; sourceTree = "<group>"; };
+		B52B1126201835900002475D /* ZLEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLEditViewController.m; sourceTree = "<group>"; };
+		B52B1127201835900002475D /* ZLForceTouchPreviewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLForceTouchPreviewController.h; sourceTree = "<group>"; };
+		B52B1128201835900002475D /* ZLForceTouchPreviewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLForceTouchPreviewController.m; sourceTree = "<group>"; };
+		B52B1129201835900002475D /* ZLNoAuthorityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLNoAuthorityViewController.h; sourceTree = "<group>"; };
+		B52B112A201835900002475D /* ZLNoAuthorityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLNoAuthorityViewController.m; sourceTree = "<group>"; };
+		B52B112B201835900002475D /* ZLPhotoActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoActionSheet.h; sourceTree = "<group>"; };
+		B52B112C201835900002475D /* ZLPhotoActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoActionSheet.m; sourceTree = "<group>"; };
+		B52B112D201835900002475D /* ZLPhotoBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoBrowser.h; sourceTree = "<group>"; };
+		B52B112E201835900002475D /* ZLPhotoBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoBrowser.m; sourceTree = "<group>"; };
+		B52B112F201835900002475D /* ZLPhotoBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoBrowserCell.h; sourceTree = "<group>"; };
+		B52B1130201835900002475D /* ZLPhotoBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoBrowserCell.m; sourceTree = "<group>"; };
+		B52B1131201835900002475D /* ZLPhotoConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoConfiguration.h; sourceTree = "<group>"; };
+		B52B1132201835900002475D /* ZLPhotoConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoConfiguration.m; sourceTree = "<group>"; };
+		B52B1133201835900002475D /* ZLPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoManager.h; sourceTree = "<group>"; };
+		B52B1134201835900002475D /* ZLPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoManager.m; sourceTree = "<group>"; };
+		B52B1135201835900002475D /* ZLPhotoModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPhotoModel.h; sourceTree = "<group>"; };
+		B52B1136201835900002475D /* ZLPhotoModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPhotoModel.m; sourceTree = "<group>"; };
+		B52B1137201835900002475D /* ZLPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLPlayer.h; sourceTree = "<group>"; };
+		B52B1138201835900002475D /* ZLPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLPlayer.m; sourceTree = "<group>"; };
+		B52B1139201835900002475D /* ZLProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLProgressHUD.h; sourceTree = "<group>"; };
+		B52B113A201835900002475D /* ZLProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLProgressHUD.m; sourceTree = "<group>"; };
+		B52B113B201835900002475D /* ZLShowBigImgViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLShowBigImgViewController.h; sourceTree = "<group>"; };
+		B52B113C201835900002475D /* ZLShowBigImgViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLShowBigImgViewController.m; sourceTree = "<group>"; };
+		B52B113D201835900002475D /* ZLThumbnailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLThumbnailViewController.h; sourceTree = "<group>"; };
+		B52B113E201835900002475D /* ZLThumbnailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZLThumbnailViewController.m; sourceTree = "<group>"; };
+		B52B1157201835B20002475D /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = System/Library/Frameworks/PhotosUI.framework; sourceTree = SDKROOT; };
+		B52B1159201835C10002475D /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		B52B115B20185B6B0002475D /* FFPostStatusImageCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFPostStatusImageCell.h; sourceTree = "<group>"; };
+		B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFPostStatusImageCell.m; sourceTree = "<group>"; };
+		B52B115E20188BA40002475D /* FFGifThumbnailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFGifThumbnailViewController.h; sourceTree = "<group>"; };
+		B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFGifThumbnailViewController.m; sourceTree = "<group>"; };
 		B535C6641FB05E8B0090DCC9 /* FFWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFWebViewController.h; sourceTree = "<group>"; };
 		B535C6651FB05E8B0090DCC9 /* FFWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFWebViewController.m; sourceTree = "<group>"; };
 		B536858F1FA71B75001836DC /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -734,6 +814,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B52B115A201835C60002475D /* Photos.framework in Frameworks */,
+				B52B1158201835BA0002475D /* PhotosUI.framework in Frameworks */,
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5B95E9D1FBE8D6500ACD7F7 /* libChangyanSDK.a in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
@@ -931,6 +1013,67 @@
 				B5971F2F1FAB0CA200246640 /* RebateChildViewController */,
 			);
 			path = RecommentChildController;
+			sourceTree = "<group>";
+		};
+		B52B110F201835900002475D /* PhotoBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				B52B1110201835900002475D /* NSBundle+ZLPhotoBrowser.h */,
+				B52B1111201835900002475D /* NSBundle+ZLPhotoBrowser.m */,
+				B52B1112201835900002475D /* resource */,
+				B52B1116201835900002475D /* ToastUtils.h */,
+				B52B1117201835900002475D /* ToastUtils.m */,
+				B52B1118201835900002475D /* UIButton+EnlargeTouchArea.h */,
+				B52B1119201835900002475D /* UIButton+EnlargeTouchArea.m */,
+				B52B111A201835900002475D /* UIImage+ZLPhotoBrowser.h */,
+				B52B111B201835900002475D /* UIImage+ZLPhotoBrowser.m */,
+				B52B111C201835900002475D /* ZLBigImageCell.h */,
+				B52B111D201835900002475D /* ZLBigImageCell.m */,
+				B52B111E201835900002475D /* ZLCollectionCell.h */,
+				B52B111F201835900002475D /* ZLCollectionCell.m */,
+				B52B1120201835900002475D /* ZLCustomCamera.h */,
+				B52B1121201835900002475D /* ZLCustomCamera.m */,
+				B52B1122201835900002475D /* ZLDefine.h */,
+				B52B1123201835900002475D /* ZLEditVideoController.h */,
+				B52B1124201835900002475D /* ZLEditVideoController.m */,
+				B52B1125201835900002475D /* ZLEditViewController.h */,
+				B52B1126201835900002475D /* ZLEditViewController.m */,
+				B52B1127201835900002475D /* ZLForceTouchPreviewController.h */,
+				B52B1128201835900002475D /* ZLForceTouchPreviewController.m */,
+				B52B1129201835900002475D /* ZLNoAuthorityViewController.h */,
+				B52B112A201835900002475D /* ZLNoAuthorityViewController.m */,
+				B52B112B201835900002475D /* ZLPhotoActionSheet.h */,
+				B52B112C201835900002475D /* ZLPhotoActionSheet.m */,
+				B52B112D201835900002475D /* ZLPhotoBrowser.h */,
+				B52B112E201835900002475D /* ZLPhotoBrowser.m */,
+				B52B112F201835900002475D /* ZLPhotoBrowserCell.h */,
+				B52B1130201835900002475D /* ZLPhotoBrowserCell.m */,
+				B52B1131201835900002475D /* ZLPhotoConfiguration.h */,
+				B52B1132201835900002475D /* ZLPhotoConfiguration.m */,
+				B52B1133201835900002475D /* ZLPhotoManager.h */,
+				B52B1134201835900002475D /* ZLPhotoManager.m */,
+				B52B1135201835900002475D /* ZLPhotoModel.h */,
+				B52B1136201835900002475D /* ZLPhotoModel.m */,
+				B52B1137201835900002475D /* ZLPlayer.h */,
+				B52B1138201835900002475D /* ZLPlayer.m */,
+				B52B1139201835900002475D /* ZLProgressHUD.h */,
+				B52B113A201835900002475D /* ZLProgressHUD.m */,
+				B52B113B201835900002475D /* ZLShowBigImgViewController.h */,
+				B52B113C201835900002475D /* ZLShowBigImgViewController.m */,
+				B52B113D201835900002475D /* ZLThumbnailViewController.h */,
+				B52B113E201835900002475D /* ZLThumbnailViewController.m */,
+			);
+			path = PhotoBrowser;
+			sourceTree = "<group>";
+		};
+		B52B1112201835900002475D /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				B52B1113201835900002475D /* ZLPhotoActionSheet.xib */,
+				B52B1114201835900002475D /* ZLPhotoBrowser.bundle */,
+				B52B1115201835900002475D /* ZLPhotoBrowserCell.xib */,
+			);
+			path = resource;
 			sourceTree = "<group>";
 		};
 		B52D94DC1FBBE7E500C52AEF /* PackageChildController */ = {
@@ -1315,6 +1458,8 @@
 		B5A5D51D1FC5242800EC951F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B52B1159201835C10002475D /* Photos.framework */,
+				B52B1157201835B20002475D /* PhotosUI.framework */,
 				B5A5D53D1FC5293E00EC951F /* libz.tbd */,
 				B5A5D5331FC5284300EC951F /* CoreTelephony.framework */,
 				B5A5D5311FC5274900EC951F /* libsqlite3.tbd */,
@@ -1441,6 +1586,8 @@
 				B52B11092015D4460002475D /* FFDriveCommentCell.h */,
 				B52B110A2015D4460002475D /* FFDriveCommentCell.m */,
 				B52B110B2015D4460002475D /* FFDriveCommentCell.xib */,
+				B52B115B20185B6B0002475D /* FFPostStatusImageCell.h */,
+				B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1817,6 +1964,7 @@
 				B5137A271FB44C710025F00B /* SYKeychain.m */,
 				B5B28E0B1FD7B1E5008A9BCD /* Reachability.h */,
 				B5B28E0C1FD7B1E5008A9BCD /* Reachability.m */,
+				B52B110F201835900002475D /* PhotoBrowser */,
 				B58DB71E2011FCB900DBE381 /* XLPhotoBrowser */,
 				B5955614200C8549007F3CC7 /* SDWebImage */,
 				B5A5D51A1FC5231000EC951F /* QQFrameWork */,
@@ -1961,6 +2109,8 @@
 				B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */,
 				B58DB71020118DE000DBE381 /* FFDriveDetailInfoViewController.h */,
 				B58DB71120118DE000DBE381 /* FFDriveDetailInfoViewController.m */,
+				B52B115E20188BA40002475D /* FFGifThumbnailViewController.h */,
+				B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */,
 			);
 			path = ChildClass;
 			sourceTree = "<group>";
@@ -2108,9 +2258,12 @@
 				B596AAAE1FCD10AE00C8F15E /* FFMyprizeCell.xib in Resources */,
 				B59556CA200DE12D007F3CC7 /* Community.xcassets in Resources */,
 				B5A5D5431FC59F2400EC951F /* FFTransferNotesCell.xib in Resources */,
+				B52B1140201835900002475D /* ZLPhotoActionSheet.xib in Resources */,
+				B52B1142201835900002475D /* ZLPhotoBrowserCell.xib in Resources */,
 				B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */,
 				B5A5D5131FC4543900EC951F /* FFPlatformCell.xib in Resources */,
 				B5B95E541FBC3A1800ACD7F7 /* FFGameCommentCell.xib in Resources */,
+				B52B1141201835900002475D /* ZLPhotoBrowser.bundle in Resources */,
 				B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */,
 				B5137A1B1FB3FDF30025F00B /* FFApplyTransferView.xib in Resources */,
 				B5A5D53C1FC5288500EC951F /* README.txt in Resources */,
@@ -2136,6 +2289,7 @@
 				B5B95E531FBC3A1800ACD7F7 /* FFGameCommentCell.m in Sources */,
 				B51967291FA9AD100046E391 /* FFHotGameController.m in Sources */,
 				B5AB9509200310D20055D507 /* FFDriveController.m in Sources */,
+				B52B1148201835900002475D /* ZLCustomCamera.m in Sources */,
 				B53685A11FA81C01001836DC /* FFRankListModel.m in Sources */,
 				B519673B1FA9FA0D0046E391 /* FFRecommentCollectionCell.m in Sources */,
 				B5B95E761FBC3BBC00ACD7F7 /* FLAnimatedImageView.m in Sources */,
@@ -2145,11 +2299,13 @@
 				B5971F321FAB0CE500246640 /* FFApplyRebateViewController.m in Sources */,
 				B5955641200C854A007F3CC7 /* SDWebImagePrefetcher.m in Sources */,
 				B51379BF1FB2E0900025F00B /* FFAboutViewController.m in Sources */,
+				B52B1143201835900002475D /* ToastUtils.m in Sources */,
 				B519674A1FAAC52A0046E391 /* FFRRebateViewController.m in Sources */,
 				B5BC05581FA714870091EE4B /* NSBundle+MJRefresh.m in Sources */,
 				B51967261FA9ACFF0046E391 /* FFNewGameController.m in Sources */,
 				B5B95E751FBC3BBC00ACD7F7 /* FLAnimatedImage.m in Sources */,
 				B5BC05571FA714870091EE4B /* MJRefreshConst.m in Sources */,
+				B52B1150201835900002475D /* ZLPhotoConfiguration.m in Sources */,
 				B5A5D4F51FC3C39800EC951F /* FFGoldCenterViewController.m in Sources */,
 				B58DB7422011FCB900DBE381 /* FSActionSheet.m in Sources */,
 				B519671B1FA99A360046E391 /* FFCustomizeCell.m in Sources */,
@@ -2162,12 +2318,14 @@
 				B5B95E4D1FBC3A1800ACD7F7 /* FFCustomLayout.m in Sources */,
 				B5971F631FAC65D600246640 /* FFBasicViewController.m in Sources */,
 				B58DB7452011FCB900DBE381 /* FSActionSheetItem.m in Sources */,
+				B52B114B201835900002475D /* ZLForceTouchPreviewController.m in Sources */,
 				B58DB74A2011FCB900DBE381 /* TADotView.m in Sources */,
 				B5BC05521FA714870091EE4B /* MJRefreshBackStateFooter.m in Sources */,
 				B5A5D5621FC6A6AF00EC951F /* FFMyNewsModel.m in Sources */,
 				B556B0F41FA6D0BB005DC871 /* FFCustomizeTabBar.m in Sources */,
 				B5A5D5031FC40CBC00EC951F /* FFGoldDetailViewController.m in Sources */,
 				B595563B200C854A007F3CC7 /* SDImageCacheConfig.m in Sources */,
+				B52B1152201835900002475D /* ZLPhotoModel.m in Sources */,
 				B5955640200C854A007F3CC7 /* SDWebImageManager.m in Sources */,
 				B5BC04D21FA70F430091EE4B /* FFHomeViewController.m in Sources */,
 				B5A5D56A1FC6B82600EC951F /* FFReplyToCommentController.m in Sources */,
@@ -2187,9 +2345,11 @@
 				B5B95E881FBD880800ACD7F7 /* FFGameFooterView.m in Sources */,
 				B536859C1FA71B75001836DC /* AFURLResponseSerialization.m in Sources */,
 				B5955639200C854A007F3CC7 /* NSImage+WebCache.m in Sources */,
+				B52B1149201835900002475D /* ZLEditVideoController.m in Sources */,
 				B5955643200C854A007F3CC7 /* UIImage+GIF.m in Sources */,
 				B58DB74B2011FCB900DBE381 /* TAPageControl.m in Sources */,
 				B54E6B351FB0527C009D0025 /* FFActivityCell.m in Sources */,
+				B52B1145201835900002475D /* UIImage+ZLPhotoBrowser.m in Sources */,
 				B556B0E61FA6BD88005DC871 /* main.m in Sources */,
 				B519674D1FAAC8790046E391 /* FFRActivityViewController.m in Sources */,
 				B54E6B301FB04FA7009D0025 /* FFActivityModel.m in Sources */,
@@ -2197,11 +2357,15 @@
 				B5BC054C1FA714870091EE4B /* MJRefreshHeader.m in Sources */,
 				B5BC054E1FA714870091EE4B /* MJRefreshAutoNormalFooter.m in Sources */,
 				B51379B61FB2E0210025F00B /* FFTransferServerViewController.m in Sources */,
+				B52B114D201835900002475D /* ZLPhotoActionSheet.m in Sources */,
 				B5B95EA71FBEDB9700ACD7F7 /* FFBasicPackageViewController.m in Sources */,
 				B5A5D5161FC517FE00EC951F /* FFSharedController.m in Sources */,
 				B51395E91FEBA51800BAE477 /* FFSystemDetailController.m in Sources */,
 				B51395CA1FEB904800BAE477 /* FFSystemInfoCell.m in Sources */,
 				B5955646200C854A007F3CC7 /* UIImageView+WebCache.m in Sources */,
+				B52B114A201835900002475D /* ZLEditViewController.m in Sources */,
+				B52B115D20185B6B0002475D /* FFPostStatusImageCell.m in Sources */,
+				B52B114F201835900002475D /* ZLPhotoBrowserCell.m in Sources */,
 				B5137A251FB43D8D0025F00B /* FFLoginViewController.m in Sources */,
 				B51379B31FB2DFFD0025F00B /* FFMyCollectionViewController.m in Sources */,
 				B519671F1FA9A2580046E391 /* FFHomeViewSelectView.m in Sources */,
@@ -2210,6 +2374,7 @@
 				B5B95E851FBD788600ACD7F7 /* FFGameHeaderView.m in Sources */,
 				B5BC04D81FA70FAB0091EE4B /* FFOpenServerViewController.m in Sources */,
 				B595563F200C854A007F3CC7 /* SDWebImageDownloaderOperation.m in Sources */,
+				B52B1144201835900002475D /* UIButton+EnlargeTouchArea.m in Sources */,
 				B5B95E911FBD8B9000ACD7F7 /* FFGamePackageViewController.m in Sources */,
 				B51967161FA977800046E391 /* FFOpenServerCell.m in Sources */,
 				B5A5D4E41FC27D4700EC951F /* FFNewPasswordViewController.m in Sources */,
@@ -2227,6 +2392,7 @@
 				B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */,
 				B5B95E821FBD742000ACD7F7 /* FFGameViewController.m in Sources */,
 				B5B95E981FBDB05900ACD7F7 /* FFRaidersCell.m in Sources */,
+				B52B113F201835900002475D /* NSBundle+ZLPhotoBrowser.m in Sources */,
 				B5137A571FB5538F0025F00B /* FFBoxModel.m in Sources */,
 				B52B110C2015D4460002475D /* FFDriveCommentCell.m in Sources */,
 				B5955648200C854A007F3CC7 /* UIView+WebCacheOperation.m in Sources */,
@@ -2236,10 +2402,12 @@
 				B513799D1FB29C910025F00B /* FFMineCoinView.m in Sources */,
 				B51379CA1FB2FCE00025F00B /* FFpackageCell.m in Sources */,
 				B58DB71220118DE000DBE381 /* FFDriveDetailInfoViewController.m in Sources */,
+				B52B1155201835900002475D /* ZLShowBigImgViewController.m in Sources */,
 				B595563E200C854A007F3CC7 /* SDWebImageDownloader.m in Sources */,
 				B58DB74D2011FCB900DBE381 /* XLProgressView.m in Sources */,
 				B5B95E8B1FBD8B5000ACD7F7 /* FFGameDetailViewController.m in Sources */,
 				B58DB7482011FCB900DBE381 /* TAAbstractDotView.m in Sources */,
+				B52B1153201835900002475D /* ZLPlayer.m in Sources */,
 				B5A5D5661FC6AD6700EC951F /* FFMyNewsCell.m in Sources */,
 				B5955647200C854A007F3CC7 /* UIView+WebCache.m in Sources */,
 				B519670E1FA8AA0B0046E391 /* FFTomorrowOpenServerViewController.m in Sources */,
@@ -2266,10 +2434,12 @@
 				B5A5D5471FC6703200EC951F /* FFRebateRecordCell.m in Sources */,
 				B5A5D54B1FC6792500EC951F /* FFWriteCommentController.m in Sources */,
 				B596AAA01FCCFBA100C8F15E /* FFClassifyDetailController.m in Sources */,
+				B52B1146201835900002475D /* ZLBigImageCell.m in Sources */,
 				B53685A41FA81D72001836DC /* FFMapModel.m in Sources */,
 				B5A5D4EE1FC2C94D00EC951F /* FFPayModel.m in Sources */,
 				B5A5D4E11FC2737D00EC951F /* FFForgetPasswordViewController.m in Sources */,
 				B5A5D4DE1FC272EB00EC951F /* FFRegisterViewController.m in Sources */,
+				B52B1151201835900002475D /* ZLPhotoManager.m in Sources */,
 				B51967461FAAB7440046E391 /* FFRecommentCarouselView.m in Sources */,
 				B596AAA61FCD09B400C8F15E /* FFMyPrizeViewController.m in Sources */,
 				B556B0D81FA6BD88005DC871 /* AppDelegate.m in Sources */,
@@ -2284,11 +2454,14 @@
 				B51379B91FB2E0350025F00B /* FFSettingViewController.m in Sources */,
 				B52B110720158CF80002475D /* FFDriveReplyView.m in Sources */,
 				B596AAA31FCD025A00C8F15E /* FFLaunchScreen.m in Sources */,
+				B52B116020188BA40002475D /* FFGifThumbnailViewController.m in Sources */,
 				B5B95E6F1FBC3A7300ACD7F7 /* FFGameModel.m in Sources */,
 				B5BC054D1FA714870091EE4B /* MJRefreshAutoGifFooter.m in Sources */,
 				B5B28DBF1FD55460008A9BCD /* FFAdvertisingView.m in Sources */,
 				B519672C1FA9AD230046E391 /* FFClassifyController.m in Sources */,
+				B52B114C201835900002475D /* ZLNoAuthorityViewController.m in Sources */,
 				B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */,
+				B52B1154201835900002475D /* ZLProgressHUD.m in Sources */,
 				B58DB7152011C1C600DBE381 /* MBProgressHUD.m in Sources */,
 				B58DB7402011FCB900DBE381 /* UIImage+XLExtension.m in Sources */,
 				B5BC04D51FA70F930091EE4B /* FFRankListViewController.m in Sources */,
@@ -2300,6 +2473,7 @@
 				B51967301FA9EA8E0046E391 /* FFClassifyModel.m in Sources */,
 				B536859B1FA71B75001836DC /* AFURLRequestSerialization.m in Sources */,
 				B5BC05531FA714870091EE4B /* MJRefreshGifHeader.m in Sources */,
+				B52B1147201835900002475D /* ZLCollectionCell.m in Sources */,
 				B5C1FC241FB93A80004A779B /* FFOpenVipViewController.m in Sources */,
 				B519670B1FA8A9E50046E391 /* FFTodayOpenServerViewController.m in Sources */,
 				B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */,
@@ -2319,10 +2493,12 @@
 				B5BC05511FA714870091EE4B /* MJRefreshBackNormalFooter.m in Sources */,
 				B5A5D4E71FC2A46100EC951F /* FFResetNickNameView.m in Sources */,
 				B5A5D5071FC40FB600EC951F /* FFCoinDetailCell.m in Sources */,
+				B52B1156201835900002475D /* ZLThumbnailViewController.m in Sources */,
 				B5B95E511FBC3A1800ACD7F7 /* FFGameDetailTableViewCell.m in Sources */,
 				B5B95E791FBD2E6200ACD7F7 /* FFSearchShowControllerViewController.m in Sources */,
 				B5BC054B1FA714870091EE4B /* MJRefreshFooter.m in Sources */,
 				B58DB7442011FCB900DBE381 /* FSActionSheetConfig.m in Sources */,
+				B52B114E201835900002475D /* ZLPhotoBrowser.m in Sources */,
 				B5B95E7C1FBD2EFB00ACD7F7 /* FFSearchModel.m in Sources */,
 				B51967361FA9EC750046E391 /* FFClassifyTableCell.m in Sources */,
 				B5137A291FB44C710025F00B /* SYKeychain.m in Sources */,

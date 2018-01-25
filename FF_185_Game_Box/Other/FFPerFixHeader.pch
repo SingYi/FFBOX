@@ -51,6 +51,12 @@
 #define USER_NAME @"CurrentUserName"
 #define SSKEYCHAIN_USER_NAME ([SYKeychain passwordForService:@"tenoneTec.com" account:USER_NAME])
 
+#define FF_is_login     if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {\
+                            BOX_MESSAGE(@"尚未登录");\
+                            return;\
+                        }\
+
+
 #define START_NET_WORK [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES]
 #define STOP_NET_WORK [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO]
 

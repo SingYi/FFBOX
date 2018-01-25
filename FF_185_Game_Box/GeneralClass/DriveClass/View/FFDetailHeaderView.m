@@ -8,9 +8,10 @@
 
 #import "FFDetailHeaderView.h"
 #import "UIImageView+WebCache.h"
-#import "XLPhotoBrowser.h"
+#import "ZLPhotoActionSheet.h"
+#import "ZLPhotoManager.h"
 
-@interface FFDetailHeaderView() <XLPhotoBrowserDelegate>
+@interface FFDetailHeaderView()
 
 @property (nonatomic, strong) UIImageView *iconView;
 @property (nonatomic, strong) UILabel *nickNameLabel;
@@ -20,6 +21,7 @@
 @property (nonatomic, strong) UILabel *contentLabel;
 @property (nonatomic, strong) UIView *imageContentView;
 @property (nonatomic, strong) UIView *grayLayer;
+@property (nonatomic, strong) UIButton *attentionButton;
 
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
 @property (nonatomic, strong) NSMutableArray<UIImage *> *images;
@@ -54,9 +56,17 @@
     [self addSubview:self.nickNameLabel];
     [self addSubview:self.sexView];
     [self addSubview:self.vipView];
+    [self addSubview:self.attentionButton];
     [self addSubview:self.contentLabel];
     [self addSubview:self.timeLabel];
     [self addSubview:self.imageContentView];
+}
+
+#pragma mark - responds
+- (void)respondsToAttentionButton {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDetailHeaderView:clickAttentionButton:)]) {
+        [self.delegate FFDetailHeaderView:self clickAttentionButton:nil];
+    }
 }
 
 
@@ -77,8 +87,8 @@
     [self setNickNameWith:dict[@"user"][@"nick_name"]];
     //sex
     [self setSexWith:dict[@"user"][@"sex"]];
-    //sex
-    [self setVipWith:dict[@"user"][@"sex"]];
+    //vip
+    [self setVipWith:dict[@"user"][@"vip"]];
     //time label
     [self setTimeWith:dict[@"dynamics"][@"create_time"]];
     //content
@@ -89,7 +99,7 @@
         array = [NSArray array];
     }
     [self setImagesWith:array];
-
+    self.attentionButton.hidden = YES;
 }
 
 - (void)setIconImageWith:(NSString *)url {
@@ -101,10 +111,25 @@
     [self.nickNameLabel sizeToFit];
     self.nickNameLabel.center = CGPointMake(self.nickNameLabel.center.x, 25);
     self.sexView.center = CGPointMake(CGRectGetMaxX(self.nickNameLabel.frame) + 15, 25);
-    self.vipView.center = CGPointMake(CGRectGetMaxX(self.sexView.frame), 25);
+    self.vipView.center = CGPointMake(CGRectGetMaxX(self.sexView.frame) + 15, 25);
 }
 
 - (void)setSexWith:(NSString *)str {
+    if ([str isKindOfClass:[NSString class]]) {
+        self.sexView.hidden = NO;
+        if (str.integerValue == 1) {
+            self.sexView.tintColor = [UIColor redColor];
+            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Female"];
+        } else {
+            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Male"];
+            self.sexView.tintColor = [UIColor blueColor];
+        }
+    } else {
+        self.sexView.hidden = YES;
+    }
+}
+
+- (void)setVipWith:(NSString *)str {
     if ([str isKindOfClass:[NSString class]] && str!= nil && str.boolValue) {
         self.vipView.hidden = NO;
     } else {
@@ -112,16 +137,17 @@
     }
 }
 
-- (void)setVipWith:(NSString *)str {
-    if ([str isKindOfClass:[NSString class]]) {
-        self.sexView.hidden = NO;
-        if (str.integerValue == 1) {
-            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Male"];
-        } else {
-            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Female"];
-        }
+- (void)setAttentionWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    self.attentionButton.hidden = NO;
+    if (string.integerValue == 0) {
+        [self.attentionButton setTitle:@"+关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:NAVGATION_BAR_COLOR forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
     } else {
-        self.sexView.hidden = YES;
+        [self.attentionButton setTitle:@"已关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = [UIColor grayColor].CGColor;
     }
 }
 
@@ -194,29 +220,49 @@
             [view removeFromSuperview];
         }
     }
-
     _imageViews = [NSMutableArray arrayWithCapacity:images.count];
     _images = [NSMutableArray arrayWithCapacity:images.count];
+
     if (images.count > 0) {
-        [images enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            UIImageView *imageView = [[UIImageView alloc] init];
+        [images enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            UIImageView *imageView = nil;
+            imageView = [[UIImageView alloc] init];
+
+            if ([obj hasSuffix:@".gif"]) {
+
+                NSData *iamgeData = [self imageDataFromDiskCacheWithKey:obj];
+                if (iamgeData) {
+                    [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:iamgeData forKey:obj];
+                    imageView.image = [ZLPhotoManager transformToGifImageWithData:iamgeData];
+                    [_images addObject:imageView.image];
+                } else {
+                    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+                    }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+                        [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:obj];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                            [_images addObject:imageView.image];
+
+                        });
+
+                    }];
+                }
+
+            } else {
+                [imageView sd_setImageWithURL:[NSURL URLWithString:obj] completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+                    if ([obj hasSuffix:@".gif"]) {
+                        NSData *data = UIImagePNGRepresentation(image);
+                        imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                    }
+                    [_images addObject:imageView.image];
+                }];
+            }
+
+
             imageView.tag = idx + 10086;
             imageView.userInteractionEnabled = YES;
             [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickImage:)]];
-
-            [imageView sd_setImageWithURL:[NSURL URLWithString:obj] placeholderImage:[UIImage new] options:(SDWebImageHighPriority) completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
-
-                if (image != nil) {
-                    [_images addObject:image];
-                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-
-                        [[[SDWebImageManager sharedManager] imageCache]storeImage:image forKey:obj completion:nil];
-
-                    });
-                }
-
-            }];
-
             imageView.contentMode = UIViewContentModeScaleAspectFill;
             imageView.layer.masksToBounds = YES;
             CGFloat y = 0;
@@ -230,26 +276,21 @@
             } else {
 
             }
-
-            imageView.frame = CGRectMake(x, y, imageviewWidth, imageviewWidth);
             [_imageViews addObject:imageView];
+            imageView.frame = CGRectMake(x, y, imageviewWidth, imageviewWidth);
             [self.imageContentView addSubview:imageView];
+
         }];
     }
-
 
 }
 
 
 - (void)clickImage:(UITapGestureRecognizer *)sender {
     syLog(@"点击图片");
+    [[self getPas] previewPhotos:self.images index:sender.view.tag - 10086 hideToolBar:YES complete:^(NSArray * _Nonnull photos) {
 
-    XLPhotoBrowser *browser = [XLPhotoBrowser showPhotoBrowserWithImages:self.images currentImageIndex:sender.view.tag - 10086];
-    browser.browserStyle = XLPhotoBrowserStyleIndexLabel; // 微博样式
-
-    // 设置长按手势弹出的地步ActionSheet数据,不实现此方法则没有长按手势
-//    [browser setActionSheetWithTitle:@"这是一个类似微信/微博的图片浏览器组件" delegate:self cancelButtonTitle:nil deleteButtonTitle:@"删除" otherButtonTitles:@"发送给朋友",@"保存图片",@"收藏",@"投诉",nil];
-
+    }];
 }
 
 #pragma mark - getter
@@ -288,7 +329,8 @@
     if (!_vipView) {
         _vipView = [[UIImageView alloc] init];
         _vipView.bounds = CGRectMake(0, 0, 15, 15);
-        _vipView.center = CGPointMake(CGRectGetMaxX(self.sexView.frame) + 15, self.sexView.center.y);
+        _vipView.center = CGPointMake(CGRectGetMaxX(self.sexView.frame) + 60, self.sexView.center.y);
+        _vipView.image = [UIImage imageNamed:@"Community_Vip"];
     }
     return _vipView;
 }
@@ -329,7 +371,34 @@
     return _grayLayer;
 }
 
+- (UIButton *)attentionButton {
+    if (!_attentionButton) {
+        _attentionButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _attentionButton.frame = CGRectMake(kSCREEN_WIDTH - 70, 10, 60, 30);
+        _attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
+        _attentionButton.layer.borderWidth = 1;
+        _attentionButton.layer.cornerRadius = 4;
+        _attentionButton.layer.masksToBounds = YES;
+        _attentionButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_attentionButton addTarget:self action:@selector(respondsToAttentionButton) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return _attentionButton;
+}
 
+- (ZLPhotoActionSheet *)getPas {
+    ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
+    actionSheet.sender = [UIApplication sharedApplication].keyWindow.rootViewController;
+    actionSheet.configuration.allowSelectGif = YES;
+    actionSheet.configuration.navBarColor = NAVGATION_BAR_COLOR;
+    actionSheet.configuration.bottomViewBgColor = NAVGATION_BAR_COLOR;
+    return actionSheet;
+}
+
+
+- (NSData *)imageDataFromDiskCacheWithKey:(NSString *)key {
+    NSString *path = [[[SDWebImageManager sharedManager] imageCache] defaultCachePathForKey:key];
+    return [NSData dataWithContentsOfFile:path];
+}
 
 
 @end

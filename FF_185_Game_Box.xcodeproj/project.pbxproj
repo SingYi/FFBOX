@@ -92,6 +92,7 @@
 		B52B115A201835C60002475D /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52B1159201835C10002475D /* Photos.framework */; };
 		B52B115D20185B6B0002475D /* FFPostStatusImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */; };
 		B52B116020188BA40002475D /* FFGifThumbnailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */; };
+		B52B11852019E3100002475D /* FFAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B52B11842019E3100002475D /* FFAppDelegate.m */; };
 		B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B535C6651FB05E8B0090DCC9 /* FFWebViewController.m */; };
 		B53685991FA71B75001836DC /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685901FA71B75001836DC /* AFHTTPSessionManager.m */; };
 		B536859A1FA71B75001836DC /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685921FA71B75001836DC /* AFSecurityPolicy.m */; };
@@ -115,8 +116,6 @@
 		B556B0F91FA7000C005DC871 /* FFControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B556B0F81FA70005005DC871 /* FFControllerManager.m */; };
 		B55DE0A11FB08EEF001437D5 /* FFUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B55DE0A01FB08EEF001437D5 /* FFUserModel.m */; };
 		B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55DE0A41FB14BF0001437D5 /* FFSignInViewController.m */; };
-		B58DB705200EFC8D00DBE381 /* UIAlertController+FFAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = B58DB703200EFC8D00DBE381 /* UIAlertController+FFAlertController.h */; };
-		B58DB706200EFC8D00DBE381 /* UIAlertController+FFAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB704200EFC8D00DBE381 /* UIAlertController+FFAlertController.m */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
 		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
@@ -157,11 +156,6 @@
 		B5955647200C854A007F3CC7 /* UIView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = B5955635200C8549007F3CC7 /* UIView+WebCache.m */; };
 		B5955648200C854A007F3CC7 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = B5955637200C8549007F3CC7 /* UIView+WebCacheOperation.m */; };
 		B5955691200DA734007F3CC7 /* FFDrivePostStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5955690200DA733007F3CC7 /* FFDrivePostStatusViewController.m */; };
-		B59556BC200DDEA6007F3CC7 /* FFViewFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = B59556BA200DDEA6007F3CC7 /* FFViewFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B59556BF200DDEA6007F3CC7 /* FFViewFactory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59556B8200DDEA6007F3CC7 /* FFViewFactory.framework */; };
-		B59556C0200DDEA6007F3CC7 /* FFViewFactory.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B59556B8200DDEA6007F3CC7 /* FFViewFactory.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		B59556C7200DDF09007F3CC7 /* UIButton+FFButton.h in Headers */ = {isa = PBXBuildFile; fileRef = B59556C5200DDF09007F3CC7 /* UIButton+FFButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B59556C8200DDF09007F3CC7 /* UIButton+FFButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B59556C6200DDF09007F3CC7 /* UIButton+FFButton.m */; };
 		B59556CA200DE12D007F3CC7 /* Community.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B59556C9200DE12D007F3CC7 /* Community.xcassets */; };
 		B596AAA01FCCFBA100C8F15E /* FFClassifyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEC91FCC4538003FC031 /* FFClassifyDetailController.m */; };
 		B596AAA31FCD025A00C8F15E /* FFLaunchScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = B596AAA11FCD025A00C8F15E /* FFLaunchScreen.m */; };
@@ -279,16 +273,6 @@
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B59556BD200DDEA6007F3CC7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B556B0CB1FA6BD88005DC871 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B59556B7200DDEA6007F3CC7;
-			remoteInfo = FFViewFactory;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		B5A3357F1FF6407400A4526F /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -296,7 +280,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B59556C0200DDEA6007F3CC7 /* FFViewFactory.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,6 +440,8 @@
 		B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFPostStatusImageCell.m; sourceTree = "<group>"; };
 		B52B115E20188BA40002475D /* FFGifThumbnailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFGifThumbnailViewController.h; sourceTree = "<group>"; };
 		B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFGifThumbnailViewController.m; sourceTree = "<group>"; };
+		B52B11832019E3100002475D /* FFAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFAppDelegate.h; sourceTree = "<group>"; };
+		B52B11842019E3100002475D /* FFAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFAppDelegate.m; sourceTree = "<group>"; };
 		B535C6641FB05E8B0090DCC9 /* FFWebViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFWebViewController.h; sourceTree = "<group>"; };
 		B535C6651FB05E8B0090DCC9 /* FFWebViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFWebViewController.m; sourceTree = "<group>"; };
 		B536858F1FA71B75001836DC /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
@@ -587,7 +572,6 @@
 		B5955637200C8549007F3CC7 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
 		B595568F200DA733007F3CC7 /* FFDrivePostStatusViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDrivePostStatusViewController.h; sourceTree = "<group>"; };
 		B5955690200DA733007F3CC7 /* FFDrivePostStatusViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDrivePostStatusViewController.m; sourceTree = "<group>"; };
-		B59556B8200DDEA6007F3CC7 /* FFViewFactory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FFViewFactory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B59556BA200DDEA6007F3CC7 /* FFViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFViewFactory.h; sourceTree = "<group>"; };
 		B59556BB200DDEA6007F3CC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B59556C5200DDF09007F3CC7 /* UIButton+FFButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIButton+FFButton.h"; sourceTree = "<group>"; };
@@ -823,14 +807,6 @@
 				B5A5D52F1FC526F800EC951F /* TencentOpenAPI.framework in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,
 				B5A5D5341FC5284700EC951F /* CoreTelephony.framework in Frameworks */,
-				B59556BF200DDEA6007F3CC7 /* FFViewFactory.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B59556B4200DDEA6007F3CC7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1139,7 +1115,6 @@
 			isa = PBXGroup;
 			children = (
 				B556B0D31FA6BD88005DC871 /* FF_185_Game_Box.app */,
-				B59556B8200DDEA6007F3CC7 /* FFViewFactory.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1149,6 +1124,8 @@
 			children = (
 				B556B0D61FA6BD88005DC871 /* AppDelegate.h */,
 				B556B0D71FA6BD88005DC871 /* AppDelegate.m */,
+				B52B11832019E3100002475D /* FFAppDelegate.h */,
+				B52B11842019E3100002475D /* FFAppDelegate.m */,
 				B596AAA21FCD025A00C8F15E /* FFLaunchScreen.h */,
 				B596AAA11FCD025A00C8F15E /* FFLaunchScreen.m */,
 				B5B28DBD1FD55460008A9BCD /* FFAdvertisingView.h */,
@@ -2117,19 +2094,6 @@
 		};
 /* End PBXGroup section */
 
-/* Begin PBXHeadersBuildPhase section */
-		B59556B5200DDEA6007F3CC7 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B59556C7200DDF09007F3CC7 /* UIButton+FFButton.h in Headers */,
-				B59556BC200DDEA6007F3CC7 /* FFViewFactory.h in Headers */,
-				B58DB705200EFC8D00DBE381 /* UIAlertController+FFAlertController.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
-
 /* Begin PBXNativeTarget section */
 		B556B0D21FA6BD88005DC871 /* FF_185_Game_Box */ = {
 			isa = PBXNativeTarget;
@@ -2143,30 +2107,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				B59556BE200DDEA6007F3CC7 /* PBXTargetDependency */,
 			);
 			name = FF_185_Game_Box;
 			productName = FF_185_Game_Box;
 			productReference = B556B0D31FA6BD88005DC871 /* FF_185_Game_Box.app */;
 			productType = "com.apple.product-type.application";
-		};
-		B59556B7200DDEA6007F3CC7 /* FFViewFactory */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B59556C1200DDEA6007F3CC7 /* Build configuration list for PBXNativeTarget "FFViewFactory" */;
-			buildPhases = (
-				B59556B3200DDEA6007F3CC7 /* Sources */,
-				B59556B4200DDEA6007F3CC7 /* Frameworks */,
-				B59556B5200DDEA6007F3CC7 /* Headers */,
-				B59556B6200DDEA6007F3CC7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = FFViewFactory;
-			productName = FFViewFactory;
-			productReference = B59556B8200DDEA6007F3CC7 /* FFViewFactory.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -2179,10 +2124,6 @@
 				TargetAttributes = {
 					B556B0D21FA6BD88005DC871 = {
 						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Automatic;
-					};
-					B59556B7200DDEA6007F3CC7 = {
-						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -2223,7 +2164,6 @@
 			projectRoot = "";
 			targets = (
 				B556B0D21FA6BD88005DC871 /* FF_185_Game_Box */,
-				B59556B7200DDEA6007F3CC7 /* FFViewFactory */,
 			);
 		};
 /* End PBXProject section */
@@ -2268,13 +2208,6 @@
 				B5137A1B1FB3FDF30025F00B /* FFApplyTransferView.xib in Resources */,
 				B5A5D53C1FC5288500EC951F /* README.txt in Resources */,
 				B5BC05561FA714870091EE4B /* MJRefresh.bundle in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B59556B6200DDEA6007F3CC7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2379,6 +2312,7 @@
 				B51967161FA977800046E391 /* FFOpenServerCell.m in Sources */,
 				B5A5D4E41FC27D4700EC951F /* FFNewPasswordViewController.m in Sources */,
 				B595563C200C854A007F3CC7 /* SDWebImageCompat.m in Sources */,
+				B52B11852019E3100002475D /* FFAppDelegate.m in Sources */,
 				B5A5D55F1FC6A31700EC951F /* FFNotificationViewController.m in Sources */,
 				B51395BE1FEA5E5D00BAE477 /* UIBarButtonItem+FFSubscript.m in Sources */,
 				B55DE0A11FB08EEF001437D5 /* FFUserModel.m in Sources */,
@@ -2507,24 +2441,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B59556B3200DDEA6007F3CC7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				B59556C8200DDF09007F3CC7 /* UIButton+FFButton.m in Sources */,
-				B58DB706200EFC8D00DBE381 /* UIAlertController+FFAlertController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B59556BE200DDEA6007F3CC7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B59556B7200DDEA6007F3CC7 /* FFViewFactory */;
-			targetProxy = B59556BD200DDEA6007F3CC7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B556B0E11FA6BD88005DC871 /* LaunchScreen.storyboard */ = {
@@ -2714,56 +2631,6 @@
 			};
 			name = Release;
 		};
-		B59556C2200DDEA6007F3CC7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = JR27SLBFXN;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FFViewFactory/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				PRODUCT_BUNDLE_IDENTIFIER = Sans.FFViewFactory;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		B59556C3200DDEA6007F3CC7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = JR27SLBFXN;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = FFViewFactory/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
-				PRODUCT_BUNDLE_IDENTIFIER = Sans.FFViewFactory;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2781,15 +2648,6 @@
 			buildConfigurations = (
 				B556B0EA1FA6BD88005DC871 /* Debug */,
 				B556B0EB1FA6BD88005DC871 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B59556C1200DDEA6007F3CC7 /* Build configuration list for PBXNativeTarget "FFViewFactory" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B59556C2200DDEA6007F3CC7 /* Debug */,
-				B59556C3200DDEA6007F3CC7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

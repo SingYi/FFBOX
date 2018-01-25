@@ -1,12 +1,12 @@
 //
-//  AppDelegate.m
+//  FFAppDelegate.m
 //  FF_185_Game_Box
 //
-//  Created by 燚 on 2017/10/30.
-//  Copyright © 2017年 Yi Shi. All rights reserved.
+//  Created by 燚 on 2018/1/25.
+//  Copyright © 2018年 Yi Shi. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "FFAppDelegate.h"
 #import "FFControllerManager.h"
 #import "WXApi.h"
 #import <TencentOpenAPI/TencentOAuth.h>
@@ -22,11 +22,12 @@
 #define QQAPPID @"1106099979"
 
 
-@interface AppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
+@interface FFAppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
 
 @end
 
-@implementation AppDelegate
+
+@implementation FFAppDelegate
 
 - (void)onReq:(BaseReq*)req {
     syLog(@"????????????????????????????????????????");
@@ -44,6 +45,11 @@
 
     //初始化数据
     [self initializeDataSource];
+
+//    self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
+//    self.window.rootViewController = [UIViewController new];
+//    [self.window makeKeyAndVisible];
+
 
 
     return YES;
@@ -75,7 +81,6 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
     syLog(@"open url == %@",url);
     [WXApi handleOpenURL:url delegate:self];
@@ -93,10 +98,6 @@
     [WXApi handleOpenURL:url delegate:self];
     return NO;
 }
-
-
-
-
 
 
 #pragma mark - method
@@ -160,14 +161,6 @@
             }
         }
     }];
-
-
-    //推送通知
-//    [FFBoxModel registerNotification:10];
-
-//    NSURL *url = [NSURL URLWithString:@"App-Prefs:root=App-Prefs:root=General&path=DeviceManagement"];
-//    [[UIApplication sharedApplication] openURL:url];
-
 }
 
 /** 注册通知 */
@@ -198,44 +191,4 @@
 
 
 
-#pragma mark - UNUserNotificationCenterDelegate
-//在展示通知前进行处理，即有机会在展示通知前再修改通知内容。
-//- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-//    completionHandler(UNNotificationPresentationOptionAlert);
-//
-//    syLog(@"================================================ \n ======================== 收到通知!!!!======================== \n======================== ======================== \n");
-//}
-//
-//- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
-//    syLog(@"================================================ \n ======================== 收到通知 ????======================== \n======================== ======================== \n");
-//}
-//
-//- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-//    NSLog(@"iOS7及以上系统，收到通知:%@", userInfo);
-//
-//    completionHandler(UIBackgroundFetchResultNewData);
-//
-//}
-
-
-
-
-
-
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

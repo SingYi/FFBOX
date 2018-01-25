@@ -155,6 +155,7 @@ static FFSharedController *controller = nil;
     req.scene = WXSceneTimeline;
 
     [WXApi sendReq:req];
+//    [WXApi send]
 }
 
 /** 微信好友 */

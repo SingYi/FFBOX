@@ -9,7 +9,7 @@
 #import "FFDriveAllInfoViewController.h"
 #import "DriveInfoCell.h"
 #import "FFDriveDetailInfoViewController.h"
-
+#import "FFSharedController.h"
 
 #define CELL_IDE @"DriveInfoCell"
 
@@ -19,10 +19,20 @@
 @property (nonatomic, assign) NSUInteger currentPage;
 @property (nonatomic, strong) FFDriveDetailInfoViewController *detailController;
 
-
 @end
 
-@implementation FFDriveAllInfoViewController
+@implementation FFDriveAllInfoViewController {
+    NSString *dynamicsID;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondsToSharedDynamisSuccess) name:SharedDynamicsSuccess object:nil];
+    }
+    return self;
+}
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -51,7 +61,6 @@
 - (void)initDataSource {
     [self.tableView.mj_header beginRefreshing];
 }
-
 
 - (void)refreshNewData {
     _currentPage = 1;
@@ -140,6 +149,31 @@
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
+static BOOL respondsSuccess;
+- (void)respondsSharedButtonWithCell:(DriveInfoCell *)cell {
+    NSMutableDictionary *dict;
+    syLog(@"分享");
+    dict = cell.dict.mutableCopy;
+    [dict setObject:cell.images forKey:@"images"];
+    dynamicsID = dict[@"dynamics"][@"id"];
+    respondsSuccess = NO;
+    [FFSharedController sharedDynamicsWithDict:dict];
+}
+
+- (void)respondsToSharedDynamisSuccess {
+    if (respondsSuccess) {
+        return;
+    }
+    respondsSuccess = YES;
+
+    [FFDriveModel userSharedDynamics:dynamicsID Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"shared success");
+        syLog(@"%@",content);
+        if (success) {
+            [self refreshNewData];
+        }
+    }];
+}
 
 #pragma mark - tableview data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -171,20 +205,21 @@
     SHOW_PARNENT_TABBAR;
 }
 
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-//    syLog(@"!!!!!!!!!!1");
-////    NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
-////    if (cells.count > 0) {
-////        [cells.firstObject stopGif];
-////        [cells.lastObject stopGif];
-////    }
-////
-////    if (cells.count > 1) {
-////        [cells[1] starGif];
-////        [cells[cells.count - 2] starGif];
-////    }
-//
-//}
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    syLog(@"!!!!!!!!!!1");
+    NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
+    [cells enumerateObjectsUsingBlock:^(DriveInfoCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        CGRect frame = [obj convertRect:obj.bounds toView:self.view];
+        if (frame.origin.y < -100 || frame.origin.y > 300) {
+            [obj stopGif];
+        } else {
+            [obj starGif];
+        }
+    }];
+}
+
 
 
 #pragma mark - cell dele gate
@@ -200,7 +235,7 @@
         }
             break;
         case sharedButton: {
-
+            [self respondsSharedButtonWithCell:cell];
         }
             break;
         case commentButoon: {
@@ -226,6 +261,11 @@
     syLog(@"点赞????");
     [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+
+- (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller SharedWith:(NSIndexPath *)indexPath {
+    DriveInfoCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self respondsSharedButtonWithCell:cell];
 }
 
 #pragma mark - getter
@@ -267,6 +307,10 @@
         _detailController.delegate = self;
     }
     return _detailController;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SharedDynamicsSuccess object:nil];
 }
 
 

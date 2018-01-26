@@ -11,8 +11,12 @@
 #import "FFPostStatusImageCell.h"
 #import <Photos/Photos.h>
 #import "UIAlertController+FFAlertController.h"
+#import "FFDriveModel.h"
+#import "MBProgressHUD.h"
 
 #define CELL_IDE @"FFPostStatusImageCell"
+
+
 
 @interface FFDrivePostStatusViewController ()<UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 
@@ -20,7 +24,11 @@
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UILabel *remindLabel;
 
+@property (nonatomic, strong) UILabel *remindLabel1;
+
 @property (nonatomic, strong) UIView *imageContentView;
+
+@property (nonatomic, strong) UIButton *hideButton;
 
 @property (nonatomic, strong) ZLPhotoActionSheet *actionSheet;
 @property (nonatomic, strong) UICollectionView *collectionView;
@@ -32,6 +40,8 @@
 
 
 @property (nonatomic, assign) BOOL isOriginal;
+
+@property (nonatomic, assign) BOOL isGif;
 
 @end
 
@@ -49,21 +59,19 @@
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"发布状态";
+    [self.view addSubview:self.hideButton];
     [self.view addSubview:self.remindLabel];
     [self.view addSubview:self.textView];
+    [self.view addSubview:self.remindLabel1];
     [self.view addSubview:self.collectionView];
     self.navigationItem.rightBarButtonItem = self.sendButton;
 }
 
 - (void)initDataSource {
     textViewFrame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 120);
-    imageContentViewFrame = CGRectMake(0, CGRectGetMaxY(textViewFrame) + 8, kSCREEN_WIDTH, kSCREEN_WIDTH / 4 + 10);
+    imageContentViewFrame = CGRectMake(0, CGRectGetMaxY(self.remindLabel1.frame) + 8, kSCREEN_WIDTH, kSCREEN_WIDTH / 4 + 10);
 }
 
-
-- (void)selectIamge {
-
-}
 
 #pragma mark - responds
 - (void)respondsToTap:(UITapGestureRecognizer *)sender {
@@ -75,7 +83,17 @@
         [UIAlertController showAlertMessage:@"请输入要发送的状态\n或者选择要发送的图片" dismissTime:0.7 dismissBlock:nil];
     } else {
 
+        [FFDriveModel userUploadPortraitWithContent:self.textView.text Image:self.lastSelectAssets Completion:^(NSDictionary *content, BOOL success) {
+            if (success) {
+                [self.navigationController popViewControllerAnimated:YES];
+            }
+        }];
+
     }
+}
+
+- (void)respondsToHideButton {
+    [self.textView resignFirstResponder];
 }
 
 #pragma mark - collection view data source
@@ -97,32 +115,63 @@
     FFPostStatusImageCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:CELL_IDE forIndexPath:indexPath];
 
     if (indexPath.row + 1 > self.imagesArray.count) {
-//        cell.backgroundColor = [UIColor blackColor];
         cell.type = addImage;
     } else {
         cell.type = showImage;
-//        cell.backgroundColor = [UIColor whiteColor];
         cell.imageView.image = self.imagesArray[indexPath.row];
         PHAsset *asset = self.lastSelectAssets[indexPath.row];
         cell.playImageView.hidden = !(asset.mediaType == PHAssetMediaTypeVideo);
     }
-
-//    cell.type = addImage;
-
     return cell;
 }
 
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    syLog(@"????????");
+
     FFPostStatusImageCell *cell = (FFPostStatusImageCell *)[collectionView cellForItemAtIndexPath:indexPath];
     if (cell.type == addImage) {
-        [self.actionSheet showPhotoLibrary];
+        [UIAlertController showAlertControllerWithViewController:self alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:nil CallBackBlock:^(NSInteger btnIndex) {
+            [self selectPhotoWith:btnIndex];
+        } otherButtonTitles:@"相册",@"GIF",nil];
     } else {
-//        [self.actionSheet previewSelectedPhotos:self.lastSelectPhotos assets:self.lastSelectAssets index:indexPath.row isOriginal:self.isOriginal];
         [self.actionSheet previewSelectedPhotos:self.lastSelectPhotos assets:self.lastSelectAssets index:indexPath.row isOriginal:self.isOriginal];
     }
 }
+
+- (void)selectPhotoWith:(NSUInteger)index {
+    switch (index) {
+        case 0:                             break;
+        case 1: [self showPhotoLibrary];    break;
+        case 2: [self showGifLibrary];      break;
+        default:                            break;
+    }
+}
+
+- (void)showPhotoLibrary {
+    if (_isGif != NO) {
+        self.imagesArray = nil;
+        self.lastSelectAssets = nil;
+        self.lastSelectPhotos = nil;
+    }
+    _isGif = NO;
+    //设置照片最大选择数
+    self.actionSheet.configuration.maxSelectCount = 4;
+    self.actionSheet.configuration.allowSelectGif = NO;
+    [self.actionSheet showPhotoLibrary];
+}
+
+- (void)showGifLibrary {
+    self.actionSheet.configuration.maxSelectCount = 1;
+    if (_isGif != YES) {
+        self.imagesArray = nil;
+        self.lastSelectAssets = nil;
+        self.lastSelectPhotos = nil;
+    }
+    _isGif = YES;
+    self.actionSheet.configuration.allowSelectGif = YES;
+    [self.actionSheet showGifLibrary];
+}
+
 
 #pragma makr - text view delegate
 - (void)textViewDidChange:(UITextView *)textView {
@@ -156,6 +205,18 @@
     return _remindLabel;
 }
 
+- (UILabel *)remindLabel1 {
+    if (!_remindLabel1) {
+        _remindLabel1 = [[UILabel alloc] initWithFrame:CGRectMake(8, CGRectGetMaxY(textViewFrame), kSCREEN_WIDTH - 20, 30)];
+        _remindLabel1.text = @"  普通图片可以发送4张. GIF 图片只能发送1张";
+        _remindLabel1.font = [UIFont systemFontOfSize:13];
+        _remindLabel1.textColor = [UIColor redColor];
+        _remindLabel1.numberOfLines = 0;
+        [_remindLabel1 sizeToFit];
+    }
+    return _remindLabel1;
+}
+
 - (UICollectionView *)collectionView {
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
@@ -173,6 +234,14 @@
     return _collectionView;
 }
 
+- (UIButton *)hideButton {
+    if (!_hideButton) {
+        _hideButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _hideButton.frame = CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT);
+        [_hideButton addTarget:self action:@selector(respondsToHideButton) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return _hideButton;
+}
 
 
 - (ZLPhotoActionSheet *)actionSheet {

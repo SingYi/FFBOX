@@ -10,6 +10,7 @@
 #import "FFMapModel.h"
 #import "SYKeychain.h"
 #import "AFHTTPSessionManager.h"
+#import <Photos/Photos.h>
 
 @implementation FFDriveModel
 
@@ -52,6 +53,7 @@
                                                          @"application/octet-stream",
                                                          @"text/json",
                                                          @"text/txt",
+                                                         @"image/gif",
                                                          nil];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -65,26 +67,35 @@
 
         //上传的多张照片
         for (int i = 0; i < images.count; i++) {
-            UIImage *image = images[i];
-            NSData *imageData = UIImagePNGRepresentation(image);
-//
             NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
             formatter.dateFormat =@"yyyyMMddHHmmss";
             NSString *str = [formatter stringFromDate:[NSDate date]];
-            NSString *fileName = [NSString stringWithFormat:@"%@.png", str];
+            NSString *fileName;
+            id image = images[i];
+            if ([image isKindOfClass:[PHAsset class]]) {
+                fileName = [NSString stringWithFormat:@"%@.gif", str];
+                PHImageRequestOptions *options = [PHImageRequestOptions new];
+                options.resizeMode = PHImageRequestOptionsResizeModeFast;
+                options.synchronous = YES;
+                PHCachingImageManager *manager = [PHCachingImageManager new];
 
-//            NSLog(@"di %ld zhang",i);
-//        NSData *imageData = [NSKeyedArchiver archivedDataWithRootObject:images];
-            [formData appendPartWithFileData:imageData name:@"imgs[]" fileName:fileName mimeType:@""];
-
-//            NSLog(@"%d   form data %@",i,formData);
+                [manager requestImageDataForAsset:image options:options resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info) {
+                    if ([dataUTI isEqualToString:(__bridge NSString *)kUTTypeGIF]) {
+                        syLog(@"gif");
+                        [formData appendPartWithFileData:imageData name:@"imgs[]" fileName:fileName mimeType:@""];
+                    }
+                }];
+            } else {
+                fileName = [NSString stringWithFormat:@"%@.png", str];
+                UIImage *image = images[i];
+                NSData *imageData = UIImagePNGRepresentation(image);
+                [formData appendPartWithFileData:imageData name:@"imgs[]" fileName:fileName mimeType:@""];
+            }
         }
 
 
-//        NSLog(@"form data %@",formData);
-
     } progress:^(NSProgress *_Nonnull uploadProgress) {
-//        NSLog(@"%@",uploadProgress);
+
 
     } success:^(NSURLSessionDataTask *_Nonnull task, id _Nullable responseObject) {
         if (completion) {
@@ -224,7 +235,15 @@
     }];
 }
 
-
+/** 分享 */
++ (void)userSharedDynamics:(NSString *)Dynamics Complete:(CompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:Dynamics forKey:@"id"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"id"]))) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].SHARE_DYNAMICS params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
 
 
 @end

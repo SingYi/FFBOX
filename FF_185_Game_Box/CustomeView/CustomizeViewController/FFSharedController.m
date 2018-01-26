@@ -25,6 +25,14 @@
 #define SHARED_INVITE_URL [FFSharedController inviteUrl]
 #define SHARED_INVITE_IMAGE [UIImage imageNamed:@"aboutus_icon"]
 #define GAME_INFO [FFSharedController sharedController].gameInfo
+#define FFSharedType ([FFSharedController sharedController].sharedType)
+
+typedef enum : NSUInteger {
+    invitedFirend,
+    games,
+    dynamics,
+} SharedType;
+
 
 @interface FFSharedController ()
 
@@ -40,11 +48,16 @@
 @property (nonatomic, assign) BOOL isShow;
 @property (nonatomic, assign) BOOL isInvite;
 
+@property (nonatomic, assign) SharedType sharedType;
+@property (nonatomic, strong) NSDictionary *dynamicsDict;
+
 @end
 
 static FFSharedController *controller = nil;
 
-@implementation FFSharedController
+@implementation FFSharedController {
+
+}
 
 
 + (FFSharedController *)sharedController {
@@ -61,6 +74,7 @@ static FFSharedController *controller = nil;
         return;
     }
     IS_INVITE = YES;
+    [FFSharedController sharedController].sharedType = invitedFirend;
     [FFSharedController sharedController].isShow = YES;
     [FFSharedController sharedController].cancelButton.userInteractionEnabled = NO;
     SHARED_VIEW.userInteractionEnabled = NO;
@@ -91,6 +105,35 @@ static FFSharedController *controller = nil;
     if ([FFSharedController sharedController].isShow) {
         return;
     }
+    [FFSharedController sharedController].sharedType = games;
+    [FFSharedController sharedController].isShow = YES;
+    [FFSharedController sharedController].cancelButton.userInteractionEnabled = NO;
+    SHARED_VIEW.userInteractionEnabled = NO;
+    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:SHARED_VIEW];
+    BACKGROUND_VIEW.frame = CGRectMake(0, kSCREEN_HEIGHT, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.3 + 20 + 44);
+    [UIView animateWithDuration:0.3 animations:^{
+        BACKGROUND_VIEW.frame = CGRectMake(0, kSCREEN_HEIGHT - kSCREEN_WIDTH * 0.3 - 20 - 44, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.3 + 20 + 44);
+    } completion:^(BOOL finished) {
+        if (finished) {
+            [FFSharedController sharedController].isShow = NO;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:controller action:@selector(respondsToTap:)];
+            tap.numberOfTapsRequired = 1;
+            tap.numberOfTouchesRequired = 1;
+            [SHARED_VIEW addGestureRecognizer:tap];
+            SHARED_VIEW.userInteractionEnabled = YES;
+            [FFSharedController sharedController].cancelButton.userInteractionEnabled = YES;
+        }
+    }];
+}
+
++ (void)sharedDynamicsWithDict:(NSDictionary *)dict {
+    if ([dict isKindOfClass:[NSDictionary class]]) {
+        [FFSharedController sharedController].dynamicsDict = dict;
+    }
+    if ([FFSharedController sharedController].isShow) {
+        return;
+    }
+    [FFSharedController sharedController].sharedType = dynamics;
     [FFSharedController sharedController].isShow = YES;
     [FFSharedController sharedController].cancelButton.userInteractionEnabled = NO;
     SHARED_VIEW.userInteractionEnabled = NO;
@@ -186,8 +229,6 @@ static FFSharedController *controller = nil;
                            Url:(NSString *)url
                          Image:(NSData *)imageData {
 
-//    QQApiNewsObject *object = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:subTitle previewImageURL:[NSURL URLWithString:imageUrl]];
-
     QQApiNewsObject *object = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:subTitle previewImageData:imageData];
 
     object.shareDestType = ShareDestTypeQQ;
@@ -203,7 +244,6 @@ static FFSharedController *controller = nil;
                              Url:(NSString *)url
                            Image:(NSData *)imageData {
 
-//    QQApiNewsObject *object = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:subTitle previewImageURL:[NSURL URLWithString:imageUrl]];
     QQApiNewsObject *object = [QQApiNewsObject objectWithURL:[NSURL URLWithString:url] title:title description:subTitle previewImageData:imageData];
 
     object.shareDestType = ShareDestTypeQQ;
@@ -217,6 +257,12 @@ static FFSharedController *controller = nil;
 #pragma mark - shared invite method
 + (NSString *)inviteUrl {
     NSString *url = [NSString stringWithFormat:@"%@?c=%@&u=%@",[FFMapModel map].FREND_RECOM,Channel,SSKEYCHAIN_UID];
+    return url;
+}
+
++ (NSString *)dynamicsUrl {
+
+    NSString *url = [NSString stringWithFormat:@"%@?id=%@",[FFMapModel map].DYNAMICS_WAP_INFO,[FFSharedController sharedController].dynamicsDict[@"dynamics"][@"id"]];
     return url;
 }
 
@@ -257,38 +303,125 @@ static FFSharedController *controller = nil;
     [FFSharedController shareToQQFriendWithTitle:GAME_INFO[@"title"] SubTitle:@"充值大返利!!!" Url:GAME_INFO[@"url"] Image:imageData];
 }
 
+#pragma mark - shared dynamics
++ (void)sharedDynamicsToFriendCircle {
+    NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
+    NSArray *images = dict[@"images"];
+    UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
+    [FFSharedController shareToFirednCircleWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
+    [FFSharedController sharedDynamicsSuccess];
+}
+
++ (void)sharedDynamicsToWeXin {
+    NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
+    NSArray *images = dict[@"images"];
+    UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
+    [FFSharedController shareToWexinFirendWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
+    [FFSharedController sharedDynamicsSuccess];
+}
+
++ (void)sharedDynamicsToQQZone {
+    NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
+    NSArray *images = dict[@"images"];
+    UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [FFSharedController shareToQQZoneWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
+    [FFSharedController sharedDynamicsSuccess];
+}
+
++ (void)sharedDynamicsToQQFriend {
+    NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
+    NSArray *images = dict[@"images"];
+    UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
+    NSData *imageData = UIImagePNGRepresentation(image);
+    [FFSharedController shareToQQFriendWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
+    [FFSharedController sharedDynamicsSuccess];
+}
+
++ (void)sharedDynamicsSuccess {
+    [[NSNotificationCenter defaultCenter] postNotificationName:SharedDynamicsSuccess object:nil];
+}
+
+
 #pragma mark - responds
 - (void)respondsToSharedButton:(UIButton *)sender {
     switch (sender.tag - BUTTON_TAG) {
         case 0: {
-            if (IS_INVITE) {
-                [FFSharedController sharedInviteToFriendCircle];
-            } else {
-                [FFSharedController sharedGameToFriendCircle];
-            }
-//            (IS_INVITE) ? ([FFSharedController sharedInviteToFriendCircle]) : ([FFSharedController sharedGameToFriendCircle]);
+            [FFSharedController sharedCircleWith:FFSharedType];
             syLog(@"朋友圈");
             break;
         }
         case 1: {
-            (IS_INVITE) ? ([FFSharedController sharedInviteToWeixin]) : ([FFSharedController sharedGameToWeixin]);
+            [FFSharedController sharedWeiXinWith:FFSharedType];
              syLog(@"微信好友");
             break;
         }
         case 2: {
-            (IS_INVITE) ? ([FFSharedController sharedInviteToQQZone]) : ([FFSharedController sharedGameToQQZone]);
+            [FFSharedController sharedQQZoneWith:FFSharedType];
              syLog(@"QQ空间");
             break;
         }
         case 3: {
-            (IS_INVITE) ? ([FFSharedController sharedInviteToQQFriend]) : ([FFSharedController sharedGameToQQFriend]);
-             syLog(@"QQ好友");
+            [FFSharedController sharedQQFirendWith:FFSharedType];
+            syLog(@"QQ好友");
             break;
         }
         default:
             break;
     }
     [[FFSharedController sharedController] respondsToTap:nil];
+}
+
++ (void)sharedCircleWith:(SharedType)type {
+    switch (type) {
+        case invitedFirend:[FFSharedController sharedInviteToFriendCircle];
+            break;
+        case games: [FFSharedController sharedGameToFriendCircle];
+            break;
+        case dynamics: [FFSharedController sharedDynamicsToFriendCircle];
+            break;
+        default:
+            break;
+    }
+}
+
++ (void)sharedWeiXinWith:(SharedType)type {
+    switch (type) {
+        case invitedFirend:[FFSharedController sharedInviteToWeixin];
+            break;
+        case games: [FFSharedController sharedGameToWeixin];
+            break;
+        case dynamics: [FFSharedController sharedDynamicsToWeXin];
+            break;
+        default:
+            break;
+    }
+}
+
++ (void)sharedQQZoneWith:(SharedType)type {
+    switch (type) {
+        case invitedFirend:[FFSharedController sharedInviteToQQZone];
+            break;
+        case games: [FFSharedController sharedGameToQQZone];
+            break;
+        case dynamics: [FFSharedController sharedDynamicsToQQZone];
+            break;
+        default:
+            break;
+    }
+}
+
++ (void)sharedQQFirendWith:(SharedType)type {
+    switch (type) {
+        case invitedFirend:[FFSharedController sharedInviteToQQFriend];
+            break;
+        case games: [FFSharedController sharedGameToQQFriend];
+            break;
+        case dynamics: [FFSharedController sharedDynamicsToQQFriend];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - getter

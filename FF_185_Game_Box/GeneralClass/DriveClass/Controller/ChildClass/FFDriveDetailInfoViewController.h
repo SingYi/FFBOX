@@ -16,6 +16,10 @@
                     replaceDict:(NSDictionary *)dict
                       indexPath:(NSIndexPath *)indexPath;
 
+- (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller
+                     SharedWith:(NSIndexPath *)indexPath;
+
+
 
 @end
 

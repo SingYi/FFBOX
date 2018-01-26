@@ -8,16 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
+#define SharedDynamicsSuccess @"SharedDynamicsSuccess"
+
+
 @interface FFSharedController : NSObject
 
 /** 好友邀请 */
 + (void)inviteFriend;
 
-
-
 /** 分享游戏 */
 + (void)sharedGameWith:(id)info;
 
+/** 分享动态 */
++ (void)sharedDynamicsWithDict:(NSDictionary *)dict;
 
 
 

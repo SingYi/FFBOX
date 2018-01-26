@@ -39,7 +39,6 @@
 
 - (void)setSelected:(BOOL)selected {
     [super setSelected:selected];
-    syLog(@"wocao??");
 }
 
 

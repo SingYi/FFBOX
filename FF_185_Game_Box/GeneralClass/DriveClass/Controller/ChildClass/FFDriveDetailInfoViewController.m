@@ -95,8 +95,10 @@
 - (void)refreshNewData {
     syLog(@"刷新");
     currentPage = 1;
+    START_NET_WORK;
     [FFDriveModel userComeentListWithDynamicsID:dynamicsID type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"comment list === %@",content);
+        STOP_NET_WORK;
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             self.showArray = [array mutableCopy];
@@ -105,8 +107,10 @@
             [self.tableView reloadData];
             NSDictionary *dict = content[@"data"][@"dynamics_info"];
             [self setCommentNUmber:[NSString stringWithFormat:@"%@",dict[@"comment"]]];
+
             attentionString = [NSString stringWithFormat:@"%@",dict[@"is_follow"]];
             [self.headerView setAttentionWith:attentionString];
+
             attentionUid = [NSString stringWithFormat:@"%@",dict[@"uid"]];
 
         } else {
@@ -307,6 +311,7 @@
         syLog(@"点赞");
     }
 
+    _dict = dict;
     [self setDataDict:dict];
     [self refreshNewData];
 }
@@ -323,36 +328,27 @@
             BOX_MESSAGE(content[@"msg"]);
         }
     }];
-
-
 }
+
+
 
 #pragma mark - footer view delegate
 - (void)FFDetailFooterView:(FFDetailFooterView *)view didClickButton:(NSUInteger)idx {
     syLog(@"click button %ld",idx);
     switch (idx) {
-        case 0: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:like];
-        }
-            break;
-        case 1: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:dislike];
-        }
-            break;
-        case 2: {
-
-        }
-            break;
-        case 3: {
-            [self showWirteReview];
-        }
-            break;
-
-        default:
-            break;
+        case 0: [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:like]; break;
+        case 1: [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:dislike]; break;
+        case 2: [self respondsSharedButtonClick]; break;
+        case 3: [self showWirteReview]; break;
+        default: break;
     }
 }
 
+- (void)respondsSharedButtonClick {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDriveDetailController:SharedWith:)]) {
+        [self.delegate FFDriveDetailController:self SharedWith:self.indexPath];
+    }
+}
 
 
 - (void)showWirteReview {

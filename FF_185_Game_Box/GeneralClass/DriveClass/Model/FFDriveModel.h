@@ -37,7 +37,7 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 @interface FFDriveModel : FFBasicModel
 
 /** 发状态 */
-+ (void)postDynamicWith:(NSString *)content Images:(NSArray *)imgs Complete:(CompleteBlock)completion;
+//+ (void)postDynamicWith:(NSString *)content Images:(NSArray *)imgs Complete:(CompleteBlock)completion;
 
 
 /** get dynamic */
@@ -79,6 +79,10 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 + (void)userAttentionWith:(NSString *)attentionUid
                      Type:(AttentionType)type
                  Complete:(CompleteBlock)completion;
+
+/** 分享动态 */
++ (void)userSharedDynamics:(NSString *)Dynamics
+                  Complete:(CompleteBlock)completion;
 
 
 @end

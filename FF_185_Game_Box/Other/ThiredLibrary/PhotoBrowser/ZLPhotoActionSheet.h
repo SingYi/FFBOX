@@ -68,6 +68,11 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)showPhotoLibrary;
 
 /**
+ 直接进入 GIF 相册
+ */
+- (void)showGifLibrary;
+
+/**
  直接进入相册选择界面
  
  @param sender 调用该对象的控制器

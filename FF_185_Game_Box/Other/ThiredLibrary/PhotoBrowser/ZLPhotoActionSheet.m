@@ -31,6 +31,7 @@ double const ScalePhotoWidth = 1000;
     ZLCollectionCell *_panCell;
     UIImageView *_panView;
     ZLPhotoModel *_panModel;
+    BOOL isGif;
 }
 
 @property (weak, nonatomic) IBOutlet UIButton *btnCamera;
@@ -176,6 +177,12 @@ double const ScalePhotoWidth = 1000;
 
 - (void)showPhotoLibrary
 {
+    isGif = NO;
+    [self showPreview:NO animate:NO];
+}
+
+- (void)showGifLibrary {
+    isGif = YES;
     [self showPreview:NO animate:NO];
 }
 
@@ -809,18 +816,21 @@ double const ScalePhotoWidth = 1000;
     ZLPhotoBrowser *photoBrowser = [[ZLPhotoBrowser alloc] initWithStyle:UITableViewStylePlain];
     ZLImageNavigationController *nav = [self getImageNavWithRootVC:photoBrowser];
 #warning image
-//    ZLThumbnailViewController *tvc = [[ZLThumbnailViewController alloc] init];
-//    [nav pushViewController:tvc animated:YES];
+    if (isGif) {
+        [ZLPhotoManager getGifPhotoAblumList:NO allowSelectImage:YES complete:^(NSArray<ZLAlbumListModel *> *array) {
+            syLog(@"gif === %@",array);
+            FFGifThumbnailViewController *tvc = [[FFGifThumbnailViewController alloc] init];
+            if (array.count == 1) {
+                tvc.albumListModel = array.firstObject;
+                [nav pushViewController:tvc animated:YES];
+            }
 
-    [ZLPhotoManager getGifPhotoAblumList:NO allowSelectImage:YES complete:^(NSArray<ZLAlbumListModel *> *array) {
-        syLog(@"gif === %@",array);
+        }];
+    } else {
         FFGifThumbnailViewController *tvc = [[FFGifThumbnailViewController alloc] init];
-        if (array.count == 1) {
-            tvc.albumListModel = array.firstObject;
-            [nav pushViewController:tvc animated:YES];
-        }
+        [nav pushViewController:tvc animated:YES];
+    }
 
-    }];
 
     [self.sender showDetailViewController:nav sender:nil];
 }

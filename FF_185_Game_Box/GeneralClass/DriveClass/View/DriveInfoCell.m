@@ -44,9 +44,13 @@
 //@property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
-@property (nonatomic, strong) NSMutableArray<UIImage *> *images;
+
 
 @property (nonatomic, strong) NSString *dynamicsID;
+
+
+@property (nonatomic, strong) UIImage *gifImage;
+@property (nonatomic, strong) UIImage *normalImage;
 
 @end
 
@@ -289,18 +293,21 @@
                     NSData *iamgeData = [self imageDataFromDiskCacheWithKey:obj];
                     if (iamgeData) {
                         dispatch_async(dispatch_get_main_queue(), ^{
-                            imageView.image = [ZLPhotoManager transformToGifImageWithData:iamgeData];
-                            [_images addObject:imageView.image];
-        
+                            self.gifImage = [ZLPhotoManager transformToGifImageWithData:iamgeData];
+                            self.normalImage = [UIImage imageWithData:iamgeData];
+                            imageView.image = self.gifImage;
+                            [_images addObject:self.gifImage];
                         });
                     } else {
                         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                         }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
                             [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:obj];
                             dispatch_async(dispatch_get_main_queue(), ^{
-                                imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
-                                [_images addObject:imageView.image];
-
+//                                imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                                self.gifImage = [ZLPhotoManager transformToGifImageWithData:iamgeData];
+                                self.normalImage = [UIImage imageWithData:iamgeData];
+                                imageView.image = self.gifImage;
+                                [_images addObject:self.gifImage];
                             });
 
                         }];
@@ -313,6 +320,8 @@
                     if ([obj hasSuffix:@".gif"]) {
                         NSData *data = UIImagePNGRepresentation(image);
                         imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
+                        self.gifImage = [UIImage imageWithData:data];
+                        self.normalImage = [UIImage imageWithData:data];
                     }
                     [_images addObject:imageView.image];
                 }];
@@ -452,7 +461,10 @@
 - (void)starGif {
     if (isGifImage) {
         [_imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj startAnimating];
+//            dispatch_queue_t queue = dispatch_queue_create(nil, 0);
+//            dispatch_async(queue, ^{
+                obj.image = self.gifImage;
+//            });
         }];
     }
 }
@@ -460,7 +472,7 @@
 - (void)stopGif {
     if (isGifImage) {
         [_imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-            [obj stopAnimating];
+            obj.image = self.normalImage;
         }];
     }
 }

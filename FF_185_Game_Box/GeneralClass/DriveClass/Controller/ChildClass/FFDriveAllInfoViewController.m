@@ -10,6 +10,7 @@
 #import "DriveInfoCell.h"
 #import "FFDriveDetailInfoViewController.h"
 #import "FFSharedController.h"
+#import "FFDriveMineViewController.h"
 
 #define CELL_IDE @"DriveInfoCell"
 
@@ -194,6 +195,8 @@ static BOOL respondsSuccess;
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
     [self pushDetailControllerWith:indexPath Comment:NO];
 }
 
@@ -208,14 +211,15 @@ static BOOL respondsSuccess;
 
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    syLog(@"!!!!!!!!!!1");
     NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
     [cells enumerateObjectsUsingBlock:^(DriveInfoCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        CGRect frame = [obj convertRect:obj.bounds toView:self.view];
-        if (frame.origin.y < -100 || frame.origin.y > 300) {
-            [obj stopGif];
-        } else {
-            [obj starGif];
+        if ([obj isKindOfClass:[DriveInfoCell class]]) {
+            CGRect frame = [obj convertRect:obj.bounds toView:self.view];
+            if (frame.origin.y < -100 || frame.origin.y > 300) {
+                [obj stopGif];
+            } else {
+                [obj starGif];
+            }
         }
     }];
 }
@@ -254,6 +258,12 @@ static BOOL respondsSuccess;
 
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid {
     syLog(@"click icon with uid == %@", uid);
+
+    FFDriveMineViewController *vc = [FFDriveMineViewController new];
+
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 #pragma mark - detail delegate

@@ -213,9 +213,7 @@ const NSInteger ButtonTag = 10086;
     x += self.titleButtonArray[0].center.x;
     self.cursorView.center = CGPointMake(x, self.cursorView.center.y);
     NSInteger index = x / (kSCREEN_WIDTH / count);
-    if (index != (self.selectTitleIndex)) {
-        [self setButtonHighlightedWintIndex:index];
-    }
+    [self setButtonHighlightedWintIndex:index];
 }
 
 - (void)setButtonHighlightedWintIndex:(NSUInteger)idx {

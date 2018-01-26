@@ -11,23 +11,12 @@
 #import "FFDriveModel.h"
 
 #import "FFDrivePostStatusViewController.h"
-
 #import "UIAlertController+FFAlertController.h"
 #import "UIButton+FFButton.h"
 #import "FFDriveThroughInfoViewController.h"
 
 @interface FFDriveController ()<FFSelectHeaderViewDelegate,UIScrollViewDelegate>
 
-@property (nonatomic, strong) FFSelectHeaderView *selectHeaderView;
-
-@property (nonatomic, strong) UIScrollView *scrollView;
-@property (nonatomic, strong) NSMutableArray<UIViewController *> *fChildControllers;
-
-@property (nonatomic, strong) UIButton *postStatusButton;
-
-@property (nonatomic, strong) UIBarButtonItem *throughtBarbutton;
-
-@property (nonatomic, strong) FFDriveThroughInfoViewController *throughtViewController;
 
 @end
 
@@ -45,7 +34,6 @@
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
 
-    self.view.backgroundColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
     self.navigationController.navigationBar.barTintColor = NAVGATION_BAR_COLOR;
@@ -53,15 +41,16 @@
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.navigationItem.title = @"秋名山";
+
     [self addSubViews];
 }
 
 - (void)initDataSource {
 
+    self.selectHeaderView.headerTitleArray = @[@"全部",@"热门",@"关注"];
     [self setFchildControllerWithClassNames:@[@"FFDriveAllInfoViewController",
                                               @"FFDriveHotInfoViewController",
-                                              @"FFDriveAttentionInfoViewController",
-                                              @"attention"]];
+                                              @"FFDriveAttentionInfoViewController"]];
 }
 
 - (void)addSubViews {
@@ -206,7 +195,7 @@
 #pragma mark - getter
 - (FFSelectHeaderView *)selectHeaderView {
     if (!_selectHeaderView) {
-        _selectHeaderView = [[FFSelectHeaderView alloc] initWithFrame:CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 50) WithHeaderTitleArray:@[@"全部",@"热门",@"关注",@"我的"]];
+        _selectHeaderView = [[FFSelectHeaderView alloc] initWithFrame:CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 50)];
         _selectHeaderView.delegate = self;
     }
     return _selectHeaderView;

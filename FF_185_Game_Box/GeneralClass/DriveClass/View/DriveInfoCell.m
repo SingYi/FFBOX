@@ -307,7 +307,7 @@
                                 self.gifImage = [ZLPhotoManager transformToGifImageWithData:iamgeData];
                                 self.normalImage = [UIImage imageWithData:iamgeData];
                                 imageView.image = self.gifImage;
-                                [_images addObject:self.gifImage];
+                                [_images addObject:imageView.image];
                             });
 
                         }];

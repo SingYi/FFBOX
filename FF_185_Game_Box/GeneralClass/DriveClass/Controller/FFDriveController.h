@@ -7,7 +7,35 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFSelectHeaderView.h"
+#import "FFDriveModel.h"
+
+#import "FFDrivePostStatusViewController.h"
+#import "UIAlertController+FFAlertController.h"
+#import "UIButton+FFButton.h"
+#import "FFDriveThroughInfoViewController.h"
 
 @interface FFDriveController : UIViewController
 
+@property (nonatomic, strong) FFSelectHeaderView *selectHeaderView;
+
+@property (nonatomic, strong) UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableArray<UIViewController *> *fChildControllers;
+@property (nonatomic, strong) UIButton *postStatusButton;
+@property (nonatomic, strong) UIBarButtonItem *throughtBarbutton;
+@property (nonatomic, strong) FFDriveThroughInfoViewController *throughtViewController;
+
+
+- (void)initUserInterface;
+
+- (void)initDataSource;
+
+- (void)setFchildControllerWithClassNames:(NSArray *)classNames;
+
+- (void)addSubViews;
+
 @end
+
+
+
+

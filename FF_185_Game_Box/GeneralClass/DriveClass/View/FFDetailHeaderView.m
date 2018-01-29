@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoManager.h"
+#import "SYKeychain.h"
 
 @interface FFDetailHeaderView()
 
@@ -89,6 +90,8 @@
     [self setSexWith:dict[@"user"][@"sex"]];
     //vip
     [self setVipWith:dict[@"user"][@"vip"]];
+    //attention
+    [self setShowAttention:dict[@"dynamics"][@"uid"]];
     //time label
     [self setTimeWith:dict[@"dynamics"][@"create_time"]];
     //content
@@ -98,6 +101,9 @@
     if (array == nil || ![array isKindOfClass:[NSArray class]]) {
         array = [NSArray array];
     }
+
+    // showAttention
+
     [self setImagesWith:array];
     self.attentionButton.hidden = YES;
 }
@@ -148,6 +154,15 @@
         [self.attentionButton setTitle:@"已关注" forState:(UIControlStateNormal)];
         [self.attentionButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
         self.attentionButton.layer.borderColor = [UIColor grayColor].CGColor;
+    }
+}
+
+- (void)setShowAttention:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    if ([string isEqualToString:SSKEYCHAIN_UID]) {
+        self.attentionButton.hidden = YES;
+    } else {
+        self.attentionButton.hidden = NO;
     }
 }
 

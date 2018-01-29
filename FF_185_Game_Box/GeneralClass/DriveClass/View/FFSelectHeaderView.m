@@ -21,6 +21,9 @@ const NSInteger ButtonTag = 10086;
 
 @property (nonatomic, strong) UIScrollView *scrollView;
 
+@property (nonatomic, strong) CALayer *lineLayer;
+@property (nonatomic, strong) UIView *lineView;
+
 @end
 
 @implementation FFSelectHeaderView {
@@ -64,6 +67,7 @@ const NSInteger ButtonTag = 10086;
 
 - (void)initUserInterface {
     [self addSubview:self.scrollView];
+    [self addSubview:self.lineView];
 }
 
 - (void)initDataSource {
@@ -106,7 +110,7 @@ const NSInteger ButtonTag = 10086;
 
         [self.scrollView addSubview:button];
     }];
-    [self.scrollView sendSubviewToBack:self.cursorView];
+//    [self.scrollView.layer addSublayer:self.lineLayer];
     [self setSelectTitleIndex:0];
 }
 
@@ -226,6 +230,13 @@ const NSInteger ButtonTag = 10086;
     lastButton = button;
 }
 
+- (void)setLineColor:(UIColor *)lineColor {
+    if (lineColor) {
+        self.lineView.frame = CGRectMake(0, self.frame.size.height - 2, kSCREEN_WIDTH, 2);
+        self.lineView.backgroundColor = lineColor;
+    }
+}
+
 #pragma mark - getter
 - (CGSize)titleSize {
     if (_titleSize.width == 0 || _titleSize.height == 0) {
@@ -268,6 +279,22 @@ const NSInteger ButtonTag = 10086;
         _cursorCenter_Y = totalFrame.size.height - 4;
     }
     return _cursorCenter_Y;
+}
+
+- (CALayer *)lineLayer {
+    if (!_lineLayer) {
+        _lineLayer = [[CALayer alloc] init];
+        _lineLayer.bounds = CGRectMake(0, 0, totalFrame.size.width, 2);
+    }
+    return _lineLayer;
+}
+
+- (UIView *)lineView {
+    if (!_lineView) {
+        _lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+        _lineView.backgroundColor = [UIColor clearColor];
+    }
+    return _lineView;
 }
 
 

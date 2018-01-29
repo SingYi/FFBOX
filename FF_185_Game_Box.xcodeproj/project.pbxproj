@@ -185,6 +185,13 @@
 		B5971F381FAB0D9E00246640 /* FFRebateNoticeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5971F371FAB0D9E00246640 /* FFRebateNoticeViewController.m */; };
 		B5971F631FAC65D600246640 /* FFBasicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5971F621FAC65D600246640 /* FFBasicViewController.m */; };
 		B5971F661FAC7BA600246640 /* FFBasicSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5971F651FAC7BA600246640 /* FFBasicSelectView.m */; };
+		B59E3D9A201EBD5500F81F60 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3D96201EBD5500F81F60 /* UIViewController+Cloudox.m */; };
+		B59E3D9B201EC25000F81F60 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3D95201EBD5400F81F60 /* UINavigationController+Cloudox.m */; };
+		B59E3D9D201F0CC400F81F60 /* k.plist in Resources */ = {isa = PBXBuildFile; fileRef = B59E3D9C201F0CC400F81F60 /* k.plist */; };
+		B59E3DA1201F19B400F81F60 /* FFDriveNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA0201F19B400F81F60 /* FFDriveNumbersViewController.m */; };
+		B59E3DA4201F19E900F81F60 /* FFDriveFansNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA3201F19E900F81F60 /* FFDriveFansNumbersViewController.m */; };
+		B59E3DA7201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA6201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m */; };
+		B59E3DAA201F27FC00F81F60 /* FFMineBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */; };
 		B5A1C85B2005E49F00EA1A99 /* FFSelectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */; };
 		B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */; };
 		B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */; };
@@ -645,6 +652,19 @@
 		B5971F621FAC65D600246640 /* FFBasicViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFBasicViewController.m; sourceTree = "<group>"; };
 		B5971F641FAC7BA600246640 /* FFBasicSelectView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBasicSelectView.h; sourceTree = "<group>"; };
 		B5971F651FAC7BA600246640 /* FFBasicSelectView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFBasicSelectView.m; sourceTree = "<group>"; };
+		B59E3D95201EBD5400F81F60 /* UINavigationController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Cloudox.m"; sourceTree = "<group>"; };
+		B59E3D96201EBD5500F81F60 /* UIViewController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Cloudox.m"; sourceTree = "<group>"; };
+		B59E3D97201EBD5500F81F60 /* UINavigationController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationController+Cloudox.h"; sourceTree = "<group>"; };
+		B59E3D98201EBD5500F81F60 /* UIViewController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Cloudox.h"; sourceTree = "<group>"; };
+		B59E3D9C201F0CC400F81F60 /* k.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = k.plist; path = ../../k.plist; sourceTree = "<group>"; };
+		B59E3D9F201F19B400F81F60 /* FFDriveNumbersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveNumbersViewController.h; sourceTree = "<group>"; };
+		B59E3DA0201F19B400F81F60 /* FFDriveNumbersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveNumbersViewController.m; sourceTree = "<group>"; };
+		B59E3DA2201F19E900F81F60 /* FFDriveFansNumbersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveFansNumbersViewController.h; sourceTree = "<group>"; };
+		B59E3DA3201F19E900F81F60 /* FFDriveFansNumbersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveFansNumbersViewController.m; sourceTree = "<group>"; };
+		B59E3DA5201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAttentionNumbersViewController.h; sourceTree = "<group>"; };
+		B59E3DA6201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAttentionNumbersViewController.m; sourceTree = "<group>"; };
+		B59E3DA8201F27FC00F81F60 /* FFMineBaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMineBaseTableViewController.h; sourceTree = "<group>"; };
+		B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMineBaseTableViewController.m; sourceTree = "<group>"; };
 		B5A1C8592005E49F00EA1A99 /* FFSelectHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFSelectHeaderView.h; sourceTree = "<group>"; };
 		B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSelectHeaderView.m; sourceTree = "<group>"; };
 		B5A1EEBE1FCC04B7003FC031 /* FFBindMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBindMobileViewController.h; sourceTree = "<group>"; };
@@ -1146,6 +1166,7 @@
 			children = (
 				B52B1188201B13AD0002475D /* FFDriveMineViewController.h */,
 				B52B1189201B13AD0002475D /* FFDriveMineViewController.m */,
+				B59E3D9E201F194C00F81F60 /* FFDriveMineChildController */,
 			);
 			path = MineCenterController;
 			sourceTree = "<group>";
@@ -1441,6 +1462,7 @@
 		B59556B9200DDEA6007F3CC7 /* FFViewFactory */ = {
 			isa = PBXGroup;
 			children = (
+				B59E3D9C201F0CC400F81F60 /* k.plist */,
 				B59556BA200DDEA6007F3CC7 /* FFViewFactory.h */,
 				B59556C4200DDEEE007F3CC7 /* UIButton */,
 				B59556BB200DDEA6007F3CC7 /* Info.plist */,
@@ -1501,6 +1523,21 @@
 				B5A5D5691FC6B82600EC951F /* FFReplyToCommentController.m */,
 			);
 			path = CustomizeViewController;
+			sourceTree = "<group>";
+		};
+		B59E3D9E201F194C00F81F60 /* FFDriveMineChildController */ = {
+			isa = PBXGroup;
+			children = (
+				B59E3D9F201F19B400F81F60 /* FFDriveNumbersViewController.h */,
+				B59E3DA0201F19B400F81F60 /* FFDriveNumbersViewController.m */,
+				B59E3DA2201F19E900F81F60 /* FFDriveFansNumbersViewController.h */,
+				B59E3DA3201F19E900F81F60 /* FFDriveFansNumbersViewController.m */,
+				B59E3DA5201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.h */,
+				B59E3DA6201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m */,
+				B59E3DA8201F27FC00F81F60 /* FFMineBaseTableViewController.h */,
+				B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */,
+			);
+			path = FFDriveMineChildController;
 			sourceTree = "<group>";
 		};
 		B5A1EEC71FCC4523003FC031 /* ClassifyChildController */ = {
@@ -2050,6 +2087,10 @@
 				B5137A271FB44C710025F00B /* SYKeychain.m */,
 				B5B28E0B1FD7B1E5008A9BCD /* Reachability.h */,
 				B5B28E0C1FD7B1E5008A9BCD /* Reachability.m */,
+				B59E3D97201EBD5500F81F60 /* UINavigationController+Cloudox.h */,
+				B59E3D95201EBD5400F81F60 /* UINavigationController+Cloudox.m */,
+				B59E3D98201EBD5500F81F60 /* UIViewController+Cloudox.h */,
+				B59E3D96201EBD5500F81F60 /* UIViewController+Cloudox.m */,
 				B52B118B201B1C780002475D /* Masonry */,
 				B52B110F201835900002475D /* PhotoBrowser */,
 				B58DB71E2011FCB900DBE381 /* XLPhotoBrowser */,
@@ -2317,6 +2358,7 @@
 				B5B95E541FBC3A1800ACD7F7 /* FFGameCommentCell.xib in Resources */,
 				B52B1141201835900002475D /* ZLPhotoBrowser.bundle in Resources */,
 				B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */,
+				B59E3D9D201F0CC400F81F60 /* k.plist in Resources */,
 				B5137A1B1FB3FDF30025F00B /* FFApplyTransferView.xib in Resources */,
 				B5A5D53C1FC5288500EC951F /* README.txt in Resources */,
 				B5BC05561FA714870091EE4B /* MJRefresh.bundle in Resources */,
@@ -2340,7 +2382,9 @@
 				B5B95E761FBC3BBC00ACD7F7 /* FLAnimatedImageView.m in Sources */,
 				B58DB74E2011FCB900DBE381 /* XLZoomingScrollView.m in Sources */,
 				B596AAAD1FCD10AE00C8F15E /* FFMyprizeCell.m in Sources */,
+				B59E3DA1201F19B400F81F60 /* FFDriveNumbersViewController.m in Sources */,
 				B5B95E501FBC3A1800ACD7F7 /* FFGameDetailTableHeader.m in Sources */,
+				B59E3D9A201EBD5500F81F60 /* UIViewController+Cloudox.m in Sources */,
 				B5971F321FAB0CE500246640 /* FFApplyRebateViewController.m in Sources */,
 				B5955641200C854A007F3CC7 /* SDWebImagePrefetcher.m in Sources */,
 				B51379BF1FB2E0900025F00B /* FFAboutViewController.m in Sources */,
@@ -2417,6 +2461,7 @@
 				B5137A251FB43D8D0025F00B /* FFLoginViewController.m in Sources */,
 				B51379B31FB2DFFD0025F00B /* FFMyCollectionViewController.m in Sources */,
 				B52B1187201ABE3E0002475D /* UIAlertController+FFAlertController.m in Sources */,
+				B59E3D9B201EC25000F81F60 /* UINavigationController+Cloudox.m in Sources */,
 				B519671F1FA9A2580046E391 /* FFHomeViewSelectView.m in Sources */,
 				B5A1C85B2005E49F00EA1A99 /* FFSelectHeaderView.m in Sources */,
 				B58DB7492011FCB900DBE381 /* TAAnimatedDotView.m in Sources */,
@@ -2469,6 +2514,7 @@
 				B53685991FA71B75001836DC /* AFHTTPSessionManager.m in Sources */,
 				B5971F661FAC7BA600246640 /* FFBasicSelectView.m in Sources */,
 				B5971F351FAB0CFE00246640 /* FFRebateRecordViewController.m in Sources */,
+				B59E3DA7201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m in Sources */,
 				B51967081FA8A0460046E391 /* FFOpenServerSelectView.m in Sources */,
 				B51395C11FEA665400BAE477 /* FFSystemInfoController.m in Sources */,
 				B51379A11FB2ADD80025F00B /* FFMineHeaderView.m in Sources */,
@@ -2495,6 +2541,7 @@
 				B5A5D4DE1FC272EB00EC951F /* FFRegisterViewController.m in Sources */,
 				B52B1151201835900002475D /* ZLPhotoManager.m in Sources */,
 				B51967461FAAB7440046E391 /* FFRecommentCarouselView.m in Sources */,
+				B59E3DA4201F19E900F81F60 /* FFDriveFansNumbersViewController.m in Sources */,
 				B52B11AD201B1C790002475D /* MASViewAttribute.m in Sources */,
 				B596AAA61FCD09B400C8F15E /* FFMyPrizeViewController.m in Sources */,
 				B556B0D81FA6BD88005DC871 /* AppDelegate.m in Sources */,
@@ -2550,6 +2597,7 @@
 				B5BC05481FA714870091EE4B /* MJRefreshAutoFooter.m in Sources */,
 				B52B11AA201B1C790002475D /* MASConstraint.m in Sources */,
 				B5B95E8E1FBD8B8000ACD7F7 /* FFGameRaidersViewController.m in Sources */,
+				B59E3DAA201F27FC00F81F60 /* FFMineBaseTableViewController.m in Sources */,
 				B5BC05511FA714870091EE4B /* MJRefreshBackNormalFooter.m in Sources */,
 				B5A5D4E71FC2A46100EC951F /* FFResetNickNameView.m in Sources */,
 				B5A5D5071FC40FB600EC951F /* FFCoinDetailCell.m in Sources */,

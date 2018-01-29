@@ -15,6 +15,10 @@
 #import "UIButton+FFButton.h"
 #import "FFDriveThroughInfoViewController.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
+
 @interface FFDriveController ()<FFSelectHeaderViewDelegate,UIScrollViewDelegate>
 
 
@@ -23,6 +27,11 @@
 @implementation FFDriveController {
     UIViewController *lastController;
     BOOL _isAnimation;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLoad {
@@ -39,7 +48,7 @@
     self.navigationController.navigationBar.barTintColor = NAVGATION_BAR_COLOR;
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.automaticallyAdjustsScrollViewInsets = NO;
+
     self.navigationItem.title = @"秋名山";
 
     [self addSubViews];

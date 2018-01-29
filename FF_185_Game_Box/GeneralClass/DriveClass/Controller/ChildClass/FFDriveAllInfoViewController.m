@@ -12,6 +12,9 @@
 #import "FFSharedController.h"
 #import "FFDriveMineViewController.h"
 
+//#import "UINavigationController+Cloudox.h"
+//#import "UIViewController+Cloudox.h"
+
 #define CELL_IDE @"DriveInfoCell"
 
 @interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate,FFDriveDetailDelegate, UIScrollViewDelegate>
@@ -37,7 +40,7 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    [self.tableView reloadData];
+//    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLoad {
@@ -264,6 +267,9 @@ static BOOL respondsSuccess;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:vc animated:YES];
+    SHOW_TABBAR;
+    SHOW_PARNENT_TABBAR;
+
 }
 
 #pragma mark - detail delegate

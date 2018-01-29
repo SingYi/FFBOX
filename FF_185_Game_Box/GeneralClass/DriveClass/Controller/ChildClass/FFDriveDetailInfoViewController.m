@@ -320,6 +320,9 @@
 - (void)FFDetailHeaderView:(FFDetailHeaderView *)view clickAttentionButton:(id)info {
     FF_is_login;
     syLog(@"关注");
+//    if ([attentionUid isEqualToString:SSKEYCHAIN_UID]) {
+//        BOX_MESSAGE(@"");
+//    } 
     [FFDriveModel userAttentionWith:attentionUid Type:(attentionString.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"attention === %@",content);
         if (success) {

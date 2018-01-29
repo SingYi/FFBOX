@@ -301,14 +301,18 @@
                     } else {
                         [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:obj] options:SDWebImageDownloaderHighPriority progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
                         }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-                            [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:obj];
-                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                imageView.image = [ZLPhotoManager transformToGifImageWithData:data];
-                                self.gifImage = [ZLPhotoManager transformToGifImageWithData:iamgeData];
-                                self.normalImage = [UIImage imageWithData:iamgeData];
-                                imageView.image = self.gifImage;
-                                [_images addObject:imageView.image];
-                            });
+                            if (finished) {
+                                [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:obj];
+
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    self.gifImage = [ZLPhotoManager transformToGifImageWithData:data];
+                                    self.normalImage = [UIImage imageWithData:data];
+                                    imageView.image = self.gifImage;
+                                    if (self.gifImage) {
+                                        [_images addObject:imageView.image];
+                                    }
+                                });
+                            }
 
                         }];
                     }

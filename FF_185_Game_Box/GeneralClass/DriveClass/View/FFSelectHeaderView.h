@@ -39,6 +39,9 @@
 @property (nonatomic, assign) CGSize cursorSize;
 @property (nonatomic, assign) CGFloat cursorCenter_Y;
 
+/** default is clear color */ 
+@property (nonatomic, strong) UIColor *lineColor;
+
 /** default is NO */
 @property (nonatomic, assign) BOOL canScrollTitle;
 /**

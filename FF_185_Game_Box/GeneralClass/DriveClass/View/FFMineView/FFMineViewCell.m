@@ -10,7 +10,6 @@
 #import "Masonry.h"
 #import "FFMineBaseTableViewController.h"
 
-
 #define CELL_IDE @"FFDriveMineCell"
 
 @interface FFMineViewCell ()<UIPageViewControllerDelegate,UIPageViewControllerDataSource,UIScrollViewDelegate>
@@ -68,11 +67,7 @@
     self.pageViewCtrl.dataSource = self;
     self.pageViewCtrl.delegate = self;
 
-    FFMineBaseTableViewController *ctrl1 = [[FFMineBaseTableViewController alloc] init];
-    FFMineBaseTableViewController *ctrl2 = [[FFMineBaseTableViewController alloc] init];
-    FFMineBaseTableViewController *ctrl3 = [[FFMineBaseTableViewController alloc] init];
-
-    self.dataArray = @[ctrl1,ctrl2,ctrl3].mutableCopy;
+    self.dataArray = @[self.numbersViewController,self.fansNumbersViewController,self.attentionNumbersViewController].mutableCopy;
 
     [self.pageViewCtrl setViewControllers:@[self.dataArray[0]]
                                 direction:UIPageViewControllerNavigationDirectionForward
@@ -104,20 +99,17 @@
                         change:(NSDictionary<NSKeyValueChangeKey,id> *)change
                        context:(void *)context {
     if (((UIScrollView *)object).panGestureRecognizer.state == UIGestureRecognizerStateChanged) {
-        NSLog(@"bottomSView 滑动了");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PageViewGestureState" object:@"changed"];
     } else if (((UIScrollView *)object).panGestureRecognizer.state == UIGestureRecognizerStateEnded) {
-        NSLog(@"结束拖拽");
         [[NSNotificationCenter defaultCenter] postNotificationName:@"PageViewGestureState" object:@"ended"];
     }
 }
 
+#pragma mark - setter
 //创建pageViewController
 - (void)setPageView {
     [self customPageView];
 }
-
-
 
 - (void)setCanScroll:(BOOL)canScroll {
     _canScroll = canScroll;
@@ -131,10 +123,17 @@
 }
 
 - (void)setSelectIndex:(NSInteger)selectIndex {
+    _selectIndex = selectIndex;
     [self.pageViewCtrl setViewControllers:@[self.dataArray[selectIndex]]
                                 direction:UIPageViewControllerNavigationDirectionForward
                                  animated:NO
                                completion:nil];
+}
+
+- (void)setBuid:(NSString *)buid {
+    _buid = buid;
+    FFDriveNumbersViewController *ctrl1 = self.dataArray[0];
+    ctrl1.buid = buid;
 }
 
 #pragma mark - UIPageViewControllerDataSource
@@ -214,6 +213,31 @@
 }
 
 
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    syLog(@"11111111111111111");
+}
+
+#pragma mark - getter
+- (FFDriveNumbersViewController *)numbersViewController {
+    if (!_numbersViewController) {
+        _numbersViewController = [[FFDriveNumbersViewController alloc] init];
+    }
+    return _numbersViewController;
+}
+
+- (FFDriveFansNumbersViewController *)fansNumbersViewController {
+    if (!_fansNumbersViewController) {
+        _fansNumbersViewController = [[FFDriveFansNumbersViewController alloc] init];
+    }
+    return _fansNumbersViewController;
+}
+
+- (FFDriveAttentionNumbersViewController *)attentionNumbersViewController {
+    if (!_attentionNumbersViewController) {
+        _attentionNumbersViewController = [[FFDriveAttentionNumbersViewController alloc] init];
+    }
+    return _attentionNumbersViewController;
+}
 
 
 

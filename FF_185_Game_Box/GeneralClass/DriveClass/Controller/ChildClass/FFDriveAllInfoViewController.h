@@ -12,6 +12,7 @@
 #import "MBProgressHUD.h"
 
 
+
 @interface FFDriveAllInfoViewController : UIViewController
 
 /** table View */
@@ -23,6 +24,11 @@
 
 @property (nonatomic, assign) DynamicType dynamicType;
 
+@property (assign, nonatomic) BOOL canScroll;
+
+@property (nonatomic, strong) NSString *buid;
+
+
 
 - (void)initUserInterface;
 
@@ -31,6 +37,10 @@
 - (void)refreshNewData;
 
 - (void)loadMoreData;
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView;
+- (void)canScroll:(UIScrollView *)scrollView;
+
 
 
 @end

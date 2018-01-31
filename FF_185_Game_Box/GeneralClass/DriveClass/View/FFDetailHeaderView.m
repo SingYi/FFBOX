@@ -124,11 +124,11 @@
     if ([str isKindOfClass:[NSString class]]) {
         self.sexView.hidden = NO;
         if (str.integerValue == 1) {
+            self.sexView.tintColor = [UIColor blueColor];
+            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Male"];
+        } else {
             self.sexView.tintColor = [UIColor redColor];
             self.sexView.image = [UIImage imageNamed:@"Community_Sex_Female"];
-        } else {
-            self.sexView.image = [UIImage imageNamed:@"Community_Sex_Male"];
-            self.sexView.tintColor = [UIColor blueColor];
         }
     } else {
         self.sexView.hidden = YES;

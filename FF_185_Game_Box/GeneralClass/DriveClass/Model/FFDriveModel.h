@@ -12,7 +12,8 @@ typedef enum : NSUInteger {
     hotDynamic = 1,
     allDynamic,
     throughDynamic,
-    attentionDynamic
+    attentionDynamic,
+    CheckUserDynamic
 } DynamicType;
 
 typedef enum : NSUInteger {
@@ -30,6 +31,11 @@ typedef enum : NSUInteger {
     cancel
 } AttentionType;
 
+typedef enum : NSUInteger {
+    myAttention = 1,
+    myFans
+} FansOrAttention;
+
 typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
 
@@ -41,7 +47,7 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
 
 /** get dynamic */
-+ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page Complete:(CompleteBlock)completion;
++ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(CompleteBlock)completion;
 
 
 /** 发布动态 */
@@ -83,6 +89,11 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 /** 分享动态 */
 + (void)userSharedDynamics:(NSString *)Dynamics
                   Complete:(CompleteBlock)completion;
+
+/** 关注 / 粉丝*/
++ (void)userFansAndAttettionWithPage:(NSString *)page
+                                Type:(FansOrAttention)type
+                            Complete:(CompleteBlock)completion;
 
 
 @end

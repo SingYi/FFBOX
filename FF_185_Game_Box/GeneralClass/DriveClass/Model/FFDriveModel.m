@@ -11,6 +11,8 @@
 #import "SYKeychain.h"
 #import "AFHTTPSessionManager.h"
 #import <Photos/Photos.h>
+#import "FFDriveUserModel.h"
+
 
 @implementation FFDriveModel
 
@@ -22,7 +24,7 @@
     }
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:[self userModel].uid forKey:@"uid"];
     [dict setObject:content forKey:@"content"];
     NSLog(@"dict == %@",dict);
     [dict setObject:BOX_SIGN(dict, (@[@"uid",@"content"])) forKey:@"sign"];
@@ -113,15 +115,19 @@
 
 
 /** get dynamic */
-+ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page Complete:(CompleteBlock)completion {
++ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(CompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
     if (SSKEYCHAIN_UID) {
         [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     }
+    if (type == CheckUserDynamic && buid) {
+        [dict setObject:buid forKey:@"buid"];
+    }
     [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
     [dict setObject:page forKey:@"page"];
     [dict setObject:(BOX_SIGN(dict, (@[@"type",@"page"]))) forKey:@"sign"];
+
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].GET_DYNAMICS params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
@@ -244,6 +250,28 @@
         NEW_REQUEST_COMPLETION;
     }];
 }
+
+/** 关注 / 粉丝 */
++ (void)userFansAndAttettionWithPage:(NSString *)page Type:(FansOrAttention)type Complete:(CompleteBlock)completion {
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:[self userModel].buid forKey:@"uid"];
+    [dict setObject:[self userModel].uid forKey:@"visit_uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
+    [dict setObject:page forKey:@"page"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"visit_uid",@"channel",@"type",@"page"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].FOLLOW_LIST params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+
++ (FFDriveUserModel *)userModel {
+    return [FFDriveUserModel sharedModel];
+}
+
 
 
 @end

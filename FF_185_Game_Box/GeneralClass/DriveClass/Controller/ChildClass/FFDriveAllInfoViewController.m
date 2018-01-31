@@ -8,9 +8,10 @@
 
 #import "FFDriveAllInfoViewController.h"
 #import "DriveInfoCell.h"
-#import "FFDriveDetailInfoViewController.h"
 #import "FFSharedController.h"
 #import "FFDriveMineViewController.h"
+#import "FFDriveUserModel.h"
+#import "FFDriveDetailInfoViewController.h"
 
 //#import "UINavigationController+Cloudox.h"
 //#import "UIViewController+Cloudox.h"
@@ -21,6 +22,10 @@
 
 
 @property (nonatomic, assign) NSUInteger currentPage;
+
+//判断手指是否离开
+@property (nonatomic, assign) BOOL isTouch;
+
 @property (nonatomic, strong) FFDriveDetailInfoViewController *detailController;
 
 @end
@@ -71,8 +76,9 @@
 
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
 
-    [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"get dynamic == %@",content);
+        syLog(@"buid == %@",self.buid);
         if (success) {
             self.showArray = [content[@"data"] mutableCopy];
         }
@@ -93,7 +99,7 @@
 
 - (void)loadMoreData {
     _currentPage ++;
-    [FFDriveModel getDynamicWithType:allDynamic Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel getDynamicWithType:allDynamic Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             NSArray *array = content[@"data"];
             if (array.count > 0 && array != nil) {
@@ -198,14 +204,13 @@ static BOOL respondsSuccess;
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    HIDE_TABBAR;
-    HIDE_PARNENT_TABBAR;
     [self pushDetailControllerWith:indexPath Comment:NO];
 }
 
 - (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {
     self.detailController.dict = self.showArray[indexPath.row];
     self.detailController.indexPath = indexPath;
+    HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
     SHOW_PARNENT_TABBAR;
@@ -213,7 +218,17 @@ static BOOL respondsSuccess;
 
 
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    self.isTouch = YES;
+}
+
+///用于判断手指是否离开了 要做到当用户手指离开了，tableview滑道顶部，也不显示出主控制器
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+    self.isTouch = NO;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
     NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
     [cells enumerateObjectsUsingBlock:^(DriveInfoCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[DriveInfoCell class]]) {
@@ -225,6 +240,21 @@ static BOOL respondsSuccess;
             }
         }
     }];
+}
+
+- (void)canScroll:(UIScrollView *)scrollView {
+    if (!self.canScroll) {
+        [scrollView setContentOffset:CGPointZero];
+    }
+    CGFloat offsetY = scrollView.contentOffset.y;
+    if (offsetY < 0) {
+        if (!self.isTouch) {//当手指离开了，也不允许显示主控制器，这里可以根据实际需求做处理
+            return;
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kLeaveTopNtf" object:@1];
+        self.canScroll = NO;
+        scrollView.contentOffset = CGPointZero;
+    }
 }
 
 
@@ -259,11 +289,14 @@ static BOOL respondsSuccess;
     }
 }
 
-- (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid {
+- (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid WithIconImage:(UIImage *)iconImage {
     syLog(@"click icon with uid == %@", uid);
 
     FFDriveMineViewController *vc = [FFDriveMineViewController new];
-
+    vc.dict = cell.dict;
+    vc.iconImage = iconImage;
+    vc.uid = uid;
+    [self userModel].buid = uid;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:vc animated:YES];
@@ -325,9 +358,18 @@ static BOOL respondsSuccess;
     return _detailController;
 }
 
+- (FFDriveUserModel *)userModel {
+    return [FFDriveUserModel sharedModel];
+}
+
+- (NSString *)buid {
+    return [self userModel].buid;
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SharedDynamicsSuccess object:nil];
 }
+
 
 
 @end

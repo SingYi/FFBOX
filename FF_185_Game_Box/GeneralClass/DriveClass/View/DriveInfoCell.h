@@ -19,7 +19,7 @@ typedef enum : NSUInteger {
 
 @protocol DriveInfoCellDelegate <NSObject>
 
-- (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid;
+- (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid WithIconImage:(UIImage *)iconImage;
 
 @optional
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type;

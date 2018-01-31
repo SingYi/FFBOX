@@ -7,8 +7,15 @@
 //
 
 #import "FFDriveFansNumbersViewController.h"
+#import "FFViewFactory.h"
+#import "FFDriveFansCell.h"
+
+#define CELL_IDE @"FFDriveFansCell"
 
 @interface FFDriveFansNumbersViewController ()
+
+@property (nonatomic, assign) NSUInteger currentPage;
+
 
 @end
 
@@ -16,22 +23,111 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self initDataSource];
+    [self initUserInterface];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+
+- (void)initUserInterface {
+    MJRefreshNormalHeader *customRefreshHeader = [FFViewFactory customRefreshHeaderWithTableView:self.tableView WithTarget:self];
+
+    //下拉刷新
+    [customRefreshHeader setRefreshingAction:@selector(refreshNewData)];
+    //上拉加载更多
+    self.tableView.mj_footer = [MJRefreshBackNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreData)];
+    self.tableView.tableFooterView = [UIView new];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)initDataSource {
+    [self.tableView registerNib:[UINib nibWithNibName:CELL_IDE bundle:nil] forCellReuseIdentifier:CELL_IDE];
+    [self refreshNewData];
 }
-*/
+
+#pragma mark - method
+- (void)refreshNewData {
+    _currentPage = 1;
+    [FFDriveModel userFansAndAttettionWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"attention === %@", content);
+        if (success) {
+            NSArray *array = content[@"data"][@"list"];
+            self.showArray = array.mutableCopy;
+        }
+
+        if (self.showArray.count == 0) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
+            imageView.image = [UIImage imageNamed:@"Community_NoData"];
+            self.tableView.backgroundView = imageView;
+        } else {
+            self.tableView.backgroundView = nil;
+        }
+
+        [self.tableView reloadData];
+        [self.tableView.mj_header endRefreshing];
+        [self.tableView.mj_footer endRefreshing];
+    }];
+}
+
+- (void)loadMoreData {
+    _currentPage++;
+    [FFDriveModel userFansAndAttettionWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"attention === %@", content);
+        if (success) {
+            NSArray *array = content[@"data"][@"list"];
+            if (array.count > 0) {
+                [self.showArray addObjectsFromArray:array];
+                [self.tableView.mj_footer endRefreshing];
+            } else {
+                [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            }
+        } else {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        }
+
+        if (self.showArray.count == 0) {
+            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
+            imageView.image = [UIImage imageNamed:@"Community_NoData"];
+            self.tableView.backgroundView = imageView;
+        } else {
+            self.tableView.backgroundView = nil;
+        }
+        [self.tableView reloadData];
+    }];
+}
+
+#pragma mark - table view data source
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.showArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    FFDriveFansCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
+
+    cell.dict = self.showArray[indexPath.row];
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 80;
+}
+
+
+#pragma mark - getter
+- (FansOrAttention)type {
+    return myFans;
+}
+
+
 
 @end
+
+
+
+
+
+
+

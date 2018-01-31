@@ -82,13 +82,15 @@
     if (self.textView.text.length == 0 && self.imagesArray.count == 0) {
         [UIAlertController showAlertMessage:@"请输入要发送的状态\n或者选择要发送的图片" dismissTime:0.7 dismissBlock:nil];
     } else {
-
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+        syLog(@"发送动态");
         [FFDriveModel userUploadPortraitWithContent:self.textView.text Image:self.lastSelectAssets Completion:^(NSDictionary *content, BOOL success) {
+            [hud hideAnimated:YES];
+            syLog(@"发送完成");
             if (success) {
                 [self.navigationController popViewControllerAnimated:YES];
             }
         }];
-
     }
 }
 

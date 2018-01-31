@@ -1,19 +1,21 @@
 //
-//  FFDriveMineViewController.h
+//  FFDrivePersonalHeader.h
 //  FF_185_Game_Box
 //
-//  Created by 燚 on 2018/1/26.
+//  Created by 燚 on 2018/1/30.
 //  Copyright © 2018年 Yi Shi. All rights reserved.
 //
 
-
 #import <UIKit/UIKit.h>
 
-@interface FFDriveMineViewController : UIViewController
+@interface FFDrivePersonalHeader : UIView
 
 @property (nonatomic, strong) UIImage *iconImage;
 @property (nonatomic, strong) NSDictionary *dict;
 @property (nonatomic, strong) NSString *uid;
+// nick name
+@property (nonatomic, strong, readonly) NSString *nickName;
 
+- (void)hideNickName:(BOOL)hide;
 
 @end

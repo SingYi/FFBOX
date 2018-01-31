@@ -56,10 +56,11 @@
 
 - (void)initDataSource {
 
-    self.selectHeaderView.headerTitleArray = @[@"全部",@"热门",@"关注"];
+    self.selectHeaderView.headerTitleArray = @[@"全部",@"热门",@"关注",@"我的"];
     [self setFchildControllerWithClassNames:@[@"FFDriveAllInfoViewController",
                                               @"FFDriveHotInfoViewController",
-                                              @"FFDriveAttentionInfoViewController"]];
+                                              @"FFDriveAttentionInfoViewController",
+                                              @"UIViewController"]];
 }
 
 - (void)addSubViews {
@@ -206,6 +207,7 @@
     if (!_selectHeaderView) {
         _selectHeaderView = [[FFSelectHeaderView alloc] initWithFrame:CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 50)];
         _selectHeaderView.delegate = self;
+        _selectHeaderView.lineColor = [UIColor colorWithWhite:0.9 alpha:1];
     }
     return _selectHeaderView;
 }
@@ -246,6 +248,7 @@
     }
     return _throughtViewController;
 }
+
 
 
 

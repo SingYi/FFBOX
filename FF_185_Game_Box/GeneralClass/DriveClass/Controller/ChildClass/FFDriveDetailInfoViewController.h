@@ -9,9 +9,10 @@
 #import "FFDriveAllInfoViewController.h"
 @class FFDriveDetailInfoViewController;
 
+
 @protocol FFDriveDetailDelegate <NSObject>
 
-
+@optional
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller
                     replaceDict:(NSDictionary *)dict
                       indexPath:(NSIndexPath *)indexPath;

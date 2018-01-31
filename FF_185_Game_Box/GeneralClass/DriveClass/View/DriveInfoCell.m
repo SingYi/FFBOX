@@ -97,10 +97,10 @@
 }
 
 - (void)respondsToIcon {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickIconWithUid:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickIconWithUid:WithIconImage:)]) {
         NSString *uid = [NSString stringWithFormat:@"%@",self.dict[@"dynamics"][@"uid"]];
         if (uid.length > 0) {
-            [self.delegate DriveInfoCell:self didClickIconWithUid:uid];
+            [self.delegate DriveInfoCell:self didClickIconWithUid:uid WithIconImage:self.iconImageView.image];
         }
     }
 }
@@ -199,11 +199,11 @@
     if ([str isKindOfClass:[NSString class]]) {
         self.sexImageVIew.hidden = NO;
         if (str.integerValue == 1) {
-            self.sexImageVIew.tintColor = [UIColor redColor];
-            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
-        } else {
             self.sexImageVIew.tintColor = [UIColor blueColor];
             self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
+        } else {
+            self.sexImageVIew.tintColor = [UIColor redColor];
+            self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
         }
     } else {
         self.sexImageVIew.hidden = YES;

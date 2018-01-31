@@ -6,8 +6,11 @@
 //  Copyright © 2018年 Yi Shi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FFDriveFansNumbersViewController.h"
 
-@interface FFDriveAttentionNumbersViewController : UIViewController
+@interface FFDriveAttentionNumbersViewController : FFDriveFansNumbersViewController
+
+
+
 
 @end

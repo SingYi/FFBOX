@@ -6,8 +6,12 @@
 //  Copyright © 2018年 Yi Shi. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "FFDriveAllInfoViewController.h"
+#import "FFDriveDetailInfoViewController.h"
 
-@interface FFDriveNumbersViewController : UIViewController
+@interface FFDriveNumbersViewController : FFDriveAllInfoViewController <FFDriveDetailDelegate>
+
+
 
 @end
+

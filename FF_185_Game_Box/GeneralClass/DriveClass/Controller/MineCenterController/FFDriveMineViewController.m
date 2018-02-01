@@ -20,6 +20,7 @@
 #import "MBProgressHUD.h"
 
 #import "FFDriveDetailInfoViewController.h"
+#import "FFDetailMineInfoTableViewController.h"
 
 @interface FFTestTableViewController : UITableView
 
@@ -55,8 +56,13 @@
 
 //编辑按钮
 @property (nonatomic, strong) UIBarButtonItem *editButton;
+//查看按钮
+@property (nonatomic, strong) UIBarButtonItem *checkButton;
 
 @property (nonatomic, strong) FFDriveDetailInfoViewController *detailController;
+
+
+@property (nonatomic, assign) NSUInteger selectIndex;
 
 
 @end
@@ -111,6 +117,10 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onScrollBottomView:) name:@"PageViewGestureState" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushDetailController:) name:@"pushDetailController" object:nil];
 
+    //刷新查看用户发车的回调通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CheckUserDynamicCallBack:) name:@"CheckUserDynamicCallBack" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FansAndAttetionNumbersCallBack:) name:@"FansAndAttetionNumbersCallBack" object:nil];
+
     self.tableView.showsVerticalScrollIndicator = NO;
     [FFMineViewCell registCellWithTableView:self.tableView];
 
@@ -119,6 +129,7 @@
 //通知的处理
 //pageViewController页面变动时的通知
 - (void)onPageViewCtrlChange:(NSNotification *)ntf {
+    _selectIndex = [ntf.object integerValue];
     [self.selectHeaderView setSelectTitleIndex:[ntf.object integerValue]];
 }
 
@@ -147,6 +158,43 @@
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
+}
+
+//开车数目回调
+- (void)CheckUserDynamicCallBack:(NSNotification *)ntf {
+    [self.tableView.mj_header endRefreshing];
+    NSDictionary *dict = ntf.userInfo;
+    syLog(@"user info === %@",dict);
+    NSArray *array = dict[@"data"];
+    NSString *numbers = nil;
+    if (array.count > 0) {
+        NSDictionary *dynamics = array[0][@"dynamics"];
+        numbers = [NSString stringWithFormat:@"开车数(%@)",dynamics[@"dynamics_count"]];
+    } else {
+        numbers = @"开车数(0)";
+    }
+    self.selectHeaderTitleArray = [@[numbers,self.selectHeaderTitleArray[1],self.selectHeaderTitleArray[2]] mutableCopy];
+}
+
+- (void)FansAndAttetionNumbersCallBack:(NSNotification *)ntf {
+    [self.tableView.mj_header endRefreshing];
+    NSDictionary *dict = ntf.userInfo;
+    syLog(@"notif === %@",dict);
+    if ([dict[@"type"] isEqualToString:@"1"]) {
+        NSString *string = [NSString stringWithFormat:@"%@",dict[@"data"]];
+        if (string.integerValue > 0) {
+            self.selectHeaderTitleArray = [@[self.selectHeaderTitleArray[0],[NSString stringWithFormat:@"粉丝(%@)",string],self.selectHeaderTitleArray[2]] mutableCopy];
+        } else {
+            self.selectHeaderTitleArray = [@[self.selectHeaderTitleArray[0],@"粉丝",self.selectHeaderTitleArray[2]] mutableCopy];
+        }
+    } else {
+        NSString *string = [NSString stringWithFormat:@"%@",dict[@"data"]];
+        if (string.integerValue > 0) {
+            self.selectHeaderTitleArray = [@[self.selectHeaderTitleArray[0],self.selectHeaderTitleArray[1],[NSString stringWithFormat:@"关注(%@)",string]] mutableCopy];
+        } else {
+            self.selectHeaderTitleArray = [@[self.selectHeaderTitleArray[0],self.selectHeaderTitleArray[1],@"关注(0)"] mutableCopy];
+        }
+    }
 }
 
 
@@ -217,15 +265,30 @@
 #pragma mark - respodns
 - (void)respondsToEditButton {
     syLog(@"编辑个人信息");
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:[FFDetailMineInfoTableViewController controllerWithUid:self.uid Dict:self.dict] animated:YES];
+}
+
+- (void)respondsToCheckButton {
+    syLog(@"查看信息");
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:[FFDetailMineInfoTableViewController controllerWithUid:self.uid Dict:self.dict] animated:YES];
 }
 
 - (void)refreshNewData {
-    syLog(@"刷新");
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.tableView.mj_header endRefreshing];
-        [hud hideAnimated:YES];
-    });
+    syLog(@"刷新 %ld",_selectIndex);
+    switch (_selectIndex) {
+        case 0: [self.contentCell.numbersViewController refreshNewData];
+            break;
+        case 1: [self.contentCell.fansNumbersViewController refreshNewData];
+            break;
+        case 2: [self.contentCell.attentionNumbersViewController refreshNewData];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - setter
@@ -255,7 +318,7 @@
     if ([uid isEqualToString:SSKEYCHAIN_UID]) {
         self.navigationItem.rightBarButtonItem = self.editButton;
     } else {
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.rightBarButtonItem = self.checkButton;
     }
     
     self.contentCell.buid = _uid;
@@ -268,8 +331,7 @@
 
 #pragma mark - select header delegate
 - (void)FFSelectHeaderView:(FFSelectHeaderView *)view didSelectTitleWithIndex:(NSUInteger)idx {
-
-
+    _selectIndex = idx;
     self.contentCell.selectIndex = idx;
 }
 
@@ -330,6 +392,13 @@
         _editButton = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToEditButton)];
     }
     return _editButton;
+}
+
+- (UIBarButtonItem *)checkButton {
+    if (!_checkButton) {
+        _checkButton = [[UIBarButtonItem alloc] initWithTitle:@"查看" style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToCheckButton)];
+    }
+    return _checkButton;
 }
 
 - (FFMineViewCell *)contentCell {

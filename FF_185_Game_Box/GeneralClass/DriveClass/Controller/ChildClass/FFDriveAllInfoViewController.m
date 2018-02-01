@@ -78,9 +78,12 @@
 
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"get dynamic == %@",content);
-        syLog(@"buid == %@",self.buid);
+        [hud hideAnimated:YES];
         if (success) {
             self.showArray = [content[@"data"] mutableCopy];
+            if (self.dynamicType == CheckUserDynamic) {
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckUserDynamicCallBack" object:nil userInfo:content];
+            }
         }
 
         if (self.showArray.count == 0) {
@@ -93,7 +96,7 @@
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
         [self.tableView reloadData];
-        [hud hideAnimated:YES];
+
     }];
 }
 
@@ -187,7 +190,7 @@ static BOOL respondsSuccess;
 
 #pragma mark - tableview data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

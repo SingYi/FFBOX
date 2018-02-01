@@ -36,6 +36,11 @@ typedef enum : NSUInteger {
     myFans
 } FansOrAttention;
 
+typedef enum : NSUInteger {
+    fieldSimple = 1,
+    fieldDetail
+} FieldType;
+
 typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
 
@@ -94,6 +99,24 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 + (void)userFansAndAttettionWithPage:(NSString *)page
                                 Type:(FansOrAttention)type
                             Complete:(CompleteBlock)completion;
+
+/** 用户信息 */
++ (void)userInfomationWithUid:(NSString *)uid
+                    fieldType:(FieldType)type
+                     Complete:(CompleteBlock)completion;
+
+/** 编辑用户信息 */
++ (void)userEditInfoMationWithNickName:(NSString *)nick_name
+                                   sex:(NSString *)sex
+                               address:(NSString *)address
+                                  desc:(NSString *)desc
+                                 birth:(NSString *)birth
+                                    qq:(NSString *)qq
+                                 email:(NSString *)email
+                              Complete:(CompleteBlock)completion;
+
+
+
 
 
 @end

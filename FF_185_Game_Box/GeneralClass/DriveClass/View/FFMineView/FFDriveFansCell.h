@@ -7,9 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+@class FFDriveFansCell;
+
+
+@protocol FFDriveCellDelegate <NSObject>
+
+- (void)FFDriveFansCell:(FFDriveFansCell *)cell clickAttentionButtonWitDict:(NSDictionary *)dict;
+
+
+@end
+
 
 @interface FFDriveFansCell : UITableViewCell
 
 @property (nonatomic, strong) NSDictionary *dict;
+
+@property (nonatomic, weak) id<FFDriveCellDelegate> delegate;
 
 @end

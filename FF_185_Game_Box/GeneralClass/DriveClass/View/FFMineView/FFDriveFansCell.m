@@ -8,6 +8,7 @@
 
 #import "FFDriveFansCell.h"
 #import "UIImageView+WebCache.h"
+#import "FFDriveUserModel.h"
 
 @interface FFDriveFansCell()
 
@@ -22,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet UIImageView *vipImage;
 
+@property (weak, nonatomic) IBOutlet UIButton *attentionButton;
 
 @end
 
@@ -34,6 +36,8 @@
     self.iconImage.layer.masksToBounds = YES;
     self.iconImage.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
     self.iconImage.layer.borderWidth = 2;
+
+    [self.attentionButton setTitleColor:NAVGATION_BAR_COLOR forState:(UIControlStateNormal)];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -55,6 +59,10 @@
     [self setSex:dict[@"sex"]];
     //numbers
     [self setNumbers:dict[@"fans_counts"]];
+    //attentionButton
+    [self setAttention:dict[@"follow_status"]];
+    //uid attention
+    [self setUid:dict[@"uid"]];
 }
 
 - (void)setIcon:(NSString *)str {
@@ -92,6 +100,37 @@
 
 - (void)setNumbers:(NSString *)str {
     self.numbersLabel.text = [NSString stringWithFormat:@"粉丝数(%@)",str];
+}
+
+- (void)setAttention:(NSString *)str {
+    NSString *attention = [NSString stringWithFormat:@"%@",str];
+    if (attention.integerValue == 0) {
+        [self setAttentionButtonTitle:@"+关注" TitleColor:NAVGATION_BAR_COLOR];
+    } else if (attention.integerValue == 0) {
+        [self setAttentionButtonTitle:@"取消关注" TitleColor:[UIColor lightGrayColor]];
+    } else if (attention.integerValue == 2) {
+        [self setAttentionButtonTitle:@"相互关注" TitleColor:RGBCOLOR(218, 95, 85)];
+    }
+}
+
+- (void)setAttentionButtonTitle:(NSString *)title TitleColor:(UIColor *)color {
+    [self.attentionButton setTitle:title forState:(UIControlStateNormal)];
+    [self.attentionButton setTitleColor:color forState:(UIControlStateNormal)];
+}
+
+- (void)setUid:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    if ([string isEqualToString:[FFDriveUserModel sharedModel].uid]) {
+        self.attentionButton.hidden = YES;
+    } else {
+        self.attentionButton.hidden = NO;
+    }
+}
+
+- (IBAction)ClickAttentionButton:(UIButton *)sender {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDriveFansCell:clickAttentionButtonWitDict:)]) {
+        [self.delegate FFDriveFansCell:self clickAttentionButtonWitDict:self.dict];
+    }
 }
 
 

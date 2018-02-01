@@ -59,13 +59,25 @@
                             <constraint firstAttribute="width" constant="15" id="v4T-QO-7j4"/>
                         </constraints>
                     </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVO-J7-A0C">
+                        <rect key="frame" x="524" y="28" width="46" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="EYb-hX-b61"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="ClickAttentionButton:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="yvy-vh-S3A"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="1aL-Fl-ZL8" firstAttribute="centerY" secondItem="bBu-h4-tN0" secondAttribute="centerY" id="6kg-7V-X7B"/>
                     <constraint firstItem="bBu-h4-tN0" firstAttribute="leading" secondItem="vv4-0e-PaY" secondAttribute="trailing" constant="4" id="7Uf-uI-awv"/>
+                    <constraint firstItem="VVO-J7-A0C" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="9UI-no-d07"/>
                     <constraint firstItem="1aL-Fl-ZL8" firstAttribute="leading" secondItem="bBu-h4-tN0" secondAttribute="trailing" constant="4" id="JIb-Rv-vj5"/>
                     <constraint firstItem="8dv-hM-vug" firstAttribute="leading" secondItem="69p-7G-QiI" secondAttribute="trailing" constant="8" id="Oyu-Gb-2xb"/>
                     <constraint firstItem="69p-7G-QiI" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="XeF-02-8OW"/>
+                    <constraint firstItem="VVO-J7-A0C" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="YhI-La-5lG"/>
                     <constraint firstItem="vv4-0e-PaY" firstAttribute="leading" secondItem="69p-7G-QiI" secondAttribute="trailing" constant="8" id="aTM-sZ-cyy"/>
                     <constraint firstItem="vv4-0e-PaY" firstAttribute="top" secondItem="69p-7G-QiI" secondAttribute="top" id="lB2-RH-TRT"/>
                     <constraint firstItem="69p-7G-QiI" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="pP7-z9-ky4"/>
@@ -75,6 +87,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
             <connections>
+                <outlet property="attentionButton" destination="VVO-J7-A0C" id="58B-yN-aTu"/>
                 <outlet property="iconImage" destination="69p-7G-QiI" id="U6U-mZ-Sgy"/>
                 <outlet property="nickNameLabel" destination="vv4-0e-PaY" id="NJc-oy-yBO"/>
                 <outlet property="numbersLabel" destination="8dv-hM-vug" id="t92-7P-Vcm"/>

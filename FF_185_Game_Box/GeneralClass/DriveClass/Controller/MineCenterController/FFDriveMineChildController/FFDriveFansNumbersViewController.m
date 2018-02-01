@@ -9,10 +9,11 @@
 #import "FFDriveFansNumbersViewController.h"
 #import "FFViewFactory.h"
 #import "FFDriveFansCell.h"
+#import "MBProgressHUD.h"
 
 #define CELL_IDE @"FFDriveFansCell"
 
-@interface FFDriveFansNumbersViewController ()
+@interface FFDriveFansNumbersViewController ()<FFDriveCellDelegate>
 
 @property (nonatomic, assign) NSUInteger currentPage;
 
@@ -47,11 +48,16 @@
 #pragma mark - method
 - (void)refreshNewData {
     _currentPage = 1;
+
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+
     [FFDriveModel userFansAndAttettionWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"attention === %@", content);
+        [hud hideAnimated:YES];
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             self.showArray = array.mutableCopy;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"FansAndAttetionNumbersCallBack" object:nil userInfo:@{@"type":(self.type == attention) ? @"0" : @"1",@"data":content[@"data"][@"count"]}];
         }
 
         if (self.showArray.count == 0) {
@@ -106,13 +112,24 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FFDriveFansCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
-
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell.delegate = self;
     cell.dict = self.showArray[indexPath.row];
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 80;
+}
+
+#pragma mark - cell delegate
+- (void)FFDriveFansCell:(FFDriveFansCell *)cell clickAttentionButtonWitDict:(NSDictionary *)dict {
+    NSString *attention1 = dict[@"follow_status"];
+    AttentionType type = (attention1.integerValue == 0) ? attention : cancel;
+    NSString *uid = dict[@"uid"];
+    [FFDriveModel userAttentionWith:uid Type:type Complete:^(NSDictionary *content, BOOL success) {
+        [self refreshNewData];
+    }];
 }
 
 

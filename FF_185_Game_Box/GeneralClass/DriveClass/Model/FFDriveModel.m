@@ -267,6 +267,77 @@
     }];
 }
 
+/** 查询用户信息 */
++ (void)userInfomationWithUid:(NSString *)uid fieldType:(FieldType)type Complete:(CompleteBlock)completion {
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:4];
+    [dict setObject:uid forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"field_type"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"field_type"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_DESC params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+/** 编辑信息 */
++ (void)userEditInfoMationWithNickName:(NSString *)nick_name
+                                   sex:(NSString *)sex
+                               address:(NSString *)address
+                                  desc:(NSString *)desc
+                                 birth:(NSString *)birth
+                                    qq:(NSString *)qq
+                                 email:(NSString *)email
+                              Complete:(CompleteBlock)completion
+{
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+
+    if (!nick_name) {
+        nick_name = @"";
+    }
+    [dict setObject:nick_name forKey:@"nick_name"];
+
+    if (!sex) {
+        sex = @"";
+    }
+    [dict setObject:sex forKey:@"sex"];
+
+    if (!address) {
+        address = @"";
+    }
+    [dict setObject:address forKey:@"address"];
+
+    if (!desc) {
+        desc = @"";
+    }
+    [dict setObject:desc forKey:@"desc"];
+
+    if (!birth) {
+        birth = @"";
+    }
+    [dict setObject:birth forKey:@"birth"];
+
+    if (!qq) {
+        qq = @"";
+    }
+    [dict setObject:qq forKey:@"qq"];
+
+    if (!email) {
+        email = @"";
+    }
+    [dict setObject:email forKey:@"email"];
+
+    NSArray *para = @[@"uid",@"channel",@"nick_name",@"sex",@"address",@"desc",@"birth",@"qq",@"email"];
+    [dict setObject:(BOX_SIGN(dict, para)) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_EDIT params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
 
 + (FFDriveUserModel *)userModel {
     return [FFDriveUserModel sharedModel];

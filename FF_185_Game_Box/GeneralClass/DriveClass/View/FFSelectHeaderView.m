@@ -100,6 +100,13 @@ const NSInteger ButtonTag = 10086;
     if (titleArray == nil || titleArray.count == 0) {
         return;
     }
+    if (_titleButtonArray.count > 0 && _titleButtonArray.count == titleArray.count) {
+        [_titleButtonArray enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj setTitle:titleArray[idx] forState:(UIControlStateNormal)];
+        }];
+        return;
+    }
+
     _titleButtonArray = [NSMutableArray arrayWithCapacity:titleArray.count];
     
     [titleArray enumerateObjectsUsingBlock:^(NSString* obj, NSUInteger idx, BOOL * _Nonnull stop) {

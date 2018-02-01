@@ -201,6 +201,8 @@
 		B59E3DC32021938800F81F60 /* FFDriveUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DC22021938800F81F60 /* FFDriveUserModel.m */; };
 		B59E3DC72021BAEF00F81F60 /* FFDriveFansCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DC52021BAEF00F81F60 /* FFDriveFansCell.m */; };
 		B59E3DC82021BAEF00F81F60 /* FFDriveFansCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59E3DC62021BAEF00F81F60 /* FFDriveFansCell.xib */; };
+		B59E3DCC2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DCA2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m */; };
+		B59E3DD12022E85500F81F60 /* MyStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B59E3DD02022E85500F81F60 /* MyStoryboard.storyboard */; };
 		B5A1C85B2005E49F00EA1A99 /* FFSelectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */; };
 		B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */; };
 		B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */; };
@@ -691,6 +693,9 @@
 		B59E3DC42021BAEF00F81F60 /* FFDriveFansCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveFansCell.h; sourceTree = "<group>"; };
 		B59E3DC52021BAEF00F81F60 /* FFDriveFansCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveFansCell.m; sourceTree = "<group>"; };
 		B59E3DC62021BAEF00F81F60 /* FFDriveFansCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FFDriveFansCell.xib; sourceTree = "<group>"; };
+		B59E3DC92022C32B00F81F60 /* FFDetailMineInfoTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailMineInfoTableViewController.h; sourceTree = "<group>"; };
+		B59E3DCA2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailMineInfoTableViewController.m; sourceTree = "<group>"; };
+		B59E3DD02022E85500F81F60 /* MyStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyStoryboard.storyboard; sourceTree = "<group>"; };
 		B5A1C8592005E49F00EA1A99 /* FFSelectHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFSelectHeaderView.h; sourceTree = "<group>"; };
 		B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSelectHeaderView.m; sourceTree = "<group>"; };
 		B5A1EEBE1FCC04B7003FC031 /* FFBindMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBindMobileViewController.h; sourceTree = "<group>"; };
@@ -1725,6 +1730,9 @@
 			children = (
 				B5AB9507200310D20055D507 /* FFDriveController.h */,
 				B5AB9508200310D20055D507 /* FFDriveController.m */,
+				B59E3DC92022C32B00F81F60 /* FFDetailMineInfoTableViewController.h */,
+				B59E3DCA2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m */,
+				B59E3DD02022E85500F81F60 /* MyStoryboard.storyboard */,
 				B52B11B4201B1DE50002475D /* MineCenterController */,
 				B5D75A8620070BC100600B3D /* ChildClass */,
 			);
@@ -2396,6 +2404,7 @@
 				B51395CB1FEB904800BAE477 /* FFSystemInfoCell.xib in Resources */,
 				B53685A61FA84B69001836DC /* GameBoxConfig.plist in Resources */,
 				B54E6B341FB0527C009D0025 /* FFActivityCell.xib in Resources */,
+				B59E3DD12022E85500F81F60 /* MyStoryboard.storyboard in Resources */,
 				B51967431FAAB3120046E391 /* aa.xcassets in Resources */,
 				B5A5D5671FC6AD6700EC951F /* FFMyNewsCell.xib in Resources */,
 				B54E6B2D1FB03008009D0025 /* RebateTableViewCell.xib in Resources */,
@@ -2671,6 +2680,7 @@
 				B51967361FA9EC750046E391 /* FFClassifyTableCell.m in Sources */,
 				B5137A291FB44C710025F00B /* SYKeychain.m in Sources */,
 				B5955644200C854A007F3CC7 /* UIImage+MultiFormat.m in Sources */,
+				B59E3DCC2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m in Sources */,
 				B596AAB11FCD31B500C8F15E /* FFEvervDayComment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

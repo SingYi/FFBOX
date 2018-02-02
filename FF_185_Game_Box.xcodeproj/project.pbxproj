@@ -203,6 +203,7 @@
 		B59E3DC82021BAEF00F81F60 /* FFDriveFansCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B59E3DC62021BAEF00F81F60 /* FFDriveFansCell.xib */; };
 		B59E3DCC2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DCA2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m */; };
 		B59E3DD12022E85500F81F60 /* MyStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B59E3DD02022E85500F81F60 /* MyStoryboard.storyboard */; };
+		B59E3DD920243F9600F81F60 /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D52E1FC526F800EC951F /* TencentOpenAPI.framework */; };
 		B5A1C85B2005E49F00EA1A99 /* FFSelectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */; };
 		B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */; };
 		B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */; };
@@ -222,7 +223,6 @@
 		B5A5D5131FC4543900EC951F /* FFPlatformCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A5D5121FC4543900EC951F /* FFPlatformCell.xib */; };
 		B5A5D5161FC517FE00EC951F /* FFSharedController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D5151FC517FE00EC951F /* FFSharedController.m */; };
 		B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D52C1FC5268700EC951F /* libstdc++.tbd */; };
-		B5A5D52F1FC526F800EC951F /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D52E1FC526F800EC951F /* TencentOpenAPI.framework */; };
 		B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D5311FC5274900EC951F /* libsqlite3.tbd */; };
 		B5A5D5341FC5284700EC951F /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D5331FC5284300EC951F /* CoreTelephony.framework */; };
 		B5A5D53B1FC5288500EC951F /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5A5D5361FC5288500EC951F /* libWeChatSDK.a */; };
@@ -696,6 +696,8 @@
 		B59E3DC92022C32B00F81F60 /* FFDetailMineInfoTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailMineInfoTableViewController.h; sourceTree = "<group>"; };
 		B59E3DCA2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailMineInfoTableViewController.m; sourceTree = "<group>"; };
 		B59E3DD02022E85500F81F60 /* MyStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyStoryboard.storyboard; sourceTree = "<group>"; };
+		B59E3DD32024371400F81F60 /* TrackingIO.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = TrackingIO.a; sourceTree = "<group>"; };
+		B59E3DD42024371400F81F60 /* TrackingIO.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingIO.h; sourceTree = "<group>"; };
 		B5A1C8592005E49F00EA1A99 /* FFSelectHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFSelectHeaderView.h; sourceTree = "<group>"; };
 		B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSelectHeaderView.m; sourceTree = "<group>"; };
 		B5A1EEBE1FCC04B7003FC031 /* FFBindMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBindMobileViewController.h; sourceTree = "<group>"; };
@@ -902,8 +904,8 @@
 				B5B95E9D1FBE8D6500ACD7F7 /* libChangyanSDK.a in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
 				B5A5D53B1FC5288500EC951F /* libWeChatSDK.a in Frameworks */,
-				B5A5D52F1FC526F800EC951F /* TencentOpenAPI.framework in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,
+				B59E3DD920243F9600F81F60 /* TencentOpenAPI.framework in Frameworks */,
 				B5A5D5341FC5284700EC951F /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1594,6 +1596,15 @@
 			path = Test;
 			sourceTree = "<group>";
 		};
+		B59E3DD22024371400F81F60 /* trackingio */ = {
+			isa = PBXGroup;
+			children = (
+				B59E3DD32024371400F81F60 /* TrackingIO.a */,
+				B59E3DD42024371400F81F60 /* TrackingIO.h */,
+			);
+			path = trackingio;
+			sourceTree = "<group>";
+		};
 		B5A1EEC71FCC4523003FC031 /* ClassifyChildController */ = {
 			isa = PBXGroup;
 			children = (
@@ -2150,6 +2161,7 @@
 				B59E3D95201EBD5400F81F60 /* UINavigationController+Cloudox.m */,
 				B59E3D98201EBD5500F81F60 /* UIViewController+Cloudox.h */,
 				B59E3D96201EBD5500F81F60 /* UIViewController+Cloudox.m */,
+				B59E3DD22024371400F81F60 /* trackingio */,
 				B52B118B201B1C780002475D /* Masonry */,
 				B52B110F201835900002475D /* PhotoBrowser */,
 				B58DB71E2011FCB900DBE381 /* XLPhotoBrowser */,
@@ -2806,6 +2818,7 @@
 		B556B0EA1FA6BD88005DC871 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2813,8 +2826,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/FF_185_Game_Box/Other/FFPerFixHeader.pch";
 				INFOPLIST_FILE = FF_185_Game_Box/Other/Info.plist;
@@ -2825,12 +2838,11 @@
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechatOpenSDK/OpenSDK1.8.0",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/ChangyanSDK",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechatOpenSDK/OpenSDK1.8.1_NoPay",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/trackingio",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-Objc",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sy185Box.TWKJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -2842,6 +2854,7 @@
 		B556B0EB1FA6BD88005DC871 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -2849,8 +2862,8 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/FF_185_Game_Box/Other/FFPerFixHeader.pch";
 				INFOPLIST_FILE = FF_185_Game_Box/Other/Info.plist;
@@ -2861,12 +2874,11 @@
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechatOpenSDK/OpenSDK1.8.0",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/ChangyanSDK",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechatOpenSDK/OpenSDK1.8.1_NoPay",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/trackingio",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 				);
 				OTHER_CFLAGS = "";
-				OTHER_LDFLAGS = (
-					"-all_load",
-					"-Objc",
-				);
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.sy185Box.TWKJ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

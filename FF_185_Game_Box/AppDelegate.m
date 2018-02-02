@@ -17,7 +17,7 @@
 #import "FFLaunchScreen.h"
 #import "FFAdvertisingView.h"
 
-#import "TrackingIO.h"
+//#import "TrackingIO.h"
 
 #define WEIXINAPPID @"wx7ec31aabe8cc710d"
 #define QQAPPID @"1106099979"

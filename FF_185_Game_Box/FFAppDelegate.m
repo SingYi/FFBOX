@@ -17,10 +17,13 @@
 #import "FFLaunchScreen.h"
 #import "FFAdvertisingView.h"
 
+#import "TrackingIO.h"
 
 #define WEIXINAPPID @"wx7ec31aabe8cc710d"
 #define QQAPPID @"1106099979"
 
+#define TrackingIOID @"ffcaffb5979b3df9ff12751857fc88fa"
+#define TrackingIOToken @"506D348071C391675943F5754F6AF056"
 
 @interface FFAppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
 
@@ -29,13 +32,6 @@
 
 @implementation FFAppDelegate
 
-- (void)onReq:(BaseReq*)req {
-    syLog(@"????????????????????????????????????????");
-}
-
-- (void)onResp:(BaseResp*)resp {
-    syLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -45,11 +41,6 @@
 
     //初始化数据
     [self initializeDataSource];
-
-//    self.window = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
-//    self.window.rootViewController = [UIViewController new];
-//    [self.window makeKeyAndVisible];
-
 
 
     return YES;
@@ -79,24 +70,6 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
 }
 
 

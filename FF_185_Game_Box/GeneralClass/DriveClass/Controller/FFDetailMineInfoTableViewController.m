@@ -45,7 +45,10 @@ typedef enum : NSUInteger {
 
 + (instancetype)ControllerWithType:(ModifyType)type;
 
+- (void)showPickerViewWithType:(ModifyType)type;
+
 @end
+
 
 
 const NSUInteger cellTag = 10086;
@@ -83,6 +86,8 @@ const NSUInteger cellTag = 10086;
 
 @property (nonatomic, strong) FFModifyInfomationViewController *modifyController;
 @property (nonatomic, strong) NSString *modifyContent;
+
+@property (nonatomic, strong) UIDatePicker *datePicker;
 
 @end
 
@@ -192,6 +197,8 @@ const NSUInteger cellTag = 10086;
     [self setEmail:dict[@"email"]];
     //local
     [self setLocal:dict[@"address"]];
+
+    [self.tableView reloadData];
 }
 
 //setImage
@@ -214,7 +221,11 @@ const NSUInteger cellTag = 10086;
 //register time
 - (void)setCreatTime:(NSString *)str {
     STR_NIL_RETURN;
-    self.creatTimeLabel.text = [NSString stringWithFormat:@"%@",str];
+    NSString *timeString = [NSString stringWithFormat:@"%@",str];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeString.integerValue];
+    self.creatTimeLabel.text = [formatter stringFromDate:date];
 }
 //desc
 - (void)setcontent:(NSString *)str {
@@ -305,7 +316,7 @@ const NSUInteger cellTag = 10086;
 - (void)reSetDescription {
     syLog(@"重置   简介");
     modifyType = modifyIntroduction;
-    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.OriginalContent = self.contentLabel.text;
     self.modifyController.type = modifyIntroduction;
     [self.navigationController pushViewController:self.modifyController animated:YES];
 }
@@ -318,20 +329,32 @@ const NSUInteger cellTag = 10086;
 - (void)reSetBirthDay {
     syLog(@"重置   生日");
     modifyType = modifyBirthday;
+    [self showModifyWindow:self.birthdayLabel.text Type:modifyBirthday];
 }
 
 - (void)reSetQQ {
     syLog(@"重置    QQ");
-    modifyType = modifyQQ;
-    self.modifyController.OriginalContent = self.nickNameLabel.text;
-    self.modifyController.type = modifyQQ;
+    [self pushModifyWith:self.QQLabel.text Type:modifyQQ];
+}
+
+- (void)pushModifyWith:(NSString *)text Type:(ModifyType)type {
+    modifyType = type;
+    self.modifyController.OriginalContent = text;
+    self.modifyController.type = type;
     [self.navigationController pushViewController:self.modifyController animated:YES];
+}
+
+- (void)showModifyWindow:(NSString *)text Type:(ModifyType)type {
+    modifyType = type;
+    self.modifyController.OriginalContent = text;
+    self.modifyController.type = type;
+    [self.modifyController showPickerViewWithType:type];
 }
 
 - (void)reSetEmail {
     syLog(@"重置    邮箱");
     modifyType = modifyEmail;
-    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.OriginalContent = self.EmailLabel.text;
     self.modifyController.type = modifyEmail;
     [self.navigationController pushViewController:self.modifyController animated:YES];
 }
@@ -429,6 +452,17 @@ const NSUInteger cellTag = 10086;
     return _actionSheet;
 }
 
+- (UIDatePicker *)datePicker {
+    if (!_datePicker) {
+        _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.62)];
+        _datePicker.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2);
+        _datePicker.datePickerMode = UIDatePickerModeDate;
+//        _datePicker.date = [NSDate dateWithTimeIntervalSince1970:0];
+        _datePicker.backgroundColor = [UIColor whiteColor];
+    }
+    return _datePicker;
+}
+
 
 - (FFModifyInfomationViewController *)modifyController {
     if (!_modifyController) {
@@ -445,11 +479,13 @@ const NSUInteger cellTag = 10086;
 
 
 
-@interface FFModifyInfomationViewController ()
+@interface FFModifyInfomationViewController () <UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) UITextField *textFiled;
 @property (nonatomic, strong) UITextView *textView;
 @property (nonatomic, strong) UIBarButtonItem *completeButton;
+@property (nonatomic, assign) NSUInteger maxStringCount;
+@property (nonatomic, strong) UIWindow *showWindow;
 
 @end
 
@@ -462,6 +498,10 @@ const NSUInteger cellTag = 10086;
     return controller;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUserInterface];
@@ -472,66 +512,122 @@ const NSUInteger cellTag = 10086;
     self.navigationItem.rightBarButtonItem = self.completeButton;
 }
 
+- (void)showPickerViewWithType:(ModifyType)type {
+    self.view.backgroundColor = [UIColor clearColor];
+    [self.showWindow makeKeyAndVisible];
+}
+
 #pragma mark - responds
 - (void)respondsToCompleteButton {
     NSString *content = (self.type == modifyIntroduction) ? self.textView.text : self.textFiled.text;
+    if (content.length < 1) {
+        [UIAlertController showAlertMessage:@"请输入要修改的信息" dismissTime:0.7 dismissBlock:nil];
+        return;
+    }
+
+    if ([content isEqualToString:self.OriginalContent]) {
+
+        return;
+    }
+
+    [self.navigationController popViewControllerAnimated:YES];
     if (self.FFEnterCallBackBlock) {
         self.FFEnterCallBackBlock(content);
     }
 }
 
+- (void)respondsToCancelWindow {
+    [self.showWindow resignKeyWindow];
+    self.showWindow = nil;
+}
+
 
 #pragma mark - setter
 - (void)setType:(ModifyType)type {
+    self.view.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     _type = type;
     switch (type) {
         case modifyNickName: {
             self.textFiled.text = self.OriginalContent;
             self.textFiled.placeholder = @"请输入昵称 : ";
             self.navigationItem.title = @"修改昵称";
+            self.maxStringCount = 12;
         }
             break;
         case modifyQQ: {
             self.textFiled.text = self.OriginalContent;
             self.textFiled.placeholder = @"请输入QQ : ";
             self.navigationItem.title = @"修改QQ";
+            self.maxStringCount = 12;
         }
             break;
         case modifyEmail: {
             self.textFiled.text = self.OriginalContent;
             self.textFiled.placeholder = @"请输入Email : ";
             self.navigationItem.title = @"修改Email";
+            self.maxStringCount = 20;
         }
             break;
         case modifyIntroduction: {
             self.textView.text = self.OriginalContent;
             self.navigationItem.title = @"修改简介";
+            self.maxStringCount = 30;
         }
             break;
-
         default:
             break;
     }
     (type == modifyIntroduction) ? [self addTextView] : [self addTextFiledView];
 }
 
+
+
+
 - (void)addTextFiledView {
     [self.textView removeFromSuperview];
     [self.view addSubview:self.textFiled];
+    [self.textFiled becomeFirstResponder];
 }
 
 - (void)addTextView {
     [self.textFiled removeFromSuperview];
     [self.view addSubview:self.textView];
+    [self.textView becomeFirstResponder];
 }
 
 - (void)setOriginalContent:(NSString *)OriginalContent {
-    if (OriginalContent == nil) {
-        OriginalContent = @"";
+    _OriginalContent = @"";
+    if (OriginalContent != nil) {
+        _OriginalContent = OriginalContent;
     }
-    _OriginalContent = OriginalContent;
+
+    syLog(@"_OriginalContent  -=== %@",_OriginalContent);
     self.textFiled.text = _OriginalContent;
     self.textView.text = _OriginalContent;
+}
+
+#pragma mark - textfield Delegate
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [self respondsToCompleteButton];
+    return YES;
+}
+
+//限制用户名和密码长度
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    if (range.length == 1 && string.length == 0) {
+        return YES;
+    } else if (textField.text.length >= 12) {
+        textField.text = [textField.text substringToIndex:12];
+        return NO;
+    }
+    return YES;
+}
+
+#pragma mark - text view delegate
+- (void)textViewDidChange:(UITextView *)textView {
+    if (textView.text.length > 30) {
+        textView.text = [textView.text substringToIndex:30];
+    }
 }
 
 #pragma mark - getter
@@ -541,8 +637,22 @@ const NSUInteger cellTag = 10086;
         _textFiled.bounds = CGRectMake(0, 0, kSCREEN_WIDTH * 0.8, 44);
         _textFiled.center = CGPointMake(kSCREEN_WIDTH / 2, 120);
         _textFiled.borderStyle = UITextBorderStyleRoundedRect;
+        _textFiled.delegate = self;
     }
     return _textFiled;
+}
+
+-(UITextView *)textView {
+    if (!_textView) {
+        _textView = [[UITextView alloc] initWithFrame:CGRectMake(5, 88, kSCREEN_WIDTH - 10, 160)];
+        _textView.layer.borderColor = [UIColor grayColor].CGColor;
+        _textView.layer.borderWidth = 1;
+        _textView.layer.cornerRadius = 4;
+        _textView.layer.masksToBounds = YES;
+        _textView.font = [UIFont systemFontOfSize:16];
+        _textView.delegate = self;
+    }
+    return _textView;
 }
 
 - (UIBarButtonItem *)completeButton {
@@ -551,6 +661,23 @@ const NSUInteger cellTag = 10086;
     }
     return _completeButton;
 }
+
+- (UIWindow *)showWindow {
+    if (!_showWindow) {
+        _showWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
+        _showWindow.rootViewController = self;
+        _showWindow.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
+
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondsToCancelWindow)];
+        tap.numberOfTapsRequired = 1;
+        tap.numberOfTouchesRequired = 1;
+        [_showWindow addGestureRecognizer:tap];
+    }
+    return _showWindow;
+}
+
+
+
 
 
 

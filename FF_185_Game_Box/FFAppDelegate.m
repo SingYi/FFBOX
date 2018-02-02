@@ -17,13 +17,12 @@
 #import "FFLaunchScreen.h"
 #import "FFAdvertisingView.h"
 
-#import "TrackingIO.h"
+#import "FFStatisticsModel.h"
 
 #define WEIXINAPPID @"wx7ec31aabe8cc710d"
 #define QQAPPID @"1106099979"
 
-#define TrackingIOID @"ffcaffb5979b3df9ff12751857fc88fa"
-#define TrackingIOToken @"506D348071C391675943F5754F6AF056"
+
 
 @interface FFAppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
 
@@ -124,6 +123,9 @@
 
     //公告
     [FFBoxModel appAnnouncement];
+
+    //注册统计
+    [FFStatisticsModel reigstStatics];
 
     //检查更新
     [FFBoxModel checkBoxVersionCompletion:^(NSDictionary *content, BOOL success) {

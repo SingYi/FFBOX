@@ -357,7 +357,7 @@
 
     NSArray *para = @[@"uid",@"channel",@"nick_name",@"sex",@"address",@"desc",@"birth",@"qq",@"email"];
     [redict setObject:(BOX_SIGN(redict, para)) forKey:@"sign"];
-    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_EDIT params:dict completion:^(NSDictionary *content, BOOL success) {
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_EDIT params:redict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
     }];
 }

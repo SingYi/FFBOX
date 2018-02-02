@@ -260,12 +260,12 @@
 		B59E3FED202441C000F81F60 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3F19202441BF00F81F60 /* UINavigationController+Cloudox.m */; };
 		B59E3FEE202441C000F81F60 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3F1B202441BF00F81F60 /* UIViewController+Cloudox.m */; };
 		B59E40102024439A00F81F60 /* TrackingIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E3F16202441BF00F81F60 /* TrackingIO.a */; };
-		B59E40182024445C00F81F60 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = B59E40132024445B00F81F60 /* README.txt */; };
 		B59E40192024449100F81F60 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E40122024445B00F81F60 /* libWeChatSDK.a */; };
 		B59E401B2024458D00F81F60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401A2024458800F81F60 /* Security.framework */; };
 		B59E401D202445A400F81F60 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401C2024459F00F81F60 /* AdSupport.framework */; };
 		B59E401F202445B700F81F60 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401E202445B200F81F60 /* SystemConfiguration.framework */; };
 		B59E4021202445C700F81F60 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E4020202445C300F81F60 /* CoreMotion.framework */; };
+		B59E40242024605300F81F60 /* FFStatisticsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E40232024605300F81F60 /* FFStatisticsModel.m */; };
 		B5A1C85B2005E49F00EA1A99 /* FFSelectHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */; };
 		B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */; };
 		B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5A1EEC11FCC0FE1003FC031 /* NewImage.xcassets */; };
@@ -871,7 +871,6 @@
 		B59E3F1A202441BF00F81F60 /* UIViewController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Cloudox.h"; sourceTree = "<group>"; };
 		B59E3F1B202441BF00F81F60 /* UIViewController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Cloudox.m"; sourceTree = "<group>"; };
 		B59E40122024445B00F81F60 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		B59E40132024445B00F81F60 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		B59E40142024445B00F81F60 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		B59E40152024445B00F81F60 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		B59E40162024445B00F81F60 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
@@ -879,6 +878,8 @@
 		B59E401C2024459F00F81F60 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B59E401E202445B200F81F60 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		B59E4020202445C300F81F60 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		B59E40222024605300F81F60 /* FFStatisticsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFStatisticsModel.h; sourceTree = "<group>"; };
+		B59E40232024605300F81F60 /* FFStatisticsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFStatisticsModel.m; sourceTree = "<group>"; };
 		B5A1C8592005E49F00EA1A99 /* FFSelectHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFSelectHeaderView.h; sourceTree = "<group>"; };
 		B5A1C85A2005E49F00EA1A99 /* FFSelectHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSelectHeaderView.m; sourceTree = "<group>"; };
 		B5A1EEBE1FCC04B7003FC031 /* FFBindMobileViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBindMobileViewController.h; sourceTree = "<group>"; };
@@ -1997,7 +1998,6 @@
 			isa = PBXGroup;
 			children = (
 				B59E40122024445B00F81F60 /* libWeChatSDK.a */,
-				B59E40132024445B00F81F60 /* README.txt */,
 				B59E40142024445B00F81F60 /* WechatAuthSDK.h */,
 				B59E40152024445B00F81F60 /* WXApi.h */,
 				B59E40162024445B00F81F60 /* WXApiObject.h */,
@@ -2521,6 +2521,8 @@
 				B53685A31FA81D72001836DC /* FFMapModel.m */,
 				B5137A551FB5538F0025F00B /* FFBoxModel.h */,
 				B5137A561FB5538F0025F00B /* FFBoxModel.m */,
+				B59E40222024605300F81F60 /* FFStatisticsModel.h */,
+				B59E40232024605300F81F60 /* FFStatisticsModel.m */,
 				B53685A71FA8505C001836DC /* ViewFactory */,
 			);
 			path = Model;
@@ -2647,7 +2649,6 @@
 				B59E3DC82021BAEF00F81F60 /* FFDriveFansCell.xib in Resources */,
 				B5B95E991FBDB05900ACD7F7 /* FFRaidersCell.xib in Resources */,
 				B51379C91FB2FCE00025F00B /* FFpackageCell.xib in Resources */,
-				B59E40182024445C00F81F60 /* README.txt in Resources */,
 				B5B95E521FBC3A1800ACD7F7 /* FFGameDetailTableViewCell.xib in Resources */,
 				B51395CB1FEB904800BAE477 /* FFSystemInfoCell.xib in Resources */,
 				B59E3F93202441C000F81F60 /* README.md in Resources */,
@@ -2861,6 +2862,7 @@
 				B53685A41FA81D72001836DC /* FFMapModel.m in Sources */,
 				B59E3FA1202441C000F81F60 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				B5A5D4EE1FC2C94D00EC951F /* FFPayModel.m in Sources */,
+				B59E40242024605300F81F60 /* FFStatisticsModel.m in Sources */,
 				B5A5D4E11FC2737D00EC951F /* FFForgetPasswordViewController.m in Sources */,
 				B59E3FDC202441C000F81F60 /* SDImageCache.m in Sources */,
 				B5A5D4DE1FC272EB00EC951F /* FFRegisterViewController.m in Sources */,

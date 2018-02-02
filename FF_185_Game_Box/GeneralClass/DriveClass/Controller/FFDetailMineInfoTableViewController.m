@@ -10,18 +10,43 @@
 #import "UINavigationController+Cloudox.h"
 #import "UIViewController+Cloudox.h"
 #import "UIImageView+WebCache.h"
-#import "FFDriveModel.h"
 #import "UIAlertController+FFAlertController.h"
 #import "SYKeychain.h"
 #import "MBProgressHUD.h"
 #import "ZLPhotoActionSheet.h"
 #import <Photos/Photos.h>
 
+#import "FFDriveModel.h"
+#import "FFUserModel.h"
+#import "FFDriveUserModel.h"
 
 #define CELL_IDE @"DetailMineInfoCell"
 #define STR_NIL_RETURN if (str == nil || [str isKindOfClass:[NSNull class]]) {\
 return;\
 }
+
+
+typedef enum : NSUInteger {
+    modifyNickName,
+    modifyIntroduction,
+    modifyBirthday,
+    modifySex,
+    modifyQQ,
+    modifyEmail,
+    modifyLocation
+} ModifyType;
+
+
+@interface FFModifyInfomationViewController : UIViewController
+
+@property (nonatomic, strong) void(^FFEnterCallBackBlock)(NSString * content);
+@property (nonatomic, assign) ModifyType type;
+@property (nonatomic, strong) NSString *OriginalContent;
+
++ (instancetype)ControllerWithType:(ModifyType)type;
+
+@end
+
 
 const NSUInteger cellTag = 10086;
 
@@ -56,11 +81,15 @@ const NSUInteger cellTag = 10086;
 @property (nonatomic, strong) NSMutableArray<PHAsset *> *lastSelectAssets;
 @property (nonatomic, assign) BOOL isOriginal;
 
+@property (nonatomic, strong) FFModifyInfomationViewController *modifyController;
+@property (nonatomic, strong) NSString *modifyContent;
+
 @end
 
 @implementation FFDetailMineInfoTableViewController {
     BOOL selectButton;
     BOOL isRefres;
+    ModifyType modifyType;
 }
 
 + (instancetype)controllerWithUid:(NSString *)uid Dict:(NSDictionary *)dict {
@@ -99,7 +128,10 @@ const NSUInteger cellTag = 10086;
     syLog(@"设置 uid");
     NSString *string = [NSString stringWithFormat:@"%@",uid];
     _uid = string;
+    [self refreshData];
+}
 
+- (void)refreshData {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     [FFDriveModel userInfomationWithUid:_uid fieldType:fieldDetail Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"查询用户信息  :  %@",content);
@@ -264,40 +296,82 @@ const NSUInteger cellTag = 10086;
 
 - (void)reSetNiceName {
     syLog(@"重置   昵称");
-
-    [FFDriveModel userEditInfoMationWithNickName:@"雨下整夜" sex: nil address:nil desc:nil birth:nil qq:nil email:nil Complete:^(NSDictionary *content, BOOL success) {
-        syLog(@"修改 昵称 ===%@ ", content);
-    }];
+    modifyType = modifyNickName;
+    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.type = modifyNickName;
+    [self.navigationController pushViewController:self.modifyController animated:YES];
 }
 
 - (void)reSetDescription {
     syLog(@"重置   简介");
+    modifyType = modifyIntroduction;
+    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.type = modifyIntroduction;
+    [self.navigationController pushViewController:self.modifyController animated:YES];
 }
 
 - (void)reSetSex {
     syLog(@"重置   性别");
+    modifyType = modifySex;
 }
 
 - (void)reSetBirthDay {
     syLog(@"重置   生日");
+    modifyType = modifyBirthday;
 }
 
 - (void)reSetQQ {
     syLog(@"重置    QQ");
+    modifyType = modifyQQ;
+    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.type = modifyQQ;
+    [self.navigationController pushViewController:self.modifyController animated:YES];
 }
 
 - (void)reSetEmail {
     syLog(@"重置    邮箱");
+    modifyType = modifyEmail;
+    self.modifyController.OriginalContent = self.nickNameLabel.text;
+    self.modifyController.type = modifyEmail;
+    [self.navigationController pushViewController:self.modifyController animated:YES];
 }
 
 - (void)reSetLocation {
+    modifyType = modifyLocation;
     syLog(@"重置   所在地");
 }
 
+- (void)setModifyContent:(NSString *)modifyContent {
+    _modifyContent = modifyContent;
+    NSString *type;
+    switch (modifyType) {
+        case modifyNickName: type = @"nick_name"; break;
+        case modifyIntroduction: type = @"desc"; break;
+        case modifySex: type = @"sex"; break;
+        case modifyBirthday: type = @"birth"; break;
+        case modifyQQ: type = @"qq"; break;
+        case modifyEmail: type = @"email"; break;
+        case modifyLocation: type = @"address"; break;
+        default:
+            break;
+    }
+
+    [self userModifyWith:@{type:modifyContent}];
+}
+
+- (void)userModifyWith:(NSDictionary *)dict {
+    syLog(@"修改  dict == %@",dict);
+    [FFDriveModel userEditInfoMationWIthDict:dict Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"edit call back === %@",content);
+        if (success) {
+            [self refreshData];
+        }
+    }];
+}
+
+
 - (void)setImagesArray:(NSArray *)imagesArray {
     self.iconImage.image = imagesArray.firstObject;
-//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
-    [self.tableView reloadData];
 }
 
 
@@ -328,9 +402,6 @@ const NSUInteger cellTag = 10086;
         _actionSheet.configuration.maxSelectCount = 1;
 
         _actionSheet.configuration.navBarColor = NAVGATION_BAR_COLOR;
-        //    actionSheet.configuration.navTitleColor = [UIColor blackColor];
-        //        _actionSheet.configuration.bottomBtnsNormalTitleColor = [UIColor blueColor];
-        //        _actionSheet.configuration.bottomBtnsDisableBgColor = [UIColor whiteColor];
         _actionSheet.configuration.bottomViewBgColor = NAVGATION_BAR_COLOR;
         //是否允许框架解析图片
         _actionSheet.configuration.shouldAnialysisAsset = YES;
@@ -343,7 +414,7 @@ const NSUInteger cellTag = 10086;
         _actionSheet.configuration.allowRecordVideo = NO;
 
         zl_weakify(self);
-        [self.actionSheet setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
+        [_actionSheet setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
             zl_strongify(weakSelf);
             strongSelf.imagesArray = images;
             strongSelf.isOriginal = isOriginal;
@@ -359,5 +430,159 @@ const NSUInteger cellTag = 10086;
 }
 
 
+- (FFModifyInfomationViewController *)modifyController {
+    if (!_modifyController) {
+        _modifyController = [[FFModifyInfomationViewController alloc] init];
+    }
+    WeakSelf;
+    [_modifyController setFFEnterCallBackBlock:^(NSString *content) {
+        weakSelf.modifyContent = content;
+    }];
+    return _modifyController;
+}
 
 @end
+
+
+
+@interface FFModifyInfomationViewController ()
+
+@property (nonatomic, strong) UITextField *textFiled;
+@property (nonatomic, strong) UITextView *textView;
+@property (nonatomic, strong) UIBarButtonItem *completeButton;
+
+@end
+
+@implementation FFModifyInfomationViewController
+
+
++ (instancetype)ControllerWithType:(ModifyType)type {
+    FFModifyInfomationViewController *controller = [[FFModifyInfomationViewController alloc] init];
+
+    return controller;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self initUserInterface];
+}
+
+- (void)initUserInterface {
+    self.view.backgroundColor = [UIColor whiteColor];
+    self.navigationItem.rightBarButtonItem = self.completeButton;
+}
+
+#pragma mark - responds
+- (void)respondsToCompleteButton {
+    NSString *content = (self.type == modifyIntroduction) ? self.textView.text : self.textFiled.text;
+    if (self.FFEnterCallBackBlock) {
+        self.FFEnterCallBackBlock(content);
+    }
+}
+
+
+#pragma mark - setter
+- (void)setType:(ModifyType)type {
+    _type = type;
+    switch (type) {
+        case modifyNickName: {
+            self.textFiled.text = self.OriginalContent;
+            self.textFiled.placeholder = @"请输入昵称 : ";
+            self.navigationItem.title = @"修改昵称";
+        }
+            break;
+        case modifyQQ: {
+            self.textFiled.text = self.OriginalContent;
+            self.textFiled.placeholder = @"请输入QQ : ";
+            self.navigationItem.title = @"修改QQ";
+        }
+            break;
+        case modifyEmail: {
+            self.textFiled.text = self.OriginalContent;
+            self.textFiled.placeholder = @"请输入Email : ";
+            self.navigationItem.title = @"修改Email";
+        }
+            break;
+        case modifyIntroduction: {
+            self.textView.text = self.OriginalContent;
+            self.navigationItem.title = @"修改简介";
+        }
+            break;
+
+        default:
+            break;
+    }
+    (type == modifyIntroduction) ? [self addTextView] : [self addTextFiledView];
+}
+
+- (void)addTextFiledView {
+    [self.textView removeFromSuperview];
+    [self.view addSubview:self.textFiled];
+}
+
+- (void)addTextView {
+    [self.textFiled removeFromSuperview];
+    [self.view addSubview:self.textView];
+}
+
+- (void)setOriginalContent:(NSString *)OriginalContent {
+    if (OriginalContent == nil) {
+        OriginalContent = @"";
+    }
+    _OriginalContent = OriginalContent;
+    self.textFiled.text = _OriginalContent;
+    self.textView.text = _OriginalContent;
+}
+
+#pragma mark - getter
+- (UITextField *)textFiled {
+    if (!_textFiled) {
+        _textFiled = [[UITextField alloc] init];
+        _textFiled.bounds = CGRectMake(0, 0, kSCREEN_WIDTH * 0.8, 44);
+        _textFiled.center = CGPointMake(kSCREEN_WIDTH / 2, 120);
+        _textFiled.borderStyle = UITextBorderStyleRoundedRect;
+    }
+    return _textFiled;
+}
+
+- (UIBarButtonItem *)completeButton {
+    if (!_completeButton) {
+        _completeButton = [[UIBarButtonItem alloc] initWithTitle:@"完成" style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToCompleteButton)];
+    }
+    return _completeButton;
+}
+
+
+
+
+
+
+@end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

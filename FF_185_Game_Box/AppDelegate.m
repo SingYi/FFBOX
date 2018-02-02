@@ -17,10 +17,13 @@
 #import "FFLaunchScreen.h"
 #import "FFAdvertisingView.h"
 
+#import "TrackingIO.h"
 
 #define WEIXINAPPID @"wx7ec31aabe8cc710d"
 #define QQAPPID @"1106099979"
 
+#define TrackingIOID @"ffcaffb5979b3df9ff12751857fc88fa"
+#define TrackingIOToken @"506D348071C391675943F5754F6AF056"
 
 @interface AppDelegate () <UNUserNotificationCenterDelegate,WXApiDelegate>
 
@@ -28,13 +31,7 @@
 
 @implementation AppDelegate
 
-- (void)onReq:(BaseReq*)req {
-    syLog(@"????????????????????????????????????????");
-}
 
-- (void)onResp:(BaseResp*)resp {
-    syLog(@"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-}
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
@@ -76,23 +73,6 @@
 }
 
 
-- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
-}
-
-- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
-    syLog(@"open url == %@",url);
-    [WXApi handleOpenURL:url delegate:self];
-    return NO;
-}
 
 
 
@@ -161,12 +141,6 @@
         }
     }];
 
-
-    //推送通知
-//    [FFBoxModel registerNotification:10];
-
-//    NSURL *url = [NSURL URLWithString:@"App-Prefs:root=App-Prefs:root=General&path=DeviceManagement"];
-//    [[UIApplication sharedApplication] openURL:url];
 
 }
 

@@ -17,7 +17,7 @@
 @implementation FFDriveModel
 
 /** 发状态 */
-+ (void)postDynamicWith:(NSString *)content Images:(NSArray *)imgs Complete:(CompleteBlock)completion {
++ (void)postDynamicWith:(NSString *)content Images:(NSArray *)imgs Complete:(FFCompleteBlock)completion {
 
     if ((content == nil || content.length == 0) && (imgs.count == 0)) {
         return;
@@ -42,7 +42,7 @@
 /** 发动态 */
 + (void)userUploadPortraitWithContent:(NSString *)content
                                 Image:(NSArray<UIImage *> *)images
-                           Completion:(CompleteBlock)completion
+                           Completion:(FFCompleteBlock)completion
 {
 
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -115,7 +115,7 @@
 
 
 /** get dynamic */
-+ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(CompleteBlock)completion {
++ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
     if (SSKEYCHAIN_UID) {
@@ -136,7 +136,7 @@
 }
 
 /** like or dislike */
-+ (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id type:(LikeOrDislike)type Complete:(CompleteBlock)completion {
++ (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id type:(LikeOrDislike)type Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     if (SSKEYCHAIN_UID != nil && SSKEYCHAIN_UID.length != 0) {
@@ -161,7 +161,7 @@
 }
 
 /** comment  */
-+ (void)userComeentListWithDynamicsID:(NSString *)dynamicsID type:(CommentType)type page:(NSString *)page Complete:(CompleteBlock)completion {
++ (void)userComeentListWithDynamicsID:(NSString *)dynamicsID type:(CommentType)type page:(NSString *)page Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     if (SSKEYCHAIN_UID != nil && SSKEYCHAIN_UID.length != 0) {
@@ -182,7 +182,7 @@
 
 
 /** 发布评论 */
-+ (void)userSendCommentWithjDynamicsID:(NSString *)dynamicsID ToUid:(NSString *)toUid Comment:(NSString *)comment Complete:(CompleteBlock)completion {
++ (void)userSendCommentWithjDynamicsID:(NSString *)dynamicsID ToUid:(NSString *)toUid Comment:(NSString *)comment Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
 
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
@@ -200,7 +200,7 @@
 }
 
 /** 赞或者踩评论 */
-+ (void)userLikeOrDislikeComment:(NSString *)comment_id Type:(LikeOrDislike)type Complete:(CompleteBlock)completion {
++ (void)userLikeOrDislikeComment:(NSString *)comment_id Type:(LikeOrDislike)type Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     [dict setObject:Channel forKey:@"channel"];
@@ -216,7 +216,7 @@
 }
 
 /** 删除评论 */
-+ (void)userDeleteCommentWith:(NSString *)comment_id Complete:(CompleteBlock)completion {
++ (void)userDeleteCommentWith:(NSString *)comment_id Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     [dict setObject:Channel forKey:@"channel"];
@@ -229,7 +229,7 @@
 }
 
 /** 关注用户 */
-+ (void)userAttentionWith:(NSString *)attentionUid Type:(AttentionType)type Complete:(CompleteBlock)completion {
++ (void)userAttentionWith:(NSString *)attentionUid Type:(AttentionType)type Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     [dict setObject:attentionUid forKey:@"buid"];
@@ -242,7 +242,7 @@
 }
 
 /** 分享 */
-+ (void)userSharedDynamics:(NSString *)Dynamics Complete:(CompleteBlock)completion {
++ (void)userSharedDynamics:(NSString *)Dynamics Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:Dynamics forKey:@"id"];
     [dict setObject:(BOX_SIGN(dict, (@[@"id"]))) forKey:@"sign"];
@@ -252,7 +252,7 @@
 }
 
 /** 关注 / 粉丝 */
-+ (void)userFansAndAttettionWithPage:(NSString *)page Type:(FansOrAttention)type Complete:(CompleteBlock)completion {
++ (void)userFansAndAttettionWithPage:(NSString *)page Type:(FansOrAttention)type Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:[self userModel].buid forKey:@"uid"];
@@ -268,7 +268,7 @@
 }
 
 /** 查询用户信息 */
-+ (void)userInfomationWithUid:(NSString *)uid fieldType:(FieldType)type Complete:(CompleteBlock)completion {
++ (void)userInfomationWithUid:(NSString *)uid fieldType:(FieldType)type Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:4];
     [dict setObject:uid forKey:@"uid"];
@@ -289,7 +289,7 @@
                                  birth:(NSString *)birth
                                     qq:(NSString *)qq
                                  email:(NSString *)email
-                              Complete:(CompleteBlock)completion
+                              Complete:(FFCompleteBlock)completion
 {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
@@ -333,6 +333,30 @@
 
     NSArray *para = @[@"uid",@"channel",@"nick_name",@"sex",@"address",@"desc",@"birth",@"qq",@"email"];
     [dict setObject:(BOX_SIGN(dict, para)) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_EDIT params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
++ (void)userEditInfoMationWIthDict:(NSDictionary *)dict Complete:(FFCompleteBlock)completion {
+    NSMutableDictionary *redict = [@{@"uid":SSKEYCHAIN_UID,
+                                     @"channel":Channel,
+                                     @"nick_name":@"",
+                                     @"sex":@"",
+                                     @"address":@"",
+                                     @"desc":@"",
+                                     @"birth":@"",
+                                     @"qq":@"",
+                                     @"email":@""
+                                   } mutableCopy];
+
+    NSArray *allKeys = dict.allKeys;
+    [allKeys enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [redict setObject:dict[obj] forKey:obj];
+    }];
+
+    NSArray *para = @[@"uid",@"channel",@"nick_name",@"sex",@"address",@"desc",@"birth",@"qq",@"email"];
+    [redict setObject:(BOX_SIGN(redict, para)) forKey:@"sign"];
     [FFBasicModel postRequestWithURL:[FFMapModel map].USER_EDIT params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
     }];

@@ -41,7 +41,7 @@ typedef enum : NSUInteger {
     fieldDetail
 } FieldType;
 
-typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
+typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 
 
 
@@ -52,58 +52,58 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
 
 
 /** get dynamic */
-+ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(CompleteBlock)completion;
++ (void)getDynamicWithType:(DynamicType)type Page:(NSString *)page CheckUid:(NSString *)buid Complete:(FFCompleteBlock)completion;
 
 
 /** 发布动态 */
 + (void)userUploadPortraitWithContent:(NSString *)content
                                 Image:(NSArray *)images
-                           Completion:(CompleteBlock)completion;
+                           Completion:(FFCompleteBlock)completion;
 
 /** 赞或者踩动态 */
 + (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
                                    type:(LikeOrDislike)type
-                               Complete:(CompleteBlock)completion;
+                               Complete:(FFCompleteBlock)completion;
 
 /** 请求评论(请求动态详情) */
 + (void)userComeentListWithDynamicsID:(NSString *)dynamicsID
                                  type:(CommentType)type
                                  page:(NSString *)page
-                             Complete:(CompleteBlock)completion;
+                             Complete:(FFCompleteBlock)completion;
 
 /** 发送评论 */
 + (void)userSendCommentWithjDynamicsID:(NSString *)dynamicsID
                                  ToUid:(NSString *)toUid
                                Comment:(NSString *)comment
-                              Complete:(CompleteBlock)completion;
+                              Complete:(FFCompleteBlock)completion;
 
 /** 赞或者踩评论 */
 + (void)userLikeOrDislikeComment:(NSString *)comment_id
                             Type:(LikeOrDislike)type
-                        Complete:(CompleteBlock)completion;
+                        Complete:(FFCompleteBlock)completion;
 
 /** 删除评论 */
 + (void)userDeleteCommentWith:(NSString *)comment_id
-                     Complete:(CompleteBlock)completion;
+                     Complete:(FFCompleteBlock)completion;
 
 /** 关注用户 */
 + (void)userAttentionWith:(NSString *)attentionUid
                      Type:(AttentionType)type
-                 Complete:(CompleteBlock)completion;
+                 Complete:(FFCompleteBlock)completion;
 
 /** 分享动态 */
 + (void)userSharedDynamics:(NSString *)Dynamics
-                  Complete:(CompleteBlock)completion;
+                  Complete:(FFCompleteBlock)completion;
 
 /** 关注 / 粉丝*/
 + (void)userFansAndAttettionWithPage:(NSString *)page
                                 Type:(FansOrAttention)type
-                            Complete:(CompleteBlock)completion;
+                            Complete:(FFCompleteBlock)completion;
 
 /** 用户信息 */
 + (void)userInfomationWithUid:(NSString *)uid
                     fieldType:(FieldType)type
-                     Complete:(CompleteBlock)completion;
+                     Complete:(FFCompleteBlock)completion;
 
 /** 编辑用户信息 */
 + (void)userEditInfoMationWithNickName:(NSString *)nick_name
@@ -113,9 +113,10 @@ typedef void (^CompleteBlock)(NSDictionary *content, BOOL success);
                                  birth:(NSString *)birth
                                     qq:(NSString *)qq
                                  email:(NSString *)email
-                              Complete:(CompleteBlock)completion;
+                              Complete:(FFCompleteBlock)completion;
 
-
++ (void)userEditInfoMationWIthDict:(NSDictionary *)dict
+                          Complete:(FFCompleteBlock)completion;
 
 
 

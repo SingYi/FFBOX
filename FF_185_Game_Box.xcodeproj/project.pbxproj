@@ -302,6 +302,7 @@
 		B5A5D56D1FC8002400EC951F /* FFNewMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D56C1FC8002400EC951F /* FFNewMineViewController.m */; };
 		B5AB9509200310D20055D507 /* FFDriveController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AB9508200310D20055D507 /* FFDriveController.m */; };
 		B5AB950C200310F00055D507 /* FFDriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AB950B200310F00055D507 /* FFDriveModel.m */; };
+		B5AFBF7420246D5B0087C1F5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AFBF7020246D5B0087C1F5 /* libWeChatSDK.a */; };
 		B5B28DBF1FD55460008A9BCD /* FFAdvertisingView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B28DBE1FD55460008A9BCD /* FFAdvertisingView.m */; };
 		B5B95E1F1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B95E1E1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m */; };
 		B5B95E261FBC1BF000ACD7F7 /* FFRebateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B95E251FBC1BF000ACD7F7 /* FFRebateModel.m */; };
@@ -941,6 +942,10 @@
 		B5AB9508200310D20055D507 /* FFDriveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveController.m; sourceTree = "<group>"; };
 		B5AB950A200310F00055D507 /* FFDriveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveModel.h; sourceTree = "<group>"; };
 		B5AB950B200310F00055D507 /* FFDriveModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveModel.m; sourceTree = "<group>"; };
+		B5AFBF7020246D5B0087C1F5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		B5AFBF7120246D5B0087C1F5 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		B5AFBF7220246D5B0087C1F5 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		B5AFBF7320246D5B0087C1F5 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		B5B28DBD1FD55460008A9BCD /* FFAdvertisingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFAdvertisingView.h; sourceTree = "<group>"; };
 		B5B28DBE1FD55460008A9BCD /* FFAdvertisingView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFAdvertisingView.m; sourceTree = "<group>"; };
 		B5B95E1D1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFPackageSearchResultViewController.h; sourceTree = "<group>"; };
@@ -1021,6 +1026,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5AFBF7420246D5B0087C1F5 /* libWeChatSDK.a in Frameworks */,
 				B59E4021202445C700F81F60 /* CoreMotion.framework in Frameworks */,
 				B59E401F202445B700F81F60 /* SystemConfiguration.framework in Frameworks */,
 				B59E401D202445A400F81F60 /* AdSupport.framework in Frameworks */,
@@ -1503,6 +1509,7 @@
 				B59E3E5F202441BF00F81F60 /* Masonry */,
 				B59E3E7C202441BF00F81F60 /* MBProgressHUD.h */,
 				B59E3E7D202441BF00F81F60 /* MBProgressHUD.m */,
+				B5AFBF6F20246D5B0087C1F5 /* WechtSDK1.8.2_NoPay */,
 				B59E3E7E202441BF00F81F60 /* MJRefresh */,
 				B59E3EAD202441BF00F81F60 /* photoBroser */,
 				B59E3EBB202441BF00F81F60 /* PhotoBrowser */,
@@ -2149,6 +2156,17 @@
 				B52B115C20185B6B0002475D /* FFPostStatusImageCell.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		B5AFBF6F20246D5B0087C1F5 /* WechtSDK1.8.2_NoPay */ = {
+			isa = PBXGroup;
+			children = (
+				B5AFBF7020246D5B0087C1F5 /* libWeChatSDK.a */,
+				B5AFBF7120246D5B0087C1F5 /* WechatAuthSDK.h */,
+				B5AFBF7220246D5B0087C1F5 /* WXApi.h */,
+				B5AFBF7320246D5B0087C1F5 /* WXApiObject.h */,
+			);
+			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		B5B95E231FBC1BDF00ACD7F7 /* RebateModel */ = {

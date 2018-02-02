@@ -8,10 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^StatisticsBlock)(NSDictionary *content,  BOOL success);
+
 @interface FFStatisticsModel : NSObject
 
 
 + (void)reigstStatics;
+
++ (void)logCount;
+
+
+
+
 
 
 

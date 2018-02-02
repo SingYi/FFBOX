@@ -260,7 +260,6 @@
 		B59E3FED202441C000F81F60 /* UINavigationController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3F19202441BF00F81F60 /* UINavigationController+Cloudox.m */; };
 		B59E3FEE202441C000F81F60 /* UIViewController+Cloudox.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3F1B202441BF00F81F60 /* UIViewController+Cloudox.m */; };
 		B59E40102024439A00F81F60 /* TrackingIO.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E3F16202441BF00F81F60 /* TrackingIO.a */; };
-		B59E40192024449100F81F60 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E40122024445B00F81F60 /* libWeChatSDK.a */; };
 		B59E401B2024458D00F81F60 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401A2024458800F81F60 /* Security.framework */; };
 		B59E401D202445A400F81F60 /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401C2024459F00F81F60 /* AdSupport.framework */; };
 		B59E401F202445B700F81F60 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E401E202445B200F81F60 /* SystemConfiguration.framework */; };
@@ -870,10 +869,6 @@
 		B59E3F19202441BF00F81F60 /* UINavigationController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationController+Cloudox.m"; sourceTree = "<group>"; };
 		B59E3F1A202441BF00F81F60 /* UIViewController+Cloudox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Cloudox.h"; sourceTree = "<group>"; };
 		B59E3F1B202441BF00F81F60 /* UIViewController+Cloudox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Cloudox.m"; sourceTree = "<group>"; };
-		B59E40122024445B00F81F60 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
-		B59E40142024445B00F81F60 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
-		B59E40152024445B00F81F60 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
-		B59E40162024445B00F81F60 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
 		B59E401A2024458800F81F60 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		B59E401C2024459F00F81F60 /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		B59E401E202445B200F81F60 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -1038,7 +1033,6 @@
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,
-				B59E40192024449100F81F60 /* libWeChatSDK.a in Frameworks */,
 				B5A5D5341FC5284700EC951F /* CoreTelephony.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1502,7 +1496,6 @@
 		B59E3DDA202441BF00F81F60 /* ThiredLibrary */ = {
 			isa = PBXGroup;
 			children = (
-				B59E40112024445B00F81F60 /* WechtSDK1.8.2_NoPay */,
 				B59E3DDB202441BF00F81F60 /* AFNetWorking */,
 				B59E3DE6202441BF00F81F60 /* ChangyanSDK */,
 				B59E3DE9202441BF00F81F60 /* FLAnimatedImage */,
@@ -1992,17 +1985,6 @@
 				B59E3F17202441BF00F81F60 /* TrackingIO.h */,
 			);
 			path = trackingio;
-			sourceTree = "<group>";
-		};
-		B59E40112024445B00F81F60 /* WechtSDK1.8.2_NoPay */ = {
-			isa = PBXGroup;
-			children = (
-				B59E40122024445B00F81F60 /* libWeChatSDK.a */,
-				B59E40142024445B00F81F60 /* WechatAuthSDK.h */,
-				B59E40152024445B00F81F60 /* WXApi.h */,
-				B59E40162024445B00F81F60 /* WXApiObject.h */,
-			);
-			path = WechtSDK1.8.2_NoPay;
 			sourceTree = "<group>";
 		};
 		B5A1EEC71FCC4523003FC031 /* ClassifyChildController */ = {

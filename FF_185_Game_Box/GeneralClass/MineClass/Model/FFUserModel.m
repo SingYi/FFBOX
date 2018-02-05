@@ -10,6 +10,7 @@
 #import "FFMapModel.h"
 #import "SYKeychain.h"
 #import "AFHTTPSessionManager.h"
+#import "FFStatisticsModel.h"
 
 #define KEYCHAINSERVICE @"tenoneTec.com"
 #define DEVICEID @"CurrentUid"
@@ -89,6 +90,8 @@ static FFUserModel *model;
     [FFUserModel deleteUID];
     //移除 userName
     [FFUserModel deleteUserName];
+    //清空密码
+    [FFUserModel deletePassWord];
     //移除所有 key
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:USER_INFO_KEYS];
 
@@ -168,7 +171,18 @@ static FFUserModel *model;
     return model.username;
 }
 
++ (BOOL)setPassWord:(NSString *)passWord {
+    return [SYKeychain setPassword:passWord forService:KEYCHAINSERVICE account:USER_PASSWORDK];
+}
 
++ (NSString *)getPassWord {
+    NSString *uid = [SYKeychain passwordForService:KEYCHAINSERVICE account:USER_PASSWORDK];
+    return uid;
+}
+
++ (BOOL)deletePassWord {
+    return [SYKeychain deletePasswordForService:KEYCHAINSERVICE account:USER_PASSWORDK];
+}
 
 
 //CurrentUserName
@@ -241,8 +255,23 @@ static FFUserModel *model;
         NEW_REQUEST_COMPLETION;
 
         syLog(@"login content ==== %@",content);
-        if (success) {
+        if (success && status.integerValue == 1) {
             [FFUserModel changyanLogin];
+            NSDictionary *dict = content[@"data"];
+            NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithCapacity:dict.count];
+            if (dict[@"username"]) {
+                [muDict setObject:dict[@"username"] forKey:@"username"];
+            }
+
+            if (dict[@"mobile"]) {
+                [muDict setObject:dict[@"mobile"] forKey:@"mobile"];
+            }
+            if (dict[@"nick_name"]) {
+                [muDict setObject:dict[@"nick_name"] forKey:@"nick_name"];
+            }
+
+            [FFStatisticsModel statisticsLoginWithAccount:content[@"data"][@"username"]];
+            [FFStatisticsModel profile:muDict];
         }
     }];
 }
@@ -274,6 +303,10 @@ static FFUserModel *model;
     [dict setObject:BOX_SIGN(dict, pamaras) forKey:@"sign"];
     [FFUserModel postRequestWithURL:Map.USER_REGISTER params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
+        syLog(@"注册信息 : %@",content);
+        if (success && status.integerValue == 1) {
+            [FFStatisticsModel statisticsRegistrationWithAccount:content[@"data"][@"username"]];
+        }
     }];
 }
 

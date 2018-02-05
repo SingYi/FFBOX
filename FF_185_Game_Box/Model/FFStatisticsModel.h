@@ -12,15 +12,34 @@ typedef void(^StatisticsBlock)(NSDictionary *content,  BOOL success);
 
 @interface FFStatisticsModel : NSObject
 
-
+/** 请求是否统计 */
 + (void)reigstStatics;
 
-+ (void)logCount;
+/** 注册统计 */
++ (void)statisticsRegistrationWithAccount:(NSString *)account;
+
+/** 登录统计 */
++ (void)statisticsLoginWithAccount:(NSString *)account;
+
+/** 支付统计 */
++ (void)statisticsPayWithTransactionID:(NSString *)transactionID
+                           paymentType:(NSString *)payMentType
+                        currencyAmount:(NSString *)amount;
+
+/** 支付回调统计 */
++ (void)statisticsPayCallBackWithTransactionID:(NSString *)transactionID
+                                   paymentType:(NSString *)payMentType
+                                currencyAmount:(NSString *)amount;
+
+/** 自定义事件统计 */
++ (void)customEventsWith:(NSString *)name Extra:(NSDictionary *)dict;
 
 
-
+/** 用户事件统计 */
++ (void)profile:(NSDictionary*)dataDic;
 
 
 
 
 @end
+

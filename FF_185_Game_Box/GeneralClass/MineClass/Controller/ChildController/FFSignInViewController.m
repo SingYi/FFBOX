@@ -142,6 +142,7 @@
             [self setContinueSignDay];
             self.remindLabel.attributedText = [self colocStringWithString1:[NSString stringWithFormat:@" %@ ",self.signDays] String2:self.continueSignDays];
             self.isSign = @"1";
+            [FFStatisticsModel customEventsWith:@"sign_in" Extra:nil];
             BOX_MESSAGE(@"签到成功");
         } else {
             REQUEST_MESSAGE;

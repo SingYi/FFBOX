@@ -51,6 +51,10 @@
 + (NSString *)getUserName;
 + (BOOL)deleteUserName;
 + (NSString *)UserName;
+/** password */
++ (BOOL)setPassWord:(NSString *)passWord;
++ (NSString *)getPassWord;
++ (BOOL)deletePassWord;
 /** avatar */
 + (NSData *)getAvatarData;
 + (void)setAvatarData:(NSData *)data;

@@ -8,14 +8,13 @@
 
 #import "DriveInfoCell.h"
 #import "UIImageView+WebCache.h"
-#import "UIView+XLExtension.h"
-#import "XLPhotoBrowser.h"
+//#import "XLPhotoBrowser.h"
 #import "FFDriveModel.h"
 #import "FLAnimatedImage.h"
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoManager.h"
 
-@interface DriveInfoCell () <XLPhotoBrowserDelegate, XLPhotoBrowserDatasource>
+@interface DriveInfoCell ()
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 

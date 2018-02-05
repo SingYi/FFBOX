@@ -220,7 +220,7 @@
                         [FFUserModel setUID:[FFUserModel currentUser].uid];
                         [FFUserModel setUserName:[FFUserModel currentUser].username];
                         [FFUserModel currentUser].isLogin = @"1";
-
+                        [FFUserModel setPassWord:passWord];
                         BOX_MESSAGE(@"登陆成功");
 
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserReigsterThanLogin" object:nil userInfo:nil];

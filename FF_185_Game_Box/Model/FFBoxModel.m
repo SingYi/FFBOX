@@ -12,6 +12,7 @@
 #import <UIKit/UIKit.h>
 #import "FFUserModel.h"
 #import "SDWebImageManager.h"
+#import "FFUserModel.h"
 
 @interface FFBoxModel ()<UNUserNotificationCenterDelegate>
 
@@ -86,6 +87,16 @@
     }
 }
 
++ (void)login {
+    NSString *username = [FFUserModel getUserName];
+    NSString *password = [FFUserModel getPassWord];
+    syLog(@"启动登录");
+    if (username != nil && password != nil && username.length > 0 && password.length > 0) {
+        [FFUserModel userLoginWithUserName:username PassWord:password Completion:^(NSDictionary *content, BOOL success) {
+
+        }];
+    }
+}
 
 + (BOOL)isFirstInstall {
     NSString *isFirstInstall = [[NSUserDefaults standardUserDefaults] stringForKey:@"isFirstInstall"];

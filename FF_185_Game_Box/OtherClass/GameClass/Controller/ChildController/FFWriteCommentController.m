@@ -81,6 +81,8 @@
             [FFGameModel writeCommentGetCoinComoletion:^(NSDictionary *content, BOOL success) {
                 syLog(@"content === %@",content);
             }];
+
+            [FFStatisticsModel customEventsWith:@"comments_game" Extra:nil];
         } else {
             BOX_MESSAGE(@"评论失败\n请稍后尝试");
         }

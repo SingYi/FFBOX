@@ -109,6 +109,8 @@
             [FFUserModel setUID:[FFUserModel currentUser].uid];
             [FFUserModel setUserName:[FFUserModel currentUser].username];
             [FFUserModel currentUser].isLogin = @"1";
+            [FFUserModel setPassWord:self.passWord.text];
+            
             [self.navigationController popToRootViewControllerAnimated:YES];
             BOX_MESSAGE(@"登录成功");
 

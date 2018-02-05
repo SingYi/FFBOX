@@ -74,6 +74,7 @@ static FFSharedController *controller = nil;
         return;
     }
     IS_INVITE = YES;
+    [FFStatisticsModel customEventsWith:@"shared_Box" Extra:nil];
     [FFSharedController sharedController].sharedType = invitedFirend;
     [FFSharedController sharedController].isShow = YES;
     [FFSharedController sharedController].cancelButton.userInteractionEnabled = NO;
@@ -102,6 +103,9 @@ static FFSharedController *controller = nil;
             [FFSharedController sharedController].gameInfo = info;
         }
     }
+
+    [FFStatisticsModel customEventsWith:@"shared_Game" Extra:@{@"game_name":info[@"gamename"]}];
+
     if ([FFSharedController sharedController].isShow) {
         return;
     }

@@ -97,6 +97,7 @@
             syLog(@"exchang == %@",content);
             [self initDataSource];
             BOX_MESSAGE(@"兑换成功");
+            [FFStatisticsModel customEventsWith:@"exchange_platform_coin" Extra:@{@"number":self.exchangeTextfield.text}];
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }

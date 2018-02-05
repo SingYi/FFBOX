@@ -114,11 +114,6 @@
 		B59E3DA4201F19E900F81F60 /* FFDriveFansNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA3201F19E900F81F60 /* FFDriveFansNumbersViewController.m */; };
 		B59E3DA7201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA6201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m */; };
 		B59E3DAA201F27FC00F81F60 /* FFMineBaseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */; };
-		B59E3DB720200CBD00F81F60 /* PersonalCenterTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DAE20200CBC00F81F60 /* PersonalCenterTableView.m */; };
-		B59E3DB820200CBD00F81F60 /* PersonalLeftViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DAF20200CBC00F81F60 /* PersonalLeftViewController.m */; };
-		B59E3DB920200CBD00F81F60 /* PersonalCenterController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DB020200CBC00F81F60 /* PersonalCenterController.m */; };
-		B59E3DBA20200CBD00F81F60 /* PersonalMiddleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DB520200CBD00F81F60 /* PersonalMiddleViewController.m */; };
-		B59E3DBC20200DA100F81F60 /* PersonalRightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DBB20200DA100F81F60 /* PersonalRightViewController.m */; };
 		B59E3DC020201AE900F81F60 /* FFDrivePersonalHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DBF20201AE900F81F60 /* FFDrivePersonalHeader.m */; };
 		B59E3DC32021938800F81F60 /* FFDriveUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DC22021938800F81F60 /* FFDriveUserModel.m */; };
 		B59E3DC72021BAEF00F81F60 /* FFDriveFansCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DC52021BAEF00F81F60 /* FFDriveFansCell.m */; };
@@ -486,8 +481,6 @@
 		B54E6B321FB0527B009D0025 /* FFActivityCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFActivityCell.h; sourceTree = "<group>"; };
 		B54E6B331FB0527B009D0025 /* FFActivityCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFActivityCell.m; sourceTree = "<group>"; };
 		B556B0D31FA6BD88005DC871 /* FF_185_Game_Box.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FF_185_Game_Box.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B556B0D61FA6BD88005DC871 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B556B0D71FA6BD88005DC871 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		B556B0E21FA6BD88005DC871 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B556B0E41FA6BD88005DC871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B556B0E51FA6BD88005DC871 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -557,16 +550,6 @@
 		B59E3DA6201F1A3F00F81F60 /* FFDriveAttentionNumbersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAttentionNumbersViewController.m; sourceTree = "<group>"; };
 		B59E3DA8201F27FC00F81F60 /* FFMineBaseTableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMineBaseTableViewController.h; sourceTree = "<group>"; };
 		B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMineBaseTableViewController.m; sourceTree = "<group>"; };
-		B59E3DAE20200CBC00F81F60 /* PersonalCenterTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCenterTableView.m; sourceTree = "<group>"; };
-		B59E3DAF20200CBC00F81F60 /* PersonalLeftViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalLeftViewController.m; sourceTree = "<group>"; };
-		B59E3DB020200CBC00F81F60 /* PersonalCenterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalCenterController.m; sourceTree = "<group>"; };
-		B59E3DB120200CBC00F81F60 /* PersonalCenterTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCenterTableView.h; sourceTree = "<group>"; };
-		B59E3DB220200CBC00F81F60 /* PersonalCenterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalCenterController.h; sourceTree = "<group>"; };
-		B59E3DB320200CBC00F81F60 /* PersonalLeftViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalLeftViewController.h; sourceTree = "<group>"; };
-		B59E3DB420200CBD00F81F60 /* PersonalMiddleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalMiddleViewController.h; sourceTree = "<group>"; };
-		B59E3DB520200CBD00F81F60 /* PersonalMiddleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalMiddleViewController.m; sourceTree = "<group>"; };
-		B59E3DB620200CBD00F81F60 /* PersonalRightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonalRightViewController.h; sourceTree = "<group>"; };
-		B59E3DBB20200DA100F81F60 /* PersonalRightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonalRightViewController.m; sourceTree = "<group>"; };
 		B59E3DBE20201AE900F81F60 /* FFDrivePersonalHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDrivePersonalHeader.h; sourceTree = "<group>"; };
 		B59E3DBF20201AE900F81F60 /* FFDrivePersonalHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDrivePersonalHeader.m; sourceTree = "<group>"; };
 		B59E3DC12021938800F81F60 /* FFDriveUserModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveUserModel.h; sourceTree = "<group>"; };
@@ -1229,7 +1212,6 @@
 			children = (
 				B52B1188201B13AD0002475D /* FFDriveMineViewController.h */,
 				B52B1189201B13AD0002475D /* FFDriveMineViewController.m */,
-				B59E3DBD20200DDB00F81F60 /* Test */,
 				B59E3D9E201F194C00F81F60 /* FFDriveMineChildController */,
 			);
 			path = MineCenterController;
@@ -1302,8 +1284,6 @@
 		B556B0D51FA6BD88005DC871 /* FF_185_Game_Box */ = {
 			isa = PBXGroup;
 			children = (
-				B556B0D61FA6BD88005DC871 /* AppDelegate.h */,
-				B556B0D71FA6BD88005DC871 /* AppDelegate.m */,
 				B52B11832019E3100002475D /* FFAppDelegate.h */,
 				B52B11842019E3100002475D /* FFAppDelegate.m */,
 				B596AAA21FCD025A00C8F15E /* FFLaunchScreen.h */,
@@ -1480,23 +1460,6 @@
 				B59E3DA9201F27FC00F81F60 /* FFMineBaseTableViewController.m */,
 			);
 			path = FFDriveMineChildController;
-			sourceTree = "<group>";
-		};
-		B59E3DBD20200DDB00F81F60 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				B59E3DB220200CBC00F81F60 /* PersonalCenterController.h */,
-				B59E3DB020200CBC00F81F60 /* PersonalCenterController.m */,
-				B59E3DB120200CBC00F81F60 /* PersonalCenterTableView.h */,
-				B59E3DAE20200CBC00F81F60 /* PersonalCenterTableView.m */,
-				B59E3DB320200CBC00F81F60 /* PersonalLeftViewController.h */,
-				B59E3DAF20200CBC00F81F60 /* PersonalLeftViewController.m */,
-				B59E3DB420200CBD00F81F60 /* PersonalMiddleViewController.h */,
-				B59E3DB520200CBD00F81F60 /* PersonalMiddleViewController.m */,
-				B59E3DB620200CBD00F81F60 /* PersonalRightViewController.h */,
-				B59E3DBB20200DA100F81F60 /* PersonalRightViewController.m */,
-			);
-			path = Test;
 			sourceTree = "<group>";
 		};
 		B59E3DDA202441BF00F81F60 /* ThiredLibrary */ = {
@@ -2687,7 +2650,6 @@
 				B5B95E531FBC3A1800ACD7F7 /* FFGameCommentCell.m in Sources */,
 				B59E3F80202441C000F81F60 /* CTAssetsGridSelectedView.m in Sources */,
 				B51967291FA9AD100046E391 /* FFHotGameController.m in Sources */,
-				B59E3DBA20200CBD00F81F60 /* PersonalMiddleViewController.m in Sources */,
 				B5AB9509200310D20055D507 /* FFDriveController.m in Sources */,
 				B59E3FD7202441C000F81F60 /* ZLThumbnailViewController.m in Sources */,
 				B59E3F74202441C000F81F60 /* PHAsset+CTAssetsPickerController.m in Sources */,
@@ -2702,7 +2664,6 @@
 				B59E3FBB202441C000F81F60 /* HZIndicatorView.m in Sources */,
 				B59E3F77202441C000F81F60 /* UIImage+CTAssetsPickerController.m in Sources */,
 				B59E3FDE202441C000F81F60 /* SDWebImageCompat.m in Sources */,
-				B59E3DB820200CBD00F81F60 /* PersonalLeftViewController.m in Sources */,
 				B59E3FAD202441C000F81F60 /* MJRefreshAutoStateFooter.m in Sources */,
 				B59E3F76202441C000F81F60 /* UICollectionView+CTAssetsPickerController.m in Sources */,
 				B59E3FB2202441C000F81F60 /* MJRefreshNormalHeader.m in Sources */,
@@ -2741,7 +2702,6 @@
 				B59E3F71202441C000F81F60 /* NSDateFormatter+CTAssetsPickerController.m in Sources */,
 				B59E3F69202441BF00F81F60 /* AFSecurityPolicy.m in Sources */,
 				B59E3F7C202441C000F81F60 /* CTAssetPlayButton.m in Sources */,
-				B59E3DB720200CBD00F81F60 /* PersonalCenterTableView.m in Sources */,
 				B59E3F8A202441C000F81F60 /* CTAssetsPickerController.m in Sources */,
 				B59E3FB1202441C000F81F60 /* MJRefreshGifHeader.m in Sources */,
 				B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */,
@@ -2813,7 +2773,6 @@
 				B59E3FCC202441C000F81F60 /* ZLForceTouchPreviewController.m in Sources */,
 				B5B95E941FBD8B9E00ACD7F7 /* FFGameServiceViewController.m in Sources */,
 				B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */,
-				B59E3DBC20200DA100F81F60 /* PersonalRightViewController.m in Sources */,
 				B5B95E1F1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m in Sources */,
 				B59E3F81202441C000F81F60 /* CTAssetsGridView.m in Sources */,
 				B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */,
@@ -2908,7 +2867,6 @@
 				B51967301FA9EA8E0046E391 /* FFClassifyModel.m in Sources */,
 				B5C1FC241FB93A80004A779B /* FFOpenVipViewController.m in Sources */,
 				B519670B1FA8A9E50046E391 /* FFTodayOpenServerViewController.m in Sources */,
-				B59E3DB920200CBD00F81F60 /* PersonalCenterController.m in Sources */,
 				B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */,
 				B52B1186201ABE3B0002475D /* UIButton+FFButton.m in Sources */,
 				B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */,

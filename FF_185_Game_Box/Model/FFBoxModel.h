@@ -28,6 +28,8 @@ typedef void (^Completion)(NSDictionary *  content, BOOL success);
 /** app  announcement */
 + (void)appAnnouncement;
 
++ (void)login;
+
 
 /** test */
 + (void)registerNotification:(NSInteger )alerTime;

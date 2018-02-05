@@ -33,6 +33,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    [FFStatisticsModel customEventsWith:@"luck_draw" Extra:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

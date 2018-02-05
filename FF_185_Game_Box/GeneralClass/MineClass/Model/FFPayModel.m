@@ -10,6 +10,7 @@
 #import "FFMapModel.h"
 #import "FFUserModel.h"
 
+
 #define MAP_URL [FFMapModel map]
 
 static FFPayModel *model = nil;

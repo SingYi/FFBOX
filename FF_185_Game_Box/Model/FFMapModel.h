@@ -109,6 +109,9 @@
 @property (nonatomic, strong) NSString *SHARE_DYNAMICS;
 
 
+//
+@property (nonatomic, strong) NSString *BOX_INIT;
+
 + (instancetype)map;
 
 

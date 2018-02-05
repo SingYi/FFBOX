@@ -22,6 +22,7 @@
 #import "FFLoginViewController.h"
 #import "FFSharedController.h"
 
+
 #import "ChangyanSDK.h"
 
 @interface FFGameViewController ()<FFGameHeaderViewDelegate, FFGameFooterViewDelegate, UIScrollViewDelegate>
@@ -221,6 +222,7 @@ static FFGameViewController *controller = nil;
 
 - (void)FFGameFooterView:(FFGameFooterView *)detailFooter clickDownLoadBtn:(UIButton *)sender {
     syLog(@"download game ===== %@",self.gameinfo);
+
     if ([Channel isEqualToString:@"185"]) {
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.gameinfo[@"ios_url"]]];
     } else {
@@ -231,6 +233,8 @@ static FFGameViewController *controller = nil;
 
         }];
     }
+
+    [FFStatisticsModel customEventsWith:@"down_laod_game" Extra:@{@"game_name":self.gameinfo[@"gamename"],@"game_id":self.gameinfo[@"id"]}];
 }
 
 - (void)FFGameFooterView:(FFGameFooterView *)detailFooter clickCollecBtn:(UIButton *)sender {

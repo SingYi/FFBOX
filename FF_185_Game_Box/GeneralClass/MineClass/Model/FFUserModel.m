@@ -11,6 +11,7 @@
 #import "SYKeychain.h"
 #import "AFHTTPSessionManager.h"
 #import "FFStatisticsModel.h"
+#import "SYKeychain.h"
 
 #define KEYCHAINSERVICE @"tenoneTec.com"
 #define DEVICEID @"CurrentUid"
@@ -122,10 +123,7 @@ static FFUserModel *model;
 }
 
 + (NSString *)uid {
-    if (model == nil) {
-        return nil;
-    }
-    return model.uid;
+    return SSKEYCHAIN_UID;
 }
 
 - (void)setNick_name:(NSString *)nick_name {
@@ -493,7 +491,8 @@ static FFUserModel *model;
                                                          nil];
 
 
-    NSURLSessionDataTask *task = [manager POST:[FFMapModel map].USER_UPLOAD parameters:@{@"id":model.uid} constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
+
+    NSURLSessionDataTask *task = [manager POST:[FFMapModel map].USER_UPLOAD parameters:@{@"id":SSKEYCHAIN_UID} constructingBodyWithBlock:^(id<AFMultipartFormData> _Nonnull formData) {
 
         NSData *imageData = UIImagePNGRepresentation(image);
 

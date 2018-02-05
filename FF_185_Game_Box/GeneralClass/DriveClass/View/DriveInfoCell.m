@@ -180,9 +180,10 @@
     [self setCommentWith:dict[@"dynamics"][@"comment"]];
     //dynamics id
     [self setDynamicsID:dict[@"dynamics"][@"id"]];
-
     //operate
     [self setOperateWith:dict[@"user"][@"operate"]];
+
+
 }
 
 - (void)setIconImageWith:(NSString *)url {

@@ -14,6 +14,8 @@
 #import "SYKeychain.h"
 #import "MBProgressHUD.h"
 #import "ZLPhotoActionSheet.h"
+
+#import <MobileCoreServices/MobileCoreServices.h>
 #import <Photos/Photos.h>
 
 #import "FFDriveModel.h"
@@ -53,7 +55,7 @@ typedef enum : NSUInteger {
 
 const NSUInteger cellTag = 10086;
 
-@interface FFDetailMineInfoTableViewController ()
+@interface FFDetailMineInfoTableViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImage;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
@@ -302,39 +304,43 @@ const NSUInteger cellTag = 10086;
 - (void)reSetIconImage {
     syLog(@"重置   头像");
     //设置照片最大选择数
-    [self.actionSheet showPhotoLibrary];
+//    [self.actionSheet showPhotoLibrary];
+    [self openPhoto];
 }
 
 - (void)reSetNiceName {
     syLog(@"重置   昵称");
-    modifyType = modifyNickName;
-    self.modifyController.OriginalContent = self.nickNameLabel.text;
-    self.modifyController.type = modifyNickName;
-    [self.navigationController pushViewController:self.modifyController animated:YES];
+    [self pushModifyWith:self.nickNameLabel.text Type:modifyNickName];
 }
 
 - (void)reSetDescription {
     syLog(@"重置   简介");
-    modifyType = modifyIntroduction;
-    self.modifyController.OriginalContent = self.contentLabel.text;
-    self.modifyController.type = modifyIntroduction;
-    [self.navigationController pushViewController:self.modifyController animated:YES];
+    [self pushModifyWith:self.contentLabel.text Type:modifyIntroduction];
 }
 
 - (void)reSetSex {
     syLog(@"重置   性别");
-    modifyType = modifySex;
+    [self showModifyWindow:self.sexLabel.text Type:modifySex];
 }
 
 - (void)reSetBirthDay {
     syLog(@"重置   生日");
-    modifyType = modifyBirthday;
     [self showModifyWindow:self.birthdayLabel.text Type:modifyBirthday];
 }
 
 - (void)reSetQQ {
     syLog(@"重置    QQ");
     [self pushModifyWith:self.QQLabel.text Type:modifyQQ];
+}
+
+- (void)reSetEmail {
+    syLog(@"重置    邮箱");
+    [self pushModifyWith:self.EmailLabel.text Type:modifyEmail];
+}
+
+- (void)reSetLocation {
+    syLog(@"重置   所在地");
+    [self showModifyWindow:self.localLabel.text Type:modifyLocation];
 }
 
 - (void)pushModifyWith:(NSString *)text Type:(ModifyType)type {
@@ -351,19 +357,10 @@ const NSUInteger cellTag = 10086;
     [self.modifyController showPickerViewWithType:type];
 }
 
-- (void)reSetEmail {
-    syLog(@"重置    邮箱");
-    modifyType = modifyEmail;
-    self.modifyController.OriginalContent = self.EmailLabel.text;
-    self.modifyController.type = modifyEmail;
-    [self.navigationController pushViewController:self.modifyController animated:YES];
-}
 
-- (void)reSetLocation {
-    modifyType = modifyLocation;
-    syLog(@"重置   所在地");
-}
 
+
+//修改字典的键值
 - (void)setModifyContent:(NSString *)modifyContent {
     _modifyContent = modifyContent;
     NSString *type;
@@ -378,7 +375,6 @@ const NSUInteger cellTag = 10086;
         default:
             break;
     }
-
     [self userModifyWith:@{type:modifyContent}];
 }
 
@@ -394,9 +390,69 @@ const NSUInteger cellTag = 10086;
 
 
 - (void)setImagesArray:(NSArray *)imagesArray {
+    //修改头像 .
     self.iconImage.image = imagesArray.firstObject;
 }
 
+//修改头像
+- (void)openPhoto {
+    UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
+    pickerView.delegate = self;
+    pickerView.allowsEditing = YES;
+    if  ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] && [UIImagePickerController isSourceTypeAvailable : UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请选择图片来源" preferredStyle:UIAlertControllerStyleActionSheet];
+        UIAlertAction *photoLibraryAct = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+
+            pickerView.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+            [self presentViewController:pickerView animated:YES completion:nil];
+
+
+        }];
+        UIAlertAction *cameraAct = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            pickerView.sourceType = UIImagePickerControllerSourceTypeCamera;
+            pickerView.cameraDevice = UIImagePickerControllerCameraDeviceRear;
+            pickerView.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
+
+            [self presentViewController:pickerView animated:YES completion:nil];
+        }];
+
+
+        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+        [alertController addAction:photoLibraryAct];
+        [alertController addAction:cameraAct];
+        [alertController addAction:cancelAct];
+
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
+}
+
+#pragma mark - pickerDelegate
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
+    NSString* type = [info objectForKey:UIImagePickerControllerMediaType];
+
+    if ([type isEqualToString:(NSString*)kUTTypeImage]) {
+        UIImage  *image = info[UIImagePickerControllerEditedImage];
+        [FFUserModel setAvatarData:UIImagePNGRepresentation(image)];
+
+        /** 上传图片 */
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
+        [FFUserModel userUploadPortraitWithImage:image Completion:^(NSDictionary *content, BOOL success) {
+            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
+            if (success) {
+                syLog(@"上传头像成功");
+                [hud hideAnimated:YES];
+                self.iconImage.image = image;
+            } else {
+                [UIAlertController showAlertMessage:content[@"msg"] dismissTime:0.7 dismissBlock:nil];
+            }
+
+        }];
+    }
+    syLog(@"2");
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
 
 #pragma mark - getter
 - (ZLPhotoActionSheet *)actionSheet {
@@ -415,6 +471,7 @@ const NSUInteger cellTag = 10086;
         _actionSheet.configuration.allowMixSelect = NO;
         _actionSheet.configuration.allowDragSelect = NO;
 
+        _actionSheet.configuration.clipRatios = GetClipRatio(1,1);
         //设置相册内部显示拍照按钮
         _actionSheet.configuration.allowTakePhotoInLibrary = YES;
         //设置在内部拍照按钮上实时显示相机俘获画面
@@ -457,12 +514,10 @@ const NSUInteger cellTag = 10086;
         _datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.62)];
         _datePicker.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2);
         _datePicker.datePickerMode = UIDatePickerModeDate;
-//        _datePicker.date = [NSDate dateWithTimeIntervalSince1970:0];
         _datePicker.backgroundColor = [UIColor whiteColor];
     }
     return _datePicker;
 }
-
 
 - (FFModifyInfomationViewController *)modifyController {
     if (!_modifyController) {
@@ -477,7 +532,7 @@ const NSUInteger cellTag = 10086;
 
 @end
 
-
+#pragma mark - modify infomation view controller
 
 @interface FFModifyInfomationViewController () <UITextFieldDelegate, UITextViewDelegate>
 
@@ -486,6 +541,7 @@ const NSUInteger cellTag = 10086;
 @property (nonatomic, strong) UIBarButtonItem *completeButton;
 @property (nonatomic, assign) NSUInteger maxStringCount;
 @property (nonatomic, strong) UIWindow *showWindow;
+@property (nonatomic, assign) ModifyType windowModifyType;
 
 @end
 
@@ -514,6 +570,9 @@ const NSUInteger cellTag = 10086;
 
 - (void)showPickerViewWithType:(ModifyType)type {
     self.view.backgroundColor = [UIColor clearColor];
+    [self.textView removeFromSuperview];
+    [self.textFiled removeFromSuperview];
+    self.windowModifyType = type;
     [self.showWindow makeKeyAndVisible];
 }
 
@@ -540,7 +599,6 @@ const NSUInteger cellTag = 10086;
     [self.showWindow resignKeyWindow];
     self.showWindow = nil;
 }
-
 
 #pragma mark - setter
 - (void)setType:(ModifyType)type {
@@ -580,8 +638,25 @@ const NSUInteger cellTag = 10086;
     (type == modifyIntroduction) ? [self addTextView] : [self addTextFiledView];
 }
 
+- (void)setWindowModifyType:(ModifyType)windowModifyType {
+    switch (windowModifyType) {
+        case modifySex: {
 
+        }
+            break;
+        case modifyBirthday: {
 
+        }
+            break;
+        case modifyLocation: {
+
+        }
+            break;
+
+        default:
+            break;
+    }
+}
 
 - (void)addTextFiledView {
     [self.textView removeFromSuperview];

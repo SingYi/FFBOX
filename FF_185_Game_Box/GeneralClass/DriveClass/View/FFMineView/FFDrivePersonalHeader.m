@@ -8,6 +8,7 @@
 
 #import "FFDrivePersonalHeader.h"
 #import "SYKeychain.h"
+#import "UIImageView+WebCache.h"
 
 @interface FFDrivePersonalHeader ()
 
@@ -71,11 +72,9 @@
 - (void)setDict:(NSDictionary *)dict {
     _dict = dict;
 
-    NSDictionary *dynamics = dict[@"dynamics"];
     NSDictionary *user = dict[@"user"];
-    if (dynamics == nil && user == nil) {
-        dynamics = dict;
-        user = nil;
+    if (user == nil) {
+        user = dict;
     }
     // nick name
     [self setNickName:user[@"nick_name"]];
@@ -83,12 +82,17 @@
     [self setSexWith:user[@"sex"]];
     // vip
     [self setVipWith:user[@"vip"]];
+    //image
+    [self setImageUrl:user[@"icon_url"]];
 }
 
 - (void)setIconImage:(UIImage *)iconImage {
     self.iconImageView.image = iconImage;
 }
 
+- (void)setImageUrl:(NSString *)imageurl {
+    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:imageurl]];
+}
 
 - (void)setNickName:(NSString *)nickName {
     NSString *string = [NSString stringWithFormat:@" %@ ",nickName];

@@ -152,67 +152,67 @@
                     params:(NSDictionary *)dicP
                 completion:(void(^)(NSDictionary * content,BOOL success))completion {
 
-    [FFBasicModel postRequestWithURL:url params:dicP Success:^(NSDictionary *content) {
-        if (completion) {
-            completion(content, YES);
-        }
-    } Failure:^(NSError *error) {
-        if (completion) {
-            completion(@{@"error": error.localizedDescription}, NO);
-        }
-    }];
-
-//    NSURLSession *session = [NSURLSession sharedSession];
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
-//    if (dicP && dicP.count) {
-//        NSArray *arrKey = [dicP allKeys];
-//        NSMutableArray *pValues = [NSMutableArray array];
-//        for (id key in arrKey) {
-//            [pValues addObject:[NSString stringWithFormat:@"%@=%@",key,dicP[key]]];
+//    [FFBasicModel postRequestWithURL:url params:dicP Success:^(NSDictionary *content) {
+//        if (completion) {
+//            completion(content, YES);
 //        }
-//        NSString *strP = [pValues componentsJoinedByString:@"&"];
-//        [request setHTTPBody:[strP dataUsingEncoding:NSUTF8StringEncoding]];
-////        [request setHTTPBody:[strP dataUsingEncoding:NSUTF16StringEncoding]];
-////        nsutf
-//    }
-//
-//    request.timeoutInterval = 5.f;
-//
-//    [request setHTTPMethod:@"POST"];
-//
-//    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-//        if (error == nil) {
-//
-//            NSError * fail = nil;
-//            id obj = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&fail];
-//                        syLog(@"%@",obj);
-//            if (fail) {
-//                dispatch_async(dispatch_get_main_queue(), ^{
-//                    if (completion) {
-//                        completion(nil,false);
-//                    }
-//                });
-//                                syLog(@"NSJSONSerialization error");
-//
-//            } else {
-//                if (obj && [obj isKindOfClass:[NSDictionary class]]) {
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        if (completion) {
-//                            completion((NSDictionary *)obj,true);
-//                        }
-//                    });
-//                }
-//            }
-//        } else {
-//                        syLog(@"Request Failed...");
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                if (completion) {
-//                    completion(nil,false);
-//                }
-//            });
+//    } Failure:^(NSError *error) {
+//        if (completion) {
+//            completion(@{@"error": error.localizedDescription}, NO);
 //        }
 //    }];
-//    [task resume];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+    if (dicP && dicP.count) {
+        NSArray *arrKey = [dicP allKeys];
+        NSMutableArray *pValues = [NSMutableArray array];
+        for (id key in arrKey) {
+            [pValues addObject:[NSString stringWithFormat:@"%@=%@",key,dicP[key]]];
+        }
+        NSString *strP = [pValues componentsJoinedByString:@"&"];
+        [request setHTTPBody:[strP dataUsingEncoding:NSUTF8StringEncoding]];
+//        [request setHTTPBody:[strP dataUsingEncoding:NSUTF16StringEncoding]];
+//        nsutf
+    }
+
+    request.timeoutInterval = 5.f;
+
+    [request setHTTPMethod:@"POST"];
+
+    NSURLSessionTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error == nil) {
+
+            NSError * fail = nil;
+            id obj = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&fail];
+                        syLog(@"%@",obj);
+            if (fail) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (completion) {
+                        completion(nil,false);
+                    }
+                });
+                                syLog(@"NSJSONSerialization error");
+
+            } else {
+                if (obj && [obj isKindOfClass:[NSDictionary class]]) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        if (completion) {
+                            completion((NSDictionary *)obj,true);
+                        }
+                    });
+                }
+            }
+        } else {
+                        syLog(@"Request Failed...");
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(nil,false);
+                }
+            });
+        }
+    }];
+    [task resume];
 }
 
 + (void)postRequestWithURL:(NSString *)url params:(NSDictionary *)dicP {

@@ -425,7 +425,6 @@ break;\
         }];
     }
     syLog(@"2");
-//    [[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:(NSUserDomainMask)];
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 

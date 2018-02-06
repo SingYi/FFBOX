@@ -333,6 +333,13 @@
 		B5C1FC351FBAE73F004A779B /* FFNewCustomizeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5C1FC331FBAE73F004A779B /* FFNewCustomizeCell.xib */; };
 		B5C1FC361FBAE73F004A779B /* FFNewCustomizeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1FC341FBAE73F004A779B /* FFNewCustomizeCell.m */; };
 		B5C1FC3C1FBB0B20004A779B /* FFPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C1FC3B1FBB0B20004A779B /* FFPackageModel.m */; };
+		B5D108DD2029782000E4D49F /* cityData.plist in Resources */ = {isa = PBXBuildFile; fileRef = B5D108DC2029782000E4D49F /* cityData.plist */; };
+		B5D108E0202988C400E4D49F /* FFDriveMyNewsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108DF202988C400E4D49F /* FFDriveMyNewsViewController.m */; };
+		B5D108EB2029A3D100E4D49F /* FFDriveMyNewsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108E92029A3D100E4D49F /* FFDriveMyNewsCell.m */; };
+		B5D108EC2029A3D100E4D49F /* FFDriveMyNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D108EA2029A3D100E4D49F /* FFDriveMyNewsCell.xib */; };
+		B5D108F42029AC0800E4D49F /* YBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108EF2029AC0800E4D49F /* YBPopupMenu.m */; };
+		B5D108F52029AC0800E4D49F /* YBPopupMenuPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F12029AC0800E4D49F /* YBPopupMenuPath.m */; };
+		B5D108F62029AC0800E4D49F /* YBRectConst.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F32029AC0800E4D49F /* YBRectConst.m */; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
@@ -997,6 +1004,18 @@
 		B5C1FC341FBAE73F004A779B /* FFNewCustomizeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFNewCustomizeCell.m; sourceTree = "<group>"; };
 		B5C1FC3A1FBB0B20004A779B /* FFPackageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFPackageModel.h; sourceTree = "<group>"; };
 		B5C1FC3B1FBB0B20004A779B /* FFPackageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFPackageModel.m; sourceTree = "<group>"; };
+		B5D108DC2029782000E4D49F /* cityData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cityData.plist; sourceTree = "<group>"; };
+		B5D108DE202988C400E4D49F /* FFDriveMyNewsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveMyNewsViewController.h; sourceTree = "<group>"; };
+		B5D108DF202988C400E4D49F /* FFDriveMyNewsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveMyNewsViewController.m; sourceTree = "<group>"; };
+		B5D108E82029A3D100E4D49F /* FFDriveMyNewsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveMyNewsCell.h; sourceTree = "<group>"; };
+		B5D108E92029A3D100E4D49F /* FFDriveMyNewsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveMyNewsCell.m; sourceTree = "<group>"; };
+		B5D108EA2029A3D100E4D49F /* FFDriveMyNewsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FFDriveMyNewsCell.xib; sourceTree = "<group>"; };
+		B5D108EE2029AC0800E4D49F /* YBPopupMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBPopupMenu.h; sourceTree = "<group>"; };
+		B5D108EF2029AC0800E4D49F /* YBPopupMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenu.m; sourceTree = "<group>"; };
+		B5D108F02029AC0800E4D49F /* YBPopupMenuPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBPopupMenuPath.h; sourceTree = "<group>"; };
+		B5D108F12029AC0800E4D49F /* YBPopupMenuPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenuPath.m; sourceTree = "<group>"; };
+		B5D108F22029AC0800E4D49F /* YBRectConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBRectConst.h; sourceTree = "<group>"; };
+		B5D108F32029AC0800E4D49F /* YBRectConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBRectConst.m; sourceTree = "<group>"; };
 		B5D75A8720070C0B00600B3D /* FFDriveAllInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAllInfoViewController.h; sourceTree = "<group>"; };
 		B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAllInfoViewController.m; sourceTree = "<group>"; };
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
@@ -1227,6 +1246,9 @@
 				B59E3DC42021BAEF00F81F60 /* FFDriveFansCell.h */,
 				B59E3DC52021BAEF00F81F60 /* FFDriveFansCell.m */,
 				B59E3DC62021BAEF00F81F60 /* FFDriveFansCell.xib */,
+				B5D108E82029A3D100E4D49F /* FFDriveMyNewsCell.h */,
+				B5D108E92029A3D100E4D49F /* FFDriveMyNewsCell.m */,
+				B5D108EA2029A3D100E4D49F /* FFDriveMyNewsCell.xib */,
 			);
 			path = FFMineView;
 			sourceTree = "<group>";
@@ -1342,6 +1364,7 @@
 				B57B95EE20036C9500C39A5A /* Test.c */,
 				B57B95EF20036C9500C39A5A /* Test.h */,
 				B53685A51FA84B69001836DC /* GameBoxConfig.plist */,
+				B5D108DC2029782000E4D49F /* cityData.plist */,
 				B59E3DDA202441BF00F81F60 /* ThiredLibrary */,
 				B556B0E51FA6BD88005DC871 /* main.m */,
 				B556B0E41FA6BD88005DC871 /* Info.plist */,
@@ -1472,6 +1495,7 @@
 				B59E3E5F202441BF00F81F60 /* Masonry */,
 				B59E3E7C202441BF00F81F60 /* MBProgressHUD.h */,
 				B59E3E7D202441BF00F81F60 /* MBProgressHUD.m */,
+				B5D108ED2029AC0800E4D49F /* YBPopupMenu */,
 				B5AFBF6F20246D5B0087C1F5 /* WechtSDK1.8.2_NoPay */,
 				B59E3E7E202441BF00F81F60 /* MJRefresh */,
 				B59E3EAD202441BF00F81F60 /* photoBroser */,
@@ -2491,6 +2515,19 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		B5D108ED2029AC0800E4D49F /* YBPopupMenu */ = {
+			isa = PBXGroup;
+			children = (
+				B5D108EE2029AC0800E4D49F /* YBPopupMenu.h */,
+				B5D108EF2029AC0800E4D49F /* YBPopupMenu.m */,
+				B5D108F02029AC0800E4D49F /* YBPopupMenuPath.h */,
+				B5D108F12029AC0800E4D49F /* YBPopupMenuPath.m */,
+				B5D108F22029AC0800E4D49F /* YBRectConst.h */,
+				B5D108F32029AC0800E4D49F /* YBRectConst.m */,
+			);
+			path = YBPopupMenu;
+			sourceTree = "<group>";
+		};
 		B5D75A8620070BC100600B3D /* ChildClass */ = {
 			isa = PBXGroup;
 			children = (
@@ -2504,6 +2541,8 @@
 				B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */,
 				B58DB70D20104F2E00DBE381 /* FFDriveThroughInfoViewController.h */,
 				B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */,
+				B5D108DE202988C400E4D49F /* FFDriveMyNewsViewController.h */,
+				B5D108DF202988C400E4D49F /* FFDriveMyNewsViewController.m */,
 				B58DB71020118DE000DBE381 /* FFDriveDetailInfoViewController.h */,
 				B58DB71120118DE000DBE381 /* FFDriveDetailInfoViewController.m */,
 				B52B115E20188BA40002475D /* FFGifThumbnailViewController.h */,
@@ -2600,6 +2639,7 @@
 				B51967151FA977800046E391 /* FFOpenServerCell.xib in Resources */,
 				B51967411FAAB2AC0046E391 /* OldAssets.xcassets in Resources */,
 				B5C1FC351FBAE73F004A779B /* FFNewCustomizeCell.xib in Resources */,
+				B5D108DD2029782000E4D49F /* cityData.plist in Resources */,
 				B59E3F94202441C000F81F60 /* LICENSE in Resources */,
 				B51395F21FEBA95C00BAE477 /* FFSystemDetailView.xib in Resources */,
 				B519671C1FA99A360046E391 /* FFCustomizeCell.xib in Resources */,
@@ -2629,6 +2669,7 @@
 				B59E3FA4202441C000F81F60 /* README.md in Resources */,
 				B59E3F99202441C000F81F60 /* LICENSE in Resources */,
 				B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */,
+				B5D108EC2029A3D100E4D49F /* FFDriveMyNewsCell.xib in Resources */,
 				B5A5D5131FC4543900EC951F /* FFPlatformCell.xib in Resources */,
 				B59E3F91202441C000F81F60 /* CTAssetsPicker.xcassets in Resources */,
 				B5B95E541FBC3A1800ACD7F7 /* FFGameCommentCell.xib in Resources */,
@@ -2768,6 +2809,7 @@
 				B59E3FA9202441C000F81F60 /* MJRefreshFooter.m in Sources */,
 				B5A5D55F1FC6A31700EC951F /* FFNotificationViewController.m in Sources */,
 				B51395BE1FEA5E5D00BAE477 /* UIBarButtonItem+FFSubscript.m in Sources */,
+				B5D108F52029AC0800E4D49F /* YBPopupMenuPath.m in Sources */,
 				B55DE0A11FB08EEF001437D5 /* FFUserModel.m in Sources */,
 				B5B95E591FBC3A1800ACD7F7 /* FFCommentStarGradeView.m in Sources */,
 				B59E3FCC202441C000F81F60 /* ZLForceTouchPreviewController.m in Sources */,
@@ -2810,6 +2852,7 @@
 				B51967501FAAC8CE0046E391 /* FFRPackageViewController.m in Sources */,
 				B51379B01FB2DFE80025F00B /* FFMyPackageViewController.m in Sources */,
 				B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */,
+				B5D108F62029AC0800E4D49F /* YBRectConst.m in Sources */,
 				B5C1FC361FBAE73F004A779B /* FFNewCustomizeCell.m in Sources */,
 				B51967111FA967C60046E391 /* FFOpenServerModel.m in Sources */,
 				B5A5D5471FC6703200EC951F /* FFRebateRecordCell.m in Sources */,
@@ -2875,6 +2918,7 @@
 				B59E3F95202441C000F81F60 /* ALView+PureLayout.m in Sources */,
 				B59E3F9E202441C000F81F60 /* MASViewAttribute.m in Sources */,
 				B59E3F83202441C000F81F60 /* CTAssetsGridViewController.m in Sources */,
+				B5D108EB2029A3D100E4D49F /* FFDriveMyNewsCell.m in Sources */,
 				B51967531FAAC9000046E391 /* FFRHeightVipViewController.m in Sources */,
 				B59E3FCE202441C000F81F60 /* ZLPhotoActionSheet.m in Sources */,
 				B556B0F91FA7000C005DC871 /* FFControllerManager.m in Sources */,
@@ -2903,6 +2947,7 @@
 				B5A5D50B1FC422BA00EC951F /* FFExchangeCoinController.m in Sources */,
 				B5B95E8E1FBD8B8000ACD7F7 /* FFGameRaidersViewController.m in Sources */,
 				B59E3DAA201F27FC00F81F60 /* FFMineBaseTableViewController.m in Sources */,
+				B5D108E0202988C400E4D49F /* FFDriveMyNewsViewController.m in Sources */,
 				B59E3FD3202441C000F81F60 /* ZLPhotoModel.m in Sources */,
 				B5A5D4E71FC2A46100EC951F /* FFResetNickNameView.m in Sources */,
 				B59E3FE7202441C000F81F60 /* UIImageView+HighlightedWebCache.m in Sources */,
@@ -2913,6 +2958,7 @@
 				B59E3FE4202441C000F81F60 /* UIButton+WebCache.m in Sources */,
 				B59E3F9C202441C000F81F60 /* MASConstraintMaker.m in Sources */,
 				B51967361FA9EC750046E391 /* FFClassifyTableCell.m in Sources */,
+				B5D108F42029AC0800E4D49F /* YBPopupMenu.m in Sources */,
 				B59E3DCC2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m in Sources */,
 				B596AAB11FCD31B500C8F15E /* FFEvervDayComment.m in Sources */,
 				B59E3FCB202441C000F81F60 /* ZLEditViewController.m in Sources */,

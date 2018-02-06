@@ -60,7 +60,7 @@
     [self setFchildControllerWithClassNames:@[@"FFDriveAllInfoViewController",
                                               @"FFDriveHotInfoViewController",
                                               @"FFDriveAttentionInfoViewController",
-                                              @"UIViewController"]];
+                                              @"FFDriveMyNewsViewController"]];
 }
 
 - (void)addSubViews {

@@ -108,6 +108,9 @@
 @property (nonatomic, strong) NSString *DYNAMICS_WAP_INFO;
 @property (nonatomic, strong) NSString *SHARE_DYNAMICS;
 
+//
+@property (nonatomic, strong) NSString *USER_NEW_UP;
+@property (nonatomic, strong) NSString *USER_COMMENT_ZAN;
 
 //
 @property (nonatomic, strong) NSString *BOX_INIT;

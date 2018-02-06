@@ -73,15 +73,13 @@
 
 - (void)refreshNewData {
     _currentPage = 1;
-
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
-
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"get dynamic == %@",content);
         [hud hideAnimated:YES];
-        self.showArray = nil;
+        _showArray = nil;
         if (success) {
-            self.showArray = [content[@"data"] mutableCopy];
+            _showArray = [content[@"data"] mutableCopy];
             if (self.dynamicType == CheckUserDynamic) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckUserDynamicCallBack" object:nil userInfo:content];
             }
@@ -101,23 +99,31 @@
     }];
 }
 
+static BOOL moreData = NO;
 - (void)loadMoreData {
-    _currentPage ++;
-    [FFDriveModel getDynamicWithType:allDynamic Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
+    _currentPage++;
+    syLog(@"加载更多数据");
+    if (moreData) {
+        return;
+    }
+
+    [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             NSArray *array = content[@"data"];
             if (array.count > 0 && array != nil) {
-                [self.showArray addObjectsFromArray:array];
-                [self.tableView.mj_footer endRefreshing];
+                [_showArray addObjectsFromArray:array];
                 [self.tableView reloadData];
+                [self.tableView.mj_footer endRefreshing];
             } else {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
+                moreData = YES;
             }
         } else {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
+            moreData = YES;
         }
 
-        if (self.showArray.count == 0) {
+        if (_showArray.count == 0) {
             UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
             imageView.image = [UIImage imageNamed:@"Community_NoData"];
             self.tableView.backgroundView = imageView;
@@ -125,7 +131,6 @@
             self.tableView.backgroundView = nil;
         }
 
-        
     }];
 }
 
@@ -191,7 +196,7 @@ static BOOL respondsSuccess;
 
 #pragma mark - tableview data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -244,6 +249,16 @@ static BOOL respondsSuccess;
             }
         }
     }];
+
+
+//    CGPoint offSet = scrollView.contentOffset;
+//    CGSize contentSize = scrollView.contentSize;
+//
+//    syLog(@"%lf       hieht == %lf",offSet.y,contentSize.height);
+//    if (offSet.y + 1000 > contentSize.height) {
+//        [self loadMoreData];
+//    }
+
 }
 
 - (void)canScroll:(UIScrollView *)scrollView {
@@ -345,6 +360,7 @@ static BOOL respondsSuccess;
         _tableView.dataSource = self;
         _tableView.estimatedRowHeight = 200;
         _tableView.rowHeight = UITableViewAutomaticDimension;
+        _tableView.showsVerticalScrollIndicator = YES;
 
     }
     return _tableView;

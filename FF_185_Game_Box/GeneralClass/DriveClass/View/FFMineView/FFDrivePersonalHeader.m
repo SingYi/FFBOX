@@ -76,6 +76,9 @@
     if (user == nil) {
         user = dict;
     }
+
+    syLog(@"dict === %@",dict);
+    syLog(@"user === %@",user);
     // nick name
     [self setNickName:user[@"nick_name"]];
     // sex
@@ -112,9 +115,11 @@
         if (str.integerValue == 1) {
             self.sexImage.image = [UIImage imageNamed:@"Community_Sex_Male"];
             self.sexImage.tintColor = [UIColor blueColor];
-        } else {
+        } else if (str.integerValue == 2) {
             self.sexImage.tintColor = [UIColor redColor];
             self.sexImage.image = [UIImage imageNamed:@"Community_Sex_Female"];
+        } else {
+            self.sexImage.hidden = YES;
         }
     } else {
         self.sexImage.hidden = YES;
@@ -122,7 +127,8 @@
 }
 
 - (void)setVipWith:(NSString *)str {
-    if ([str isKindOfClass:[NSString class]] && str!= nil && str.boolValue) {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    if (string.boolValue) {
         self.vipImage.hidden = NO;
     } else {
         self.vipImage.hidden = YES;

@@ -21,6 +21,7 @@
 #import "FFDriveModel.h"
 #import "FFUserModel.h"
 #import "FFDriveUserModel.h"
+#import "UIAlertController+FFAlertController.h"
 
 #define CELL_IDE @"DetailMineInfoCell"
 #define STR_NIL_RETURN if (str == nil || [str isKindOfClass:[NSNull class]]) {\
@@ -238,7 +239,7 @@ const NSUInteger cellTag = 10086;
 - (void)setSex:(NSString *)str {
     STR_NIL_RETURN;
     NSString *sex = [NSString stringWithFormat:@"%@",str];
-    self.sexLabel.text = (sex.integerValue == 1) ? @"男" : sex.integerValue == 2 ? @"女" : @"其他";
+    self.sexLabel.text = (sex.integerValue == 1) ? @"男" : sex.integerValue == 2 ? @"女" : @"未设置";
 }
 //birthday
 - (void)setbirthday:(NSString *)str {
@@ -357,11 +358,11 @@ const NSUInteger cellTag = 10086;
     [self.modifyController showPickerViewWithType:type];
 }
 
-
-
-
 //修改字典的键值
 - (void)setModifyContent:(NSString *)modifyContent {
+    if (modifyContent == nil) {
+        return;
+    }
     _modifyContent = modifyContent;
     NSString *type;
     switch (modifyType) {
@@ -384,10 +385,11 @@ const NSUInteger cellTag = 10086;
         syLog(@"edit call back === %@",content);
         if (success) {
             [self refreshData];
+        } else {
+
         }
     }];
 }
-
 
 - (void)setImagesArray:(NSArray *)imagesArray {
     //修改头像 .
@@ -534,7 +536,7 @@ const NSUInteger cellTag = 10086;
 
 #pragma mark - modify infomation view controller
 
-@interface FFModifyInfomationViewController () <UITextFieldDelegate, UITextViewDelegate>
+@interface FFModifyInfomationViewController () <UITextFieldDelegate, UITextViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
 
 @property (nonatomic, strong) UITextField *textFiled;
 @property (nonatomic, strong) UITextView *textView;
@@ -542,6 +544,26 @@ const NSUInteger cellTag = 10086;
 @property (nonatomic, assign) NSUInteger maxStringCount;
 @property (nonatomic, strong) UIWindow *showWindow;
 @property (nonatomic, assign) ModifyType windowModifyType;
+@property (nonatomic, strong) UIButton *hideWindwoButton;
+
+@property (nonatomic, strong) UIPickerView *sexPickerView;
+@property (nonatomic, strong) UIDatePicker *birthdayPickerView;
+@property (nonatomic, strong) UIPickerView *locationPickerView;
+@property (nonatomic, strong) UIButton *sureButton;
+
+@property (nonatomic, strong) NSArray *sexArray;
+@property (nonatomic, strong) NSArray *locationArray;
+
+/** plist对应的字典 */
+@property (nonatomic, strong) NSDictionary *cityNames;
+/** 省份 */
+@property (nonatomic, strong) NSArray *provinces;
+/** 城市 */
+@property (nonatomic, strong) NSArray *cities;
+/** 选中的省份 */
+@property (nonatomic, strong) NSString *selectedProvince;
+/** 选中的城市 */
+@property (nonatomic, strong) NSString *selectCity;
 
 @end
 
@@ -561,6 +583,9 @@ const NSUInteger cellTag = 10086;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initUserInterface];
+
+    //设置默认选中的省份是provinces中的第一个元素
+    self.selectedProvince = self.provinces[0];
 }
 
 - (void)initUserInterface {
@@ -593,6 +618,33 @@ const NSUInteger cellTag = 10086;
     if (self.FFEnterCallBackBlock) {
         self.FFEnterCallBackBlock(content);
     }
+}
+
+- (void)respondsToSureButton {
+    syLog(@"确认修改");
+    NSString *content;
+    [self respondsToCancelWindow];
+
+    if (self.type == modifySex) {
+        NSInteger row = [self.sexPickerView selectedRowInComponent:0];
+        content = [NSString stringWithFormat:@"%ld",(row + 1)];
+        syLog(@"修改性别 : %@",self.sexArray[row]);
+    } else if (self.type == modifyBirthday) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        formatter.dateFormat = @"YYYY-MM-dd";
+        content = [formatter stringFromDate:self.birthdayPickerView.date];
+        syLog(@"修改生日 : %@",content);
+    } else if (self.type == modifyLocation) {
+        NSInteger row = [self.locationPickerView selectedRowInComponent:1];
+        self.selectCity = self.cities[row];
+        syLog(@"修改地方  省份 : %@   城市 : %@",self.selectedProvince,self.selectCity);
+        content = [NSString stringWithFormat:@"%@-%@",self.selectedProvince,self.selectCity];
+    }
+
+    if (self.FFEnterCallBackBlock) {
+        self.FFEnterCallBackBlock(content);
+    }
+
 }
 
 - (void)respondsToCancelWindow {
@@ -641,15 +693,15 @@ const NSUInteger cellTag = 10086;
 - (void)setWindowModifyType:(ModifyType)windowModifyType {
     switch (windowModifyType) {
         case modifySex: {
-
+            [self addFSexPickerView];
         }
             break;
         case modifyBirthday: {
-
+            [self addFBirthdayPickerView];
         }
             break;
         case modifyLocation: {
-
+            [self addFLocationPickerView];
         }
             break;
 
@@ -659,16 +711,123 @@ const NSUInteger cellTag = 10086;
 }
 
 - (void)addTextFiledView {
-    [self.textView removeFromSuperview];
+    [self removeAllView];
     [self.view addSubview:self.textFiled];
     [self.textFiled becomeFirstResponder];
 }
 
 - (void)addTextView {
-    [self.textFiled removeFromSuperview];
+    [self removeAllView];
     [self.view addSubview:self.textView];
     [self.textView becomeFirstResponder];
 }
+
+- (void)addFSexPickerView {
+    [self removeAllView];
+    syLog(@"sex == %@",self.OriginalContent);
+    if ([self.OriginalContent isEqualToString:@"未设置"] || [self.OriginalContent isEqualToString:@"男"]) {
+        [self.sexPickerView selectRow:0 inComponent:0 animated:NO];
+    } else {
+        [self.sexPickerView selectRow:1 inComponent:0 animated:NO];
+    }
+    [self.view addSubview:self.hideWindwoButton];
+    [self.view addSubview:self.sexPickerView];
+    [self.view addSubview:self.sureButton];
+}
+
+- (void)addFBirthdayPickerView {
+    [self removeAllView];
+    syLog(@"birthdat == %@",self.OriginalContent);
+    if (self.OriginalContent.length > 7) {
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        formatter.dateFormat = @"YYYY-MM-dd";
+        self.birthdayPickerView.date = [formatter dateFromString:self.OriginalContent];
+    }
+
+    [self.view addSubview:self.hideWindwoButton];
+    [self.view addSubview:self.birthdayPickerView];
+    [self.view addSubview:self.sureButton];
+}
+
+- (void)addFLocationPickerView {
+    [self removeAllView];
+    syLog(@"location == %@",self.OriginalContent);
+    [self.view addSubview:self.hideWindwoButton];
+    [self.view addSubview:self.locationPickerView];
+    [self.view addSubview:self.sureButton];
+}
+
+- (void)removeAllText {
+    [self.textFiled removeFromSuperview];
+    [self.textView removeFromSuperview];
+}
+
+- (void)removeAllPickerView {
+    [self.hideWindwoButton removeFromSuperview];
+    [self.sexPickerView removeFromSuperview];
+    [self.birthdayPickerView removeFromSuperview];
+    [self.locationPickerView removeFromSuperview];
+    [[self sureButton] removeFromSuperview];
+}
+
+- (void)removeAllView {
+    [self removeAllPickerView];
+    [self removeAllText];
+}
+
+
+#pragma mark - picker view delegate and data source
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    if (pickerView == self.sexPickerView) {
+        return 1;
+    } else if (pickerView == self.locationPickerView) {
+        return 2;
+    } else {
+        return 0;
+    }
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    if (pickerView == self.sexPickerView) {
+        return 2;
+    } else {
+        if (component == 0) {
+            return self.provinces.count;
+        } else {
+            self.cities = [self.cityNames valueForKey:self.selectedProvince];
+            return self.cities.count;
+        }
+    }
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    if (pickerView == self.sexPickerView) {
+        return self.sexArray[row];
+    } else {
+        if (component == 0) {
+            return self.provinces[row];
+        } else {
+            self.cities = [self.cityNames valueForKey:self.selectedProvince];
+            return self.cities[row];
+        }
+    }
+    return @"";
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    if (pickerView == self.locationPickerView) {
+        if (component == 0) {
+            //选中的省份
+            self.selectedProvince = self.provinces[row];
+            //重新加载第二列的数据
+            [pickerView reloadComponent:1];
+            //让第二列归位
+            [pickerView selectRow:0 inComponent:1 animated:YES];
+        }
+    }
+}
+
+
 
 - (void)setOriginalContent:(NSString *)OriginalContent {
     _OriginalContent = @"";
@@ -742,21 +901,105 @@ const NSUInteger cellTag = 10086;
         _showWindow = [[UIWindow alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT)];
         _showWindow.rootViewController = self;
         _showWindow.backgroundColor = [UIColor colorWithWhite:0.5 alpha:0.3];
-
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(respondsToCancelWindow)];
-        tap.numberOfTapsRequired = 1;
-        tap.numberOfTouchesRequired = 1;
-        [_showWindow addGestureRecognizer:tap];
     }
     return _showWindow;
 }
 
+- (UIPickerView *)sexPickerView {
+    if (!_sexPickerView) {
+        _sexPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.618)];
+        _sexPickerView.delegate = self;
+        _sexPickerView.dataSource = self;
+        _sexPickerView.backgroundColor = [UIColor whiteColor];
+        _sexPickerView.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2);
+    }
+    return _sexPickerView;
+}
+
+- (UIDatePicker *)birthdayPickerView {
+    if (!_birthdayPickerView) {
+        _birthdayPickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.618)];
+        _birthdayPickerView.datePickerMode = UIDatePickerModeDate;
+        _birthdayPickerView.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2);
+        _birthdayPickerView.backgroundColor = [UIColor whiteColor];
+        _birthdayPickerView.maximumDate = [NSDate date];
+        NSDateFormatter *formatter = [NSDateFormatter new];
+        formatter.dateFormat = @"YYYY-MM-dd";
+        _birthdayPickerView.minimumDate = [formatter dateFromString:@"1900-1-1"];
+    }
+    return _birthdayPickerView;
+}
+
+- (UIPickerView *)locationPickerView {
+    if (!_locationPickerView) {
+        _locationPickerView = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.618)];
+        _locationPickerView.delegate = self;
+        _locationPickerView.dataSource = self;
+        _locationPickerView.backgroundColor = [UIColor whiteColor];
+        _locationPickerView.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2);
+    }
+    return _locationPickerView;
+}
+
+- (UIButton *)sureButton {
+    if (!_sureButton) {
+        _sureButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _sureButton.bounds = CGRectMake(0, 0, kSCREEN_WIDTH * 0.9, 44);
+        _sureButton.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_HEIGHT / 2 + kSCREEN_WIDTH * 0.618 / 2 + 50);
+        _sureButton.layer.cornerRadius = 8;
+        _sureButton.layer.masksToBounds = YES;
+        _sureButton.backgroundColor = NAVGATION_BAR_COLOR;
+        [_sureButton setTitle:@"确定" forState:(UIControlStateNormal)];
+        [_sureButton addTarget:self action:@selector(respondsToSureButton) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return _sureButton;
+}
+
+- (UIButton *)hideWindwoButton {
+    if (!_hideWindwoButton) {
+        _hideWindwoButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _hideWindwoButton.frame = CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT / 2);
+        [_hideWindwoButton addTarget:self action:@selector(respondsToCancelWindow) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return _hideWindwoButton;
+}
 
 
+- (NSArray *)sexArray {
+    if (!_sexArray) {
+        _sexArray = @[@"男",@"女"];
+    }
+    return _sexArray;
+}
 
 
+- (NSDictionary*)cityNames {
+    if (!_cityNames) {
+        NSString* path = [[NSBundle mainBundle] pathForResource:@"cityData" ofType:@"plist"];
+        _cityNames = [NSDictionary dictionaryWithContentsOfFile:path];
+    }
 
+    return _cityNames;
+}
 
+NSInteger alphabeticSort(id string1, id string2, void *reverse) {
+    if (*(BOOL *)reverse == YES) {
+        return [string2 localizedCaseInsensitiveCompare:string1];
+    }
+    return [string1 localizedCaseInsensitiveCompare:string2];
+}
+
+- (NSArray*)provinces {
+    if (!_provinces) {
+//        _provinces = [self.cityNames allKeys];
+        NSMutableArray *anArray = [[self.cityNames allKeys] mutableCopy];
+        NSData *sortedArrayHint = [anArray sortedArrayHint];
+        // sort with a hint
+        BOOL reverseSort = NO;
+        _provinces = [anArray sortedArrayUsingFunction:alphabeticSort context:&reverseSort hint:sortedArrayHint];
+    }
+    return _provinces;
+}
 
 
 @end

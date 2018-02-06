@@ -290,7 +290,7 @@
         default:
             break;
     }
-    [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldSimple) Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             syLog(@"user info== %@",content);
             self.dict = content[@"data"];

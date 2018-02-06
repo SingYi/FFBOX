@@ -41,6 +41,12 @@ typedef enum : NSUInteger {
     fieldDetail
 } FieldType;
 
+typedef enum : NSUInteger {
+    newComments = 1,
+    newLikeOfComment,
+    newLikeofDynamic,
+} MyNewsType;
+
 typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 
 
@@ -117,6 +123,15 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 
 + (void)userEditInfoMationWIthDict:(NSDictionary *)dict
                           Complete:(FFCompleteBlock)completion;
+
+
+/** 我的新消息数量 */
++ (void)myNewNumbersComplete:(FFCompleteBlock)completion;
+
+/** 我的消息 */
++ (void)myNewsWithType:(MyNewsType)type
+                  page:(NSString *)page
+              Complete:(FFCompleteBlock)completion;
 
 
 

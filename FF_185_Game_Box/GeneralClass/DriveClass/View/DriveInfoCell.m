@@ -201,9 +201,11 @@
         if (str.integerValue == 1) {
             self.sexImageVIew.tintColor = [UIColor blueColor];
             self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Male"];
-        } else {
+        } else if (str.integerValue == 2) {
             self.sexImageVIew.tintColor = [UIColor redColor];
             self.sexImageVIew.image = [UIImage imageNamed:@"Community_Sex_Female"];
+        } else {
+            self.sexImageVIew.hidden = YES;
         }
     } else {
         self.sexImageVIew.hidden = YES;

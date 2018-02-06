@@ -369,4 +369,32 @@
 
 
 
++ (void)myNewNumbersComplete:(FFCompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel"]))) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_NEW_UP params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
++ (void)myNewsWithType:(MyNewsType)type page:(NSString *)page Complete:(FFCompleteBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
+    [dict setObject:page forKey:@"page"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"type",@"page"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_COMMENT_ZAN params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+
+
+
+
 @end

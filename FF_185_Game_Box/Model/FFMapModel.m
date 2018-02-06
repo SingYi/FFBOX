@@ -158,7 +158,9 @@ static FFMapModel *model = nil;
                      @"FOLLOW_OR_CANCEL":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=followOrCancel",
                      @"DYNAMICS_WAP_INFO":@"http://api.185sy.com/api/dynamics/webDisplay.html",
                      @"SHARE_DYNAMICS":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=shareDynamics",
-                     @"BOX_INIT":@"http://api.185sy.com/index.php?g=api&m=userbox&a=do_init"
+                     @"BOX_INIT":@"http://api.185sy.com/index.php?g=api&m=userbox&a=do_init",
+                     @"USER_COMMENT_ZAN":@"http://api.185sy.com/index.php?g=api&m=userbox&a=my_comment_zan",
+                     @"USER_NEW_UP":@"http://api.185sy.com/index.php?g=api&m=userbox&a=new_up_counts"
                      };
     return mapDict;
 }

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFDynamicModel.h"
 @class DriveInfoCell;
 
 typedef enum : NSUInteger {
@@ -33,6 +34,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) FFDynamicModel *model;
 
 @property (nonatomic, strong, readonly) NSString *dynamicsID;
 

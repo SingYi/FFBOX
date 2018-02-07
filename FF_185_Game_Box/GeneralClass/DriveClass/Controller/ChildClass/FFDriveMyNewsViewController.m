@@ -7,6 +7,7 @@
 //
 
 #import "FFDriveMyNewsViewController.h"
+#import "FFDriveDetailInfoViewController.h"
 #import "FFDriveModel.h"
 #import "FFDriveMyNewsCell.h"
 #import "YBPopupMenu.h"
@@ -24,6 +25,8 @@
 @property (nonatomic, assign) NSUInteger maxPage;
 
 @property (nonatomic, strong) UIButton *selectButton;
+
+@property (nonatomic, strong) FFDriveDetailInfoViewController *detailController;
 
 @end
 
@@ -153,6 +156,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     syLog(@"ffffffffffffffffffffff");
+//    self.detailController.dict = self.showArray[indexPath.row];
+//    NSDictionary *dict = self.showArray[indexPath.row];
+//    self.detailController.dynamics_id = dict[@"dynamics_id"];
+    self.detailController.indexPath = indexPath;
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:self.detailController animated:YES];
+    SHOW_PARNENT_TABBAR;
 }
 
 - (void)ybPopupMenuDidSelectedAtIndex:(NSInteger)index ybPopupMenu:(YBPopupMenu *)ybPopupMenu {
@@ -210,7 +221,13 @@
 }
 
 
-
+- (FFDriveDetailInfoViewController *)detailController {
+    if (!_detailController) {
+        _detailController = [[FFDriveDetailInfoViewController alloc] init];
+        _detailController.delegate = self;
+    }
+    return _detailController;
+}
 
 
 @end

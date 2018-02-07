@@ -340,6 +340,7 @@
 		B5D108F42029AC0800E4D49F /* YBPopupMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108EF2029AC0800E4D49F /* YBPopupMenu.m */; };
 		B5D108F52029AC0800E4D49F /* YBPopupMenuPath.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F12029AC0800E4D49F /* YBPopupMenuPath.m */; };
 		B5D108F62029AC0800E4D49F /* YBRectConst.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F32029AC0800E4D49F /* YBRectConst.m */; };
+		B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
@@ -1016,6 +1017,8 @@
 		B5D108F12029AC0800E4D49F /* YBPopupMenuPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBPopupMenuPath.m; sourceTree = "<group>"; };
 		B5D108F22029AC0800E4D49F /* YBRectConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YBRectConst.h; sourceTree = "<group>"; };
 		B5D108F32029AC0800E4D49F /* YBRectConst.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YBRectConst.m; sourceTree = "<group>"; };
+		B5D108F7202AAC3F00E4D49F /* FFDynamicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDynamicModel.h; sourceTree = "<group>"; };
+		B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDynamicModel.m; sourceTree = "<group>"; };
 		B5D75A8720070C0B00600B3D /* FFDriveAllInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAllInfoViewController.h; sourceTree = "<group>"; };
 		B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAllInfoViewController.m; sourceTree = "<group>"; };
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
@@ -2115,6 +2118,8 @@
 			children = (
 				B5AB950A200310F00055D507 /* FFDriveModel.h */,
 				B5AB950B200310F00055D507 /* FFDriveModel.m */,
+				B5D108F7202AAC3F00E4D49F /* FFDynamicModel.h */,
+				B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */,
 				B59E3DC12021938800F81F60 /* FFDriveUserModel.h */,
 				B59E3DC22021938800F81F60 /* FFDriveUserModel.m */,
 			);
@@ -2958,6 +2963,7 @@
 				B59E3FE4202441C000F81F60 /* UIButton+WebCache.m in Sources */,
 				B59E3F9C202441C000F81F60 /* MASConstraintMaker.m in Sources */,
 				B51967361FA9EC750046E391 /* FFClassifyTableCell.m in Sources */,
+				B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */,
 				B5D108F42029AC0800E4D49F /* YBPopupMenu.m in Sources */,
 				B59E3DCC2022C32B00F81F60 /* FFDetailMineInfoTableViewController.m in Sources */,
 				B596AAB11FCD31B500C8F15E /* FFEvervDayComment.m in Sources */,

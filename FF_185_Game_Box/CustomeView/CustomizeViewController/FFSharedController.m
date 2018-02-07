@@ -265,8 +265,7 @@ static FFSharedController *controller = nil;
 }
 
 + (NSString *)dynamicsUrl {
-
-    NSString *url = [NSString stringWithFormat:@"%@?id=%@",[FFMapModel map].DYNAMICS_WAP_INFO,[FFSharedController sharedController].dynamicsDict[@"dynamics"][@"id"]];
+    NSString *url = [NSString stringWithFormat:@"%@?id=%@",[FFMapModel map].DYNAMICS_WAP_INFO,[FFSharedController sharedController].dynamicsDict[@"id"]];
     return url;
 }
 
@@ -312,7 +311,7 @@ static FFSharedController *controller = nil;
     NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
-    [FFSharedController shareToFirednCircleWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
+    [FFSharedController shareToFirednCircleWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
     [FFSharedController sharedDynamicsSuccess];
 }
 
@@ -320,7 +319,7 @@ static FFSharedController *controller = nil;
     NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
-    [FFSharedController shareToWexinFirendWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
+    [FFSharedController shareToWexinFirendWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:image];
     [FFSharedController sharedDynamicsSuccess];
 }
 
@@ -329,7 +328,7 @@ static FFSharedController *controller = nil;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
     NSData *imageData = UIImagePNGRepresentation(image);
-    [FFSharedController shareToQQZoneWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
+    [FFSharedController shareToQQZoneWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
     [FFSharedController sharedDynamicsSuccess];
 }
 
@@ -338,7 +337,7 @@ static FFSharedController *controller = nil;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
     NSData *imageData = UIImagePNGRepresentation(image);
-    [FFSharedController shareToQQFriendWithTitle:dict[@"dynamics"][@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
+    [FFSharedController shareToQQFriendWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
     [FFSharedController sharedDynamicsSuccess];
 }
 

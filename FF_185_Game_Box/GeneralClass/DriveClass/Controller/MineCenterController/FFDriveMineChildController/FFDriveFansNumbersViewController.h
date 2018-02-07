@@ -14,7 +14,7 @@
 
 @property (nonatomic, strong) NSMutableArray *showArray;
 @property (nonatomic, assign) FansOrAttention type;
-
+@property (nonatomic, strong) NSString *buid;
 
 - (void)refreshNewData;
 

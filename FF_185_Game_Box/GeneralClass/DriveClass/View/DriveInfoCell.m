@@ -142,57 +142,22 @@
     }
 }
 
-#pragma mark - set
-- (void)setDict:(NSDictionary *)dict {
-
-    if (dict) {
-        _dict = dict;
-    } else {
-        return;
-    }
-
-    //icon
-    [self setIconImageWith:dict[@"user"][@"icon_url"]];
-    //nick name
-    [self setNickNameWith:dict[@"user"][@"nick_name"]];
-    //sex
-    [self setSexWith:dict[@"user"][@"sex"]];
-    //sex
-    [self setVipWith:dict[@"user"][@"vip"]];
-    //time label
-    [self setTimeWith:dict[@"dynamics"][@"create_time"]];
-    //content
-    [self setcontentWith:dict[@"dynamics"][@"content"]];
-    //images
-    id array = dict[@"dynamics"][@"imgs"];
-    if (array == nil || ![array isKindOfClass:[NSArray class]]) {
-        array = [NSArray array];
-    }
-    [self setImagesWith:array];
-
-    //like
-    [self setLikeWith:dict[@"dynamics"][@"likes"]];
-    //unlie
-    [self setUnLikeWith:dict[@"dynamics"][@"dislike"]];
-    //shared
-    [self setSharedWith:dict[@"dynamics"][@"share"]];
-    //comment
-    [self setCommentWith:dict[@"dynamics"][@"comment"]];
-    //dynamics id
-    [self setDynamicsID:dict[@"dynamics"][@"id"]];
-    //operate
-    [self setOperateWith:dict[@"user"][@"operate"]];
-
-
-}
-
-- (void)setIconImageWith:(NSString *)url {
-    [self.iconImageView sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:nil];
-}
-
-- (void)setNickNameWith:(NSString *)Str {
-    self.nickNameLabel.text = [NSString stringWithFormat:@"%@",Str];
-    [self.nickNameLabel sizeToFit];
+#pragma mark - setter
+- (void)setModel:(FFDynamicModel *)model {
+    _model = model;
+    syLog(@"model === %@",model);
+    self.nickNameLabel.text = model.present_user_nickName;
+    self.timeLabel.text = model.creat_time;
+    self.vipImageView.hidden = model.isVip;
+    [self setSexWith:model.present_user_sex];
+    [self.iconImageView sd_setImageWithURL:model.present_user_iconImageUrl];
+    [self setLikeWith:model.likes_number];
+    [self setUnLikeWith:model.dislikes_number];
+    [self setSharedWith:model.shared_number];
+    [self setCommentWith:model.comments_number];
+    [self setImagesWith:model.imageUrlStringArray];
+    [self setcontentWith:model.content];
+    [self setOperateWith:model.operate];
 }
 
 - (void)setSexWith:(NSString *)str {
@@ -220,18 +185,9 @@
     }
 }
 
-- (void)setTimeWith:(NSString *)str {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:str.integerValue];
-    NSString *timeString = [formatter stringFromDate:date];
-    self.timeLabel.text  = timeString;
-}
-
 - (void)setcontentWith:(NSString *)content {
     self.contentLabel.text = [NSString stringWithFormat:@"%@",content];
     [self.contentLabel sizeToFit];
-    self.rowHeight += CGRectGetMaxY(self.contentLabel.frame);
 }
 
 - (void)setImagesWith:(NSArray *)images {
@@ -261,7 +217,6 @@
             }
 
             default: {
-//                imageviewWidth = imageContentViewWidth / 2 - 5;
                 imageContentHeight = 2;
             }
                 break;
@@ -467,10 +422,7 @@
 - (void)starGif {
     if (isGifImage) {
         [_imageViews enumerateObjectsUsingBlock:^(UIImageView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-//            dispatch_queue_t queue = dispatch_queue_create(nil, 0);
-//            dispatch_async(queue, ^{
-                obj.image = self.gifImage;
-//            });
+            obj.image = self.gifImage;
         }];
     }
 }

@@ -60,17 +60,15 @@ const NSInteger BUTTON_TAG = 10086;
     return button;
 }
 
-- (void)setDict:(NSDictionary *)dict {
-    _dict = dict;
-
-    NSDictionary *dynamic = dict[@"dynamics"];
-    NSDictionary *user = dict[@"user"];
-    [self setLikeButtonWith:dynamic[@"likes"]];
-    [self setUnLikeButtonWith:dynamic[@"dislike"]];
-    [self setSharedButtonWith:dynamic[@"share"]];
-    [self setCommentButtonWith:dynamic[@"comment"]];
-    [self setOperateWith:user[@"operate"]];
+- (void)setModel:(FFDynamicModel *)model {
+    _model = model;
+    [self setLikeButtonWith:model.likes_number];
+    [self setUnLikeButtonWith:model.dislikes_number];
+    [self setSharedButtonWith:model.shared_number];
+    [self setCommentButtonWith:model.comments_number];
+    [self setOperateWith:model.operate];
 }
+
 
 - (void)setLikeButtonWith:(NSString *)string {
     UIButton *button = self.buttons[0];

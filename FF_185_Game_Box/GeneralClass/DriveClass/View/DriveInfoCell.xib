@@ -92,7 +92,7 @@
                             <constraint firstAttribute="height" constant="30" id="ZZg-bN-lC3"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                        <state key="normal" title="评论" image="Communtiy_Comment">
+                        <state key="normal" title="  评论" image="Communtiy_Comment">
                             <color key="titleColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>

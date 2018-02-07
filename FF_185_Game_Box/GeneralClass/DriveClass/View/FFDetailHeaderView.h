@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFDynamicModel.h"
 @class FFDetailHeaderView;
 
 @protocol FFDetailHeaderViewDelegate <NSObject>
@@ -18,6 +19,7 @@
 @interface FFDetailHeaderView : UIView
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) FFDynamicModel *model;
 @property (nonatomic, weak) id<FFDetailHeaderViewDelegate> delegate;
 
 - (void)setAttentionWith:(NSString *)str;

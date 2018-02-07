@@ -104,9 +104,10 @@
 
 - (void)setAttention:(NSString *)str {
     NSString *attention = [NSString stringWithFormat:@"%@",str];
+    syLog(@"attention === %@",attention);
     if (attention.integerValue == 0) {
         [self setAttentionButtonTitle:@"+关注" TitleColor:NAVGATION_BAR_COLOR];
-    } else if (attention.integerValue == 0) {
+    } else if (attention.integerValue == 1) {
         [self setAttentionButtonTitle:@"取消关注" TitleColor:[UIColor lightGrayColor]];
     } else if (attention.integerValue == 2) {
         [self setAttentionButtonTitle:@"相互关注" TitleColor:RGBCOLOR(218, 95, 85)];

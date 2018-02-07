@@ -32,7 +32,6 @@
 
 - (void)initUserInterface {
     MJRefreshNormalHeader *customRefreshHeader = [FFViewFactory customRefreshHeaderWithTableView:self.tableView WithTarget:self];
-
     //下拉刷新
     [customRefreshHeader setRefreshingAction:@selector(refreshNewData)];
     //上拉加载更多
@@ -48,10 +47,8 @@
 #pragma mark - method
 - (void)refreshNewData {
     _currentPage = 1;
-
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
-
-    [FFDriveModel userFansAndAttettionWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userFansAndAttettionWithUid:self.buid Page:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"attention === %@", content);
         [hud hideAnimated:YES];
         if (success) {
@@ -76,7 +73,7 @@
 
 - (void)loadMoreData {
     _currentPage++;
-    [FFDriveModel userFansAndAttettionWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userFansAndAttettionWithUid:self.buid Page:[NSString stringWithFormat:@"%lu",_currentPage] Type:self.type Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"attention === %@", content);
         if (success) {
             NSArray *array = content[@"data"][@"list"];

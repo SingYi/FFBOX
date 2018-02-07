@@ -73,39 +73,17 @@
 
 
 #pragma mark - setter
-- (void)setDict:(NSDictionary *)dict {
-
-    if (dict) {
-        _dict = dict;
-    } else {
-        return;
-    }
-
-
-    //icon
-    [self setIconImageWith:dict[@"user"][@"icon_url"]];
-    //nick name
-    [self setNickNameWith:dict[@"user"][@"nick_name"]];
-    //sex
-    [self setSexWith:dict[@"user"][@"sex"]];
-    //vip
-    [self setVipWith:dict[@"user"][@"vip"]];
-    //attention
-    [self setShowAttention:dict[@"dynamics"][@"uid"]];
-    //time label
-    [self setTimeWith:dict[@"dynamics"][@"create_time"]];
-    //content
-    [self setcontentWith:dict[@"dynamics"][@"content"]];
-    //images
-    id array = dict[@"dynamics"][@"imgs"];
-    if (array == nil || ![array isKindOfClass:[NSArray class]]) {
-        array = [NSArray array];
-    }
-
-    // showAttention
-
-    [self setImagesWith:array];
+- (void)setModel:(FFDynamicModel *)model {
+    _model = model;
     self.attentionButton.hidden = YES;
+    [self.iconView sd_setImageWithURL:model.present_user_iconImageUrl];
+    [self setNickNameWith:model.present_user_nickName];
+    [self setSexWith:model.present_user_sex];
+    [self setVipWith:model.present_user_vip];
+    [self setShowAttention:model.present_user_uid];
+    [self setTimeWith:model.creat_time];
+    [self setcontentWith:model.content];
+    [self setImagesWith:model.imageUrlStringArray];
 }
 
 - (void)setIconImageWith:(NSString *)url {
@@ -144,9 +122,8 @@
 }
 
 - (void)setAttentionWith:(NSString *)str {
-    NSString *string = [NSString stringWithFormat:@"%@",str];
     self.attentionButton.hidden = NO;
-    if (string.integerValue == 0) {
+    if (str.integerValue == 0) {
         [self.attentionButton setTitle:@"+关注" forState:(UIControlStateNormal)];
         [self.attentionButton setTitleColor:NAVGATION_BAR_COLOR forState:(UIControlStateNormal)];
         self.attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
@@ -158,8 +135,7 @@
 }
 
 - (void)setShowAttention:(NSString *)str {
-    NSString *string = [NSString stringWithFormat:@"%@",str];
-    if ([string isEqualToString:SSKEYCHAIN_UID]) {
+    if ([str isEqualToString:SSKEYCHAIN_UID]) {
         self.attentionButton.hidden = YES;
     } else {
         self.attentionButton.hidden = NO;

@@ -68,14 +68,11 @@
 
 @end
 
-@implementation FFDriveMineViewController {
-    NSString *controller_nick_name;
-}
+@implementation FFDriveMineViewController 
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
@@ -83,14 +80,11 @@
 
 }
 
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initDataSource];
     [self initUserInterface];
 }
-
-
 
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
@@ -153,9 +147,7 @@
 
 //推送详细页面;
 - (void)pushDetailController:(NSNotification *)ntf {
-    syLog(@"退出通知");
-    NSDictionary *dict = ntf.userInfo;
-    self.detailController.dict = dict;
+    self.detailController.model = ntf.object;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
@@ -177,6 +169,7 @@
     self.selectHeaderTitleArray = [@[numbers,self.selectHeaderTitleArray[1],self.selectHeaderTitleArray[2]] mutableCopy];
 }
 
+//粉丝数回调
 - (void)FansAndAttetionNumbersCallBack:(NSNotification *)ntf {
     [self.tableView.mj_header endRefreshing];
     NSDictionary *dict = ntf.userInfo;
@@ -197,7 +190,6 @@
         }
     }
 }
-
 
 #pragma mark - tableview dele gate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -239,7 +231,7 @@
     (alpha > 1) ? (alpha = 1) : ((alpha < 0) ? (alpha = 0) : alpha);
     self.navBarBgAlpha = [NSString stringWithFormat:@"%.2lf",alpha];
     if (alpha > 0.5) {
-        self.navigationItem.title = controller_nick_name;
+        self.navigationItem.title = self.model.present_user_nickName;
         [self.tableHeaderView hideNickName:YES];
     } else {
         self.navigationItem.title = @"";
@@ -293,8 +285,14 @@
     [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             syLog(@"user info== %@",content);
-            self.dict = content[@"data"];
+//            self.dict = content[@"data"];
+            if (_model == nil) {
+                _model = [FFDynamicModel modelWithDict:nil];
+            }
+            [self.model setPropertyWithUserInfoViewDictionary:content[@"data"]];
+            self.tableHeaderView.model = self.model;
         }
+        [self.tableView.mj_header endRefreshing];
     }];
 }
 
@@ -304,16 +302,10 @@
     self.selectHeaderView.headerTitleArray = selectHeaderTitleArray;
 }
 
-- (void)setDict:(NSDictionary *)dict {
-    if ([dict isKindOfClass:[NSDictionary class]]) {
-        _dict = dict;
-    } else {
-        _dict = nil;
-    }
-
-    self.tableHeaderView.dict = _dict;
-    //
-    [self setNickName];
+- (void)setModel:(FFDynamicModel *)model {
+    _model = model;
+    self.tableHeaderView.model = _model;
+    self.uid = model.present_user_uid;
 }
 
 - (void)setIconImage:(UIImage *)iconImage {
@@ -327,13 +319,10 @@
     } else {
         self.navigationItem.rightBarButtonItem = self.checkButton;
     }
-
     self.contentCell.buid = _uid;
+    [self.tableView.mj_header beginRefreshing];
 }
 
-- (void)setNickName {
-    controller_nick_name = self.tableHeaderView.nickName;
-}
 
 
 #pragma mark - select header delegate

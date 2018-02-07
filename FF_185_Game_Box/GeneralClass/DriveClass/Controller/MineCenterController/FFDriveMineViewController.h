@@ -8,12 +8,13 @@
 
 
 #import <UIKit/UIKit.h>
+#import "FFDynamicModel.h"
 
 @interface FFDriveMineViewController : UIViewController
 
 @property (nonatomic, strong) UIImage *iconImage;
 @property (nonatomic, strong) NSDictionary *dict;
 @property (nonatomic, strong) NSString *uid;
-
+@property (nonatomic, strong) FFDynamicModel *model;
 
 @end

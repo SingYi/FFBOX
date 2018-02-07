@@ -32,10 +32,16 @@
 @property (nonatomic, assign) BOOL isComment;
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) FFDynamicModel *detailModel;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
-
 @property (nonatomic, weak) id <FFDriveDetailDelegate> delegate;
 
 
 @end
+
+
+
+
+
+

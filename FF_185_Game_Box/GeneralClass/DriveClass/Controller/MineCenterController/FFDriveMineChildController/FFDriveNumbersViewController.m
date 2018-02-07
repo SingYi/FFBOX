@@ -36,15 +36,12 @@
 }
 
 
-
-
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self pushDetailControllerWith:indexPath Comment:NO];
 }
 
 - (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushDetailController" object:nil userInfo:self.showArray[indexPath.row]];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"pushDetailController" object:self.showArray[indexPath.row] userInfo:self.showArray[indexPath.row]];
 }
 
 

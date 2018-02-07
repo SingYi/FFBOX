@@ -25,8 +25,8 @@
 // vip image
 @property (nonatomic, strong) UIImageView *vipImage;
 
-@property (nonatomic, strong) UIBarButtonItem *editButton;
-
+@property (nonatomic, strong) UILabel *descriptionLabel;
+@property (nonatomic, strong) UILabel *driverLevelLabel;
 
 @end
 
@@ -53,41 +53,30 @@
     [self addSubview:self.nickNameLabel];
     [self addSubview:self.sexImage];
     [self addSubview:self.vipImage];
-}
-
-#pragma mark - responds
-- (void)respondsToEditButton {
-
+    [self addSubview:self.driverLevelLabel];
+    [self addSubview:self.descriptionLabel];
 }
 
 - (void)hideNickName:(BOOL)hide {
     self.nickNameLabel.hidden = hide;
 }
 
-
-
 #pragma mark - setter
-
-
-- (void)setDict:(NSDictionary *)dict {
-    _dict = dict;
-
-    NSDictionary *user = dict[@"user"];
-    if (user == nil) {
-        user = dict;
-    }
-
-    syLog(@"dict === %@",dict);
-    syLog(@"user === %@",user);
+- (void)setModel:(FFDynamicModel *)model {
+    _model = model;
     // nick name
-    [self setNickName:user[@"nick_name"]];
+    [self setNickName:model.present_user_nickName];
     // sex
-    [self setSexWith:user[@"sex"]];
+    [self setSexWith:model.present_user_sex];
     // vip
-    [self setVipWith:user[@"vip"]];
+    [self setVipWith:model.present_user_vip];
     //image
-    [self setImageUrl:user[@"icon_url"]];
+    [self setImageUrl:model.present_user_iconImageUrlString];
+    //
+    [self setDriverLevelWith:model.present_user_driver_level];
+    [self setDescriptionWith:model.present_user_desc];
 }
+
 
 - (void)setIconImage:(UIImage *)iconImage {
     self.iconImageView.image = iconImage;
@@ -135,6 +124,21 @@
     }
 }
 
+- (void)setDriverLevelWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    self.driverLevelLabel.hidden = (string.length > 0) ? NO : YES;
+    self.driverLevelLabel.text = [NSString stringWithFormat:@"老司机指数 :%@颗星",string];
+    [self.driverLevelLabel sizeToFit];
+    self.driverLevelLabel.center = CGPointMake(kSCREEN_WIDTH / 2, CGRectGetMaxY(self.nickNameLabel.frame) + self.nickNameLabel.frame.size.height);
+}
+
+- (void)setDescriptionWith:(NSString *)str {
+    NSString *string = [NSString stringWithFormat:@"%@",str];
+    self.descriptionLabel.hidden = (string.length > 0) ? NO : YES;
+    self.descriptionLabel.text = [NSString stringWithFormat:@"简介 : %@ ",string];
+    self.descriptionLabel.bounds = CGRectMake(0, 0, kSCREEN_WIDTH, 30);
+    self.descriptionLabel.center = CGPointMake(kSCREEN_WIDTH / 2, CGRectGetMaxY(self.driverLevelLabel.frame) + self.driverLevelLabel.frame.size.height);
+}
 
 #pragma mark - getter
 - (UIImageView *)backgroundImageView {
@@ -185,13 +189,26 @@
     return _vipImage;
 }
 
-- (UIBarButtonItem *)editButton {
-    if (!_editButton) {
-        _editButton = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToEditButton)];
+- (UILabel *)descriptionLabel {
+    if (!_descriptionLabel) {
+        _descriptionLabel = [[UILabel alloc] init];
+        _descriptionLabel.font = [UIFont boldSystemFontOfSize:16];
+        _descriptionLabel.textColor = [UIColor whiteColor];
+        _descriptionLabel.textAlignment = NSTextAlignmentCenter;
+        _descriptionLabel.hidden = YES;
     }
-    return _editButton;
+    return _descriptionLabel;
 }
 
+- (UILabel *)driverLevelLabel {
+    if (!_driverLevelLabel) {
+        _driverLevelLabel = [[UILabel alloc] init];
+        _driverLevelLabel.font = [UIFont boldSystemFontOfSize:16];
+        _driverLevelLabel.textColor = [UIColor whiteColor];
+        _driverLevelLabel.hidden = YES;
+    }
+    return _driverLevelLabel;
+}
 
 
 @end

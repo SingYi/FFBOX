@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFDynamicModel.h"
 
 @interface FFDrivePersonalHeader : UIView
 
@@ -15,6 +16,8 @@
 @property (nonatomic, strong) NSString *uid;
 // nick name
 @property (nonatomic, strong, readonly) NSString *nickName;
+
+@property (nonatomic, strong) FFDynamicModel *model;
 
 - (void)hideNickName:(BOOL)hide;
 

@@ -13,9 +13,6 @@
 #import "FFDriveUserModel.h"
 #import "FFDriveDetailInfoViewController.h"
 
-//#import "UINavigationController+Cloudox.h"
-//#import "UIViewController+Cloudox.h"
-
 #define CELL_IDE @"DriveInfoCell"
 
 @interface FFDriveAllInfoViewController ()<UITableViewDelegate,UITableViewDataSource,DriveInfoCellDelegate,FFDriveDetailDelegate, UIScrollViewDelegate>
@@ -45,7 +42,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLoad {
@@ -75,63 +71,51 @@
     _currentPage = 1;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
-        syLog(@"get dynamic == %@",content);
+//        syLog(@"get dynamic == %@",content);
+        syLog(@"get dynamics success!!!!");
         [hud hideAnimated:YES];
-        _showArray = nil;
+        self.showArray = nil;
         if (success) {
-            _showArray = [content[@"data"] mutableCopy];
+            NSArray *array = content[@"data"];
+            if (array.count > 0) {
+                self.showArray = [self.model dataArrayWithArray:array];
+            }
             if (self.dynamicType == CheckUserDynamic) {
                 [[NSNotificationCenter defaultCenter] postNotificationName:@"CheckUserDynamicCallBack" object:nil userInfo:content];
             }
         }
-
-        if (self.showArray.count == 0) {
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
-            imageView.image = [UIImage imageNamed:@"Community_NoData"];
-            self.tableView.backgroundView = imageView;
-        } else {
-            self.tableView.backgroundView = nil;
-        }
         [self.tableView.mj_header endRefreshing];
         [self.tableView.mj_footer endRefreshing];
+        [self cheackShowArrayIsempty];
         [self.tableView reloadData];
 
     }];
 }
 
-static BOOL moreData = NO;
+
 - (void)loadMoreData {
     _currentPage++;
-    syLog(@"加载更多数据");
-    if (moreData) {
-        return;
-    }
-
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
-        if (success) {
-            NSArray *array = content[@"data"];
-            if (array.count > 0 && array != nil) {
-                [_showArray addObjectsFromArray:array];
-                [self.tableView reloadData];
-                [self.tableView.mj_footer endRefreshing];
-            } else {
-                [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                moreData = YES;
-            }
+        NSArray *array = content[@"data"];
+        if (success && array.count > 0) {
+            self.showArray = [self.model dataArrayAddArray:array];
+            [self.tableView reloadData];
+            [self.tableView.mj_footer endRefreshing];
         } else {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
-            moreData = YES;
         }
-
-        if (_showArray.count == 0) {
-            UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
-            imageView.image = [UIImage imageNamed:@"Community_NoData"];
-            self.tableView.backgroundView = imageView;
-        } else {
-            self.tableView.backgroundView = nil;
-        }
-
+        [self cheackShowArrayIsempty];
     }];
+}
+
+- (void)cheackShowArrayIsempty {
+    if (self.showArray.count == 0) {
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:self.tableView.bounds];
+        imageView.image = [UIImage imageNamed:@"Community_NoData"];
+        self.tableView.backgroundView = imageView;
+    } else {
+        self.tableView.backgroundView = nil;
+    }
 }
 
 #pragma mark - responds
@@ -147,34 +131,26 @@ static BOOL moreData = NO;
 }
 
 - (void)replaceShowArrayDataWith:(NSIndexPath *)indexPath type:(LikeOrDislike)type {
-    NSMutableDictionary *dict = [self.showArray[indexPath.row] mutableCopy];
-    NSMutableDictionary *dynamics = [dict[@"dynamics"] mutableCopy];
-    NSMutableDictionary *user = [dict[@"user"] mutableCopy];
+    FFDynamicModel *model = self.showArray[indexPath.row];
     if (type == like) {
-        NSString *like = dynamics[@"likes"];
-        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"likes"];
-        [user setObject:@"1" forKey:@"operate"];
+        model.operate = @"1";
+        model.likes_number = [NSString stringWithFormat:@"%ld",(model.likes_number.integerValue + 1)];
     } else {
-        NSString *like = dynamics[@"dislike"];
-        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"dislike"];
-        [user setObject:@"0" forKey:@"operate"];
+        model.operate = @"0";
+        model.dislikes_number = [NSString stringWithFormat:@"%ld",(model.dislikes_number.integerValue + 1)];
     }
-
-    [dict setObject:dynamics forKey:@"dynamics"];
-    [dict setObject:user forKey:@"user"];
-
-    [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
-
     [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 static BOOL respondsSuccess;
 - (void)respondsSharedButtonWithCell:(DriveInfoCell *)cell {
-    NSMutableDictionary *dict;
     syLog(@"分享");
-    dict = cell.dict.mutableCopy;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    FFDynamicModel *model = cell.model;
     [dict setObject:cell.images forKey:@"images"];
-    dynamicsID = dict[@"dynamics"][@"id"];
+    [dict setObject:model.content forKey:@"content"];
+    [dict setObject:model.dynamic_id forKey:@"id"];
+    dynamicsID = model.dynamic_id;
     respondsSuccess = NO;
     [FFSharedController sharedDynamicsWithDict:dict];
 }
@@ -184,10 +160,8 @@ static BOOL respondsSuccess;
         return;
     }
     respondsSuccess = YES;
-
     [FFDriveModel userSharedDynamics:dynamicsID Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"shared success");
-        syLog(@"%@",content);
         if (success) {
             [self refreshNewData];
         }
@@ -207,25 +181,22 @@ static BOOL respondsSuccess;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DriveInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
     cell.delegate = self;
-    cell.dict = self.showArray[indexPath.row];
+    cell.model = self.showArray[indexPath.row];
     return cell;
 }
-
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self pushDetailControllerWith:indexPath Comment:NO];
 }
 
 - (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {
-    self.detailController.dict = self.showArray[indexPath.row];
+    self.detailController.model = self.showArray[indexPath.row];
     self.detailController.indexPath = indexPath;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
     SHOW_PARNENT_TABBAR;
 }
-
-
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     self.isTouch = YES;
@@ -237,7 +208,6 @@ static BOOL respondsSuccess;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    
     NSArray<DriveInfoCell *> *cells = [self.tableView visibleCells];
     [cells enumerateObjectsUsingBlock:^(DriveInfoCell * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if ([obj isKindOfClass:[DriveInfoCell class]]) {
@@ -249,16 +219,6 @@ static BOOL respondsSuccess;
             }
         }
     }];
-
-
-//    CGPoint offSet = scrollView.contentOffset;
-//    CGSize contentSize = scrollView.contentSize;
-//
-//    syLog(@"%lf       hieht == %lf",offSet.y,contentSize.height);
-//    if (offSet.y + 1000 > contentSize.height) {
-//        [self loadMoreData];
-//    }
-
 }
 
 - (void)canScroll:(UIScrollView *)scrollView {
@@ -277,17 +237,16 @@ static BOOL respondsSuccess;
 }
 
 
-
 #pragma mark - cell dele gate
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     switch (type) {
         case likeButton: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.dynamicsID Type:like index:indexPath];
+            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.model.dynamic_id Type:like index:indexPath];
         }
             break;
         case dislikeButton: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.dynamicsID Type:dislike index:indexPath];
+            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.model.dynamic_id Type:dislike index:indexPath];
         }
             break;
         case sharedButton: {
@@ -310,12 +269,10 @@ static BOOL respondsSuccess;
 
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid WithIconImage:(UIImage *)iconImage {
     syLog(@"click icon with uid == %@", uid);
-
     FFDriveMineViewController *vc = [FFDriveMineViewController new];
-    vc.dict = cell.dict;
     vc.iconImage = iconImage;
-    vc.uid = uid;
-    [self userModel].buid = uid;
+    vc.model = cell.model;
+//    vc.uid = cell.model.present_user_uid;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:vc animated:YES];
@@ -327,8 +284,8 @@ static BOOL respondsSuccess;
 #pragma mark - detail delegate
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller replaceDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath {
     syLog(@"点赞????");
-    [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+//    [self.showArray replaceObjectAtIndex:indexPath.row withObject:dict];
+//    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller SharedWith:(NSIndexPath *)indexPath {
@@ -382,9 +339,13 @@ static BOOL respondsSuccess;
     return [FFDriveUserModel sharedModel];
 }
 
-- (NSString *)buid {
-    return [self userModel].buid;
+- (FFDynamicModel *)model {
+    if (!_model) {
+        _model = [[FFDynamicModel alloc] init];
+    }
+    return _model;
 }
+
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SharedDynamicsSuccess object:nil];

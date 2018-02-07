@@ -102,9 +102,10 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
                   Complete:(FFCompleteBlock)completion;
 
 /** 关注 / 粉丝*/
-+ (void)userFansAndAttettionWithPage:(NSString *)page
-                                Type:(FansOrAttention)type
-                            Complete:(FFCompleteBlock)completion;
++ (void)userFansAndAttettionWithUid:(NSString *)uid
+                               Page:(NSString *)page
+                               Type:(FansOrAttention)type
+                           Complete:(FFCompleteBlock)completion;
 
 /** 用户信息 */
 + (void)userInfomationWithUid:(NSString *)uid

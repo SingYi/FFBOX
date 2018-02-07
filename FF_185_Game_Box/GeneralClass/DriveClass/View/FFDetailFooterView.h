@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFDynamicModel.h"
 @class FFDetailFooterView;
 
 @protocol FFDetailFooterViewDelegate <NSObject>
@@ -24,6 +25,7 @@
 @property (nonatomic, weak) id<FFDetailFooterViewDelegate> delegate;
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) FFDynamicModel *model;
 
 
 

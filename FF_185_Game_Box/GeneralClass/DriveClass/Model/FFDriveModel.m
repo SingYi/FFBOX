@@ -169,7 +169,11 @@
     } else {
         [dict setObject:@"0" forKey:@"uid"];
     }
+    syLog(@"comment uid === %@",dict);
     [dict setObject:Channel forKey:@"channel"];
+    if (dynamicsID == nil) {
+        return;
+    }
     [dict setObject:dynamicsID forKey:@"dynamics_id"];
     [dict setObject:[NSString stringWithFormat:@"%lu",(NSUInteger)type] forKey:@"type"];
     [dict setObject:page forKey:@"page"];
@@ -252,11 +256,11 @@
 }
 
 /** 关注 / 粉丝 */
-+ (void)userFansAndAttettionWithPage:(NSString *)page Type:(FansOrAttention)type Complete:(FFCompleteBlock)completion {
++ (void)userFansAndAttettionWithUid:(NSString *)uid Page:(NSString *)page Type:(FansOrAttention)type Complete:(FFCompleteBlock)completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
-    [dict setObject:[self userModel].buid forKey:@"uid"];
-    [dict setObject:[self userModel].uid forKey:@"visit_uid"];
+    [dict setObject:uid forKey:@"uid"];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"visit_uid"];
     [dict setObject:Channel forKey:@"channel"];
     [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
     [dict setObject:page forKey:@"page"];

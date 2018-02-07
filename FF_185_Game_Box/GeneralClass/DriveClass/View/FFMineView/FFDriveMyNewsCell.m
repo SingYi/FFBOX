@@ -27,6 +27,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *dynamicNickNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dynamicContentLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *dynamicCommentLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *DynamicLikeCommentHight;
 
 
 @end
@@ -42,6 +44,9 @@
     self.iconImageView.layer.masksToBounds = YES;
     self.iconImageView.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
     self.iconImageView.layer.borderWidth = 2;
+    self.sexImageView.hidden = YES;
+    self.dynamicImageView.contentMode = UIViewContentModeScaleAspectFill;
+    self.dynamicImageView.clipsToBounds = YES;
 }
 
 
@@ -59,6 +64,11 @@
             break;
     }
 
+    if (type == 2) {
+        self.DynamicLikeCommentHight.constant = 30;
+    } else {
+        self.DynamicLikeCommentHight.constant = 0;
+    }
 }
 - (void)setDict:(NSDictionary *)dict {
     _dict = dict;
@@ -70,6 +80,16 @@
     [self setNickNameWith:CELL_DICT(@"uid_nickname")];
     //time
     [self setTimeWith:_dict[@"create_time"]];
+    //sex
+//    [self setSexWith:CELL_DICT(@"uid_vip")];
+
+    ///////////dynamic////////////
+    //image
+    [self setDynamicImage:dict[@"d_img"]];
+    //nick name
+    [self setDynamicNickName:dict[@"d_uid_nickname"]];
+    //content
+    [self setDynamicContent:dict[@"d_content"]];
 }
 
 /** 设置发起人头像 */
@@ -84,9 +104,58 @@
     self.nickNameLabel.text = string;
 }
 
+/** 设置发起人时间 */
 - (void)setTimeWith:(NSString *)str  {
     CELL_STRING;
-    self.timeLabel.text = string;
+    NSDateFormatter *formatter = [NSDateFormatter new];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:string.integerValue];
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
+    self.timeLabel.text = [formatter stringFromDate:date];
+}
+
+/** 设置发起人性别 */
+- (void)setSexWith:(NSString *)str {
+    CELL_STRING;
+    self.sexImageView.hidden = NO;
+    if (string.integerValue == 1) {
+        self.sexImageView.tintColor = [UIColor blueColor];
+        self.sexImageView.image = [UIImage imageNamed:@"Community_Sex_Male"];
+    } else if (str.integerValue == 2) {
+        self.sexImageView.tintColor = [UIColor redColor];
+        self.sexImageView.image = [UIImage imageNamed:@"Community_Sex_Female"];
+    } else {
+        self.sexImageView.hidden = YES;
+    }
+}
+
+/** 发起人 vip */
+- (void)setVipWith:(NSString *)str {
+    CELL_STRING;
+    if (string.integerValue == 1) {
+        self.vipImageView.hidden = NO;
+    } else {
+        self.vipImageView.hidden = YES;
+    }
+}
+
+
+////////////////// 作者动态 ////////////////////////////
+/** 动态图片 */
+- (void)setDynamicImage:(NSString *)str {
+    CELL_STRING;
+    [self.dynamicImageView sd_setImageWithURL:[NSURL URLWithString:string]];
+}
+
+/** 动态作者昵称 */
+- (void)setDynamicNickName:(NSString *)str {
+    CELL_STRING;
+    self.dynamicNickNameLabel.text = string;
+}
+
+/** 动态内容 */
+- (void)setDynamicContent:(NSString *)str {
+    CELL_STRING;
+    self.dynamicContentLabel.text = string;
 }
 
 

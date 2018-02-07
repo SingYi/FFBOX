@@ -25,14 +25,13 @@
 @property (nonatomic, strong) NSMutableArray *hotListArray;
 
 
+
 @end
 
 @implementation FFDriveDetailInfoViewController {
-    NSString *dynamicsID;
     CommentType commentType;
     NSUInteger currentPage;
     NSString *attentionString;
-    NSString *attentionUid;
 }
 
 - (instancetype)init
@@ -45,14 +44,11 @@
 }
 
 - (void)sendMessageCallBackNotification:(NSNotification *)notification {
-
     syLog(@"发送评论 : %@",notification.userInfo);
     NSDictionary *dict = notification.userInfo;
     NSString *status = dict[@"status"];
     if (status.integerValue == 1) {
-
         [self refreshNewData];
-
         NSString *data = [NSString stringWithFormat:@"%@",dict[@"data"]];
         if (data.integerValue > 0) {
             NSString *msg = [NSString stringWithFormat:@"评论成功\n 奖励%@金币",data];
@@ -65,13 +61,9 @@
     }
 }
 
-
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
-
-
 
 - (void)initUserInterface {
     [super initUserInterface];
@@ -91,45 +83,58 @@
     self.tableView.frame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, kSCREEN_HEIGHT - kNAVIGATION_HEIGHT - 44);
 }
 
-
 - (void)refreshNewData {
-    syLog(@"刷新");
+    syLog(@"刷新动态详情页面");
     currentPage = 1;
-    START_NET_WORK;
-    [FFDriveModel userComeentListWithDynamicsID:dynamicsID type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
+    hud_add;
+    [FFDriveModel userComeentListWithDynamicsID:self.detailModel.dynamic_id type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"comment list === %@",content);
-        STOP_NET_WORK;
+        hud_remove;
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             self.showArray = [array mutableCopy];
             NSArray *hotArray = content[@"data"][@"hot_list"];
             self.hotListArray = [hotArray mutableCopy];
+            [self.detailModel setPropertyWithDetailCommentLishVeiwDictionary:content[@"data"][@"dynamics_info"]];
+            [self setOtherModel:self.detailModel];
+            [self.headerView setAttentionWith:self.detailModel.attention];
             [self.tableView reloadData];
-            NSDictionary *dict = content[@"data"][@"dynamics_info"];
-            [self setCommentNUmber:[NSString stringWithFormat:@"%@",dict[@"comment"]]];
-
-            attentionString = [NSString stringWithFormat:@"%@",dict[@"is_follow"]];
-            [self.headerView setAttentionWith:attentionString];
-
-            attentionUid = [NSString stringWithFormat:@"%@",dict[@"uid"]];
-
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }
-
+        
         if (self.showArray.count == 0) {
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         } else {
             [self.tableView.mj_footer endRefreshing];
         }
 
+        [self cheackShowArrayIsempty];
+
         [self.tableView.mj_header endRefreshing];
     }];
 }
 
 - (void)loadMoreData {
-    [self.tableView.mj_footer endRefreshing];
+    syLog(@"加载更多详情");
+    currentPage++;
+    [FFDriveModel userComeentListWithDynamicsID:self.detailModel.dynamic_id type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
+        NSArray *array = content[@"data"][@"list"];
+        if (success) {
+            [self.showArray addObjectsFromArray:array];
+            [self.tableView reloadData];
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+        if (array.count == 0) {
+            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+        } else {
+            [self.tableView.mj_footer endRefreshing];
+        }
+        [self cheackShowArrayIsempty];
+    }];
 }
+
 
 #pragma mark - table view data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -146,7 +151,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     FFDriveCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
-
     cell.delegate = self;
     if (indexPath.section == 0) {
         cell.dict = self.hotListArray[indexPath.row];
@@ -164,8 +168,6 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     return (section == 0) ? [self creatViewWithLabel:self.hotLabel] : [self creatViewWithLabel:self.commentNumberLabel];
 }
-
-
 
 - (UIView *)creatViewWithLabel:(UILabel *)label {
     UIView *view =[[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 44)];
@@ -273,13 +275,13 @@
     syLog(@"回复评论");
     NSDictionary *dict = (indexPath.section == 0) ? self.hotListArray[indexPath.row] : self.showArray[indexPath.row];
     NSString *toUid = dict[@"uid"];
-    [FFDriveReplyView showReplyViewWithDynamicID:dynamicsID ToUid:toUid];
+    [FFDriveReplyView showReplyViewWithDynamicID:self.detailModel.dynamic_id ToUid:toUid];
 }
 
 #pragma mark - responds
 - (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type {
     FF_is_login;
-    [FFDriveModel userLikeOrDislikeWithDynamicsID:dynamicsID type:type Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userLikeOrDislikeWithDynamicsID:self.detailModel.dynamic_id type:type Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             [self replaceDictWithtype:type];
         } else {
@@ -312,18 +314,14 @@
     }
 
     _dict = dict;
-    [self setDataDict:dict];
     [self refreshNewData];
 }
 
 #pragma mark - header view delegate
 - (void)FFDetailHeaderView:(FFDetailHeaderView *)view clickAttentionButton:(id)info {
     FF_is_login;
-    syLog(@"关注");
-//    if ([attentionUid isEqualToString:SSKEYCHAIN_UID]) {
-//        BOX_MESSAGE(@"");
-//    } 
-    [FFDriveModel userAttentionWith:attentionUid Type:(attentionString.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
+    syLog(@"关注 %@",self.model.present_user_uid);
+    [FFDriveModel userAttentionWith:self.detailModel.present_user_uid Type:(self.detailModel.attention.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"attention === %@",content);
         if (success) {
             [self refreshNewData];
@@ -333,14 +331,12 @@
     }];
 }
 
-
-
 #pragma mark - footer view delegate
 - (void)FFDetailFooterView:(FFDetailFooterView *)view didClickButton:(NSUInteger)idx {
     syLog(@"click button %ld",idx);
     switch (idx) {
-        case 0: [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:like]; break;
-        case 1: [self respondsToLikeOrDislikeButtonWithDynamicsID:dynamicsID Type:dislike]; break;
+        case 0: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel.dynamic_id Type:like]; break;
+        case 1: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel.dynamic_id Type:dislike]; break;
         case 2: [self respondsSharedButtonClick]; break;
         case 3: [self showWirteReview]; break;
         default: break;
@@ -357,53 +353,26 @@
 - (void)showWirteReview {
     syLog(@"评论");
     FF_is_login;
-    [FFDriveReplyView showReplyViewWithDynamicID:dynamicsID ToUid:nil];
+    [FFDriveReplyView showReplyViewWithDynamicID:self.detailModel.dynamic_id ToUid:nil];
 }
 
 #pragma mark - setter
-- (void)setIsComment:(BOOL)isComment {
-    _isComment = isComment;
+- (void)setModel:(FFDynamicModel *)model {
+    self.detailModel = model;
 }
 
-- (void)setDict:(NSDictionary *)dict {
+- (void)setDetailModel:(FFDynamicModel *)detailModel {
+    _detailModel = detailModel;
+    self.commentNumberLabel.text = [NSString stringWithFormat:@" 评论 : %@",detailModel.comments_number];
+    [self setOtherModel:detailModel];
+    [self.tableView.mj_header beginRefreshing];
+}
 
-    if (dict == nil) {
-        return;
-    }
-
-    syLog(@"dict == %@", dict);
-    _dict = dict;
-    [self setDataDict:dict];
-
-    self.showArray = [NSMutableArray array];
-    [self.tableView reloadData];
-
+- (void)setOtherModel:(FFDynamicModel *)model {
+    self.headerView.model = model;
+    self.footerView.model = model;
     self.tableView.tableHeaderView = self.headerView;
-    [self refreshNewData];
-
 }
-
-- (void)setDataDict:(NSDictionary *)dict {
-    dynamicsID = [NSString stringWithFormat:@"%@",dict[@"dynamics"][@"id"]];
-    commentType = timeType;
-    [self setCommentNUmber:dict[@"dynamics"][@"comment"]];
-}
-
-
-- (void)setCommentNUmber:(NSString *)str {
-    id tmpDict = _dict;
-    if (![str isEqualToString:_dict[@"dynamics"][@"comment"]]) {
-        tmpDict = [_dict mutableCopy];
-        NSMutableDictionary *dynamics = [tmpDict[@"dynamics"] mutableCopy];
-        [dynamics setObject:[NSString stringWithFormat:@"%@",str] forKey:@"comment"];
-        [tmpDict setObject:dynamics forKey:@"dynamics"];
-    }
-    self.footerView.dict = tmpDict;
-    self.headerView.dict = tmpDict;
-    self.commentNumberLabel.text = [NSString stringWithFormat:@" 评论 : %@",str];
-}
-
-
 
 
 #pragma mark - getter
@@ -444,9 +413,6 @@
     }
     return _hotLabel;
 }
-
-
-
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SendCommentNotificationName object:nil];

@@ -132,9 +132,11 @@
 
 - (void)setBuid:(NSString *)buid {
     _buid = buid;
-    FFDriveNumbersViewController *ctrl1 = self.dataArray[0];
-    ctrl1.buid = buid;
+    self.numbersViewController.buid = buid;
+    self.fansNumbersViewController.buid = buid;
+    self.attentionNumbersViewController.buid = buid;
 }
+
 
 #pragma mark - UIPageViewControllerDataSource
 

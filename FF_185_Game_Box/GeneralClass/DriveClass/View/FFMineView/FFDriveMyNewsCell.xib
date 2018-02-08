@@ -112,10 +112,10 @@
                             <constraint firstAttribute="trailing" secondItem="ssA-1c-qIp" secondAttribute="trailing" constant="8" id="sii-ZQ-UJF"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="评论了:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-oN-IKo">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jqq-oN-IKo">
                         <rect key="frame" x="16" y="79" width="339" height="87.5"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Community_Vip" translatesAutoresizingMaskIntoConstraints="NO" id="pPq-LK-vgd" userLabel="vip image view">
@@ -154,6 +154,7 @@
                 <outlet property="dynamicContentLabel" destination="SMn-bW-We8" id="RQ8-pr-rVg"/>
                 <outlet property="dynamicImageView" destination="CAH-b2-NqK" id="YGp-69-Gnl"/>
                 <outlet property="dynamicNickNameLabel" destination="6GY-Nu-hOP" id="j6k-Vd-AXN"/>
+                <outlet property="dynamicsImageWidth" destination="0YL-b0-Fjh" id="1if-jk-LYC"/>
                 <outlet property="iconImageView" destination="DOR-ER-hbd" id="GuA-4w-snr"/>
                 <outlet property="nickNameLabel" destination="u5d-4j-dDl" id="t3b-yA-gtG"/>
                 <outlet property="sexImageView" destination="fsa-Io-pvH" id="g4f-5b-CJR"/>

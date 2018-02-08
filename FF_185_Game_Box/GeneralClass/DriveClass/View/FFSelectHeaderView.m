@@ -12,8 +12,7 @@ const NSInteger ButtonTag = 10086;
 
 @interface FFSelectHeaderView () <UIScrollViewDelegate>
 
-/** title button Array */
-@property (nonatomic, strong) NSMutableArray<UIButton *> *titleButtonArray;
+
 
 @property (nonatomic, assign) NSInteger selectTitleIndex;
 

@@ -21,7 +21,6 @@
 
 @property (nonatomic, weak) id<FFCustomizeTabbarDelegate> customizeDelegate;
 
-
 @property (nonatomic, strong) UIButton *centerBtn;
 
 @end

@@ -145,7 +145,7 @@
 #pragma mark - setter
 - (void)setModel:(FFDynamicModel *)model {
     _model = model;
-    syLog(@"model === %@",model);
+//    syLog(@"model === %@",model);
     self.nickNameLabel.text = model.present_user_nickName;
     self.timeLabel.text = model.creat_time;
     self.vipImageView.hidden = model.isVip;
@@ -192,7 +192,7 @@
 
 - (void)setImagesWith:(NSArray *)images {
     CGFloat imageContentHeight;
-    syLog(@"images === %@",images);
+//    syLog(@"images === %@",images);
     if (images != nil && images.count != 0) {
         switch (images.count) {
             case 1: {
@@ -353,7 +353,7 @@
 - (void)setOperateWith:(NSString *)str {
     NSString *string = [NSString stringWithFormat:@"%@",str];
     if (string != nil && string.length != 0) {
-        syLog(@"operate string === %@",str);
+//        syLog(@"operate string === %@",str);
         switch (string.integerValue) {
             case 0: {
                 [self removeLikeButtonAndeDisLikeButtonSelect];

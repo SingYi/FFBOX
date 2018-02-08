@@ -93,7 +93,7 @@ const NSInteger BUTTON_TAG = 10086;
 - (void)setOperateWith:(NSString *)str {
     NSString *string = [NSString stringWithFormat:@"%@",str];
     if (string != nil && string.length != 0) {
-        syLog(@"operate string === %@",str);
+//        syLog(@"operate string === %@",str);
         switch (string.integerValue) {
             case 0: {
                 [self removeLikeButtonAndeDisLikeButtonSelect];

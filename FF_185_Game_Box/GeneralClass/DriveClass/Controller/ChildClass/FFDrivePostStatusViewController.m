@@ -82,16 +82,28 @@
     if (self.textView.text.length == 0 && self.imagesArray.count == 0) {
         [UIAlertController showAlertMessage:@"请输入要发送的状态\n或者选择要发送的图片" dismissTime:0.7 dismissBlock:nil];
     } else {
-        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
         syLog(@"发送动态");
-        [FFDriveModel userUploadPortraitWithContent:self.textView.text Image:self.lastSelectAssets Completion:^(NSDictionary *content, BOOL success) {
-            [hud hideAnimated:YES];
-            syLog(@"发送完成");
-            if (success) {
-                [self.navigationController popViewControllerAnimated:YES];
-            }
-        }];
+        [self.textView resignFirstResponder];
+        if (_isGif) {
+            [self postImageWith:self.lastSelectAssets];
+        } else {
+            [self postImageWith:self.imagesArray];
+        }
     }
+}
+
+- (void)postImageWith:(NSArray *)array {
+    syLog(@"上传照片  : array === %@",array);
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+
+    [FFDriveModel userUploadPortraitWithContent:self.textView.text Image:array Completion:^(NSDictionary *content, BOOL success) {
+        [hud hideAnimated:YES];
+        syLog(@"发送完成");
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"postStausComplete" object:nil];
+        if (success) {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+    }];
 }
 
 - (void)respondsToHideButton {
@@ -315,11 +327,6 @@
             [strongSelf.collectionView reloadData];
 
         }];
-
-//        [self.actionSheet previewPhotos:@[@"gif"] index:0 hideToolBar:NO complete:^(NSArray * _Nonnull photos) {
-////            zl_strongify(weakSelf);
-//            syLog(@"photots = %@",photos);
-//        }];
 
         self.actionSheet.cancleBlock = ^{
             //        NSLog(@"取消选择图片");

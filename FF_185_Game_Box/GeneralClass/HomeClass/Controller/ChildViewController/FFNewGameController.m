@@ -47,6 +47,8 @@
     WeakSelf;
     [self.rankModel loadNewRankListWithCompletion:^(NSDictionary *content, BOOL success) {
 
+
+        syLog(@"new game == %@",content);
         if (success) {
             weakSelf.showArray = [content[@"data"] mutableCopy];
             [self clearUpData:weakSelf.showArray];
@@ -81,7 +83,6 @@
                 [weakSelf.tableView.mj_footer endRefreshingWithNoMoreData];
             }
         } else {
-
             [weakSelf.tableView.mj_footer endRefreshing];
         }
     }];

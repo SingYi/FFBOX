@@ -26,7 +26,7 @@
 
     view.imageView.image = [UIImage imageWithData:data];
 
-    [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:view];
+    [[UIApplication sharedApplication].keyWindow addSubview:view];
 
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [view respondsToCloseButton];

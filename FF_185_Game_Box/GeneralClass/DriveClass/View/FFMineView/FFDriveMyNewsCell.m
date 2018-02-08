@@ -29,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *dynamicCommentLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *DynamicLikeCommentHight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dynamicsImageWidth;
 
 
 @end
@@ -53,6 +54,7 @@
 
 #pragma mark - setter
 - (void)setType:(NSUInteger)type {
+    _type = type;
     switch (type) {
         case 1:_beginningString = @"c_";
             break;
@@ -64,11 +66,11 @@
             break;
     }
 
-    if (type == 2) {
-        self.DynamicLikeCommentHight.constant = 30;
-    } else {
-        self.DynamicLikeCommentHight.constant = 0;
-    }
+//    if (type == 2) {
+//        self.DynamicLikeCommentHight.constant = 30;
+//    } else {
+//        self.DynamicLikeCommentHight.constant = 0;
+//    }
 }
 - (void)setDict:(NSDictionary *)dict {
     _dict = dict;
@@ -90,6 +92,11 @@
     [self setDynamicNickName:dict[@"d_uid_nickname"]];
     //content
     [self setDynamicContent:dict[@"d_content"]];
+
+    ////////// content label ////////
+    [self setContentWith:CELL_DICT(@"content")];
+
+    [self setDynamicComment:dict[@"c_content"]];
 }
 
 /** 设置发起人头像 */
@@ -143,6 +150,7 @@
 /** 动态图片 */
 - (void)setDynamicImage:(NSString *)str {
     CELL_STRING;
+    self.dynamicsImageWidth.constant = (string.length < 5) ? 0 : 60;
     [self.dynamicImageView sd_setImageWithURL:[NSURL URLWithString:string]];
 }
 
@@ -158,6 +166,30 @@
     self.dynamicContentLabel.text = string;
 }
 
+/** 中间的内容 */
+- (void)setContentWith:(NSString *)str {
+    CELL_STRING;
+    if (self.type == 1) {
+        self.contentLabel.text = [NSString stringWithFormat:@"回复了 : %@",string];
+    } else if (self.type == 2) {
+        self.contentLabel.text = @"赞了这条评论";
+    } else if (self.type == 3) {
+        self.contentLabel.text = @"赞了这条动态";
+    }
+}
+
+/** 动态的评论 */
+- (void)setDynamicComment:(NSString *)str {
+    CELL_STRING;
+    if (string.length > 0 && str != nil) {
+        self.DynamicLikeCommentHight.constant = 30;
+    } else {
+        self.DynamicLikeCommentHight.constant = 0;
+    }
+    self.dynamicCommentLabel.text = string;
+}
+
+
 
 
 
@@ -165,3 +197,21 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

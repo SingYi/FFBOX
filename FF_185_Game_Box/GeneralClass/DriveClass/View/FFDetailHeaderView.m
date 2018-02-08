@@ -80,10 +80,10 @@
     [self setNickNameWith:model.present_user_nickName];
     [self setSexWith:model.present_user_sex];
     [self setVipWith:model.present_user_vip];
-    [self setShowAttention:model.present_user_uid];
     [self setTimeWith:model.creat_time];
     [self setcontentWith:model.content];
     [self setImagesWith:model.imageUrlStringArray];
+    [self setShowAttention:model.present_user_uid];
 }
 
 - (void)setIconImageWith:(NSString *)url {
@@ -122,7 +122,6 @@
 }
 
 - (void)setAttentionWith:(NSString *)str {
-    self.attentionButton.hidden = NO;
     if (str.integerValue == 0) {
         [self.attentionButton setTitle:@"+关注" forState:(UIControlStateNormal)];
         [self.attentionButton setTitleColor:NAVGATION_BAR_COLOR forState:(UIControlStateNormal)];
@@ -161,7 +160,7 @@
 
 - (void)setImagesWith:(NSArray *)images {
     CGFloat imageContentHeight;
-    syLog(@"images === %@",images);
+//    syLog(@"images === %@",images);
     if (images != nil && images.count != 0) {
         switch (images.count) {
             case 1: {

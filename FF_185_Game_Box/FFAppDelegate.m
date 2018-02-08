@@ -16,11 +16,13 @@
 #import <UserNotifications/UserNotifications.h>
 #import "FFLaunchScreen.h"
 #import "FFAdvertisingView.h"
-
+#import "FFMaskView.h"
 #import "FFStatisticsModel.h"
 
 #define WEIXINAPPID @"wx7ec31aabe8cc710d"
 #define QQAPPID @"1106099979"
+
+
 
 
 
@@ -76,17 +78,23 @@
 - (void)initializeUserInterface {
 
     //第一次安装
-    [FFBoxModel isFirstInstall];
+    BOOL isFirstInstall = [FFBoxModel isFirstInstall];
+
+    //加载蒙版
+
 
     //初始化window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.window.rootViewController = [FFControllerManager sharedManager].rootViewController;
     [self.window makeKeyAndVisible];
 
+    [self addMaskView:isFirstInstall];
+
     //加载引导页
     if ([FFBoxModel isFirstLogin]) {
         [self.window addSubview:[FFLaunchScreen new]];
     } else {
+
         //广告
         NSData * data = [FFBoxModel getAdvertisingImage];
         if (data) {
@@ -100,6 +108,8 @@
 
 
 }
+
+
 
 - (void)initializeDataSource {
 
@@ -152,7 +162,6 @@
                 SAVEOBJECT_AT_USERDEFAULTS([NSNumber numberWithBool:granted], @"NOTIFICATIONSETTING");
             } else {
                 SAVEOBJECT_AT_USERDEFAULTS([NSNumber numberWithBool:NO], @"NOTIFICATIONSETTING");
-
             }
         }];
 
@@ -165,7 +174,11 @@
 }
 
 
-
+- (void)addMaskView:(BOOL)add {
+    if (add) {
+        [FFMaskView addMaskViewWithWindow:self.window];
+    }
+}
 
 
 

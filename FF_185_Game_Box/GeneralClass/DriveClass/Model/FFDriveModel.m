@@ -375,6 +375,12 @@
 
 + (void)myNewNumbersComplete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {
+        if (completion) {
+            completion(nil,NO);
+        }
+        return;
+    }
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     [dict setObject:Channel forKey:@"channel"];
     [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel"]))) forKey:@"sign"];
@@ -385,7 +391,12 @@
 
 + (void)myNewsWithType:(MyNewsType)type page:(NSString *)page Complete:(FFCompleteBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
-
+    if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {
+        if (completion) {
+            completion(nil,NO);
+        }
+        return;
+    }
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     [dict setObject:Channel forKey:@"channel"];
     [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];

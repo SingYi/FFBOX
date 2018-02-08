@@ -36,6 +36,7 @@
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondsToSharedDynamisSuccess) name:SharedDynamicsSuccess object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshNewData) name:@"postStausComplete" object:nil];
     }
     return self;
 }
@@ -57,6 +58,9 @@
     self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.tableView];
 }
+
+
+
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -220,6 +224,11 @@ static BOOL respondsSuccess;
         }
     }];
 }
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+//    syLog(@"??????????");
+}
+
 
 - (void)canScroll:(UIScrollView *)scrollView {
     if (!self.canScroll) {

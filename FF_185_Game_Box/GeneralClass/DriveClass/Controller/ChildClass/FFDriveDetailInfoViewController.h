@@ -19,11 +19,7 @@
 
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller
                      SharedWith:(NSIndexPath *)indexPath;
-
-
-
 @end
-
 
 
 @interface FFDriveDetailInfoViewController : FFDriveAllInfoViewController
@@ -33,12 +29,16 @@
 
 @property (nonatomic, strong) NSDictionary *dict;
 @property (nonatomic, strong) FFDynamicModel *detailModel;
+@property (nonatomic, strong) NSString *dynamic_id;
 
 @property (nonatomic, strong) NSIndexPath *indexPath;
 @property (nonatomic, weak) id <FFDriveDetailDelegate> delegate;
 
 
 @end
+
+
+
 
 
 

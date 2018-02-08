@@ -53,6 +53,9 @@
 
 @property (nonatomic, assign) BOOL showCursorView;
 
+/** title button Array */
+@property (nonatomic, strong) NSMutableArray<UIButton *> *titleButtonArray;
+
 
 - (instancetype)initWithFrame:(CGRect)frame;
 

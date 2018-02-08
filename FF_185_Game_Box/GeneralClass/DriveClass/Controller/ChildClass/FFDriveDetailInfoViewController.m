@@ -87,7 +87,7 @@
     syLog(@"刷新动态详情页面");
     currentPage = 1;
     hud_add;
-    [FFDriveModel userComeentListWithDynamicsID:self.detailModel.dynamic_id type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
+    [FFDriveModel userComeentListWithDynamicsID:self.dynamic_id type:hotType page:[NSString stringWithFormat:@"%lu",currentPage] Complete:^(NSDictionary *content, BOOL success) {
         syLog(@"comment list === %@",content);
         hud_remove;
         if (success) {
@@ -95,6 +95,9 @@
             self.showArray = [array mutableCopy];
             NSArray *hotArray = content[@"data"][@"hot_list"];
             self.hotListArray = [hotArray mutableCopy];
+            if (_detailModel == nil) {
+                _detailModel = [FFDynamicModel modelWithDict:nil];
+            }
             [self.detailModel setPropertyWithDetailCommentLishVeiwDictionary:content[@"data"][@"dynamics_info"]];
             [self setOtherModel:self.detailModel];
             [self.headerView setAttentionWith:self.detailModel.attention];
@@ -109,7 +112,7 @@
             [self.tableView.mj_footer endRefreshing];
         }
 
-        [self cheackShowArrayIsempty];
+//        [self cheackShowArrayIsempty];
 
         [self.tableView.mj_header endRefreshing];
     }];
@@ -131,7 +134,7 @@
         } else {
             [self.tableView.mj_footer endRefreshing];
         }
-        [self cheackShowArrayIsempty];
+//        [self cheackShowArrayIsempty];
     }];
 }
 
@@ -365,13 +368,18 @@
     _detailModel = detailModel;
     self.commentNumberLabel.text = [NSString stringWithFormat:@" 评论 : %@",detailModel.comments_number];
     [self setOtherModel:detailModel];
-    [self.tableView.mj_header beginRefreshing];
+    self.dynamic_id = detailModel.dynamic_id;
 }
 
 - (void)setOtherModel:(FFDynamicModel *)model {
     self.headerView.model = model;
     self.footerView.model = model;
     self.tableView.tableHeaderView = self.headerView;
+}
+
+- (void)setDynamic_id:(NSString *)dynamic_id {
+    _dynamic_id = dynamic_id;
+    [self.tableView.mj_header beginRefreshing];
 }
 
 

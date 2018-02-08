@@ -19,8 +19,12 @@
 #import "UIViewController+Cloudox.h"
 
 
+
+
 @interface FFDriveController ()<FFSelectHeaderViewDelegate,UIScrollViewDelegate>
 
+@property (nonatomic, assign) BOOL isGetNews;
+@property (nonatomic, strong) CALayer *redLayer;
 
 @end
 
@@ -29,13 +33,48 @@
     BOOL _isAnimation;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navBarBgAlpha = @"1.0";
+    //请求新信息
+    [self getNews];
+}
+
+- (void)getNews {
+    if (_isGetNews) {
+        return;
+    }
+
+    _isGetNews = YES;
+    [FFDriveModel myNewNumbersComplete:^(NSDictionary *content, BOOL success) {
+        NSString *string = content[@"data"][@"count"];
+        if (success && string.integerValue > 0) {
+            [self addRedIdentifier];
+        } else {
+            [self removeRedIdentifier];
+        }
+        _isGetNews = NO;
+    }];
+}
+
+
+- (void)addRedIdentifier {
+    UIButton *button =  self.selectHeaderView.titleButtonArray.lastObject;
+    [button.titleLabel.layer addSublayer:self.redLayer];
+}
+
+- (void)removeRedIdentifier {
+    [self.redLayer removeFromSuperlayer];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(removeRedIdentifier) name:@"isRefreshMyNewsData" object:nil];
     [self initDataSource];
     [self initUserInterface];
 }
@@ -70,6 +109,15 @@
     [self.view addSubview:self.postStatusButton];
     [self addChildViewController:self.fChildControllers[0]];
     [self.scrollView addSubview:self.self.fChildControllers[0].view];
+}
+
+#pragma mark - method
+- (void)showPostButton {
+    self.postStatusButton.hidden = NO;
+}
+
+- (void)hidePostButton {
+    self.postStatusButton.hidden = YES;
 }
 
 #pragma mark - responds
@@ -157,6 +205,10 @@
 #pragma mark - responds
 - (void)respondsToPostStatusButton {
     syLog(@"发送状态");
+    if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {
+        BOX_MESSAGE(@"尚未登录");
+        return;
+    }
     FFDrivePostStatusViewController *postStatusViewController = [[FFDrivePostStatusViewController alloc] init];
     HIDE_TABBAR;
     [self.navigationController pushViewController:postStatusViewController animated:YES];
@@ -249,6 +301,16 @@
     return _throughtViewController;
 }
 
+- (CALayer *)redLayer {
+    if (!_redLayer) {
+        _redLayer = [[CALayer alloc] init];
+        _redLayer.backgroundColor = [UIColor redColor].CGColor;
+        _redLayer.frame = CGRectMake(32, 0, 8, 8);
+        _redLayer.cornerRadius = 4;
+        _redLayer.masksToBounds = YES;
+    }
+    return _redLayer;
+}
 
 
 

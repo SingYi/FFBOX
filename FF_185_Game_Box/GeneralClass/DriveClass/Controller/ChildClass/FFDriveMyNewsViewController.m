@@ -40,11 +40,12 @@
 - (void)refreshType {
     [FFDriveModel myNewNumbersComplete:^(NSDictionary *content, BOOL success) {
         syLog(@"my news number == %@",content);
-        if (success) {
-            NSString *count = [NSString stringWithFormat:@"%@",content[@"data"][@"count"]];
-            if (count.integerValue > 0) {
-                self.myNewsType = [NSString stringWithFormat:@"%@",content[@"data"][@"type"]].integerValue;
-            }
+        NSString *count = [NSString stringWithFormat:@"%@",content[@"data"][@"count"]];
+        if (success && count.integerValue > 0) {
+            self.myNewsType = [NSString stringWithFormat:@"%@",content[@"data"][@"type"]].integerValue;
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"isRefreshMyNewsData" object:nil];
+        } else {
+            self.myNewsType = newComments;
         }
     }];
 }
@@ -60,7 +61,7 @@
 }
 
 - (void)initDataSource {
-    self.myNewsType = newComments;
+//    self.myNewsType = newComments;
 }
 
 #pragma mark - responds
@@ -155,10 +156,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    syLog(@"ffffffffffffffffffffff");
-//    self.detailController.dict = self.showArray[indexPath.row];
-//    NSDictionary *dict = self.showArray[indexPath.row];
-//    self.detailController.dynamics_id = dict[@"dynamics_id"];
+    NSDictionary *dict = self.showArray[indexPath.row];
+    self.detailController.dynamic_id = dict[@"dynamics_id"];
     self.detailController.indexPath = indexPath;
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>china</string>
 	<key>CFBundleDisplayName</key>
-	<string>手游盒子</string>
+	<string>盒子测试版</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

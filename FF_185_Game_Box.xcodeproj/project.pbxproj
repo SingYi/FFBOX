@@ -342,6 +342,7 @@
 		B5D108F62029AC0800E4D49F /* YBRectConst.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F32029AC0800E4D49F /* YBRectConst.m */; };
 		B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */; };
 		B5D108FC202C3F1000E4D49F /* FFMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FB202C3F0F00E4D49F /* FFMaskView.m */; };
+		B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
@@ -1022,6 +1023,8 @@
 		B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDynamicModel.m; sourceTree = "<group>"; };
 		B5D108FA202C3F0F00E4D49F /* FFMaskView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMaskView.h; sourceTree = "<group>"; };
 		B5D108FB202C3F0F00E4D49F /* FFMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMaskView.m; sourceTree = "<group>"; };
+		B5D108FD202D3D3100E4D49F /* FFFlashBackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFFlashBackView.h; sourceTree = "<group>"; };
+		B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFFlashBackView.m; sourceTree = "<group>"; };
 		B5D75A8720070C0B00600B3D /* FFDriveAllInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAllInfoViewController.h; sourceTree = "<group>"; };
 		B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAllInfoViewController.m; sourceTree = "<group>"; };
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
@@ -1320,6 +1323,8 @@
 				B5B28DBE1FD55460008A9BCD /* FFAdvertisingView.m */,
 				B5D108FA202C3F0F00E4D49F /* FFMaskView.h */,
 				B5D108FB202C3F0F00E4D49F /* FFMaskView.m */,
+				B5D108FD202D3D3100E4D49F /* FFFlashBackView.h */,
+				B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */,
 				B5BC055C1FA717370091EE4B /* Model */,
 				B556B0ED1FA6C919005DC871 /* ControllerManager */,
 				B556B0EC1FA6C770005DC871 /* CustomeView */,
@@ -2720,6 +2725,7 @@
 				B59E3FB2202441C000F81F60 /* MJRefreshNormalHeader.m in Sources */,
 				B5971F321FAB0CE500246640 /* FFApplyRebateViewController.m in Sources */,
 				B51379BF1FB2E0900025F00B /* FFAboutViewController.m in Sources */,
+				B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */,
 				B519674A1FAAC52A0046E391 /* FFRRebateViewController.m in Sources */,
 				B51967261FA9ACFF0046E391 /* FFNewGameController.m in Sources */,
 				B59E3FE3202441C000F81F60 /* SDWebImagePrefetcher.m in Sources */,

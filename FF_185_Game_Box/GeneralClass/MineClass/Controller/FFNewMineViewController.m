@@ -36,6 +36,8 @@
 #import "FFWebViewController.h"             //网页
 #import "FFLotteryViewController.h"
 
+#import "FFFlashBackView.h"
+
 #define BOX_ORANG_COLOR RGBCOLOR(251, 158, 52)
 #define BUTTON_TAG 10086
 #define CurrentUser [FFUserModel currentUser]
@@ -604,6 +606,14 @@ break;\
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if (section == 0) {
+        return 12;
+    } else {
+        return 0;
+    }
+}
+
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     return 12;
 }
@@ -611,7 +621,12 @@ break;\
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section {
     UIView *view = [[UIView alloc] init];
     view.backgroundColor = BACKGROUND_COLOR;
+    return view;
+}
 
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *view = [[UIView alloc] init];
+    view.backgroundColor = BACKGROUND_COLOR;
     return view;
 }
 
@@ -619,31 +634,35 @@ break;\
 
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    if (SSKEYCHAIN_UID == nil) {
-        BOX_MESSAGE(@"尚未登录");
-        return;
-    }
+    if (indexPath.section == 0) {
+        [FFFlashBackView show];
+    } else {
+        if (SSKEYCHAIN_UID == nil) {
+            BOX_MESSAGE(@"尚未登录");
+            return;
+        }
 
-    if ([(self.showArray[indexPath.section][indexPath.row]) isEqualToString:@"FFLotteryViewController"]) {
+        if ([(self.showArray[indexPath.section][indexPath.row]) isEqualToString:@"FFLotteryViewController"]) {
 
-        HIDE_TABBAR;
-        HIDE_PARNENT_TABBAR;
-        [self.navigationController pushViewController:self.lotteryViewController animated:YES];
-        SHOW_TABBAR;
-        SHOW_PARNENT_TABBAR;
-
-        return;
-    }
-
-    Class pushClass = NSClassFromString(self.showArray[indexPath.section][indexPath.row]);
-    if (pushClass) {
-        id vc = [[pushClass alloc] init];
-        if (vc) {
             HIDE_TABBAR;
             HIDE_PARNENT_TABBAR;
-            [self.navigationController pushViewController:vc animated:YES];
+            [self.navigationController pushViewController:self.lotteryViewController animated:YES];
             SHOW_TABBAR;
             SHOW_PARNENT_TABBAR;
+
+            return;
+        }
+
+        Class pushClass = NSClassFromString(self.showArray[indexPath.section][indexPath.row]);
+        if (pushClass) {
+            id vc = [[pushClass alloc] init];
+            if (vc) {
+                HIDE_TABBAR;
+                HIDE_PARNENT_TABBAR;
+                [self.navigationController pushViewController:vc animated:YES];
+                SHOW_TABBAR;
+                SHOW_PARNENT_TABBAR;
+            }
         }
     }
 }
@@ -754,7 +773,8 @@ break;\
 - (NSMutableArray *)showArray {
     if (!_showArray) {
         if (self.is185) {
-            _showArray = [@[@[@"FFSignInViewController",@"FFEvervDayComment",@"FFInviteFriendViewController"],
+            _showArray = [@[@[@"FFResignViewController"],
+                            @[@"FFSignInViewController",@"FFEvervDayComment",@"FFInviteFriendViewController"],
                             @[@"FFExchangeCoinController",@"FFLotteryViewController",@"FFGoldDetailViewController",
                               @"FFPlatformDetailViewController"],
                            @[@"FFRRebateViewController",@"FFTransferServerViewController"],
@@ -776,7 +796,8 @@ break;\
 
 - (NSDictionary *)infoDict {
     if (!_infoDict) {
-        _infoDict = [@{@"FFSignInViewController":       @{@"title":@"签到",@"subTitle":@"+5金币,坚持有惊喜",
+        _infoDict = [@{@"FFResignViewController":       @{@"title":@"闪退修复"},
+                       @"FFSignInViewController":       @{@"title":@"签到",@"subTitle":@"+5金币,坚持有惊喜",
                                                           @"subimage":@"Mine_subimage_sign"},
                       @"FFEvervDayComment":             @{@"title":@"每日评论",@"subTitle":@"+3到10金币,每日一次",
                                                           @"subimage":@"Mine_subimage_comment"},

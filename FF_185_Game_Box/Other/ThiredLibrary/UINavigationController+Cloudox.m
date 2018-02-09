@@ -15,21 +15,46 @@
 // 设置导航栏背景透明度
 - (void)setNeedsNavigationBackground:(CGFloat)alpha {
     // 导航栏背景透明度设置
-    UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];// _UIBarBackground
-    UIImageView *backgroundImageView = [[barBackgroundView subviews] objectAtIndex:0];// UIImageView
-    if (self.navigationBar.isTranslucent) {
-        if (backgroundImageView != nil && backgroundImageView.image != nil) {
-            barBackgroundView.alpha = alpha;
-        } else {
-            UIView *backgroundEffectView = [[barBackgroundView subviews] objectAtIndex:1];// UIVisualEffectView
-            if (backgroundEffectView != nil) {
-                backgroundEffectView.alpha = alpha;
+//    UIView *barBackgroundView = [[self.navigationBar subviews] objectAtIndex:0];// _UIBarBackground
+//    UIImageView *backgroundImageView = [[barBackgroundView subviews] objectAtIndex:0];// UIImageView
+
+    UIView *barBackgroundView;// _UIBarBackground
+    UIImageView *backgroundImageView;// UIImageView
+    UIView *backgroundEffectView;// UIVisualEffectView
+
+    if (@available(iOS 10.0, *)) {//
+        barBackgroundView = [self.navigationBar.subviews objectAtIndex:0];
+        backgroundImageView = [barBackgroundView.subviews objectAtIndex:0];
+        backgroundEffectView = [barBackgroundView.subviews objectAtIndex:1];
+    }else{
+        for (UIView *view in self.navigationBar.subviews) {
+            if ([view isKindOfClass:NSClassFromString(@"_UINavigationBarBackground")]) {
+                barBackgroundView = view;
             }
         }
-    } else {
-        barBackgroundView.alpha = alpha;
+        for (UIView *otherView in barBackgroundView.subviews) {
+            if ([otherView isKindOfClass:NSClassFromString(@"UIImageView")]) {
+                backgroundImageView = (UIImageView *)otherView;
+            }else if ([otherView isKindOfClass:NSClassFromString(@"_UIBackdropView")]) {
+                backgroundEffectView = otherView;
+            }
+        }
     }
     
+//    if ([UIDevice currentDevice].systemVersion.floatValue > 10.f) {
+        if (self.navigationBar.isTranslucent) {
+            if (backgroundImageView != nil && backgroundImageView.image != nil) {
+                barBackgroundView.alpha = alpha;
+            } else {
+                if (backgroundEffectView != nil) {
+                    backgroundEffectView.alpha = alpha;
+                }
+            }
+        } else {
+            barBackgroundView.alpha = alpha;
+        }
+//    }
+
     // 对导航栏下面那条线做处理
     self.navigationBar.clipsToBounds = alpha == 0.0;
 }

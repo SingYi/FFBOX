@@ -38,7 +38,7 @@
 
 - (void)initializeDataSource {
     NSArray *viewControllerNames = @[@"FFHomeViewController", @"FFOpenServerViewController", @"FFDriveController", @"FFNewMineViewController"];
-        NSArray *titles = @[@"游戏", @"开服表", @"开车", @"我的"];
+        NSArray *titles = @[@"游戏", @"开服表", @"车站", @"我的"];
 
     NSArray *images = @[@"d_youxi_an", @"b_paihangbang_an-", @"Community_tab_image_an", @"c_wode_an"];
     NSArray *selectImages = @[@"d_youxi_liang", @"b_paihangbang_liang", @"Community_tab_image_liang", @"c_wode_liang"];

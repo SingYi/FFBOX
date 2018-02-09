@@ -61,6 +61,8 @@ static FFFlashBackView *view;
 - (void)respondsToFixButton {
     NSString *urlStrig = [NSString stringWithFormat:@"https://ipa.185sy.com/ios/fix/ios_app_%@.mobileconfig",Channel];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStrig]];
+    [self resignKeyWindow];
+    view = nil;
 }
 
 #pragma mark - getter

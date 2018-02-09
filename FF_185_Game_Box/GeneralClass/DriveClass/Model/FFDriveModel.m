@@ -260,7 +260,13 @@
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:uid forKey:@"uid"];
-    [dict setObject:SSKEYCHAIN_UID forKey:@"visit_uid"];
+    NSString *vis;
+    if (SSKEYCHAIN_UID == nil) {
+        vis = @"0";
+    } else {
+        vis = SSKEYCHAIN_UID;
+    }
+    [dict setObject:vis forKey:@"visit_uid"];
     [dict setObject:Channel forKey:@"channel"];
     [dict setObject:[NSString stringWithFormat:@"%lu",type] forKey:@"type"];
     [dict setObject:page forKey:@"page"];

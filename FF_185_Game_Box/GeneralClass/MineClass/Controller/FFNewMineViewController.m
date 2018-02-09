@@ -268,7 +268,7 @@ break;\
 
 /** 每日评论 */
 - (void)setCommentResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[0][1]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][1]] mutableCopy];
     NSString *string = [NSString stringWithFormat:@"每日首次评论奖励%@金币",str];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
 
@@ -276,26 +276,26 @@ break;\
     [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:range1];
     [signDict setObject:attributeString forKey:@"attributeString"];
     [signDict setObject:[NSString stringWithFormat:@"每日首次评论奖励%@金币",str] forKey:@"subTitle"];
-    [self.infoDict setObject:signDict forKey:self.showArray[0][1]];
+    [self.infoDict setObject:signDict forKey:self.showArray[1][1]];
 //    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 /** 好友推荐 */
 - (void)setInviteFriendResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[0][2]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][2]] mutableCopy];
     NSString *string = [NSString stringWithFormat:@"最高奖励%@金币/人",str];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range1 = [string rangeOfString:str];
     [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:range1];
     [signDict setObject:attributeString forKey:@"attributeString"];
     [signDict setObject:[NSString stringWithFormat:@"最高奖励%@金币/人",str] forKey:@"subTitle"];
-    [self.infoDict setObject:signDict forKey:self.showArray[0][2]];
+    [self.infoDict setObject:signDict forKey:self.showArray[1][2]];
 //    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 /** 金币兑换 */
 - (void)setChangeCoinResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][0]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[2][0]] mutableCopy];
     NSString *string = [NSString stringWithFormat:@"%@金币=1平台币,10平台币=1RMB",str];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range1 = [string rangeOfString:str];
@@ -303,31 +303,31 @@ break;\
     [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:NSMakeRange(string.length - 10, 2)];
     [signDict setObject:attributeString forKey:@"attributeString"];
     [signDict setObject:[NSString stringWithFormat:@"%@金币=1平台币",str] forKey:@"subTitle"];
-    [self.infoDict setObject:signDict forKey:self.showArray[1][0]];
+    [self.infoDict setObject:signDict forKey:self.showArray[2][0]];
 //    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 /** 金币抽奖 */
 - (void)setLotteryResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][1]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[2][1]] mutableCopy];
     NSString *string = [NSString stringWithFormat:@"%@金币/每次",str];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range1 = [string rangeOfString:str];
     [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:range1];
     [signDict setObject:attributeString forKey:@"attributeString"];
     [signDict setObject:[NSString stringWithFormat:@"%@金币/每次",str] forKey:@"subTitle"];
-    [self.infoDict setObject:signDict forKey:self.showArray[1][1]];
+    [self.infoDict setObject:signDict forKey:self.showArray[2][1]];
 }
 
 /** 绑定手机 */
 - (void)setBindPhoneResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[5][1]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[6][1]] mutableCopy];
     if (str.length != 11) {
         [signDict setObject:@"绑定手机" forKey:@"title"];
     } else {
         [signDict setObject:@"解绑手机" forKey:@"title"];
     }
-    [self.infoDict setObject:signDict forKey:self.showArray[5][1]];
+    [self.infoDict setObject:signDict forKey:self.showArray[6][1]];
 }
 
 - (void)refreshNewData {
@@ -584,17 +584,25 @@ break;\
     NSDictionary *dict = self.infoDict[self.showArray[indexPath.section][indexPath.row]];
     cell.textLabel.text = dict[@"title"];
     cell.textLabel.font = [UIFont systemFontOfSize:14];
-    if (dict[@"attributeString"]) {
-        cell.detailTextLabel.attributedText = dict[@"attributeString"];
+
+    if (indexPath.section == 0) {
+
     } else {
-        cell.detailTextLabel.text = dict[@"subTitle"];
-        cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-        cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        if (dict[@"attributeString"]) {
+            cell.detailTextLabel.attributedText = dict[@"attributeString"];
+        } else {
+            cell.detailTextLabel.text = dict[@"subTitle"];
+            cell.detailTextLabel.textColor = [UIColor lightGrayColor];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
+        }
     }
+
+
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     if (dict[@"subimage"]) {
         cell.imageView.image = [UIImage imageNamed:dict[@"subimage"]];
     } else {
+        cell.imageView.image = nil;
         syLog(@"no image === T@%@",dict);
     }
 

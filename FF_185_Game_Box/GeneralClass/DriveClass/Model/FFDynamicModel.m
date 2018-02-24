@@ -119,6 +119,8 @@
     self.present_user_driver_level = dict[@"driver_level"];
     self.present_user_iconImageUrlString = dict[@"icon_url"];
     self.present_user_nickName = dict[@"nick_name"];
+    self.present_user_vip = dict[@"vip"];
+    self.present_user_sex = dict[@"sex"];
 }
 
 /** 动态 ID */
@@ -130,7 +132,7 @@
 - (void)setCreat_time:(NSString *)creat_time {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:creat_time.integerValue];
     NSDateFormatter *formatter = [NSDateFormatter new];
-    formatter.dateFormat = @"YYYY-MM-dd";
+    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
     _creat_time = [formatter stringFromDate:date];
 }
 

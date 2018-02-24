@@ -148,7 +148,8 @@
 //    syLog(@"model === %@",model);
     self.nickNameLabel.text = model.present_user_nickName;
     self.timeLabel.text = model.creat_time;
-    self.vipImageView.hidden = model.isVip;
+    self.vipImageView.hidden = !model.isVip;
+//    [self setVipWith:model.present_user_vip];
     [self setSexWith:model.present_user_sex];
     [self.iconImageView sd_setImageWithURL:model.present_user_iconImageUrl];
     [self setLikeWith:model.likes_number];

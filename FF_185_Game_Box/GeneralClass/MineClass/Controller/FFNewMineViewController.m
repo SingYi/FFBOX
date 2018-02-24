@@ -36,6 +36,11 @@
 #import "FFWebViewController.h"             //网页
 #import "FFLotteryViewController.h"
 
+#import "FFDriveMineViewController.h"       //点击头像后的页面
+
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 #import "FFFlashBackView.h"
 
 #define BOX_ORANG_COLOR RGBCOLOR(251, 158, 52)
@@ -124,8 +129,9 @@ break;\
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = YES;
+//    self.navigationController.navigationBar.hidden = YES;
     [self UserReigsterThanLogin];
+    self.navBarBgAlpha = @"0.0";
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -151,7 +157,7 @@ break;\
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
 
-    self.navigationItem.title = @"个人中心";
+    self.navigationItem.title = @"";
     self.view.backgroundColor = BACKGROUND_COLOR;
 
     [self.view addSubview:self.tableHeaderView];
@@ -344,23 +350,34 @@ break;\
         [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];
         SHOW_TABBAR;
     } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            switch (status) {
-                case PHAuthorizationStatusAuthorized:
-                    [self openPhoto];
-                    syLog(@"PHAuthorizationStatusAuthorized");
-                    break;
-                case PHAuthorizationStatusDenied:
-                    syLog(@"PHAuthorizationStatusDenied");
-                    break;
-                case PHAuthorizationStatusNotDetermined:
-                    syLog(@"PHAuthorizationStatusNotDetermined");
-                    break;
-                case PHAuthorizationStatusRestricted:
-                    syLog(@"PHAuthorizationStatusRestricted");
-                    break;
-            }
-        }];
+//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+//            switch (status) {
+//                case PHAuthorizationStatusAuthorized:
+//                    [self openPhoto];
+//                    syLog(@"PHAuthorizationStatusAuthorized");
+//                    break;
+//                case PHAuthorizationStatusDenied:
+//                    syLog(@"PHAuthorizationStatusDenied");
+//                    break;
+//                case PHAuthorizationStatusNotDetermined:
+//                    syLog(@"PHAuthorizationStatusNotDetermined");
+//                    break;
+//                case PHAuthorizationStatusRestricted:
+//                    syLog(@"PHAuthorizationStatusRestricted");
+//                    break;
+//            }
+//        }];
+        
+//        syLog(@"click icon with uid == %@", uid);
+        FFDriveMineViewController *vc = [FFDriveMineViewController new];
+        //    vc.iconImage = iconImage;
+        //    vc.model = cell.model;
+        vc.uid = _uid;
+        HIDE_TABBAR;
+        HIDE_PARNENT_TABBAR;
+        [self.navigationController pushViewController:vc animated:YES];
+        SHOW_TABBAR;
+        SHOW_PARNENT_TABBAR;
     }
 }
 

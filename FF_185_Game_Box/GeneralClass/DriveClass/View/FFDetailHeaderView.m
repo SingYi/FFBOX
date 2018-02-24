@@ -142,11 +142,12 @@
 }
 
 - (void)setTimeWith:(NSString *)str {
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:str.integerValue];
-    NSString *timeString = [formatter stringFromDate:date];
-    self.timeLabel.text  = timeString;
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    formatter.dateFormat = @"YYYY-MM-dd HH:mm";
+//    NSDate *date = [NSDate dateWithTimeIntervalSince1970:str.integerValue];
+//    NSString *timeString = [formatter stringFromDate:date];
+//    self.timeLabel.text  = timeString;
+    self.timeLabel.text = str;
     [self.timeLabel sizeToFit];
 }
 

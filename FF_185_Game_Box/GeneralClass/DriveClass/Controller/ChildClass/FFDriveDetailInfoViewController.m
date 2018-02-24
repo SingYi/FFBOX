@@ -101,6 +101,7 @@
             [self.detailModel setPropertyWithDetailCommentLishVeiwDictionary:content[@"data"][@"dynamics_info"]];
             [self setOtherModel:self.detailModel];
             [self.headerView setAttentionWith:self.detailModel.attention];
+            self.commentNumberLabel.text = [NSString stringWithFormat:@" 评论 : %@",_detailModel.comments_number];
             [self.tableView reloadData];
         } else {
             BOX_MESSAGE(content[@"msg"]);

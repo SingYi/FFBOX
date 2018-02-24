@@ -115,6 +115,9 @@
     //刷新查看用户发车的回调通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(CheckUserDynamicCallBack:) name:@"CheckUserDynamicCallBack" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(FansAndAttetionNumbersCallBack:) name:@"FansAndAttetionNumbersCallBack" object:nil];
+    
+    //跟新用户
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pushDriveMineDetailView:) name:@"pushDriveMineDetailView" object:nil];
 
     self.tableView.showsVerticalScrollIndicator = NO;
     [FFMineViewCell registCellWithTableView:self.tableView];
@@ -152,6 +155,18 @@
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.detailController animated:YES];
 }
+
+- (void)pushDriveMineDetailView:(NSNotification *)ntf {
+    NSString *uid = ntf.userInfo[@"uid"];
+    if (uid.length > 1) {
+//        FFDriveMineViewController *controller = [[FFDriveMineViewController alloc] init];
+//        controller.uid = uid;
+//        [self.navigationController pushViewController:controller animated:YES];
+        self.uid = uid;
+        [self refreshAll];
+    }
+}
+
 
 //开车数目回调
 - (void)CheckUserDynamicCallBack:(NSNotification *)ntf {
@@ -282,10 +297,10 @@
         default:
             break;
     }
+    
     [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
         if (success) {
             syLog(@"user info== %@",content);
-//            self.dict = content[@"data"];
             if (_model == nil) {
                 _model = [FFDynamicModel modelWithDict:nil];
             }
@@ -294,6 +309,25 @@
         }
         [self.tableView.mj_header endRefreshing];
     }];
+}
+
+- (void)refreshAll {
+    
+    [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
+        if (success) {
+            syLog(@"user info== %@",content);
+            if (_model == nil) {
+                _model = [FFDynamicModel modelWithDict:nil];
+            }
+            [self.model setPropertyWithUserInfoViewDictionary:content[@"data"]];
+            self.tableHeaderView.model = self.model;
+        }
+        [self.tableView.mj_header endRefreshing];
+    }];
+    
+    [self.contentCell.numbersViewController refreshNewData];
+    [self.contentCell.fansNumbersViewController refreshNewData];
+    [self.contentCell.attentionNumbersViewController refreshNewData];
 }
 
 #pragma mark - setter

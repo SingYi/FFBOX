@@ -36,6 +36,9 @@
 #import "FFWebViewController.h"             //网页
 
 
+#import "FFDriveMineViewController.h"       //头像
+
+
 #define BUTTON_TAG 10086
 #define CurrentUser [FFUserModel currentUser]
 #define NotLogIn if (_uid == nil || _uid.length == 0) {\
@@ -204,29 +207,41 @@
 #pragma mark - header view delegate
 - (void)FFMineHeaderView:(FFMineHeaderView *)view respondsToAvatarButton:(id)info {
     syLog(@"头像");
-    if (_uid == nil) {
-        HIDE_TABBAR;
-        [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];
-        SHOW_TABBAR;
-    } else {
-        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-            switch (status) {
-                case PHAuthorizationStatusAuthorized:
-                    [self openPhoto];
-                    syLog(@"PHAuthorizationStatusAuthorized");
-                    break;
-                case PHAuthorizationStatusDenied:
-                    syLog(@"PHAuthorizationStatusDenied");
-                    break;
-                case PHAuthorizationStatusNotDetermined:
-                    syLog(@"PHAuthorizationStatusNotDetermined");
-                    break;
-                case PHAuthorizationStatusRestricted:
-                    syLog(@"PHAuthorizationStatusRestricted");
-                    break;
-            }
-        }];
-    }
+//    if (_uid == nil) {
+//        HIDE_TABBAR;
+//        [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];
+//        SHOW_TABBAR;
+//    } else {
+//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+//            switch (status) {
+//                case PHAuthorizationStatusAuthorized:
+//                    [self openPhoto];
+//                    syLog(@"PHAuthorizationStatusAuthorized");
+//                    break;
+//                case PHAuthorizationStatusDenied:
+//                    syLog(@"PHAuthorizationStatusDenied");
+//                    break;
+//                case PHAuthorizationStatusNotDetermined:
+//                    syLog(@"PHAuthorizationStatusNotDetermined");
+//                    break;
+//                case PHAuthorizationStatusRestricted:
+//                    syLog(@"PHAuthorizationStatusRestricted");
+//                    break;
+//            }
+//        }];
+//    }
+    
+    
+    syLog(@"click icon with uid == %@", uid);
+    FFDriveMineViewController *vc = [FFDriveMineViewController new];
+//    vc.iconImage = iconImage;
+//    vc.model = cell.model;
+        vc.uid = SYke;
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:vc animated:YES];
+    SHOW_TABBAR;
+    SHOW_PARNENT_TABBAR;
 }
 
 - (void)openPhoto {

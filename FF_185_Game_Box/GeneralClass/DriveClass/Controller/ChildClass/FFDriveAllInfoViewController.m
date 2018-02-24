@@ -75,7 +75,7 @@
     _currentPage = 1;
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
-//        syLog(@"get dynamic == %@",content);
+        syLog(@"get dynamic == %@",content);
         syLog(@"get dynamics success!!!!");
         [hud hideAnimated:YES];
         self.showArray = nil;
@@ -278,15 +278,26 @@ static BOOL respondsSuccess;
 
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid WithIconImage:(UIImage *)iconImage {
     syLog(@"click icon with uid == %@", uid);
-    FFDriveMineViewController *vc = [FFDriveMineViewController new];
-    vc.iconImage = iconImage;
-    vc.model = cell.model;
-//    vc.uid = cell.model.present_user_uid;
-    HIDE_TABBAR;
-    HIDE_PARNENT_TABBAR;
-    [self.navigationController pushViewController:vc animated:YES];
-    SHOW_TABBAR;
-    SHOW_PARNENT_TABBAR;
+    
+    if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {
+        Class Test = NSClassFromString(@"FFLoginViewController");
+        HIDE_TABBAR;
+        HIDE_PARNENT_TABBAR;
+        [self.navigationController pushViewController:[Test new] animated:YES];
+        SHOW_TABBAR;
+        SHOW_PARNENT_TABBAR;
+    } else {
+        FFDriveMineViewController *vc = [FFDriveMineViewController new];
+        vc.iconImage = iconImage;
+        vc.model = cell.model;
+        //    vc.uid = cell.model.present_user_uid;
+        HIDE_TABBAR;
+        HIDE_PARNENT_TABBAR;
+        [self.navigationController pushViewController:vc animated:YES];
+        SHOW_TABBAR;
+        SHOW_PARNENT_TABBAR;
+    }
+    
 
 }
 

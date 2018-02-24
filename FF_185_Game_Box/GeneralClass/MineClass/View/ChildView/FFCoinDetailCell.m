@@ -67,6 +67,15 @@
         case 6:
             self.typeLabel.text = @"后台";
             break;
+        case 7:
+            self.typeLabel.text = @"社区评论";
+            break;
+        case 8:
+            self.typeLabel.text = @"社区点赞";
+            break;
+        case 9:
+            self.typeLabel.text = @"社区开车";
+            break;
         default:
             self.typeLabel.text = @"其他";
             break;

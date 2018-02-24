@@ -64,6 +64,8 @@
 #pragma mark - setter
 - (void)setModel:(FFDynamicModel *)model {
     _model = model;
+    
+    syLog(@"mine center model == model");
     // nick name
     [self setNickName:model.present_user_nickName];
     // sex
@@ -125,6 +127,9 @@
 }
 
 - (void)setDriverLevelWith:(NSString *)str {
+    if (str == nil || [str isKindOfClass:[NSNull class]]) {
+        return;
+    }
     NSString *string = [NSString stringWithFormat:@"%@",str];
     self.driverLevelLabel.hidden = (string.length > 0) ? NO : YES;
     self.driverLevelLabel.text = [NSString stringWithFormat:@"老司机指数 :%@颗星",string];
@@ -133,6 +138,9 @@
 }
 
 - (void)setDescriptionWith:(NSString *)str {
+    if (str == nil || [str isKindOfClass:[NSNull class]]) {
+        return;
+    }
     NSString *string = [NSString stringWithFormat:@"%@",str];
     self.descriptionLabel.hidden = (string.length > 0) ? NO : YES;
     self.descriptionLabel.text = [NSString stringWithFormat:@"简介 : %@ ",string];
@@ -185,6 +193,7 @@
     if (!_vipImage) {
         _vipImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
         _vipImage.image = [UIImage imageNamed:@"Community_Vip"];
+        _vipImage.hidden = YES;
     }
     return _vipImage;
 }

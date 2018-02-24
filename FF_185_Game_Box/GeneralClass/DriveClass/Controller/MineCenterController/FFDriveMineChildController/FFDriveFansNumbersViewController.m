@@ -119,6 +119,15 @@
     return 80;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    syLog(@"dict === %@",self.showArray[indexPath.row]);
+    
+    NSString *uid = self.showArray[indexPath.row][@"uid"];
+    if (uid.length > 1) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"pushDriveMineDetailView" object:nil userInfo:@{@"uid":uid}];
+    }
+}
+
 #pragma mark - cell delegate
 - (void)FFDriveFansCell:(FFDriveFansCell *)cell clickAttentionButtonWitDict:(NSDictionary *)dict {
     NSString *attention1 = dict[@"follow_status"];

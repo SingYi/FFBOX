@@ -280,10 +280,10 @@ static BOOL respondsSuccess;
     syLog(@"click icon with uid == %@", uid);
     
     if (SSKEYCHAIN_UID == nil || SSKEYCHAIN_UID.length < 1) {
-        Class Test = NSClassFromString(@"FFLoginViewController");
+        Class test = NSClassFromString(@"FFLoginViewController");
         HIDE_TABBAR;
         HIDE_PARNENT_TABBAR;
-        [self.navigationController pushViewController:[Test new] animated:YES];
+        [self.navigationController pushViewController:[test new] animated:YES];
         SHOW_TABBAR;
         SHOW_PARNENT_TABBAR;
     } else {

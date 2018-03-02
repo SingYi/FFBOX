@@ -180,5 +180,56 @@
 }
 
 
+- (void)application:(UIApplication *)application handleEventsForBackgroundURLSession:(NSString *)identifier completionHandler:(void (^)(void))completionHandler {
+    syLog(@"1");
+}
+
+//- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+//    syLog(@"2");
+//    return YES;
+//}
+
+- (BOOL)application:(UIApplication*)application openURL:(NSURL*)url sourceApplication:(NSString*)sourceApplication annotation:(id)annotation {
+
+    NSLog(@"sourceApplication:%@",sourceApplication);
+
+    NSLog(@"URL scheme:%@",[url scheme]);
+    NSLog(@"URL resourceSpecifier:%@",[url resourceSpecifier]);
+    NSLog(@"URL host:%@",[url host]);
+    NSLog(@"URL port:%@",[url port]);
+    NSLog(@"URL user:%@",[url user]);
+    NSLog(@"URL password:%@",[url password]);
+    NSLog(@"URL path:%@",[url path]);
+    NSLog(@"URL fragment:%@",[url fragment]);
+    NSLog(@"URL parameterString:%@",[url parameterString]);
+    NSLog(@"URL query:%@",[url query]);
+    NSLog(@"URL relativePath:%@",[url relativePath]);
+
+    if ([[url host] isEqualToString:@"app.185sy.box"]) {
+
+
+    }
+
+    if ([[url query] hasPrefix:@"dynamicId="]) {
+        syLog(@"打开详情列表");
+        NSMutableString *mutableString = [[url query] mutableCopy];
+        NSRange range = [[url query] rangeOfString:@"dynamicId="];
+        NSArray *array = [[url query] componentsSeparatedByString:@"="];
+        syLog(@"array --- %@",array);
+        NSString *dynamicID = array.lastObject;
+
+        [FFControllerManager sharedManager].tabBarController.selectedIndex = 2;
+        
+    }
+
+    return YES;
+
+}
+
+
+
+
+
+
 
 @end

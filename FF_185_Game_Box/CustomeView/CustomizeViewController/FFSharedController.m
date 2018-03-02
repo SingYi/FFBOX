@@ -104,7 +104,7 @@ static FFSharedController *controller = nil;
         }
     }
 
-    [FFStatisticsModel customEventsWith:@"shared_Game" Extra:@{@"game_name":info[@"gamename"]}];
+//    [FFStatisticsModel customEventsWith:@"shared_Game" Extra:@{@"game_name":info[@"gamename"]}];
 
     if ([FFSharedController sharedController].isShow) {
         return;
@@ -193,7 +193,7 @@ static FFSharedController *controller = nil;
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = title;
     message.description = subTitle;
-    [message setThumbImage:image];
+    [message setThumbImage:[self imageWithImage:image scaledToSize:CGSizeMake(80, 80)]];
     message.mediaObject = object;
 
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
@@ -216,7 +216,7 @@ static FFSharedController *controller = nil;
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = title;
     message.description = subTitle;
-    [message setThumbImage:image];
+    [message setThumbImage:[self imageWithImage:image scaledToSize:CGSizeMake(80, 80)]];
     message.mediaObject = object;
 
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
@@ -255,8 +255,28 @@ static FFSharedController *controller = nil;
     SendMessageToQQReq *req = [SendMessageToQQReq reqWithContent:object];
 
     [QQApiInterface sendReq:req];
-
 }
+
+//压缩图片
++ (UIImage*)imageWithImage:(UIImage*)image scaledToSize:(CGSize)newSize
+{
+    // Create a graphics image context
+    UIGraphicsBeginImageContext(newSize);
+
+    // Tell the old image to draw in this new context, with the desired
+    // new size
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+
+    // Get the new image from the context
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+
+    // End the context
+    UIGraphicsEndImageContext();
+
+    // Return the new image.
+    return newImage;
+}
+
 
 #pragma mark - shared invite method
 + (NSString *)inviteUrl {
@@ -327,7 +347,7 @@ static FFSharedController *controller = nil;
     NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
-    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageData = UIImagePNGRepresentation([self imageWithImage:image scaledToSize:CGSizeMake(80, 80)]);
     [FFSharedController shareToQQZoneWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
     [FFSharedController sharedDynamicsSuccess];
 }
@@ -336,7 +356,7 @@ static FFSharedController *controller = nil;
     NSDictionary *dict = [FFSharedController sharedController].dynamicsDict;
     NSArray *images = dict[@"images"];
     UIImage *image = (images.count > 0) ? images.firstObject : [UIImage imageNamed:@"aboutus_icon"];
-    NSData *imageData = UIImagePNGRepresentation(image);
+    NSData *imageData = UIImagePNGRepresentation([self imageWithImage:image scaledToSize:CGSizeMake(80, 80)]);
     [FFSharedController shareToQQFriendWithTitle:dict[@"content"] SubTitle:nil Url:[FFSharedController dynamicsUrl] Image:imageData];
     [FFSharedController sharedDynamicsSuccess];
 }

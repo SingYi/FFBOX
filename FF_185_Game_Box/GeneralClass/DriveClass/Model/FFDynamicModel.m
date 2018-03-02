@@ -25,7 +25,7 @@
         return;
     }
 
-    syLog(@"set dict == %@",dict);
+//    syLog(@"set dict == %@",dict);
     NSDictionary *dynamics = dict[@"dynamics"];
     if (dynamics != nil) {
         [self setPropertyWithDynamics:dynamics];
@@ -75,7 +75,8 @@
     self.dislikes_number = dynamics[@"dislike"];
     self.shared_number = dynamics[@"share"];
     self.imageUrlStringArray = dynamics[@"imgs"];
-     syLog(@"uid === %@",self.present_user_uid);
+    self.comments_Array = dynamics[@"comment_info"];
+     syLog(@"uid === %@",self.comments_Array);
 }
 
 - (void)setPropertyWithUserInfo:(NSDictionary *)userInfo {

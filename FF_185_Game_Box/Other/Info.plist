@@ -47,7 +47,7 @@
 			<string>185GameBox</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>185GameBox</string>
+				<string>sy185box</string>
 			</array>
 		</dict>
 	</array>

@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "FFMainTabbarViewController.h"
 
 @interface FFControllerManager : NSObject
 
 @property (nonatomic, strong) UINavigationController *rootViewController;
+
+@property (nonatomic, strong) FFMainTabbarViewController *tabBarController;
 
 + (FFControllerManager *)sharedManager;
 

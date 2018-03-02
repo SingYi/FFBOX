@@ -50,6 +50,8 @@
 @property (nonatomic, strong) NSString *shared_number;
 /** 动态评论数目 */
 @property (nonatomic, strong) NSString *comments_number;
+/** 显示的两条的评论 */
+@property (nonatomic, strong) NSArray *comments_Array;
 
 /** 在或者踩 */
 @property (nonatomic, strong) NSString *operate;

@@ -799,21 +799,24 @@ break;\
     if (!_showArray) {
         if (self.is185) {
             _showArray = [@[@[@"FFResignViewController"],
-                            @[@"FFSignInViewController",@"FFEvervDayComment",@"FFInviteFriendViewController"],
+                            @[@"FFSignInViewController",@"FFEvervDayComment",@"FFDrivePostStatusViewController",
+                              @"FFInviteFriendViewController"],
                             @[@"FFExchangeCoinController",@"FFLotteryViewController",@"FFGoldDetailViewController",
                               @"FFPlatformDetailViewController"],
-                           @[@"FFRRebateViewController",@"FFTransferServerViewController"],
-                           @[@"FFMyPackageViewController",@"FFMyCollectionViewController",@"FFRActivityViewController"],
-                           @[@"FFMyNewsViewController",@"FFCustomerServiceViewController"],
-                           @[@"FFChangePasswordViewController",@"FFBindMobileViewController",@"FFAboutViewController"]] mutableCopy];
+                            @[@"FFRRebateViewController",@"FFTransferServerViewController"],
+                            @[@"FFMyPackageViewController",@"FFMyCollectionViewController",@"FFRActivityViewController"],
+                            @[@"FFMyNewsViewController",@"FFCustomerServiceViewController"],
+                            @[@"FFChangePasswordViewController",@"FFBindMobileViewController",@"FFAboutViewController"]] mutableCopy];
         } else {
-            _showArray = [@[@[@"FFSignInViewController",@"FFEvervDayComment",@"FFInviteFriendViewController"],
-                           @[@"FFExchangeCoinController",@"FFLotteryViewController",@"FFGoldDetailViewController",
+            _showArray = [@[@[@"FFResignViewController"],
+                            @[@"FFSignInViewController",@"FFEvervDayComment",@"FFDrivePostStatusViewController",
+                              @"FFInviteFriendViewController"],
+                            @[@"FFExchangeCoinController",@"FFLotteryViewController",@"FFGoldDetailViewController",
                              @"FFPlatformDetailViewController"],
-                           @[@"FFRRebateViewController",@"FFTransferServerViewController"],
-                           @[@"FFMyPackageViewController",@"FFMyCollectionViewController",@"FFRActivityViewController"],
-                           @[@"FFMyNewsViewController",@"FFCustomerServiceViewController"],
-                           @[@"FFChangePasswordViewController",@"FFBindMobileViewController"]] mutableCopy];
+                            @[@"FFRRebateViewController",@"FFTransferServerViewController"],
+                            @[@"FFMyPackageViewController",@"FFMyCollectionViewController",@"FFRActivityViewController"],
+                            @[@"FFMyNewsViewController",@"FFCustomerServiceViewController"],
+                            @[@"FFChangePasswordViewController",@"FFBindMobileViewController"]] mutableCopy];
         }
     }
     return _showArray;
@@ -826,6 +829,7 @@ break;\
                                                           @"subimage":@"Mine_subimage_sign"},
                       @"FFEvervDayComment":             @{@"title":@"每日评论",@"subTitle":@"+3到10金币,每日一次",
                                                           @"subimage":@"Mine_subimage_comment"},
+                      @"FFDrivePostStatusViewController":@{@"title":@"每日发车",@"subTitle":@"每次成功发车可获得5-30金币"},
                       @"FFInviteFriendViewController":  @{@"title":@"邀请好友",@"subTitle":@"最高奖励2000金币/人",
                                                           @"subimage":@"Mine_subimage_invite"},
 

@@ -13,8 +13,11 @@
 #import "FLAnimatedImage.h"
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoManager.h"
+#import "FFDriveCommentCell.h"
 
-@interface DriveInfoCell ()
+#define CELL_IDE @"FFDriveCommentCell"
+
+@interface DriveInfoCell ()<UITableViewDataSource,UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
 
@@ -40,13 +43,17 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeight;
 
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) NSArray *showArray;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
+@property (weak, nonatomic) IBOutlet UIButton *attentionButton;
+
 //@property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
 
 
 @property (nonatomic, strong) NSString *dynamicsID;
-
 
 @property (nonatomic, strong) UIImage *gifImage;
 @property (nonatomic, strong) UIImage *normalImage;
@@ -67,6 +74,20 @@
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    //attentionButton
+    self.attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
+    self.attentionButton.layer.borderWidth = 1;
+    self.attentionButton.layer.cornerRadius = 4;
+    self.attentionButton.layer.masksToBounds = YES;
+    self.attentionButton.titleLabel.font = [UIFont systemFontOfSize:14];
+    [self.attentionButton addTarget:self action:@selector(respondsToAttentionButton) forControlEvents:(UIControlEventTouchUpInside)];
+    //tableview
+    self.tableView.dataSource = self;
+    self.tableView.delegate = self;
+    [self.tableView registerNib:[UINib nibWithNibName:CELL_IDE bundle:nil
+                                 ] forCellReuseIdentifier:CELL_IDE];
+    self.tableView.scrollEnabled = NO;
+    _showArray = @[@"",@""];
     //icon
     self.iconImageView.layer.cornerRadius = self.iconImageView.bounds.size.width / 2;
     self.iconImageView.layer.masksToBounds = YES;
@@ -94,6 +115,12 @@
     [self.iconImageView addGestureRecognizer:tap];
 
 }
+
+//点击关注
+- (void)respondsToAttentionButton {
+    syLog(@"关注");
+}
+
 
 - (void)respondsToIcon {
     if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickIconWithUid:WithIconImage:)]) {
@@ -159,6 +186,13 @@
     [self setImagesWith:model.imageUrlStringArray];
     [self setcontentWith:model.content];
     [self setOperateWith:model.operate];
+
+    //set stableView
+    [self setTableViewShowArray:model.comments_Array];
+
+    //
+    [self setAttentionWith:model.attention];
+
 }
 
 - (void)setSexWith:(NSString *)str {
@@ -399,6 +433,47 @@
 - (void)removeLikeButtonAndeDisLikeButtonSelect {
     [self removeRespondsToButton:self.FavorButton];
     [self removeRespondsToButton:self.unFavorButton];
+}
+
+//是否关注
+- (void)setAttentionWith:(NSString *)str {
+    if (str.integerValue == 0) {
+        [self.attentionButton setTitle:@"+关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:NAVGATION_BAR_COLOR forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
+    } else {
+        [self.attentionButton setTitle:@"已关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:[UIColor grayColor] forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = [UIColor grayColor].CGColor;
+    }
+}
+
+- (void)setTableViewShowArray:(NSArray *)array {
+    self.showArray = array;
+    if (self.showArray == nil || self.showArray.count == 0) {
+        self.tableViewHeight.constant = 0;
+    } else {
+        self.tableViewHeight.constant = 100;
+    }
+
+    [self.tableView reloadData];
+}
+
+#pragma mark - tableview datasource
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.showArray.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    FFDriveCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
+
+
+
+    return cell;
 }
 
 

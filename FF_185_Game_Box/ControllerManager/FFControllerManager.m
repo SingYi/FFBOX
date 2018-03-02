@@ -7,11 +7,9 @@
 //
 
 #import "FFControllerManager.h"
-#import "FFMainTabbarViewController.h"
 
 @interface FFControllerManager () 
 
-@property (nonatomic, strong) FFMainTabbarViewController *tabBarController;
 
 @end
 

@@ -61,6 +61,8 @@ if (success) {\
 #define AppVersion ([FFBasicModel appVersion])
 
 
+typedef void(^MCompletionBlock)(NSDictionary *content, BOOL success);
+
 @interface FFBasicModel : NSObject
 
 @property (nonatomic, assign) NSInteger currentPage;
@@ -84,6 +86,7 @@ if (success) {\
 
 /** post */
 + (void)postRequestWithURL:(NSString *)url params:(NSDictionary *)params Success:(void(^) (NSDictionary *content))success Failure:(void(^)(NSError * error))failure;
+
 
 
 #pragma mark - channel

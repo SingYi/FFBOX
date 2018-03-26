@@ -89,6 +89,10 @@
 		B556B0F91FA7000C005DC871 /* FFControllerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B556B0F81FA70005005DC871 /* FFControllerManager.m */; };
 		B55DE0A11FB08EEF001437D5 /* FFUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B55DE0A01FB08EEF001437D5 /* FFUserModel.m */; };
 		B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B55DE0A41FB14BF0001437D5 /* FFSignInViewController.m */; };
+		B5623FFD2068C6A10024DAA3 /* FFRaidersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5623FFC2068C6A10024DAA3 /* FFRaidersViewController.m */; };
+		B56240072068C88A0024DAA3 /* FFRaidersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240062068C88A0024DAA3 /* FFRaidersModel.m */; };
+		B56240152068D9180024DAA3 /* FFRaidersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240122068D9170024DAA3 /* FFRaidersTableCell.m */; };
+		B56240162068D9180024DAA3 /* FFRaidersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
 		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
@@ -294,6 +298,9 @@
 		B5A5D5671FC6AD6700EC951F /* FFMyNewsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5A5D5651FC6AD6700EC951F /* FFMyNewsCell.xib */; };
 		B5A5D56A1FC6B82600EC951F /* FFReplyToCommentController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D5691FC6B82600EC951F /* FFReplyToCommentController.m */; };
 		B5A5D56D1FC8002400EC951F /* FFNewMineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A5D56C1FC8002400EC951F /* FFNewMineViewController.m */; };
+		B5A62DC9204D249E00A08880 /* FFMyDynamicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A62DC8204D249E00A08880 /* FFMyDynamicsViewController.m */; };
+		B5A6559320512C9500A08880 /* FFApplyRebateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A6559220512C9500A08880 /* FFApplyRebateModel.m */; };
+		B5AA48D7205223570098BE9D /* FFPostStatusModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AA48D6205223570098BE9D /* FFPostStatusModel.m */; };
 		B5AB9509200310D20055D507 /* FFDriveController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AB9508200310D20055D507 /* FFDriveController.m */; };
 		B5AB950C200310F00055D507 /* FFDriveModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5AB950B200310F00055D507 /* FFDriveModel.m */; };
 		B5AFBF7420246D5B0087C1F5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5AFBF7020246D5B0087C1F5 /* libWeChatSDK.a */; };
@@ -504,6 +511,13 @@
 		B55DE0A01FB08EEF001437D5 /* FFUserModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFUserModel.m; sourceTree = "<group>"; };
 		B55DE0A31FB14BF0001437D5 /* FFSignInViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFSignInViewController.h; sourceTree = "<group>"; };
 		B55DE0A41FB14BF0001437D5 /* FFSignInViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFSignInViewController.m; sourceTree = "<group>"; };
+		B5623FFB2068C6A10024DAA3 /* FFRaidersViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFRaidersViewController.h; sourceTree = "<group>"; };
+		B5623FFC2068C6A10024DAA3 /* FFRaidersViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFRaidersViewController.m; sourceTree = "<group>"; };
+		B56240052068C88A0024DAA3 /* FFRaidersModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFRaidersModel.h; sourceTree = "<group>"; };
+		B56240062068C88A0024DAA3 /* FFRaidersModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFRaidersModel.m; sourceTree = "<group>"; };
+		B56240122068D9170024DAA3 /* FFRaidersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFRaidersTableCell.m; sourceTree = "<group>"; };
+		B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FFRaidersTableCell.xib; sourceTree = "<group>"; };
+		B56240142068D9170024DAA3 /* FFRaidersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFRaidersTableCell.h; sourceTree = "<group>"; };
 		B565146D1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FFSubscript.h"; sourceTree = "<group>"; };
 		B565146E1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FFSubscript.m"; sourceTree = "<group>"; };
 		B57B95EE20036C9500C39A5A /* Test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Test.c; sourceTree = "<group>"; };
@@ -929,6 +943,12 @@
 		B5A5D5691FC6B82600EC951F /* FFReplyToCommentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFReplyToCommentController.m; sourceTree = "<group>"; };
 		B5A5D56B1FC8002400EC951F /* FFNewMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFNewMineViewController.h; sourceTree = "<group>"; };
 		B5A5D56C1FC8002400EC951F /* FFNewMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFNewMineViewController.m; sourceTree = "<group>"; };
+		B5A62DC7204D249E00A08880 /* FFMyDynamicsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMyDynamicsViewController.h; sourceTree = "<group>"; };
+		B5A62DC8204D249E00A08880 /* FFMyDynamicsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMyDynamicsViewController.m; sourceTree = "<group>"; };
+		B5A6559120512C9500A08880 /* FFApplyRebateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFApplyRebateModel.h; sourceTree = "<group>"; };
+		B5A6559220512C9500A08880 /* FFApplyRebateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFApplyRebateModel.m; sourceTree = "<group>"; };
+		B5AA48D5205223570098BE9D /* FFPostStatusModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFPostStatusModel.h; sourceTree = "<group>"; };
+		B5AA48D6205223570098BE9D /* FFPostStatusModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFPostStatusModel.m; sourceTree = "<group>"; };
 		B5AB9507200310D20055D507 /* FFDriveController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveController.h; sourceTree = "<group>"; };
 		B5AB9508200310D20055D507 /* FFDriveController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveController.m; sourceTree = "<group>"; };
 		B5AB950A200310F00055D507 /* FFDriveModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveModel.h; sourceTree = "<group>"; };
@@ -1166,6 +1186,8 @@
 				B51967281FA9AD100046E391 /* FFHotGameController.m */,
 				B519672A1FA9AD230046E391 /* FFClassifyController.h */,
 				B519672B1FA9AD230046E391 /* FFClassifyController.m */,
+				B5623FFB2068C6A10024DAA3 /* FFRaidersViewController.h */,
+				B5623FFC2068C6A10024DAA3 /* FFRaidersViewController.m */,
 				B5A1EEC71FCC4523003FC031 /* ClassifyChildController */,
 				B51967471FAAC4D40046E391 /* RecommentChildController */,
 			);
@@ -1413,6 +1435,25 @@
 				B5137A511FB546220025F00B /* FFTransferServerChildController */,
 			);
 			path = ChildController;
+			sourceTree = "<group>";
+		};
+		B5623FFE2068C7AD0024DAA3 /* StrategyView */ = {
+			isa = PBXGroup;
+			children = (
+				B56240142068D9170024DAA3 /* FFRaidersTableCell.h */,
+				B56240122068D9170024DAA3 /* FFRaidersTableCell.m */,
+				B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */,
+			);
+			path = StrategyView;
+			sourceTree = "<group>";
+		};
+		B56240042068C86E0024DAA3 /* RaidersModel */ = {
+			isa = PBXGroup;
+			children = (
+				B56240052068C88A0024DAA3 /* FFRaidersModel.h */,
+				B56240062068C88A0024DAA3 /* FFRaidersModel.m */,
+			);
+			path = RaidersModel;
 			sourceTree = "<group>";
 		};
 		B59556B9200DDEA6007F3CC7 /* FFViewFactory */ = {
@@ -2129,6 +2170,8 @@
 				B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */,
 				B59E3DC12021938800F81F60 /* FFDriveUserModel.h */,
 				B59E3DC22021938800F81F60 /* FFDriveUserModel.m */,
+				B5AA48D5205223570098BE9D /* FFPostStatusModel.h */,
+				B5AA48D6205223570098BE9D /* FFPostStatusModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2173,6 +2216,8 @@
 			children = (
 				B5B95E241FBC1BF000ACD7F7 /* FFRebateModel.h */,
 				B5B95E251FBC1BF000ACD7F7 /* FFRebateModel.m */,
+				B5A6559120512C9500A08880 /* FFApplyRebateModel.h */,
+				B5A6559220512C9500A08880 /* FFApplyRebateModel.m */,
 			);
 			path = RebateModel;
 			sourceTree = "<group>";
@@ -2380,6 +2425,7 @@
 		B5BC04C21FA70C4C0091EE4B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B56240042068C86E0024DAA3 /* RaidersModel */,
 				B5B95E231FBC1BDF00ACD7F7 /* RebateModel */,
 				B519673C1FA9FB4D0046E391 /* RecommentModel */,
 				B519672D1FA9EA7C0046E391 /* ClassifyModel */,
@@ -2392,6 +2438,7 @@
 			children = (
 				B519671D1FA9A2580046E391 /* FFHomeViewSelectView.h */,
 				B519671E1FA9A2580046E391 /* FFHomeViewSelectView.m */,
+				B5623FFE2068C7AD0024DAA3 /* StrategyView */,
 				B54E6B281FB02FC7009D0025 /* RebateViewCell */,
 				B51967381FA9F85D0046E391 /* RecommentView */,
 				B51967321FA9EC740046E391 /* ClassifyView */,
@@ -2553,6 +2600,8 @@
 				B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */,
 				B58DB70D20104F2E00DBE381 /* FFDriveThroughInfoViewController.h */,
 				B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */,
+				B5A62DC7204D249E00A08880 /* FFMyDynamicsViewController.h */,
+				B5A62DC8204D249E00A08880 /* FFMyDynamicsViewController.m */,
 				B5D108DE202988C400E4D49F /* FFDriveMyNewsViewController.h */,
 				B5D108DF202988C400E4D49F /* FFDriveMyNewsViewController.m */,
 				B58DB71020118DE000DBE381 /* FFDriveDetailInfoViewController.h */,
@@ -2596,6 +2645,14 @@
 					B556B0D21FA6BD88005DC871 = {
 						CreatedOnToolsVersion = 9.0.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 0;
+							};
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
 					};
 				};
 			};
@@ -2656,6 +2713,7 @@
 				B51395F21FEBA95C00BAE477 /* FFSystemDetailView.xib in Resources */,
 				B519671C1FA99A360046E391 /* FFCustomizeCell.xib in Resources */,
 				B59E3FC1202441C000F81F60 /* ZLPhotoActionSheet.xib in Resources */,
+				B56240162068D9180024DAA3 /* FFRaidersTableCell.xib in Resources */,
 				B59E3FC2202441C000F81F60 /* ZLPhotoBrowser.bundle in Resources */,
 				B59E3F92202441C000F81F60 /* LICENSE in Resources */,
 				B5137A501FB484FB0025F00B /* FFTransferRecordCell.xib in Resources */,
@@ -2737,6 +2795,7 @@
 				B5A5D5521FC69D4B00EC951F /* FFMyNewsViewController.m in Sources */,
 				B59E3F8B202441C000F81F60 /* CTAssetsPickerNoAssetsView.m in Sources */,
 				B59E3F7B202441C000F81F60 /* CTAssetItemViewController.m in Sources */,
+				B56240152068D9180024DAA3 /* FFRaidersTableCell.m in Sources */,
 				B5137A541FB5466D0025F00B /* FFTransferServerNotesController.m in Sources */,
 				B51967231FA9ACD40046E391 /* FFRecommentController.m in Sources */,
 				B5B95E4D1FBC3A1800ACD7F7 /* FFCustomLayout.m in Sources */,
@@ -2775,6 +2834,7 @@
 				B5B95E881FBD880800ACD7F7 /* FFGameFooterView.m in Sources */,
 				B54E6B351FB0527C009D0025 /* FFActivityCell.m in Sources */,
 				B59E3FBC202441C000F81F60 /* HZPhotoBrowser.m in Sources */,
+				B5623FFD2068C6A10024DAA3 /* FFRaidersViewController.m in Sources */,
 				B59E3F9A202441C000F81F60 /* MASCompositeConstraint.m in Sources */,
 				B556B0E61FA6BD88005DC871 /* main.m in Sources */,
 				B59E3F97202441C000F81F60 /* NSLayoutConstraint+PureLayout.m in Sources */,
@@ -2795,6 +2855,7 @@
 				B59E3FDA202441C000F81F60 /* NSData+ImageContentType.m in Sources */,
 				B51395E91FEBA51800BAE477 /* FFSystemDetailController.m in Sources */,
 				B51395CA1FEB904800BAE477 /* FFSystemInfoCell.m in Sources */,
+				B5A62DC9204D249E00A08880 /* FFMyDynamicsViewController.m in Sources */,
 				B59E3FE1202441C000F81F60 /* SDWebImageDownloaderOperation.m in Sources */,
 				B52B115D20185B6B0002475D /* FFPostStatusImageCell.m in Sources */,
 				B59E3FED202441C000F81F60 /* UINavigationController+Cloudox.m in Sources */,
@@ -2829,6 +2890,7 @@
 				B5A1EEC01FCC04B7003FC031 /* FFBindMobileViewController.m in Sources */,
 				B5B95E1F1FBC0E9800ACD7F7 /* FFPackageSearchResultViewController.m in Sources */,
 				B59E3F81202441C000F81F60 /* CTAssetsGridView.m in Sources */,
+				B5AA48D7205223570098BE9D /* FFPostStatusModel.m in Sources */,
 				B535C6661FB05E8B0090DCC9 /* FFWebViewController.m in Sources */,
 				B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */,
 				B5B95E821FBD742000ACD7F7 /* FFGameViewController.m in Sources */,
@@ -2878,6 +2940,7 @@
 				B5A5D4EE1FC2C94D00EC951F /* FFPayModel.m in Sources */,
 				B59E40242024605300F81F60 /* FFStatisticsModel.m in Sources */,
 				B5A5D4E11FC2737D00EC951F /* FFForgetPasswordViewController.m in Sources */,
+				B56240072068C88A0024DAA3 /* FFRaidersModel.m in Sources */,
 				B59E3FDC202441C000F81F60 /* SDImageCache.m in Sources */,
 				B5A5D4DE1FC272EB00EC951F /* FFRegisterViewController.m in Sources */,
 				B59E3F78202441C000F81F60 /* CTAssetCheckmark.m in Sources */,
@@ -2926,6 +2989,7 @@
 				B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */,
 				B52B1186201ABE3B0002475D /* UIButton+FFButton.m in Sources */,
 				B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */,
+				B5A6559320512C9500A08880 /* FFApplyRebateModel.m in Sources */,
 				B59E3FAA202441C000F81F60 /* MJRefreshHeader.m in Sources */,
 				B51379BC1FB2E0520025F00B /* FFChangePasswordViewController.m in Sources */,
 				B59E3F95202441C000F81F60 /* ALView+PureLayout.m in Sources */,

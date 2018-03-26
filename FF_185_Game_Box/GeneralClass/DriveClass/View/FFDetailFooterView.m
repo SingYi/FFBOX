@@ -96,13 +96,15 @@ const NSInteger BUTTON_TAG = 10086;
 //        syLog(@"operate string === %@",str);
         switch (string.integerValue) {
             case 0: {
-                [self removeLikeButtonAndeDisLikeButtonSelect];
+                [self addRespondsToButton:self.buttons[0]];
+                [self addRespondsToButton:self.buttons[1]];
                 self.buttons[0].tintColor = [UIColor grayColor];
                 self.buttons[1].tintColor = [UIColor redColor];
             }
                 break;
             case 1: {
-                [self removeLikeButtonAndeDisLikeButtonSelect];
+                [self addRespondsToButton:self.buttons[0]];
+                [self addRespondsToButton:self.buttons[1]];
                 self.buttons[0].tintColor = [UIColor redColor];
                 self.buttons[1].tintColor = [UIColor grayColor];
             }

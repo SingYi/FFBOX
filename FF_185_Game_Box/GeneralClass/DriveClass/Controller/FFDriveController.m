@@ -95,10 +95,11 @@
 
 - (void)initDataSource {
 
-    self.selectHeaderView.headerTitleArray = @[@"全部",@"热门",@"关注",@"我的"];
+    self.selectHeaderView.headerTitleArray = @[@"全部",@"热门",@"关注",@"我的",@"消息"];
     [self setFchildControllerWithClassNames:@[@"FFDriveAllInfoViewController",
                                               @"FFDriveHotInfoViewController",
                                               @"FFDriveAttentionInfoViewController",
+                                              @"FFMyDynamicsViewController",
                                               @"FFDriveMyNewsViewController"]];
 }
 

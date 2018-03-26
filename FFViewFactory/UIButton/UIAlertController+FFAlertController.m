@@ -24,19 +24,25 @@
     //添加按钮
     if (cancelBtnTitle.length) {
         UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-            block(0);
+            if (block) {
+                block(0);
+            }
         }];
         [alertController addAction:cancelAction];
     }
     if (destructiveBtnTitle.length) {
         UIAlertAction * destructiveAction = [UIAlertAction actionWithTitle:destructiveBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-            block(1);
+            if (block) {
+                block(1);
+            }
         }];
         [alertController addAction:destructiveAction];
     }
     if (otherBtnTitles.length) {
         UIAlertAction *otherActions = [UIAlertAction actionWithTitle:otherBtnTitles style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-            (!cancelBtnTitle.length && !destructiveBtnTitle.length) ? block(0) : (((cancelBtnTitle.length && !destructiveBtnTitle.length) || (!cancelBtnTitle.length && destructiveBtnTitle.length)) ? block(1) : block(2));
+            if (block) {
+                (!cancelBtnTitle.length && !destructiveBtnTitle.length) ? block(0) : (((cancelBtnTitle.length && !destructiveBtnTitle.length) || (!cancelBtnTitle.length && destructiveBtnTitle.length)) ? block(1) : block(2));
+            }
         }];
         [alertController addAction:otherActions];
         /**
@@ -58,7 +64,9 @@
             while ((otherString = va_arg(args, NSString*))) {
                 index ++ ;
                 UIAlertAction * otherActions = [UIAlertAction actionWithTitle:otherString style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                    block(index);
+                    if (block) {
+                        block(index);
+                    }
                 }];
                 [alertController addAction:otherActions];
             }
@@ -67,6 +75,52 @@
     }
     [viewController presentViewController:alertController animated:YES completion:nil];
     return alertController;
+}
+
+
++ (UIAlertController *)showAlertControllerWithViewController:(UIViewController *)viewController alertControllerStyle:(UIAlertControllerStyle)alertControllerStyle title:(NSString *)title message:(NSString *)message cancelButtonTitle:(NSString *)cancelBtnTitle destructiveButtonTitle:(NSString *)destructiveBtnTitle otherButtonTitles:(NSArray *)otherArray CallBackBlock:(CallBackBlock)block {
+
+    UIAlertController * alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:alertControllerStyle];
+
+    //添加按钮
+    if (cancelBtnTitle.length) {
+        UIAlertAction * cancelAction = [UIAlertAction actionWithTitle:cancelBtnTitle style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            if (block) {
+                block(0);
+            }
+        }];
+        [alertController addAction:cancelAction];
+    }
+    if (destructiveBtnTitle.length) {
+        UIAlertAction * destructiveAction = [UIAlertAction actionWithTitle:destructiveBtnTitle style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+            if (block) {
+                block(1);
+            }
+        }];
+        [alertController addAction:destructiveAction];
+    }
+    if (otherArray && otherArray.count > 0) {
+        NSUInteger index = 0;
+        if (block) {
+            (!cancelBtnTitle.length && !destructiveBtnTitle.length) ? (index = 0) : ((cancelBtnTitle.length && !destructiveBtnTitle.length) || (!cancelBtnTitle.length && destructiveBtnTitle.length) ? (index = 1) : (index = 2));
+        }
+        for (id obj in otherArray) {
+            NSString *title = [NSString stringWithFormat:@"%@",obj];
+            UIAlertAction * otherActions = [UIAlertAction actionWithTitle:title style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                if (block) {
+                    block(index);
+                }
+            }];
+            [alertController addAction:otherActions];
+            index++;
+        }
+
+    }
+
+    [viewController presentViewController:alertController animated:YES completion:nil];
+    return alertController;
+
+
 }
 
 

@@ -7,6 +7,10 @@
 //
 
 #import "FFDriveAttentionInfoViewController.h"
+#import "DriveInfoCell.h"
+
+
+#define CELL_IDE @"DriveInfoCell"
 
 @interface FFDriveAttentionInfoViewController ()
 
@@ -18,8 +22,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
-
 
 
 #pragma mark - getter

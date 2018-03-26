@@ -10,6 +10,9 @@
 #import "SYKeychain.h"
 #import "UIImageView+WebCache.h"
 
+#import "FFViewFactory.h"
+#import "FFDriveModel.h"
+
 @interface FFDrivePersonalHeader ()
 
 @property (nonatomic, strong) UIImageView *backgroundImageView;
@@ -27,6 +30,11 @@
 
 @property (nonatomic, strong) UILabel *descriptionLabel;
 @property (nonatomic, strong) UILabel *driverLevelLabel;
+
+
+/** tableHeaderView */
+@property (nonatomic, strong) UIButton *attentionButton;
+
 
 @end
 
@@ -55,10 +63,35 @@
     [self addSubview:self.vipImage];
     [self addSubview:self.driverLevelLabel];
     [self addSubview:self.descriptionLabel];
+    [self addSubview:self.attentionButton];
 }
 
 - (void)hideNickName:(BOOL)hide {
     self.nickNameLabel.hidden = hide;
+}
+
+#pragma mark - responds
+- (void)respondsToAttentionButton {
+    FF_is_login;
+    syLog(@"关注 %@",self.model.present_user_uid);
+    START_NET_WORK;
+    [FFDriveModel userAttentionWith:self.model.present_user_uid Type:(self.model.attention.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"attention === %@",content);
+        STOP_NET_WORK;
+        if (success) {
+            //            [self refreshNewData];
+            if (self.model.attention.integerValue == 0) {
+                self.model.attention = @"1";
+            } else {
+                self.model.attention = @"0";
+            }
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+
+        [self setAttentionWith:self.model.attention];
+    }];
+
 }
 
 #pragma mark - setter
@@ -77,6 +110,8 @@
     //
     [self setDriverLevelWith:model.present_user_driver_level];
     [self setDescriptionWith:model.present_user_desc];
+
+    [self setAttentionWith:model.attention];
 }
 
 
@@ -148,6 +183,22 @@
     self.descriptionLabel.center = CGPointMake(kSCREEN_WIDTH / 2, CGRectGetMaxY(self.driverLevelLabel.frame) + self.driverLevelLabel.frame.size.height);
 }
 
+- (void)setAttentionWith:(NSString *)str {
+
+//    [_model.present_user_uid isEqualToString:SSKEYCHAIN_UID] ? (self.attentionButton.hidden = YES) : (self.attentionButton.hidden = NO);
+    self.attentionButton.hidden = [_model.present_user_uid isEqualToString:SSKEYCHAIN_UID];
+
+    if (str.integerValue == 0) {
+        [self.attentionButton setTitle:@"+关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:[UIColor whiteColor] forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = [UIColor whiteColor].CGColor;
+    } else {
+        [self.attentionButton setTitle:@"已关注" forState:(UIControlStateNormal)];
+        [self.attentionButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+        self.attentionButton.layer.borderColor = [UIColor blackColor].CGColor;
+    }
+}
+
 #pragma mark - getter
 - (UIImageView *)backgroundImageView {
     if (!_backgroundImageView) {
@@ -217,6 +268,21 @@
         _driverLevelLabel.hidden = YES;
     }
     return _driverLevelLabel;
+}
+
+- (UIButton *)attentionButton {
+    if (!_attentionButton) {
+        _attentionButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _attentionButton.frame = CGRectMake(CGRectGetMaxX(self.iconImageView.frame) + 10, self.iconImageView.center.y - 15, 60, 30);
+        _attentionButton.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
+        _attentionButton.layer.borderWidth = 1;
+        _attentionButton.layer.cornerRadius = 4;
+        _attentionButton.layer.masksToBounds = YES;
+        _attentionButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        _attentionButton.hidden = YES;
+        [_attentionButton addTarget:self action:@selector(respondsToAttentionButton) forControlEvents:(UIControlEventTouchUpInside)];
+    }
+    return _attentionButton;
 }
 
 

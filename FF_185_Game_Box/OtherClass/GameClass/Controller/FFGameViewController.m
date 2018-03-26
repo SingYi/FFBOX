@@ -92,9 +92,7 @@ static FFGameViewController *controller = nil;
 }
 
 - (void)initDataSource {
-    _gChildControllers = [@[self.gDetailViewController,self.commentListController,self.gPackageViewController,self.gServiceViewController] copy];
-
-
+    _gChildControllers = [@[self.gDetailViewController,self.commentListController,self.gPackageViewController,self.gServiceViewController,self.gRaidersViewController] copy];
 
 
     [self addChildViewController:_gChildControllers[0]];
@@ -372,7 +370,7 @@ static FFGameViewController *controller = nil;
                         pinglun = @"评论";
                     }
                     syLog(@"game comment numbe dict === %@",dic);
-                    self.headerView.selectView.btnNameArray = @[@"详情",pinglun,@"礼包",@"开服"];
+                    self.headerView.selectView.btnNameArray = @[@"详情",pinglun,@"礼包",@"开服",@"攻略"];
                 }
 
             } else {
@@ -420,11 +418,12 @@ static FFGameViewController *controller = nil;
     [self.scrollView setContentSize:CGSizeMake(kSCREEN_WIDTH * self.gChildControllers.count, self.scrollView.frame.size.height)];
 
     self.gDetailViewController.view.frame = self.scrollView.bounds;
-//    self.gRaidersViewController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.commentListController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.commentListController.tableView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.gPackageViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.gServiceViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 3, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+    self.gRaidersViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 4, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+
 }
 
 

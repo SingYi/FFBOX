@@ -103,7 +103,7 @@ break;\
 @property (nonatomic, strong) NSMutableDictionary *infoDict;
 @property (nonatomic, assign) BOOL is185;
 
-
+@property (nonatomic, strong) UIBarButtonItem *settingButton;
 
 @end
 
@@ -162,6 +162,8 @@ break;\
 
     [self.view addSubview:self.tableHeaderView];
     [self.view addSubview:self.tableView];
+
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"New_mine_setting_button"] style:(UIBarButtonItemStyleDone) target:self action:@selector(FFMineHeaderView:respondsToSettingButton:)];
 }
 
 - (void)initDataSource {
@@ -199,6 +201,8 @@ break;\
     syLog(@"model.nick_name == %@",[FFUserModel currentUser].nick_name);
     //设置 VIP
     self.headerView.isVip = [NSString stringWithFormat:@"%@",dict[@"is_vip"]].boolValue;
+    //设置发车
+    [self setPostDynamics:nil];
 }
 
 - (void)setCoin {
@@ -286,16 +290,30 @@ break;\
 //    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:1 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
+/** 发车成功 */
+- (void)setPostDynamics:(NSString *)str {
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][2]] mutableCopy];
+    NSString *string = signDict[@"subTitle"];
+    NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
+
+    NSRange range1 = [string rangeOfString:@"5-30"];
+//    [attributeString addAttribute:NSForegroundColorAttributeName value:[UIColor lightGrayColor] range:<#(NSRange)#>]
+    [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:range1];
+    [signDict setObject:attributeString forKey:@"attributeString"];
+//    [signDict setObject:[NSString stringWithFormat:@"每日首次评论奖励%@金币",str] forKey:@"subTitle"];
+    [self.infoDict setObject:signDict forKey:self.showArray[1][2]];
+}
+
 /** 好友推荐 */
 - (void)setInviteFriendResult:(NSString *)str {
-    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][2]] mutableCopy];
+    NSMutableDictionary *signDict = [self.infoDict[self.showArray[1][3]] mutableCopy];
     NSString *string = [NSString stringWithFormat:@"最高奖励%@金币/人",str];
     NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
     NSRange range1 = [string rangeOfString:str];
     [attributeString addAttribute:NSForegroundColorAttributeName value:BOX_ORANG_COLOR range:range1];
     [signDict setObject:attributeString forKey:@"attributeString"];
     [signDict setObject:[NSString stringWithFormat:@"最高奖励%@金币/人",str] forKey:@"subTitle"];
-    [self.infoDict setObject:signDict forKey:self.showArray[1][2]];
+    [self.infoDict setObject:signDict forKey:self.showArray[1][3]];
 //    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:2 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
@@ -350,29 +368,11 @@ break;\
         [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];
         SHOW_TABBAR;
     } else {
-//        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
-//            switch (status) {
-//                case PHAuthorizationStatusAuthorized:
-//                    [self openPhoto];
-//                    syLog(@"PHAuthorizationStatusAuthorized");
-//                    break;
-//                case PHAuthorizationStatusDenied:
-//                    syLog(@"PHAuthorizationStatusDenied");
-//                    break;
-//                case PHAuthorizationStatusNotDetermined:
-//                    syLog(@"PHAuthorizationStatusNotDetermined");
-//                    break;
-//                case PHAuthorizationStatusRestricted:
-//                    syLog(@"PHAuthorizationStatusRestricted");
-//                    break;
-//            }
-//        }];
-        
-//        syLog(@"click icon with uid == %@", uid);
+        syLog(@"click icon with uid == %@", SSKEYCHAIN_UID);
         FFDriveMineViewController *vc = [FFDriveMineViewController new];
         //    vc.iconImage = iconImage;
         //    vc.model = cell.model;
-        vc.uid = _uid;
+        vc.uid = SSKEYCHAIN_UID;
         HIDE_TABBAR;
         HIDE_PARNENT_TABBAR;
         [self.navigationController pushViewController:vc animated:YES];
@@ -380,74 +380,6 @@ break;\
         SHOW_PARNENT_TABBAR;
     }
 }
-
-- (void)openPhoto {
-    UIImagePickerController *pickerView = [[UIImagePickerController alloc] init];
-    pickerView.delegate = self;
-    pickerView.allowsEditing = YES;
-
-//    pickerView.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//    [self presentViewController:pickerView animated:YES completion:nil];
-//    return;
-
-    if  ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary] && [UIImagePickerController isSourceTypeAvailable : UIImagePickerControllerSourceTypeCamera] && [UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
-
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:@"请选择图片来源" preferredStyle:UIAlertControllerStyleActionSheet];
-        UIAlertAction *photoLibraryAct = [UIAlertAction actionWithTitle:@"相册" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-
-            pickerView.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-            [self presentViewController:pickerView animated:YES completion:nil];
-
-
-        }];
-        UIAlertAction *cameraAct = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            pickerView.sourceType = UIImagePickerControllerSourceTypeCamera;
-            pickerView.cameraDevice = UIImagePickerControllerCameraDeviceRear;
-            pickerView.cameraCaptureMode = UIImagePickerControllerCameraCaptureModePhoto;
-
-            [self presentViewController:pickerView animated:YES completion:nil];
-        }];
-
-
-        UIAlertAction *cancelAct = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-        [alertController addAction:photoLibraryAct];
-        [alertController addAction:cameraAct];
-        [alertController addAction:cancelAct];
-
-        [self presentViewController:alertController animated:YES completion:nil];
-    }
-}
-
-
-
-#pragma mark - pickerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info {
-    NSString* type = [info objectForKey:UIImagePickerControllerMediaType];
-
-    if ([type isEqualToString:(NSString*)kUTTypeImage]) {
-        UIImage  *image = info[UIImagePickerControllerEditedImage];
-        _oriAvatarImage = self.headerView.avatarImage;
-        self.headerView.avatarImage = [image copy];
-        [FFUserModel setAvatarData:UIImagePNGRepresentation(image)];
-
-        /** 上传图片 */
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-        [FFUserModel userUploadPortraitWithImage:image Completion:^(NSDictionary *content, BOOL success) {
-            [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-            if (success) {
-                syLog(@"上传头像成功");
-            } else {
-                self.headerView.avatarImage = _oriAvatarImage;
-                [FFUserModel setAvatarData:UIImagePNGRepresentation(_oriAvatarImage)];
-                BOX_MESSAGE(@"上传头像失败");
-            }
-        }];
-    }
-    syLog(@"2");
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-
 
 - (void)FFMineHeaderView:(FFMineHeaderView *)view respondsToLoginButton:(id)info {
     if (_uid == nil) {
@@ -607,6 +539,7 @@ break;\
     } else {
         if (dict[@"attributeString"]) {
             cell.detailTextLabel.attributedText = dict[@"attributeString"];
+            cell.detailTextLabel.font = [UIFont systemFontOfSize:14];
         } else {
             cell.detailTextLabel.text = dict[@"subTitle"];
             cell.detailTextLabel.textColor = [UIColor lightGrayColor];
@@ -824,12 +757,15 @@ break;\
 
 - (NSDictionary *)infoDict {
     if (!_infoDict) {
-        _infoDict = [@{@"FFResignViewController":       @{@"title":@"闪退修复"},
+        _infoDict = [@{@"FFResignViewController":       @{@"title":@"闪退修复",
+                                                          @"subimage":@"Mine_subimage_Fix"
+                                                          },
                        @"FFSignInViewController":       @{@"title":@"签到",@"subTitle":@"+5金币,坚持有惊喜",
                                                           @"subimage":@"Mine_subimage_sign"},
                       @"FFEvervDayComment":             @{@"title":@"每日评论",@"subTitle":@"+3到10金币,每日一次",
                                                           @"subimage":@"Mine_subimage_comment"},
-                      @"FFDrivePostStatusViewController":@{@"title":@"每日发车",@"subTitle":@"每次成功发车可获得5-30金币"},
+                      @"FFDrivePostStatusViewController":@{@"title":@"每日发车",@"subTitle":@"每次成功发车可获得5-30金币",
+                                                           @"subimage":@"Mine_subimage_Post_Status"},
                       @"FFInviteFriendViewController":  @{@"title":@"邀请好友",@"subTitle":@"最高奖励2000金币/人",
                                                           @"subimage":@"Mine_subimage_invite"},
 

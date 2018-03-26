@@ -11,6 +11,7 @@
 #import "FFRecommentCarouselView.h"
 #import "FFPackageSearchResultViewController.h"
 #import "FFMyPackageViewController.h"
+#import "FFGameViewController.h"
 
 #define CELL_IDE @"FFpackageCell"
 
@@ -172,7 +173,12 @@
 
 #pragma mark - carouse view delegate
 - (void)FFRecommentCarouselView:(FFRecommentCarouselView *)view didSelectImageWithInfo:(NSDictionary *)info {
-
+    syLog(@"did image info == %@",info);
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [FFGameViewController sharedController].gameID = info[@"gid"];
+    [FFGameViewController sharedController].gameLogo = nil;
+    [self.navigationController pushViewController:[FFGameViewController sharedController] animated:YES];
 }
 
 #pragma mark - getter

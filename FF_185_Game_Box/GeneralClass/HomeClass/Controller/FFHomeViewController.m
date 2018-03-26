@@ -14,6 +14,7 @@
 #import "FFNewGameController.h"
 #import "FFHotGameController.h"
 #import "FFClassifyController.h"
+#import "FFRaidersViewController.h"
 
 #import "FFMyNewsViewController.h"
 #import "FFLoginViewController.h"
@@ -31,10 +32,11 @@
 @property (nonatomic, assign) BOOL isAnimation;
 @property (nonatomic, strong) UIViewController *lastController;
 
-@property (nonatomic, strong) FFRecommentController *hRecommentController;
-@property (nonatomic, strong) FFNewGameController *hNewGamesController;
-@property (nonatomic, strong) FFHotGameController *hHotGamesController;
-@property (nonatomic, strong) FFClassifyController *hClassifyController;
+@property (nonatomic, strong) FFRecommentController     *hRecommentController;
+@property (nonatomic, strong) FFNewGameController       *hNewGamesController;
+@property (nonatomic, strong) FFHotGameController       *hHotGamesController;
+@property (nonatomic, strong) FFClassifyController      *hClassifyController;
+@property (nonatomic, strong) FFRaidersViewController   *hradiersViewController;
 @property (nonatomic, strong) NSArray<UIViewController *> *hChildControllers;
 
 @property (nonatomic, strong) UISearchBar *searchBar;
@@ -69,7 +71,7 @@
 }
 
 - (void)initDataSource {
-    _hChildControllers = [@[self.hRecommentController,self.hNewGamesController,self.hHotGamesController,self.hClassifyController] copy];
+    _hChildControllers = [@[self.hRecommentController,self.hNewGamesController,self.hradiersViewController,self.hClassifyController] copy];
 
     [self addChildViewController:_hChildControllers[0]];
     [self.scrollView addSubview:_hChildControllers[0].view];
@@ -256,14 +258,14 @@
     [self.scrollView setContentSize:CGSizeMake(kSCREEN_WIDTH * self.childeTitles.count, self.scrollView.frame.size.height)];
     self.hRecommentController.view.frame = self.scrollView.bounds;
     self.hNewGamesController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
-    self.hHotGamesController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+    self.hradiersViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.hClassifyController.view.frame = CGRectMake(kSCREEN_WIDTH * 3, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
 }
 
 #pragma mark - getter
 - (NSArray *)childeTitles {
     if (!_childeTitles) {
-        _childeTitles = @[@"推荐",@"新游",@"热门",@"分类"];
+        _childeTitles = @[@"推荐",@"新游",@"攻略",@"分类"];
     }
     return _childeTitles;
 }
@@ -316,6 +318,13 @@
     return _hClassifyController;
 }
 
+- (FFRaidersViewController *)hradiersViewController {
+    if (!_hradiersViewController) {
+        _hradiersViewController = [[FFRaidersViewController alloc] init];
+    }
+    return _hradiersViewController;
+}
+
 - (UIBarButtonItem *)downLoadBtn {
     if (!_downLoadBtn) {
         _downLoadBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"homePage_download"] style:(UIBarButtonItemStyleDone) target:self action:@selector(clickDownloadBtn)];
@@ -324,8 +333,7 @@
 }
 
 - (UIBarButtonItem *)messageBtn {
-
-if (!_messageBtn) {
+    if (!_messageBtn) {
         _messageBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"homePage_message"] style:(UIBarButtonItemStyleDone) target:self action:@selector(clickMessageBtn)];
 
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];

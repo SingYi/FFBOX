@@ -11,6 +11,7 @@
 #import "FFViewFactory.h"
 #import "MBProgressHUD.h"
 #import "FFDynamicModel.h"
+#import "FFControllerManager.h"
 
 #define hud_add MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES]
 #define hud_remove [hud hideAnimated:YES];
@@ -31,6 +32,7 @@
 
 @property (nonatomic, strong) FFDynamicModel *model;
 
+@property (nonatomic, assign) NSUInteger currentCellIndex;
 
 
 - (void)initUserInterface;
@@ -40,6 +42,8 @@
 - (void)refreshNewData;
 
 - (void)loadMoreData;
+
+- (void)deleteMyDynamics;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView;
 - (void)canScroll:(UIScrollView *)scrollView;

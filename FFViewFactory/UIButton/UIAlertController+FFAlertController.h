@@ -35,6 +35,25 @@ typedef void(^dismissBlock)(void);
                                            otherButtonTitles:(NSString *)otherBtnTitles,...NS_REQUIRES_NIL_TERMINATION;
 
 /**
+ * @param viewController       presrent view controller
+ * @param alertControllerStyle UIAlertControllerStyle
+ * @param title                title
+ * @param message              message
+ * @param block                call back block
+ * @param cancelBtnTitle       cancel button title
+ * @param otherArray       other button title
+ * @param destructiveBtnTitle  destructivew button title
+ */
++ (UIAlertController *)showAlertControllerWithViewController:(UIViewController*)viewController
+                                        alertControllerStyle:(UIAlertControllerStyle)alertControllerStyle
+                                                       title:(NSString*)title
+                                                     message:(NSString*)message
+                                           cancelButtonTitle:(NSString *)cancelBtnTitle
+                                      destructiveButtonTitle:(NSString *)destructiveBtnTitle
+                                           otherButtonTitles:(NSArray *)otherArray
+                                               CallBackBlock:(CallBackBlock)block;
+
+/**
  * simple show alert
  * @param   title   title
  * @param   message message

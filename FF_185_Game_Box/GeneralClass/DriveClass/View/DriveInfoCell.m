@@ -14,6 +14,8 @@
 #import "ZLPhotoActionSheet.h"
 #import "ZLPhotoManager.h"
 #import "FFDriveCommentCell.h"
+#import "FFDriveModel.h"
+#import "FFViewFactory.h"
 
 #define CELL_IDE @"FFDriveCommentCell"
 
@@ -47,10 +49,14 @@
 @property (nonatomic, strong) NSArray *showArray;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeight;
 @property (weak, nonatomic) IBOutlet UIButton *attentionButton;
+@property (weak, nonatomic) IBOutlet UIImageView *recommendButton;
 
 //@property (nonatomic, assign) CGFloat rowHeight;
 
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
+
+/** 审核标签 */
+@property (nonatomic, strong) UILabel *verifyLabel;
 
 
 @property (nonatomic, strong) NSString *dynamicsID;
@@ -84,9 +90,11 @@
     //tableview
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
-    [self.tableView registerNib:[UINib nibWithNibName:CELL_IDE bundle:nil
-                                 ] forCellReuseIdentifier:CELL_IDE];
+//    [self.tableView registerNib:[UINib nibWithNibName:CELL_IDE bundle:nil] forCellReuseIdentifier:CELL_IDE];
     self.tableView.scrollEnabled = NO;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.userInteractionEnabled = NO;
+    self.tableView.backgroundColor = [UIColor colorWithWhite:0.95 alpha:1];
     _showArray = @[@"",@""];
     //icon
     self.iconImageView.layer.cornerRadius = self.iconImageView.bounds.size.width / 2;
@@ -114,20 +122,47 @@
     self.iconImageView.userInteractionEnabled = YES;
     [self.iconImageView addGestureRecognizer:tap];
 
+
+    [self.contentView addSubview:self.verifyLabel];
 }
 
 //点击关注
 - (void)respondsToAttentionButton {
+    if (![self.model.verifyDynamics isEqualToString:@"1"]) {
+        return;
+    }
+    FF_is_login;
+    syLog(@"关注 %@",self.model.present_user_uid);
+    START_NET_WORK;
+    [FFDriveModel userAttentionWith:self.model.present_user_uid Type:(self.model.attention.integerValue == 0) ? attention : cancel  Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"attention === %@",content);
+        STOP_NET_WORK;
+        if (success) {
+//            [self refreshNewData];
+            if (self.model.attention.integerValue == 0) {
+                self.model.attention = @"1";
+            } else {
+                self.model.attention = @"0";
+            }
+        } else {
+            BOX_MESSAGE(content[@"msg"]);
+        }
+
+        [self setAttentionWith:self.model.attention];
+    }];
+
     syLog(@"关注");
 }
 
-
+//点击头像的响应
 - (void)respondsToIcon {
+    if (![self.model.verifyDynamics isEqualToString:@"1"]) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickIconWithUid:WithIconImage:)]) {
-        NSString *uid = [NSString stringWithFormat:@"%@",self.dict[@"dynamics"][@"uid"]];
-        if (uid.length > 0) {
-            [self.delegate DriveInfoCell:self didClickIconWithUid:uid WithIconImage:self.iconImageView.image];
-        }
+//        NSString *uid = [NSString stringWithFormat:@"%@",self.dict[@"dynamics"][@"uid"]];
+        //这里回调直接传的 cell, 所以在 响应代理的控制器里面直接用的 cell 的 model, uid 没有用
+         [self.delegate DriveInfoCell:self didClickIconWithUid:nil WithIconImage:self.iconImageView.image];
     }
 }
 
@@ -149,21 +184,27 @@
 
 #pragma mark - responds
 - (void)respondsToButton:(UIButton *)sender {
+    if (![self.model.verifyDynamics isEqualToString:@"1"]) {
+        return;
+    }
     if (sender == self.FavorButton) {
-        isNoonButton ? (buttonType = noonButton) : (buttonType = likeButton);
+//        isNoonButton ? (buttonType = noonButton) : (buttonType = likeButton);
+        buttonType = likeButton;
     } else if (sender == self.unFavorButton) {
-        isNoonButton ? (buttonType = noonButton) : (buttonType = dislikeButton);
+//        isNoonButton ? (buttonType = noonButton) : (buttonType = dislikeButton);
+        buttonType = dislikeButton;
     } else if (sender == self.sharedButton) {
         buttonType = sharedButton;
     } else if (sender == self.commentButton) {
         buttonType = commentButoon;
     }
-
     [self delegateCallBackWithType:buttonType];
-
 }
 
 - (void)delegateCallBackWithType:(CellButtonType)type {
+    if (![self.model.verifyDynamics isEqualToString:@"1"]) {
+        return;
+    }
     if (self.delegate && [self.delegate respondsToSelector:@selector(DriveInfoCell:didClickButtonWithType:)]) {
         [self.delegate DriveInfoCell:self didClickButtonWithType:type];
     }
@@ -193,6 +234,47 @@
     //
     [self setAttentionWith:model.attention];
 
+    //设置审核
+    [self setVerify:model.verifyDynamics];
+    //显示审核
+    if (model.showVerifyDynamics == YES && [model.present_user_uid isEqualToString:SSKEYCHAIN_UID]) {
+        self.verifyLabel.hidden = NO;
+    } else {
+        self.verifyLabel.hidden = YES;
+    }
+    //显示关注按钮
+    self.attentionButton.hidden = [model.present_user_uid isEqualToString:SSKEYCHAIN_UID];
+
+    //推荐显示
+    [self setRecommend:model.ratings];
+}
+
+/** 设置推荐 */
+- (void)setRecommend:(NSString *)str {
+    self.recommendButton.hidden = ![str isEqualToString:@"1"];
+}
+
+/** 设置审核 */
+- (void)setVerify:(NSString *)str {
+    switch (str.integerValue) {
+        case 1:
+            [self verifyLabelTitle:@"审核成功" TitleColor:RGBCOLOR(50,150,50) Hidden:NO];
+            break;
+        case 2:
+            [self verifyLabelTitle:@"等待审核" TitleColor:RGBCOLOR(50,233,182) Hidden:NO];
+            break;
+        case 3:
+            [self verifyLabelTitle:@"审核失败" TitleColor:[UIColor redColor] Hidden:NO];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)verifyLabelTitle:(NSString *)title TitleColor:(UIColor *)color Hidden:(BOOL)hidden {
+    self.verifyLabel.text = title;
+    self.verifyLabel.textColor = color;
+    self.verifyLabel.hidden = hidden;
 }
 
 - (void)setSexWith:(NSString *)str {
@@ -391,17 +473,21 @@
 //        syLog(@"operate string === %@",str);
         switch (string.integerValue) {
             case 0: {
-                [self removeLikeButtonAndeDisLikeButtonSelect];
+//                [self removeLikeButtonAndeDisLikeButtonSelect];
+                [self addRespondsToButton:self.FavorButton];
+                [self addRespondsToButton:self.unFavorButton];
                 self.unFavorButton.tintColor = [UIColor redColor];
                 self.FavorButton.tintColor = [UIColor grayColor];
-                isNoonButton = YES;
+//                isNoonButton = YES;
             }
                 break;
             case 1: {
-                [self removeLikeButtonAndeDisLikeButtonSelect];
+//                [self removeLikeButtonAndeDisLikeButtonSelect];
+                [self addRespondsToButton:self.FavorButton];
+                [self addRespondsToButton:self.unFavorButton];
                 self.unFavorButton.tintColor = [UIColor grayColor];
                 self.FavorButton.tintColor = [UIColor redColor];
-                isNoonButton = YES;
+//                isNoonButton = YES;
             }
                 break;
             case 2: {
@@ -409,7 +495,7 @@
                 [self addRespondsToButton:self.unFavorButton];
                 self.unFavorButton.tintColor = [UIColor grayColor];
                 self.FavorButton.tintColor = [UIColor grayColor];
-                isNoonButton = NO;
+//                isNoonButton = NO;
             }
                 break;
 
@@ -452,8 +538,10 @@
     self.showArray = array;
     if (self.showArray == nil || self.showArray.count == 0) {
         self.tableViewHeight.constant = 0;
+    } else if (self.showArray.count == 1){
+        self.tableViewHeight.constant = 20;
     } else {
-        self.tableViewHeight.constant = 100;
+        self.tableViewHeight.constant = 40;
     }
 
     [self.tableView reloadData];
@@ -469,16 +557,33 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FFDriveCommentCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
+    UITableViewCell *cell  = [tableView dequeueReusableCellWithIdentifier:@"comment_cell"];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:@"comment_cell"];
+    }
 
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    NSDictionary *dict = self.showArray[indexPath.row];
+    if (dict != nil || [dict isKindOfClass:[NSDictionary class]]) {
+        NSString *string = [NSString stringWithFormat:@"%@ : %@",dict[@"username"],dict[@"content"]];
+        NSMutableAttributedString *attributeString = [[NSMutableAttributedString alloc] initWithString:string];
+        NSRange range1 = [string rangeOfString:[NSString stringWithFormat:@"%@",dict[@"username"]]];
+        [attributeString addAttribute:NSForegroundColorAttributeName value:[UIColor grayColor] range:range1];
+        range1 = [string rangeOfString:[NSString stringWithFormat:@"%@",dict[@"content"]]];
+        [attributeString addAttribute:NSForegroundColorAttributeName value:[UIColor darkTextColor] range:range1];
+        cell.textLabel.attributedText = attributeString;
+    }
 
 
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 20;
+}
+
 
 #pragma mark - getter
-
 - (ZLPhotoActionSheet *)getPas {
     ZLPhotoActionSheet *actionSheet = [[ZLPhotoActionSheet alloc] init];
     actionSheet.sender = [UIApplication sharedApplication].keyWindow.rootViewController;
@@ -487,7 +592,6 @@
     actionSheet.configuration.bottomViewBgColor = NAVGATION_BAR_COLOR;
     return actionSheet;
 }
-
 
 
 - (NSData *)imageDataFromDiskCacheWithKey:(NSString *)key {
@@ -509,6 +613,22 @@
             obj.image = self.normalImage;
         }];
     }
+}
+
+- (UILabel *)verifyLabel {
+    if (!_verifyLabel) {
+        _verifyLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        _verifyLabel.center = CGPointMake(kSCREEN_WIDTH - 40, self.nickNameLabel.center.y);
+        _verifyLabel.hidden = YES;
+        _verifyLabel.font = [UIFont systemFontOfSize:14];
+        _verifyLabel.text = @"审核中";
+        _verifyLabel.textAlignment = NSTextAlignmentCenter;
+//        _verifyLabel.layer.borderColor = NAVGATION_BAR_COLOR.CGColor;
+//        _verifyLabel.layer.borderWidth = 1;
+        _verifyLabel.layer.cornerRadius = 4;
+        _verifyLabel.layer.masksToBounds = YES;
+    }
+    return _verifyLabel;
 }
 
 

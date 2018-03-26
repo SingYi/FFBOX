@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "FFApplyRebateModel.h"
+@class RebateTableViewCell;
+
+@protocol RebateTableViewCellDelegate <NSObject>
+
+- (void)RebateTableViewCell:(RebateTableViewCell *)cell clickApplyButtonWithUserModel:(FFApplyUserModel *)model;
+
+@end
 
 @interface RebateTableViewCell : UITableViewCell
 
 @property (nonatomic, strong) NSDictionary *dict;
+@property (nonatomic, strong) FFApplyRebateModel *model;
+@property (nonatomic, strong) FFApplyUserModel *userModel;
 
+@property (nonatomic, weak) id<RebateTableViewCellDelegate> delegate;
 
 @end

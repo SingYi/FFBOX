@@ -12,6 +12,9 @@
 #import "FFBoxModel.h"
 #import "FFUserModel.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 #define CELLIDE @"SettingCell"
 
 @interface FFSettingViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -42,7 +45,9 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBar.hidden = NO;
+//    self.navigationController.navigationBar.hidden = NO;
+
+    self.navBarBgAlpha = @"1.0";
     //检查是否已经登录
     NSString *uid = [FFUserModel getUID];
 

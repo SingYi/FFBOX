@@ -29,6 +29,7 @@
 + (void)rebateApplyWithAppID:(NSString *)appid
                     RoleName:(NSString *)rolename
                       RoleID:(NSString *)roleid
+                    ServerID:(NSString *)serverID
                   Completion:(void (^)(NSDictionary * content, BOOL success))completion;
 
 

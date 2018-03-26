@@ -37,7 +37,7 @@ static FFMapModel *model = nil;
 + (void)getMap {
     [FFBasicModel postRequestWithURL:URLMAP params:nil Success:^(NSDictionary *content) {
         NSDictionary *dict = content[@"data"];
-        syLog(@"map === %@",dict);
+        syLog(@"map === %@",content);
         BOXLOG(@"map url initialize success");
         [[FFMapModel map] setAllPropertyWithDict:dict];
         BOXLOG(@"map plist writeing");
@@ -160,7 +160,12 @@ static FFMapModel *model = nil;
                      @"SHARE_DYNAMICS":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=shareDynamics",
                      @"BOX_INIT":@"http://api.185sy.com/index.php?g=api&m=userbox&a=do_init",
                      @"USER_COMMENT_ZAN":@"http://api.185sy.com/index.php?g=api&m=userbox&a=my_comment_zan",
-                     @"USER_NEW_UP":@"http://api.185sy.com/index.php?g=api&m=userbox&a=new_up_counts"
+                     @"USER_NEW_UP":@"http://api.185sy.com/index.php?g=api&m=userbox&a=new_up_counts",
+                     @"CANCEL_DYNAMICS_LIKE":@"http://api.185sy.com/index.php?g=api&m=likeinfo&a=cancel_dynamics_like",
+                     @"CANCEL_COMMENT_LIKE":@"http://api.185sy.com/index.php?g=api&m=likeinfo&a=cancel_comment_like",
+                     @"COMMENT_COUNTS":@"http://api.185sy.com/index.php?g=api&m=comment&a=get_comment_counts",
+                     @"DEL_DYNAMIC":@"http://api.185sy.com/index.php?g=api&m=dynamics&a=delDynamic",
+                     @"PACKAGE_INFO":@"http://api.185sy.com/index.php?g=api&m=package&a=pack_info",
                      };
     return mapDict;
 }

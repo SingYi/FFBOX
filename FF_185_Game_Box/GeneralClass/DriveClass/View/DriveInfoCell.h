@@ -19,10 +19,11 @@ typedef enum : NSUInteger {
 } CellButtonType;
 
 @protocol DriveInfoCellDelegate <NSObject>
-
+//点击头像响应
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickIconWithUid:(NSString *)uid WithIconImage:(UIImage *)iconImage;
 
 @optional
+//cell 下面的 4个按钮响应事件
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type;
 
 

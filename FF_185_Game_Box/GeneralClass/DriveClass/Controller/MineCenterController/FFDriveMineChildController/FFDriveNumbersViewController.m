@@ -9,6 +9,8 @@
 #import "FFDriveNumbersViewController.h"
 #import "FFDriveModel.h"
 #import "FFDriveDetailInfoViewController.h"
+#import "SYKeychain.h"
+#import "UIAlertController+FFAlertController.h"
 
 @interface FFDriveNumbersViewController () <UITableViewDelegate>
 
@@ -37,7 +39,30 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self pushDetailControllerWith:indexPath Comment:NO];
+
+    if ([self.buid isEqualToString:SSKEYCHAIN_UID]) {
+        syLog(@"删除动态");
+        [UIAlertController showAlertControllerWithViewController:[FFControllerManager sharedManager].rootViewController alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除动态" CallBackBlock:^(NSInteger btnIndex) {
+            self.currentCellIndex = indexPath.row;
+            [self deleteDynamics:btnIndex];
+        } otherButtonTitles:nil];
+    } else {
+        [self pushDetailControllerWith:indexPath Comment:NO];
+    }
+}
+
+- (void)deleteDynamics:(NSInteger)btnIndex {
+    switch (btnIndex) {
+        case 0:
+            syLog(@"取消操作");
+            break;
+        case 1:
+            syLog(@"删除动态");
+            [self deleteMyDynamics];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {

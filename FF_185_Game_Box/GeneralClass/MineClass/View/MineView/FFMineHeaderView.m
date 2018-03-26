@@ -39,7 +39,7 @@
     [self addSubview:self.avatar];
     [self addSubview:self.vipButton];
     [self addSubview:self.loginButton];
-    [self addSubview:self.settingButton];
+//    [self addSubview:self.settingButton];
 }
 
 #pragma mark - responds

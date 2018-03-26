@@ -7,8 +7,10 @@
 //
 
 #import "FFMyDynamicsViewController.h"
+#import "UIAlertController+FFAlertController.h"
 
-@interface FFMyDynamicsViewController ()
+@interface FFMyDynamicsViewController () <UITableViewDelegate>
+
 
 @end
 
@@ -19,19 +21,54 @@
     // Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    syLog(@"删除我的动态");
+    if ([self.buid isEqualToString:SSKEYCHAIN_UID]) {
+        [UIAlertController showAlertControllerWithViewController:[FFControllerManager sharedManager].rootViewController alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"删除动态" CallBackBlock:^(NSInteger btnIndex) {
+            self.currentCellIndex = indexPath.row;
+            [self deleteDynamics:btnIndex];
+        } otherButtonTitles:nil];
+    }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)deleteDynamics:(NSInteger)btnIndex {
+    switch (btnIndex) {
+        case 0:
+            syLog(@"取消操作");
+            break;
+        case 1:
+            syLog(@"删除动态");
+            [self deleteMyDynamics];
+            break;
+        default:
+            break;
+    }
 }
-*/
+
+
+
+
+
+
+
+#pragma mark - getter
+- (DynamicType)dynamicType {
+    return CheckUserDynamic;
+}
+
+- (NSString *)buid {
+    return SSKEYCHAIN_UID;
+}
+
+
+
+
+
+
+
+
+
 
 @end

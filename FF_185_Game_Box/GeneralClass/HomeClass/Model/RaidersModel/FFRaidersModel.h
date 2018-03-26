@@ -10,4 +10,6 @@
 
 @interface FFRaidersModel : FFBasicModel
 
++ (void)getRaidersWithPage:(NSString *)page Completion:(MCompletionBlock)completion;
+
 @end

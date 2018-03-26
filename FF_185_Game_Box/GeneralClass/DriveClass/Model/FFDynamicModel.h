@@ -66,6 +66,13 @@
 @property (nonatomic, strong) NSString *attention;
 @property (nonatomic, assign) BOOL isAttention;
 
+/** 审核 */
+@property (nonatomic, strong) NSString *verifyDynamics;
+/** 显示审核标签 */
+@property (nonatomic, assign) BOOL showVerifyDynamics;
+
+/** 评级 */
+@property (nonatomic, strong) NSString *ratings;
 
 /** dataArray */
 @property (nonatomic, strong) NSMutableArray<FFDynamicModel *> *dataArray;

@@ -31,6 +31,9 @@
 @property (nonatomic, strong) FFRegisterViewController *registerViewController;
 
 
+@property (nonatomic, assign) BOOL isLogin;
+
+
 @end
 
 @implementation FFLoginViewController
@@ -78,8 +81,12 @@
 //    SHOW_TABBAR;
 }
 
-/** 登录 */
+/** 登录 *///3想
 - (void)respondsToLogin {
+    if (_isLogin) {
+        return;
+    }
+    _isLogin = YES;
     //释放第一响应者
     [self.userName resignFirstResponder];
     [self.passWord resignFirstResponder];
@@ -99,6 +106,7 @@
 
         BOX_STOP_ANIMATION;
 
+        _isLogin = NO;
         if (success) {
             NSDictionary *dict = CONTENT_DATA;
             //设置用户模型

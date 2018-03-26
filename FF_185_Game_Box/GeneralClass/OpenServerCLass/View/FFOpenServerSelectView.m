@@ -41,6 +41,13 @@ attributes:attribute context:nil].size
 
     _buttons = [NSMutableArray arrayWithCapacity:btnNameArray.count];
 
+    UIFont *font;
+    if (btnNameArray.count >= 5) {
+        font = [UIFont systemFontOfSize:14];
+    } else {
+        font = [UIFont systemFontOfSize:18];
+    }
+
     [_btnNameArray enumerateObjectsUsingBlock:^(NSString * obj, NSUInteger idx, BOOL * _Nonnull stop) {
 
         UIButton *button = [UIButton buttonWithType:(UIButtonTypeCustom)];
@@ -58,6 +65,8 @@ attributes:attribute context:nil].size
         } else {
             [button setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
         }
+
+        button.titleLabel.font = font;
 
         [_buttons addObject:button];
 

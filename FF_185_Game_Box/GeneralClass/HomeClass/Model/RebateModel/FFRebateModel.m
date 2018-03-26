@@ -66,7 +66,7 @@
 }
 
 /** 申请返利 */
-+ (void)rebateApplyWithAppID:(NSString *)appid RoleName:(NSString *)rolename RoleID:(NSString *)roleid Completion:(void (^)(NSDictionary *, BOOL))completion {
++ (void)rebateApplyWithAppID:(NSString *)appid RoleName:(NSString *)rolename RoleID:(NSString *)roleid ServerID:(NSString *)serverID Completion:(void (^)(NSDictionary *, BOOL))completion {
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
@@ -74,8 +74,8 @@
     [dict setObject:appid forKey:@"appid"];
     [dict setObject:rolename forKey:@"rolename"];
     [dict setObject:roleid forKey:@"roleid"];
-    [dict setObject:BOX_SIGN(dict, (@[@"uid",@"appid",@"rolename",@"roleid"])) forKey:@"sign"];
-
+    [dict setObject:serverID forKey:@"serverID"];
+    [dict setObject:BOX_SIGN(dict, (@[@"uid",@"appid",@"rolename",@"roleid",@"serverID"])) forKey:@"sign"];
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].REBATE_APPLY params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;

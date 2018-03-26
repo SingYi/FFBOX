@@ -13,6 +13,7 @@
 #import "UIAlertController+FFAlertController.h"
 #import "FFDriveModel.h"
 #import "MBProgressHUD.h"
+#import "FFPostStatusModel.h"
 
 #define CELL_IDE @"FFPostStatusImageCell"
 
@@ -92,18 +93,15 @@
     }
 }
 
+#pragma mark - 发布动态
 - (void)postImageWith:(NSArray *)array {
     syLog(@"上传照片  : array === %@",array);
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
-
-    [FFDriveModel userUploadPortraitWithContent:self.textView.text Image:array Completion:^(NSDictionary *content, BOOL success) {
-        [hud hideAnimated:YES];
-        syLog(@"发送完成");
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"postStausComplete" object:nil];
-        if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
-        }
-    }];
+    if (self.textView.text.length == 0) {
+        [UIAlertController showAlertMessage:@"内容不能为空" dismissTime:0.7 dismissBlock:nil];
+        return;
+    }
+    [[FFPostStatusModel sharedModel] userUploadPortraitWithContent:self.textView.text Image:array];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)respondsToHideButton {
@@ -320,6 +318,11 @@
         zl_weakify(self);
         [self.actionSheet setSelectImageBlock:^(NSArray<UIImage *> * _Nonnull images, NSArray<PHAsset *> * _Nonnull assets, BOOL isOriginal) {
             zl_strongify(weakSelf);
+            strongSelf.imagesArray = nil;
+            strongSelf.isOriginal = nil;
+            strongSelf.lastSelectAssets = nil;
+            strongSelf.lastSelectPhotos = nil;
+
             strongSelf.imagesArray = images;
             strongSelf.isOriginal = isOriginal;
             strongSelf.lastSelectAssets = assets.mutableCopy;
@@ -330,6 +333,11 @@
 
         self.actionSheet.cancleBlock = ^{
             //        NSLog(@"取消选择图片");
+//            strongSelf.imagesArray = nil;
+//            strongSelf.isOriginal = nil;
+//            strongSelf.lastSelectAssets = nil;
+//            strongSelf.lastSelectPhotos = nil;
+//            [strongSelf.collectionView reloadData];
         };
     }
     return _actionSheet;

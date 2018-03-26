@@ -25,6 +25,9 @@
 
 @property (nonatomic, strong) FFDriveDetailInfoViewController *detailController;
 
+
+@property (nonatomic, assign) BOOL cancelLike;
+
 @end
 
 @implementation FFDriveAllInfoViewController {
@@ -73,11 +76,16 @@
 
 - (void)refreshNewData {
     _currentPage = 1;
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+    MBProgressHUD *hud;
+    if (self.showArray.count == 0) {
+        hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+    } else {
+        hud = nil;
+    }
     [FFDriveModel getDynamicWithType:self.dynamicType Page:[NSString stringWithFormat:@"%ld",(unsigned long)_currentPage] CheckUid:self.buid Complete:^(NSDictionary *content, BOOL success) {
+        [hud hideAnimated:YES];
         syLog(@"get dynamic == %@",content);
         syLog(@"get dynamics success!!!!");
-        [hud hideAnimated:YES];
         self.showArray = nil;
         if (success) {
             NSArray *array = content[@"data"];
@@ -123,27 +131,115 @@
 }
 
 #pragma mark - responds
-- (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type index:(NSIndexPath *)indexPath {
+- (void)respondsToLikeOrDislikeButtonWithModel:(FFDynamicModel *)model Type:(LikeOrDislike)type index:(NSIndexPath *)indexPath {
+
     FF_is_login;
-    [FFDriveModel userLikeOrDislikeWithDynamicsID:dynamicsID type:type Complete:^(NSDictionary *content, BOOL success) {
-        if (success) {
-            [self replaceShowArrayDataWith:indexPath type:type];
-        } else {
-            BOX_MESSAGE(content[@"msg"]);
+    if (_cancelLike == YES) {
+        return;
+    }
+
+    _cancelLike = YES;
+    syLog(@"%@  like === %lu , opera === %@",model.dynamic_id,type,model.operate);
+    if (model.operate.integerValue == 2) {
+        [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:type Complete:^(NSDictionary *content, BOOL success) {
+            if (success) {
+                syLog(@"zan === %@",content);
+                [self replaceShowArrayDataWith:indexPath type:type info:content[@"data"][@"operate"]];
+            } else {
+                BOX_MESSAGE(content[@"msg"]);
+            }
+            _cancelLike = NO;
+        }];
+    } else {
+        //operate 1 赞 0 踩 2 未操纵
+        if (model.operate.integerValue == 1 && type == like) {
+            //取消赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消赞 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:indexPath Type:like info:content[@"data"][@"operate"]];
+                }
+                _cancelLike = NO;
+            }];
+        } else if(model.operate.integerValue == 1 && type == dislike) {
+            //取消赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消赞 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:indexPath Type:like info:content[@"data"][@"operate"]];
+                    //点踩
+                    [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                        if (success) {
+                            [self replaceShowArrayDataWith:indexPath type:type info:content[@"data"][@"operate"]];
+                        } else {
+                            BOX_MESSAGE(content[@"msg"]);
+                        }
+                        _cancelLike = NO;
+                    }];
+                }
+            }];
+        } else if (model.operate.integerValue == 0 && type == dislike) {
+            //取消踩
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消踩 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:indexPath Type:dislike info:content[@"data"][@"operate"]];
+                }
+                _cancelLike = NO;
+            }];
+        } else if (model.operate.integerValue == 0 && type == like) {
+            //取消踩,点赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消踩 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:indexPath Type:dislike info:content[@"data"][@"operate"]];
+                    //点赞
+                    [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                        if (success) {
+                            [self replaceShowArrayDataWith:indexPath type:type info:content[@"data"][@"operate"]];
+                        } else {
+                            BOX_MESSAGE(content[@"msg"]);
+                        }
+                        _cancelLike = NO;
+                    }];
+                }
+            }];
         }
-    }];
+    }
 }
 
-- (void)replaceShowArrayDataWith:(NSIndexPath *)indexPath type:(LikeOrDislike)type {
+- (void)replaceShowArrayDataWith:(NSIndexPath *)indexPath type:(LikeOrDislike)type info:(NSString *)operate  {
     FFDynamicModel *model = self.showArray[indexPath.row];
     if (type == like) {
-        model.operate = @"1";
         model.likes_number = [NSString stringWithFormat:@"%ld",(model.likes_number.integerValue + 1)];
     } else {
-        model.operate = @"0";
         model.dislikes_number = [NSString stringWithFormat:@"%ld",(model.dislikes_number.integerValue + 1)];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+
+    model.operate = operate;
+
+    if (indexPath == nil) {
+        [self.tableView reloadData];
+    } else {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+    }
+}
+
+- (void)cancelReplaceShowArrayDataWith:(NSIndexPath *)indexPath Type:(LikeOrDislike)type info:(NSString *)operate {
+    FFDynamicModel *model = self.showArray[indexPath.row];
+    if (type == like) {
+        model.likes_number = [NSString stringWithFormat:@"%ld",(model.likes_number.integerValue - 1)];
+    } else {
+        model.dislikes_number = [NSString stringWithFormat:@"%ld",(model.dislikes_number.integerValue - 1)];
+    }
+
+    model.operate = operate;
+
+    if (indexPath == nil) {
+        [self.tableView reloadData];
+    } else {
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+    }
 }
 
 static BOOL respondsSuccess;
@@ -172,6 +268,22 @@ static BOOL respondsSuccess;
     }];
 }
 
+#pragma mark - delete dynamic
+- (void)deleteMyDynamics {
+    FFDynamicModel *model = self.showArray[self.currentCellIndex];
+    syLog(@"请求删除动态 %@",model);
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+    [FFDriveModel userDeletePortraitWithDynamicsID:model.dynamic_id Completion:^(NSDictionary *content, BOOL success) {
+        syLog(@"测试删除  == %@",content);
+        [hud hideAnimated:YES];
+        if (success) {
+            [self.tableView.mj_header beginRefreshing];
+        } else {
+            BOX_MESSAGE(@"删除失败,请稍后尝试");
+        }
+    }];
+}
+
 #pragma mark - tableview data source
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -185,12 +297,26 @@ static BOOL respondsSuccess;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DriveInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
     cell.delegate = self;
-    cell.model = self.showArray[indexPath.row];
+    FFDynamicModel *model = self.showArray[indexPath.row];
+    if ([self dynamicType] == attentionDynamic) {
+        model.attention = @"1";
+    }
+
+    if (self.dynamicType == CheckUserDynamic) {
+        model.showVerifyDynamics = YES;
+    } else {
+        model.showVerifyDynamics = NO;
+    }
+
+    cell.model = model;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self pushDetailControllerWith:indexPath Comment:NO];
+    FFDynamicModel *model = self.showArray[indexPath.row];
+    if ([model.verifyDynamics isEqualToString:@"1"]) {
+        [self pushDetailControllerWith:indexPath Comment:NO];
+    }
 }
 
 - (void)pushDetailControllerWith:(NSIndexPath *)indexPath Comment:(BOOL)isComment {
@@ -246,16 +372,16 @@ static BOOL respondsSuccess;
 }
 
 
-#pragma mark - cell dele gate
+#pragma mark - cell delegate
 - (void)DriveInfoCell:(DriveInfoCell *)cell didClickButtonWithType:(CellButtonType)type {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
     switch (type) {
         case likeButton: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.model.dynamic_id Type:like index:indexPath];
+            [self respondsToLikeOrDislikeButtonWithModel:cell.model Type:like index:indexPath];
         }
             break;
         case dislikeButton: {
-            [self respondsToLikeOrDislikeButtonWithDynamicsID:cell.model.dynamic_id Type:dislike index:indexPath];
+            [self respondsToLikeOrDislikeButtonWithModel:cell.model Type:dislike index:indexPath];
         }
             break;
         case sharedButton: {
@@ -297,9 +423,10 @@ static BOOL respondsSuccess;
         SHOW_TABBAR;
         SHOW_PARNENT_TABBAR;
     }
-    
-
 }
+
+
+
 
 #pragma mark - detail delegate
 - (void)FFDriveDetailController:(FFDriveDetailInfoViewController *)controller replaceDict:(NSDictionary *)dict indexPath:(NSIndexPath *)indexPath {

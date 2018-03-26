@@ -7,6 +7,8 @@
 //
 
 #import "FFControllerManager.h"
+#import "FFPostStatusModel.h"
+#import "UIAlertController+FFAlertController.h"
 
 @interface FFControllerManager () 
 
@@ -25,6 +27,30 @@ static FFControllerManager *manager = nil;
         }
     });
     return manager;
+}
+
+
+/** init */
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [self setPostStatusModel];
+    }
+    return self;
+}
+
+#pragma mark - method
+- (void)setPostStatusModel {
+    [[FFPostStatusModel sharedModel] setCallBackBlock:^(NSDictionary *content, BOOL success) {
+        syLog(@"发车返回: %@",content);
+        if (success) {
+            [UIAlertController showAlertMessage:@"发车成功" dismissTime:0.7 dismissBlock:nil];
+//            [UIAlertController showAlertControllerWithViewController:self.rootViewController alertControllerStyle:(UIAlertControllerStyleAlert) title:@"发车成功" message:@"请在我的页面查" cancelButtonTitle:@"确定" destructiveButtonTitle:nil CallBackBlock:nil otherButtonTitles:nil, nil];
+        } else {
+            [UIAlertController showAlertMessage:[NSString stringWithFormat:@"发车失败 : %@",content[@"msg"]] dismissTime:0.7 dismissBlock:nil];
+        }
+    }];
 }
 
 

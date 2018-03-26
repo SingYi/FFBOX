@@ -112,8 +112,20 @@
 @property (nonatomic, strong) NSString *USER_NEW_UP;
 @property (nonatomic, strong) NSString *USER_COMMENT_ZAN;
 
+//取消赞踩接口
+@property (nonatomic, strong) NSString *CANCEL_DYNAMICS_LIKE;
+@property (nonatomic, strong) NSString *CANCEL_COMMENT_LIKE;
+
 //
 @property (nonatomic, strong) NSString *BOX_INIT;
+
+//删除动态
+@property (nonatomic, strong) NSString *DEL_DYNAMIC;
+//评论数
+@property (nonatomic, strong) NSString *COMMENT_COUNTS;
+//礼包信息
+@property (nonatomic, strong) NSString *PACKAGE_INFO;
+
 
 + (instancetype)map;
 

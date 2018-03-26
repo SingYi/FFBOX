@@ -299,27 +299,28 @@
     }
     
     [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"user info== %@",content);
         if (success) {
-            syLog(@"user info== %@",content);
             if (_model == nil) {
                 _model = [FFDynamicModel modelWithDict:nil];
             }
-            [self.model setPropertyWithUserInfoViewDictionary:content[@"data"]];
-            self.tableHeaderView.model = self.model;
+            [_model setPropertyWithUserInfoViewDictionary:content[@"data"]];
+            _model.present_user_uid = self.uid;
+            self.tableHeaderView.model = _model;
         }
         [self.tableView.mj_header endRefreshing];
     }];
 }
 
 - (void)refreshAll {
-    
     [FFDriveModel userInfomationWithUid:self.uid fieldType:(fieldDetail) Complete:^(NSDictionary *content, BOOL success) {
+        syLog(@"user info== %@",content);
         if (success) {
-            syLog(@"user info== %@",content);
             if (_model == nil) {
                 _model = [FFDynamicModel modelWithDict:nil];
             }
-            [self.model setPropertyWithUserInfoViewDictionary:content[@"data"]];
+            [_model setPropertyWithUserInfoViewDictionary:content[@"data"]];
+            _model.present_user_uid = self.uid;
             self.tableHeaderView.model = self.model;
         }
         [self.tableView.mj_header endRefreshing];

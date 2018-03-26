@@ -76,7 +76,9 @@
     self.shared_number = dynamics[@"share"];
     self.imageUrlStringArray = dynamics[@"imgs"];
     self.comments_Array = dynamics[@"comment_info"];
-     syLog(@"uid === %@",self.comments_Array);
+    self.verifyDynamics = dynamics[@"status"];
+    self.ratings = [NSString stringWithFormat:@"%@",dynamics[@"level"]];
+//     syLog(@"uid === %@",self.verifyDynamics);
 }
 
 - (void)setPropertyWithUserInfo:(NSDictionary *)userInfo {
@@ -88,6 +90,7 @@
     self.present_user_sex = userInfo[@"sex"];
     self.present_user_vip = userInfo[@"vip"];
     self.operate = userInfo[@"operate"];
+    self.attention = userInfo[@"follow"];
 }
 
 - (void)setPropertyWithDetailCommentLishVeiwDictionary:(NSDictionary *)dict {
@@ -122,6 +125,7 @@
     self.present_user_nickName = dict[@"nick_name"];
     self.present_user_vip = dict[@"vip"];
     self.present_user_sex = dict[@"sex"];
+    self.isAttention = dict[@"is_follow"];
 }
 
 /** 动态 ID */

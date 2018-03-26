@@ -15,6 +15,8 @@
 
 @property (nonatomic, strong) FFMainTabbarViewController *tabBarController;
 
+
+
 + (FFControllerManager *)sharedManager;
 
 

@@ -44,6 +44,10 @@
 @property (nonatomic, strong) UIButton *changeButton;
 @property (nonatomic, strong) UIBarButtonItem *rightChangeButton;
 
+
+@property (nonatomic, assign) BOOL isRegisting;
+
+
 @end
 
 @implementation FFRegisterViewController
@@ -148,6 +152,13 @@
 /** 注册 */
 - (void)respondsToRegisterBtn {
     syLog(@"用户名注册 %u",_isUserRegister);
+
+    if (_isRegisting) {
+        return;
+    }
+
+    _isRegisting = YES;
+
     //用户名太短,返回
     if (self.userName.text.length < 6) {
         BOX_MESSAGE(@"用户名长度太短");
@@ -195,6 +206,8 @@
     BOX_START_ANIMATION;
     [FFUserModel userRegisterWithUserName:userName Code:code PhoneNumber:phoneNumber PassWord:passWord Type:type Completion:^(NSDictionary *content, BOOL success)
     {
+
+         _isRegisting = NO;
         BOX_STOP_ANIMATION;
         if (success) {
             NSString *loginName = nil;

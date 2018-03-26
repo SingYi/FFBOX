@@ -66,10 +66,20 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
                                 Image:(NSArray *)images
                            Completion:(FFCompleteBlock)completion;
 
+/** 删除动态 */
++ (void)userDeletePortraitWithDynamicsID:(NSString *)dynamicsID
+                              Completion:(FFCompleteBlock)completion;
+
+
 /** 赞或者踩动态 */
 + (void)userLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
                                    type:(LikeOrDislike)type
                                Complete:(FFCompleteBlock)completion;
+
+/** 取消动态赞或者踩 */
++ (void)userCancelLikeOrDislikeWithDynamicsID:(NSString *)dynamics_id
+                                         type:(LikeOrDislike)type
+                                     Complete:(FFCompleteBlock)completion;
 
 /** 请求评论(请求动态详情) */
 + (void)userComeentListWithDynamicsID:(NSString *)dynamicsID
@@ -87,6 +97,11 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 + (void)userLikeOrDislikeComment:(NSString *)comment_id
                             Type:(LikeOrDislike)type
                         Complete:(FFCompleteBlock)completion;
+
+/** 取消评论的赞 */ 
++ (void)userCancelLikeOrDislikeComment:(NSString *)comment_id
+                                  Type:(LikeOrDislike)type
+                              Complete:(FFCompleteBlock)completion;
 
 /** 删除评论 */
 + (void)userDeleteCommentWith:(NSString *)comment_id
@@ -133,6 +148,8 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 + (void)myNewsWithType:(MyNewsType)type
                   page:(NSString *)page
               Complete:(FFCompleteBlock)completion;
+
+
 
 
 

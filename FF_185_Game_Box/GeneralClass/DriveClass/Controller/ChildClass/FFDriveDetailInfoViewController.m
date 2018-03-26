@@ -24,7 +24,7 @@
 @property (nonatomic, strong) UILabel *hotLabel;
 @property (nonatomic, strong) NSMutableArray *hotListArray;
 
-
+@property (nonatomic, assign) BOOL cancelLike;
 
 @end
 
@@ -75,7 +75,7 @@
 }
 
 - (void)initDataSource {
-
+    _cancelLike = NO;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -283,43 +283,103 @@
 }
 
 #pragma mark - responds
-- (void)respondsToLikeOrDislikeButtonWithDynamicsID:(NSString *)dynamicsID Type:(LikeOrDislike)type {
+- (void)respondsToLikeOrDislikeButtonWithDynamicsID:(FFDynamicModel *)model Type:(LikeOrDislike)type {
     FF_is_login;
-    [FFDriveModel userLikeOrDislikeWithDynamicsID:self.detailModel.dynamic_id type:type Complete:^(NSDictionary *content, BOOL success) {
-        if (success) {
-            [self replaceDictWithtype:type];
-        } else {
-            BOX_MESSAGE(content[@"msg"]);
-        }
-    }];
-}
+    if (_cancelLike == YES) {
+        return;
+    }
 
-
-- (void)replaceDictWithtype:(LikeOrDislike)type {
-    NSMutableDictionary *dict = [self.dict mutableCopy];
-    NSMutableDictionary *dynamics = [dict[@"dynamics"] mutableCopy];
-    NSMutableDictionary *user = [dict[@"user"] mutableCopy];
-    if (type == like) {
-        NSString *like = dynamics[@"likes"];
-        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"likes"];
-        [user setObject:@"1" forKey:@"operate"];
+    _cancelLike = YES;
+    syLog(@"%@  like === %lu , opera === %@",model.dynamic_id,type,model.operate);
+    if (model.operate.integerValue == 2) {
+        [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:type Complete:^(NSDictionary *content, BOOL success) {
+            if (success) {
+                [self replaceShowArrayDataWith:nil type:type info:content[@"data"][@"operate"]];
+            } else {
+                BOX_MESSAGE(content[@"msg"]);
+            }
+            _cancelLike = NO;
+        }];
     } else {
-        NSString *like = dynamics[@"dislike"];
-        [dynamics setObject:[NSString stringWithFormat:@"%ld",(like.integerValue + 1)] forKey:@"dislike"];
-        [user setObject:@"0" forKey:@"operate"];
+        //operate 1 赞 0 踩 2 未操纵
+        if (model.operate.integerValue == 1 && type == like) {
+            //取消赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消赞 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:nil Type:like info:content[@"data"][@"operate"]];
+                }
+                _cancelLike = NO;
+            }];
+        } else if(model.operate.integerValue == 1 && type == dislike) {
+            //取消赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消赞 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:nil Type:like info:content[@"data"][@"operate"]];
+                    //点踩
+                    [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                        if (success) {
+                            [self replaceShowArrayDataWith:nil type:type info:content[@"data"][@"operate"]];
+                        } else {
+                            BOX_MESSAGE(content[@"msg"]);
+                        }
+                        _cancelLike = NO;
+                    }];
+                }
+            }];
+        } else if (model.operate.integerValue == 0 && type == dislike) {
+            //取消踩
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消踩 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:nil Type:dislike info:content[@"data"][@"operate"]];
+                }
+                _cancelLike = NO;
+            }];
+        } else if (model.operate.integerValue == 0 && type == like) {
+            //取消踩,点赞
+            [FFDriveModel userCancelLikeOrDislikeWithDynamicsID:model.dynamic_id type:dislike Complete:^(NSDictionary *content, BOOL success) {
+                syLog(@"取消踩 ??? %@",content);
+                if (success) {
+                    [self cancelReplaceShowArrayDataWith:nil Type:dislike info:content[@"data"][@"operate"]];
+                    //点赞
+                    [FFDriveModel userLikeOrDislikeWithDynamicsID:model.dynamic_id type:like Complete:^(NSDictionary *content, BOOL success) {
+                        if (success) {
+                            [self replaceShowArrayDataWith:nil type:type info:content[@"data"][@"operate"]];
+                        } else {
+                            BOX_MESSAGE(content[@"msg"]);
+                        }
+                        _cancelLike = NO;
+                    }];
+                }
+            }];
+        }
     }
-
-    [dict setObject:dynamics forKey:@"dynamics"];
-    [dict setObject:user forKey:@"user"];
-
-    if (self.delegate && [self.delegate respondsToSelector:@selector(FFDriveDetailController:replaceDict:indexPath:)]) {
-        [self.delegate FFDriveDetailController:self replaceDict:dict indexPath:self.indexPath];
-        syLog(@"点赞");
-    }
-
-    _dict = dict;
-    [self refreshNewData];
 }
+
+
+- (void)replaceShowArrayDataWith:(NSIndexPath *)indexPath type:(LikeOrDislike)type info:(NSString *)operate  {
+    if (type == like) {
+        self.detailModel.likes_number = [NSString stringWithFormat:@"%ld",(self.detailModel.likes_number.integerValue + 1)];
+    } else {
+        self.detailModel.dislikes_number = [NSString stringWithFormat:@"%ld",(self.detailModel.dislikes_number.integerValue + 1)];
+    }
+    self.detailModel.operate = operate;
+    self.footerView.model = self.detailModel;
+}
+
+
+- (void)cancelReplaceShowArrayDataWith:(NSIndexPath *)indexPath Type:(LikeOrDislike)type info:(NSString *)operate {
+    if (type == like) {
+        self.detailModel.likes_number = [NSString stringWithFormat:@"%ld",(self.detailModel.likes_number.integerValue - 1)];
+    } else {
+        self.detailModel.dislikes_number = [NSString stringWithFormat:@"%ld",(self.detailModel.dislikes_number.integerValue - 1)];
+    }
+    self.detailModel.operate = operate;
+    self.footerView.model = self.detailModel;
+}
+
 
 #pragma mark - header view delegate
 - (void)FFDetailHeaderView:(FFDetailHeaderView *)view clickAttentionButton:(id)info {
@@ -339,8 +399,8 @@
 - (void)FFDetailFooterView:(FFDetailFooterView *)view didClickButton:(NSUInteger)idx {
     syLog(@"click button %ld",idx);
     switch (idx) {
-        case 0: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel.dynamic_id Type:like]; break;
-        case 1: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel.dynamic_id Type:dislike]; break;
+        case 0: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel Type:like]; break;
+        case 1: [self respondsToLikeOrDislikeButtonWithDynamicsID:self.detailModel Type:dislike]; break;
         case 2: [self respondsSharedButtonClick]; break;
         case 3: [self showWirteReview]; break;
         default: break;

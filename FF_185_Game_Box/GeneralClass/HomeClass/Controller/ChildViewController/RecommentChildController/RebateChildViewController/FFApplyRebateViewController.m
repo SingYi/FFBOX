@@ -9,13 +9,17 @@
 #import "FFApplyRebateViewController.h"
 #import "RebateTableViewCell.h"
 #import "FFRebateModel.h"
+#import "FFApplyRebateModel.h"
+#import "UIAlertController+FFAlertController.h"
 
 #define CELL_IDE @"RebateTableViewCell"
 
-@interface FFApplyRebateViewController ()<UITableViewDelegate>
+@interface FFApplyRebateViewController ()<UITableViewDelegate, RebateTableViewCellDelegate>
 
 @property (nonatomic, strong) NSDictionary *currentDict;
 @property (nonatomic, assign) BOOL applying;
+
+@property (nonatomic, strong) NSArray *testArray;
 
 @end
 
@@ -47,11 +51,7 @@
     [FFRebateModel applyRebateListWithCompletion:^(NSDictionary *content, BOOL success) {
         syLog(@"apply rebate == %@",content);
         if (success) {
-            if (content[@"data"] == nil || [content[@"data"] isKindOfClass:[NSNull class]]) {
-                self.showArray = nil;
-            } else {
-                self.showArray = content[@"data"];
-            }
+            self.showArray = [FFApplyRebateModel modelArrayWithData:content[@"data"]];
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }
@@ -65,14 +65,18 @@
 
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     RebateTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE forIndexPath:indexPath];
 
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
 
-    cell.dict = self.showArray[indexPath.row];
-    
+    FFApplyRebateModel *model = self.showArray[indexPath.row];
+
+    cell.model = model;
+
+    cell.delegate = self;
 
     return cell;
 }
@@ -82,31 +86,73 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (_currentDict == self.showArray[indexPath.row]) {
-        return;
-    } else {
-        _currentDict = self.showArray[indexPath.row];
-    }
 
+//    RebateTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+
+    FFApplyRebateModel *model = self.showArray[indexPath.row];
+    NSMutableArray *titleArray = [NSMutableArray arrayWithCapacity:model.userArray.count];
+    [model.userArray enumerateObjectsUsingBlock:^(FFApplyUserModel *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [titleArray addObject:obj.all];
+    }];
+
+    [UIAlertController showAlertControllerWithViewController:self alertControllerStyle:(UIAlertControllerStyleActionSheet) title:nil message:nil cancelButtonTitle:@"取消" destructiveButtonTitle:@"选择返利的账号" otherButtonTitles:titleArray CallBackBlock:^(NSInteger btnIndex) {
+        if (btnIndex == 0 || btnIndex == 1) {
+
+        } else {
+            syLog(@"%lu",btnIndex - 2);
+            model.currentUserModel = model.userArray[btnIndex - 2];
+            [tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:(UITableViewRowAnimationNone)];
+        }
+    }];
+
+
+
+//    if (_currentDict == self.showArray[indexPath.row]) {
+//        return;
+//    } else {
+//        _currentDict = self.showArray[indexPath.row];
+//    }
+//
+//    if (_applying) {
+//        return;
+//    }
+//    _applying = YES;
+//
+//
+//    [FFRebateModel rebateApplyWithAppID:_currentDict[@"appid"] RoleName:_currentDict[@"rolename"] RoleID:_currentDict[@"roleid"] Completion:^(NSDictionary *content, BOOL success) {
+//
+//        _applying = NO;
+//        _currentDict = nil;
+//        if (success) {
+//            BOX_MESSAGE(@"申请成功");
+//            [self.tableView.mj_header beginRefreshing];
+//        } else {
+//            BOX_MESSAGE(content[@"msg"]);
+//        }
+//
+//    }];
+}
+
+
+#pragma mark - apply
+- (void)RebateTableViewCell:(RebateTableViewCell *)cell clickApplyButtonWithUserModel:(FFApplyUserModel *)model {
     if (_applying) {
         return;
     }
     _applying = YES;
-
-
-    [FFRebateModel rebateApplyWithAppID:_currentDict[@"appid"] RoleName:_currentDict[@"rolename"] RoleID:_currentDict[@"roleid"] Completion:^(NSDictionary *content, BOOL success) {
-
-        _applying = NO;
-        _currentDict = nil;
-        if (success) {
-            BOX_MESSAGE(@"申请成功");
-            [self.tableView.mj_header beginRefreshing];
-        } else {
-            BOX_MESSAGE(content[@"msg"]);
-        }
-
+    [FFRebateModel rebateApplyWithAppID:cell.model.appID RoleName:model.roleName RoleID:model.roleID ServerID:model.serverID Completion:^(NSDictionary *content, BOOL success) {
+            _applying = NO;
+            _currentDict = nil;
+            if (success) {
+                BOX_MESSAGE(@"申请成功");
+                [self.tableView.mj_header beginRefreshing];
+            } else {
+                BOX_MESSAGE(content[@"msg"]);
+            }
+        [self refreshNewData];
     }];
 }
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     if (self.showArray.count == 0) {

@@ -60,7 +60,7 @@
 /** 显示提示 */
 + (void)showAlertMessage:(NSString *)message dismissTime:(float)second dismiss:(void (^)(void))dismiss  {
 
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:message preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:nil message:[NSString stringWithFormat:@"%@",message] preferredStyle:UIAlertControllerStyleAlert];
 
     UIViewController *vc = [UIApplication sharedApplication].keyWindow.rootViewController;
 

@@ -22,6 +22,10 @@
 
 #import "Reachability.h"
 
+#import "FFGameModel.h"
+
+#import "FFDetailSectionHeader.h"
+
 #define CELL_IDE_GAMEDETAIL @"FFGameDetailTableViewCell"
 #define CELL_IDE_GAMEGIF @"FFGameGifTableViewCell"
 #define CELL_IDE_CLASSIFY @"FFClassifyTableCell"
@@ -63,6 +67,8 @@
 /** vip */
 @property (nonatomic, strong) NSString *vip;
 
+@property (nonatomic, strong) NSMutableArray<UIView *> *sectionHeaderArray;
+
 @property (nonatomic, strong) NSDictionary *gameInfo;
 
 /** =============================== */
@@ -102,27 +108,41 @@
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:self.tableView];
+
+
 }
 
 - (void)initDataSource {
-    _sectionTitleArray = @[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:",@"    用户评论:"];
+//    _sectionTitleArray = @[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:",@"    用户评论:"];
+    _sectionTitleArray = @[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"];
     _rowHeightArray = [@[@100.f,@100.f,@100.f,@100.f] mutableCopy];
+//    _rowHeightArray = [@[@100.f,@100.f,@100.f] mutableCopy];
     _commentArray = @[];
+
+    _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionHeaderArray.count];
+    [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
+        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
+        label.backgroundColor = [UIColor whiteColor];
+        label.text = obj;
+        [view addSubview:label];
+        [_sectionHeaderArray addObject:view];
+    }];
 }
 
 - (void)goToTop {
-    syLog(@"??");
     [self.tableView setContentOffset:CGPointMake(0, 0)];
 }
 
 #pragma mark - responds
-- (void)respondsToMoreCommentBtn {
-    HIDE_TABBAR;
-    HIDE_PARNENT_TABBAR;
-    self.commentListController.gameID = _gameID;
-    self.commentListController.tableView.frame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, kSCREEN_HEIGHT - kNAVIGATION_HEIGHT);
-    [self.navigationController pushViewController:self.commentListController animated:YES];
-}
+//- (void)respondsToMoreCommentBtn {
+//    HIDE_TABBAR;
+//    HIDE_PARNENT_TABBAR;
+//    self.commentListController.gameID = _gameID;
+//    self.commentListController.tableView.frame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, kSCREEN_HEIGHT - kNAVIGATION_HEIGHT);
+//    [self.navigationController pushViewController:self.commentListController animated:YES];
+//}
 
 #pragma mark - tableviewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -130,9 +150,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == _sectionTitleArray.count - 1) {
-        return _commentArray.count;
-    }
+//    if (section == _sectionTitleArray.count - 1) {
+//        return _commentArray.count;
+//    }
     return 1;
 }
 
@@ -163,9 +183,10 @@
             return likeCell;
         }
         default: {
-            FFGameCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_COMMENT];
-            [self setCommentCell:commentCell IndePath:indexPath];
-            return commentCell;
+//            FFGameCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_COMMENT];
+//            [self setCommentCell:commentCell IndePath:indexPath];
+//            return commentCell;
+            return nil;
         }
             break;
     }
@@ -351,6 +372,7 @@
         }
 
         [tableView endUpdates];
+        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, tableView.contentOffset.y + 1)];
     }
 
     if (indexPath.section == 5) {
@@ -415,37 +437,32 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    if (section == 2) {
-        switch (_gifModel.integerValue) {
-            case 0:
-                return 0;
-            default:
-                return 30;
-        }
+    if (section == 2 && _gifModel.integerValue == 0) {
+        return 0;
     } else {
         return 30;
     }
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
-    label.backgroundColor = [UIColor whiteColor];
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
-    view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-    if (section < 4) {
-
-        label.text = self.sectionTitleArray[section];
-    } else {
-        label.text = [NSString stringWithFormat:@"%@",self.sectionTitleArray[section]];
-    }
-    [view addSubview:label];
-    return view;
+    return self.sectionHeaderArray[section];
 }
 
 #pragma mark - setter
 - (void)setGameID:(NSString *)gameID {
     _gameID = gameID;
     [self goToTop];
+}
+
+- (void)setUserInterFace {
+    self.imagasArray    = CURRENT_GAME.showImageArray;
+    self.abstract       = CURRENT_GAME.game_introduction;
+    self.feature        = CURRENT_GAME.game_feature;
+    self.gifModel       = CURRENT_GAME.gif_model;
+    self.rebate         = CURRENT_GAME.game_rebate;
+    self.vip            = CURRENT_GAME.game_vip_amount;
+    self.gifUrl         = CURRENT_GAME.gif_url;
+    self.likes          = CURRENT_GAME.like;
 }
 
 - (void)setGameContent:(NSDictionary *)gameContent {
@@ -458,19 +475,21 @@
     syLog(@"game Content === %@",gameContent);
 }
 
-- (void)setGameInfo:(NSDictionary *)gameInfo {
-    if (_gameInfo != gameInfo) {
-        _gameInfo = gameInfo;
-        syLog(@"game detail view game info \n =======================================================\n %@",_gameInfo);
-        self.imagasArray = gameInfo[@"imgs"];
-        self.abstract = gameInfo[@"abstract"];
-        self.feature = gameInfo[@"feature"];
-        self.gifModel = gameInfo[@"gif_model"];
-        self.rebate = gameInfo[@"rebate"];
-        self.vip = gameInfo[@"vip"];
-        self.gifUrl = gameInfo[@"gif"];
-    }
-}
+//- (void)setGameInfo:(NSDictionary *)gameInfo {
+//    if (_gameInfo != gameInfo) {
+//        _gameInfo = gameInfo;
+//        syLog(@"game detail view game info \n =======================================================\n %@",_gameInfo);
+//        self.imagasArray = gameInfo[@"imgs"];
+//        self.abstract = gameInfo[@"abstract"];
+//        self.feature = gameInfo[@"feature"];
+//        self.gifModel = gameInfo[@"gif_model"];
+//        self.rebate = gameInfo[@"rebate"];
+//        self.vip = gameInfo[@"vip"];
+//        self.gifUrl = gameInfo[@"gif"];
+//    }
+//}
+
+
 
 //游戏展示的5张图片
 - (void)setImagasArray:(NSArray *)imagasArray {
@@ -592,7 +611,7 @@
     _commentArray = commentArray;
 
 //    syLog(@"comment ===== %@",commentArray);
-    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:_sectionTitleArray.count - 1] withRowAnimation:(UITableViewRowAnimationNone)];
+//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:_sectionTitleArray.count - 1] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 
@@ -604,11 +623,13 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT - 245) style:(UITableViewStylePlain)];
 
         _tableView.tableHeaderView = self.tableHeaderView;
-        _tableView.tableFooterView = self.footerView;
+//        _tableView.tableFooterView = self.footerView;
+        _tableView.tableFooterView = [UIView new];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_GAMEDETAIL bundle:nil] forCellReuseIdentifier:CELL_IDE_GAMEDETAIL];
         [_tableView registerClass:[FFGameGifTableViewCell class] forCellReuseIdentifier:CELL_IDE_GAMEGIF];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_CLASSIFY bundle:nil] forCellReuseIdentifier:CELL_IDE_CLASSIFY];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_COMMENT bundle:nil] forCellReuseIdentifier:CELL_IDE_COMMENT];
+//        [_tableView registerClass:[FFDetailSectionHeader class] forHeaderFooterViewReuseIdentifier:@"headerSection"];
 
         _tableView.delegate = self;
         _tableView.dataSource = self;
@@ -643,8 +664,8 @@
         [button setTitle:@"点击查看更多评论>" forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
 
-        [button addTarget:self action:@selector(respondsToMoreCommentBtn) forControlEvents:(UIControlEventTouchUpInside)];
-        button.backgroundColor = [UIColor whiteColor];
+//        [button addTarget:self action:@selector(respondsToMoreCommentBtn) forControlEvents:(UIControlEventTouchUpInside)];
+//        button.backgroundColor = [UIColor whiteColor];
 
         [_footerView addSubview:button];
 
@@ -661,43 +682,6 @@
 
 
 - (NSString *)getNetWorkStates {
-//    UIApplication *app = [UIApplication sharedApplication];
-//    NSArray *children = [[[app valueForKeyPath:@"statusBar"]valueForKeyPath:@"foregroundView"]subviews];
-//    NSString *state = [[NSString alloc]init];
-//    int netType = 0;
-//    //获取到网络返回码
-//    for (id child in children) {
-//        if ([child isKindOfClass:NSClassFromString(@"UIStatusBarDataNetworkItemView")]) {
-//            //获取到状态栏
-//            netType = [[child valueForKeyPath:@"dataNetworkType"]intValue];
-//
-//            switch (netType) {
-//                case 0:
-//                    state = @"无网络";
-//                    //无网模式
-//                    break;
-//                case 1:
-//                    state =  @"2G";
-//                    break;
-//                case 2:
-//                    state =  @"3G";
-//                    break;
-//                case 3:
-//                    state =   @"4G";
-//                    break;
-//                case 5:
-//                {
-//                    state =  @"wifi";
-//                    break;
-//                default:
-//                    break;
-//                }
-//            }
-//        }
-//        //根据状态选择
-//    }
-//    return state;
-
     NSString *stateString = nil;
     int netStatusNumber = 0;
     switch ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {

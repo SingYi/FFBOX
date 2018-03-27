@@ -10,6 +10,7 @@
 #import "FFSharedController.h"
 #import "FFUserModel.h"
 #import "FFViewFactory.h"
+#import "FFInviteRankListViewController.h"
 
 @interface FFInviteFriendViewController ()
 
@@ -20,6 +21,9 @@
 @property (nonatomic, strong) UILabel *detailLabel;
 @property (nonatomic, strong) UILabel *numberOfCoin;
 @property (nonatomic, strong) UILabel *numberOfFriend;
+@property (nonatomic, strong) FFInviteRankListViewController *rankListViewController;
+
+@property (nonatomic, strong) UIBarButtonItem *rankListButton;
 
 @end
 
@@ -44,6 +48,7 @@
     self.view.backgroundColor = NAVGATION_BAR_COLOR;
     self.navigationItem.title = @"邀请好友";
     [self.view addSubview:self.imageBackGround];
+    self.navigationItem.rightBarButtonItem = self.rankListButton;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -87,6 +92,11 @@
     [FFSharedController inviteFriend];
 }
 
+- (void)respondsToRankListButton {
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:self.rankListViewController animated:YES];
+}
 
 
 #pragma mark - getter
@@ -208,6 +218,20 @@
         _numberOfFriend.font = [UIFont systemFontOfSize:16];
     }
     return _numberOfFriend;
+}
+
+- (UIBarButtonItem *)rankListButton {
+    if (!_rankListButton) {
+        _rankListButton = [[UIBarButtonItem alloc] initWithTitle:@"排行榜" style:(UIBarButtonItemStyleDone) target:self action:@selector(respondsToRankListButton)];
+    }
+    return _rankListButton;
+}
+
+- (FFInviteRankListViewController *)rankListViewController {
+    if (!_rankListViewController) {
+        _rankListViewController = [[FFInviteRankListViewController alloc] init];
+    }
+    return _rankListViewController;
 }
 
 @end

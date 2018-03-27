@@ -8,7 +8,6 @@
 
 #import "FFCommentListController.h"
 #import "FFGameCommentCell.h"
-#import "ChangyanSDK.h"
 #import "FFReplyToCommentController.h"
 #import "SYKeychain.h"
 
@@ -54,65 +53,66 @@
 
 /**刷新数据*/
 - (void)refreshNewData {
-        [ChangyanSDK loadTopic:@"" topicTitle:nil topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] pageSize:[NSString stringWithFormat:@"%ld",_currentPage * 30] hotSize:nil orderBy:nil style:nil depth:nil subSize:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-
-            if (statusCode == 0) {
-
-                NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *err;
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-                self.showArray = dic[@"comments"];
-                self.topic_id = dic[@"topic_id"];
-                _currentComments = self.showArray.count;
-                if (_currentComments < _currentPage * 30) {
-                    _isAll = YES;
-                } else {
-                    _isAll = NO;
-                }
-
-                [self.tableView reloadData];
-                [self.tableView.mj_footer endRefreshing];
-
-        } else {
-            _isAll = YES;
-            [self.tableView.mj_footer endRefreshingWithNoMoreData];
-        }
-        [self.tableView.mj_header endRefreshing];
-    }];
+#warning 评论列表
+//        [ChangyanSDK loadTopic:@"" topicTitle:nil topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] pageSize:[NSString stringWithFormat:@"%ld",_currentPage * 30] hotSize:nil orderBy:nil style:nil depth:nil subSize:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
+//
+//            if (statusCode == 0) {
+//
+//                NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
+//                NSError *err;
+//                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+//                self.showArray = dic[@"comments"];
+//                self.topic_id = dic[@"topic_id"];
+//                _currentComments = self.showArray.count;
+//                if (_currentComments < _currentPage * 30) {
+//                    _isAll = YES;
+//                } else {
+//                    _isAll = NO;
+//                }
+//
+//                [self.tableView reloadData];
+//                [self.tableView.mj_footer endRefreshing];
+//
+//        } else {
+//            _isAll = YES;
+//            [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//        }
+//        [self.tableView.mj_header endRefreshing];
+//    }];
 }
 
 /** 加载更多数据 */
 - (void)loadMoreData {
-    if (_isAll) {
-        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-    } else {
-        _currentPage++;
-                [ChangyanSDK loadTopic:@"" topicTitle:nil topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] pageSize:[NSString stringWithFormat:@"%ld",_currentPage * 30] hotSize:nil orderBy:nil style:nil depth:nil subSize:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-
-                    if (statusCode == 0) {
-
-                        NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
-                        NSError *err;
-                        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-                        self.showArray = dic[@"comments"];
-                        _currentComments = self.showArray.count;
-
-
-                        if (_currentComments < _currentPage * 30) {
-                            _isAll = YES;
-                        } else {
-                            _isAll = NO;
-                        }
-
-                        [self.tableView reloadData];
-                        [self.tableView.mj_footer endRefreshing];
-
-                    } else {
-                        _isAll = YES;
-                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
-                    }
-                }];
-    }
+//    if (_isAll) {
+//        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//    } else {
+//        _currentPage++;
+//                [ChangyanSDK loadTopic:@"" topicTitle:nil topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] pageSize:[NSString stringWithFormat:@"%ld",_currentPage * 30] hotSize:nil orderBy:nil style:nil depth:nil subSize:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
+//
+//                    if (statusCode == 0) {
+//
+//                        NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
+//                        NSError *err;
+//                        NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
+//                        self.showArray = dic[@"comments"];
+//                        _currentComments = self.showArray.count;
+//
+//
+//                        if (_currentComments < _currentPage * 30) {
+//                            _isAll = YES;
+//                        } else {
+//                            _isAll = NO;
+//                        }
+//
+//                        [self.tableView reloadData];
+//                        [self.tableView.mj_footer endRefreshing];
+//
+//                    } else {
+//                        _isAll = YES;
+//                        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+//                    }
+//                }];
+//    }
 
 }
 

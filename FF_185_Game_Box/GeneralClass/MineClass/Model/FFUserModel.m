@@ -99,9 +99,6 @@ static FFUserModel *model;
     //清空 usermodel
     [model setAllPropertyWithDict:nil];
 
-    //退出畅言
-    [ChangyanSDK logout];
-
     //删除头像
     [[NSFileManager defaultManager] removeItemAtPath:[FFUserModel avatarDataPath] error:nil];
     [FFUserModel currentUser].isLogin = nil;
@@ -211,28 +208,6 @@ static FFUserModel *model;
     [super setAllPropertyWithDict:dict];
 }
 
-/** 畅言单点登录 */
-+ (void)changyanLogin {
-    BOXLOG(@"chang yan login");
-    NSDictionary *dict = [FFUserModel getUserDict];
-    syLog(@"model = %@",dict);
-    if (dict[@"id"] == nil || dict[@"nick_name"] == nil) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [FFUserModel changyanLogin];
-        });
-        return;
-    }
-    //畅言单点登录
-    syLog(@"model uid  && model nick name === %@ \n %@",dict[@"id"],dict[@"nick_name"]);
-    [ChangyanSDK loginSSO:dict[@"id"] userName:dict[@"nick_name"] profileUrl:@"" imgUrl:[NSString stringWithFormat:IMAGEURL,model.icon_url] completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-        /*
-         CYSuccess           = 0,     成功
-         CYParamsError       = 1,     参数错误
-         CYLoginError        = 2,     登录错误
-         CYOtherError        = 3,     其他错误 */
-        syLog(@"ChangyanSDK login === %@",responseStr);
-    }];
-}
 /** 用户登录 */
 + (void)userLoginWithUserName:(NSString *)userName
                      PassWord:(NSString *)passWord
@@ -254,7 +229,6 @@ static FFUserModel *model;
 
         syLog(@"login content ==== %@",content);
         if (success && status.integerValue == 1) {
-            [FFUserModel changyanLogin];
             NSDictionary *dict = content[@"data"];
             NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithCapacity:dict.count];
             if (dict[@"username"]) {

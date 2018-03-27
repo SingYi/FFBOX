@@ -93,6 +93,8 @@
 		B56240072068C88A0024DAA3 /* FFRaidersModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240062068C88A0024DAA3 /* FFRaidersModel.m */; };
 		B56240152068D9180024DAA3 /* FFRaidersTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240122068D9170024DAA3 /* FFRaidersTableCell.m */; };
 		B56240162068D9180024DAA3 /* FFRaidersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */; };
+		B56240192069E2120024DAA3 /* FFInviteRankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */; };
+		B562401C206A31850024DAA3 /* FFDetailSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B562401B206A31850024DAA3 /* FFDetailSectionHeader.m */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
 		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
@@ -128,7 +130,6 @@
 		B59E3F6A202441BF00F81F60 /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DE1202441BF00F81F60 /* AFURLRequestSerialization.m */; };
 		B59E3F6B202441BF00F81F60 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DE3202441BF00F81F60 /* AFURLResponseSerialization.m */; };
 		B59E3F6C202441C000F81F60 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DE5202441BF00F81F60 /* AFURLSessionManager.m */; };
-		B59E3F6D202441C000F81F60 /* libChangyanSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B59E3DE8202441BF00F81F60 /* libChangyanSDK.a */; };
 		B59E3F6E202441C000F81F60 /* FLAnimatedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DEB202441BF00F81F60 /* FLAnimatedImage.m */; };
 		B59E3F6F202441C000F81F60 /* FLAnimatedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DED202441BF00F81F60 /* FLAnimatedImageView.m */; };
 		B59E3F70202441C000F81F60 /* NSBundle+CTAssetsPickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3DF5202441BF00F81F60 /* NSBundle+CTAssetsPickerController.m */; };
@@ -518,6 +519,10 @@
 		B56240122068D9170024DAA3 /* FFRaidersTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FFRaidersTableCell.m; sourceTree = "<group>"; };
 		B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FFRaidersTableCell.xib; sourceTree = "<group>"; };
 		B56240142068D9170024DAA3 /* FFRaidersTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FFRaidersTableCell.h; sourceTree = "<group>"; };
+		B56240172069E2120024DAA3 /* FFInviteRankListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteRankListViewController.h; sourceTree = "<group>"; };
+		B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteRankListViewController.m; sourceTree = "<group>"; };
+		B562401A206A31850024DAA3 /* FFDetailSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailSectionHeader.h; sourceTree = "<group>"; };
+		B562401B206A31850024DAA3 /* FFDetailSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailSectionHeader.m; sourceTree = "<group>"; };
 		B565146D1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FFSubscript.h"; sourceTree = "<group>"; };
 		B565146E1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FFSubscript.m"; sourceTree = "<group>"; };
 		B57B95EE20036C9500C39A5A /* Test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Test.c; sourceTree = "<group>"; };
@@ -592,8 +597,6 @@
 		B59E3DE3202441BF00F81F60 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		B59E3DE4202441BF00F81F60 /* AFURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFURLSessionManager.h; sourceTree = "<group>"; };
 		B59E3DE5202441BF00F81F60 /* AFURLSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFURLSessionManager.m; sourceTree = "<group>"; };
-		B59E3DE7202441BF00F81F60 /* ChangyanSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangyanSDK.h; sourceTree = "<group>"; };
-		B59E3DE8202441BF00F81F60 /* libChangyanSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libChangyanSDK.a; sourceTree = "<group>"; };
 		B59E3DEA202441BF00F81F60 /* FLAnimatedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImage.h; sourceTree = "<group>"; };
 		B59E3DEB202441BF00F81F60 /* FLAnimatedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FLAnimatedImage.m; sourceTree = "<group>"; };
 		B59E3DEC202441BF00F81F60 /* FLAnimatedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FLAnimatedImageView.h; sourceTree = "<group>"; };
@@ -1064,7 +1067,6 @@
 				B52B115A201835C60002475D /* Photos.framework in Frameworks */,
 				B59E3FD8202441C000F81F60 /* TencentOpenAPI.framework in Frameworks */,
 				B52B1158201835BA0002475D /* PhotosUI.framework in Frameworks */,
-				B59E3F6D202441C000F81F60 /* libChangyanSDK.a in Frameworks */,
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,
@@ -1413,6 +1415,8 @@
 				B55DE0A41FB14BF0001437D5 /* FFSignInViewController.m */,
 				B51379A81FB2DF940025F00B /* FFInviteFriendViewController.h */,
 				B51379A91FB2DF940025F00B /* FFInviteFriendViewController.m */,
+				B56240172069E2120024DAA3 /* FFInviteRankListViewController.h */,
+				B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */,
 				B51379AB1FB2DFB50025F00B /* FFCustomerServiceViewController.h */,
 				B51379AC1FB2DFB50025F00B /* FFCustomerServiceViewController.m */,
 				B51379AE1FB2DFE80025F00B /* FFMyPackageViewController.h */,
@@ -1540,7 +1544,6 @@
 			isa = PBXGroup;
 			children = (
 				B59E3DDB202441BF00F81F60 /* AFNetWorking */,
-				B59E3DE6202441BF00F81F60 /* ChangyanSDK */,
 				B59E3DE9202441BF00F81F60 /* FLAnimatedImage */,
 				B59E3DEE202441BF00F81F60 /* ImagePicker */,
 				B59E3E5F202441BF00F81F60 /* Masonry */,
@@ -1581,15 +1584,6 @@
 				B59E3DE5202441BF00F81F60 /* AFURLSessionManager.m */,
 			);
 			path = AFNetWorking;
-			sourceTree = "<group>";
-		};
-		B59E3DE6202441BF00F81F60 /* ChangyanSDK */ = {
-			isa = PBXGroup;
-			children = (
-				B59E3DE7202441BF00F81F60 /* ChangyanSDK.h */,
-				B59E3DE8202441BF00F81F60 /* libChangyanSDK.a */,
-			);
-			path = ChangyanSDK;
 			sourceTree = "<group>";
 		};
 		B59E3DE9202441BF00F81F60 /* FLAnimatedImage */ = {
@@ -2329,6 +2323,8 @@
 			children = (
 				B5B95E3A1FBC3A1800ACD7F7 /* FFGameDetailTableHeader.h */,
 				B5B95E3B1FBC3A1800ACD7F7 /* FFGameDetailTableHeader.m */,
+				B562401A206A31850024DAA3 /* FFDetailSectionHeader.h */,
+				B562401B206A31850024DAA3 /* FFDetailSectionHeader.m */,
 				B5B95E351FBC3A1700ACD7F7 /* FFCustomLayout.h */,
 				B5B95E361FBC3A1700ACD7F7 /* FFCustomLayout.m */,
 				B5B95E961FBDB05900ACD7F7 /* FFRaidersCell.h */,
@@ -2964,6 +2960,7 @@
 				B59E3F7A202441C000F81F60 /* CTAssetCollectionViewController.m in Sources */,
 				B52B110720158CF80002475D /* FFDriveReplyView.m in Sources */,
 				B596AAA31FCD025A00C8F15E /* FFLaunchScreen.m in Sources */,
+				B562401C206A31850024DAA3 /* FFDetailSectionHeader.m in Sources */,
 				B52B116020188BA40002475D /* FFGifThumbnailViewController.m in Sources */,
 				B5B95E6F1FBC3A7300ACD7F7 /* FFGameModel.m in Sources */,
 				B5B28DBF1FD55460008A9BCD /* FFAdvertisingView.m in Sources */,
@@ -2981,6 +2978,7 @@
 				B59E3FBF202441C000F81F60 /* HZPhotoItemModel.m in Sources */,
 				B59E3FE8202441C000F81F60 /* UIImageView+WebCache.m in Sources */,
 				B5971F2E1FAB03F700246640 /* FFRebateSelectView.m in Sources */,
+				B56240192069E2120024DAA3 /* FFInviteRankListViewController.m in Sources */,
 				B59E3F87202441C000F81F60 /* CTAssetsPageView.m in Sources */,
 				B59E3FCF202441C000F81F60 /* ZLPhotoBrowser.m in Sources */,
 				B51967301FA9EA8E0046E391 /* FFClassifyModel.m in Sources */,

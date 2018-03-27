@@ -8,8 +8,31 @@
 
 #import "FFGameHeaderView.h"
 #import "UIImageView+WebCache.h"
+#import "FFGameModel.h"
 
 @interface FFGameHeaderView ()<FFOpenServerSelectViewDelegate>
+
+/** 游戏信息 */
+@property (nonatomic, strong) NSDictionary *gameInfo;
+
+/**游戏图标*/
+@property (nonatomic, strong) UIImageView *gameLogo;
+/**游戏名称标签*/
+@property (nonatomic, strong) UILabel *gameNameLabel;
+/**下载次数标签*/
+@property (nonatomic, strong) UILabel *downLoadNumber;
+/**按钮数组*/
+@property (nonatomic, strong) NSArray *btnArray;
+/** 选择的下标 */
+@property (nonatomic, assign) NSInteger index;
+/** 游戏评分 */
+@property (nonatomic, assign) CGFloat source;
+/** 游戏标签 */
+@property (nonatomic, strong) NSMutableArray<UILabel *> *typeLabels;
+/** 游戏大小 */
+@property (nonatomic, strong) UILabel *sizeLabel;
+/** QQ群 */
+@property (nonatomic, strong) NSString *qqGroup;
 
 
 /**下载按钮*/
@@ -69,6 +92,24 @@
     [self setTypeLabelsArray];
 
 }
+
+- (void)setUserInterface {
+    //设置游戏名称
+    [self setGameName:CURRENT_GAME.game_name];
+    //设置标签
+    [self setGameTypeLabel:CURRENT_GAME.game_type_array];
+    //设置游戏评分
+    [self setGameSource:CURRENT_GAME.game_score];
+    //设置游戏下载次数
+    [self setGameDownLoadNumber:CURRENT_GAME.game_download_number.integerValue];
+    //设置游戏大小
+    [self setGameSize:CURRENT_GAME.game_size];
+    //设置 logo
+    [self setGameLogoUrl:CURRENT_GAME.game_logo_url];
+    //设置 QQ 群
+    self.qqGroup = CURRENT_GAME.player_qq_group;
+}
+
 
 #pragma mark - select view delegate
 - (void)FFOpenServerSelectView:(FFOpenServerSelectView *)selectView didSelectBtnAtIndexPath:(NSInteger)idx {
@@ -189,9 +230,7 @@
 
 /** 设置 logo */
 - (void)setGameLogoUrl:(NSString *)url {
-    if ([self.gameLogo.image isEqual:[UIImage imageNamed:@"image_downloading"]]) {
-        [self.gameLogo sd_setImageWithURL:[NSURL URLWithString:url]];
-    }
+    [self.gameLogo sd_setImageWithURL:[NSURL URLWithString:url] placeholderImage:[UIImage imageNamed:@"image_downloading"]];
 }
 
 #pragma mark - getter

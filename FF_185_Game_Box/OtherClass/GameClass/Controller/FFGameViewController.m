@@ -22,8 +22,8 @@
 #import "FFLoginViewController.h"
 #import "FFSharedController.h"
 
+#import "MBProgressHUD.h"
 
-#import "ChangyanSDK.h"
 
 @interface FFGameViewController ()<FFGameHeaderViewDelegate, FFGameFooterViewDelegate, UIScrollViewDelegate>
 
@@ -46,6 +46,8 @@
 @property (nonatomic, strong) FFWriteCommentController *writeComment;
 
 @property (nonatomic, strong) NSDictionary *gameinfo;
+
+@property (nonatomic, strong) MBProgressHUD *hud;
 
 @end
 
@@ -98,6 +100,13 @@ static FFGameViewController *controller = nil;
     [self addChildViewController:_gChildControllers[0]];
     [self.scrollView addSubview:_gChildControllers[0].view];
     [_gChildControllers[0] didMoveToParentViewController:self];
+
+    self.headerView.selectView.btnNameArray = @[@"详情",@"评论",@"礼包",@"开服",@"攻略"];
+    WeakSelf;
+    [CURRENT_GAME setCommentNumberBlock:^(NSString *commentNumber) {
+        NSString *comment = [NSString stringWithFormat:@"评论(%@)",commentNumber];
+        weakSelf.headerView.selectView.btnNameArray = @[@"详情",comment,@"礼包",@"开服",@"攻略"];
+    }];
 }
 
 #pragma mark - responds
@@ -179,32 +188,7 @@ static FFGameViewController *controller = nil;
     } else {
         [self hAddChildViewController:_gChildControllers[idx]];
     }
-
     self.lastController = _gChildControllers[idx];
-
-//
-//    if (i < _gChildControllers.count - 1 && other != 0) {
-//        [self hAddChildViewController:_gChildControllers[i]];
-//        [self hAddChildViewController:_gChildControllers[i + 1]];
-//    } else if (other == 0) {
-//        if (i > 0) {
-//            [self hChildControllerRemove:_gChildControllers[i - 1]];
-//            if (i != _gChildControllers.count - 1) {
-//                [self hChildControllerRemove:_gChildControllers[i + 1]];
-//            }
-//        } else {
-//            [self hAddChildViewController:_gChildControllers[0]];
-//            [self hChildControllerRemove:_gChildControllers[i + 1]];
-//        }
-//    }
-
-//    NSArray *array = self.childViewControllers;
-//    if (array.count == 1) {
-//        self.lastController = array[0];
-//    } else {
-//        self.lastController = nil;
-//    }
-
     [self.scrollView setContentOffset:CGPointMake(kSCREEN_WIDTH * idx, 0) animated:NO];
 }
 
@@ -222,9 +206,9 @@ static FFGameViewController *controller = nil;
     syLog(@"download game ===== %@",self.gameinfo);
 
     if ([Channel isEqualToString:@"185"]) {
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.gameinfo[@"ios_url"]]];
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:CURRENT_GAME.game_download_url]];
     } else {
-        [FFGameModel gameDownloadWithTag:self.gameinfo[@"tag"] Comoletion:^(NSDictionary *content, BOOL success) {
+        [FFGameModel gameDownloadWithTag:CURRENT_GAME.game_tag Comoletion:^(NSDictionary *content, BOOL success) {
             NSString *url = content[@"data"][@"download_url"];
             syLog(@"downLoadUrl == %@",url);
             ([url isKindOfClass:[NSString class]]) ? ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) : (BOX_MESSAGE(@"链接出错,请稍后尝试"));
@@ -232,7 +216,7 @@ static FFGameViewController *controller = nil;
         }];
     }
 
-    [FFStatisticsModel customEventsWith:@"down_laod_game" Extra:@{@"game_name":self.gameinfo[@"gamename"],@"game_id":self.gameinfo[@"id"]}];
+    [FFStatisticsModel customEventsWith:@"down_laod_game" Extra:@{@"game_name":CURRENT_GAME.game_name,@"game_id":CURRENT_GAME.game_id}];
 }
 
 - (void)FFGameFooterView:(FFGameFooterView *)detailFooter clickCollecBtn:(UIButton *)sender {
@@ -240,30 +224,33 @@ static FFGameViewController *controller = nil;
         BOX_MESSAGE(@"尚未登录");
         return;
     }
-    if (self.gameinfo && _gameinfo[@"collect"]) {
-        BOOL isCollect = self.footerView.isCollection;
+
+        BOOL isCollect = CURRENT_GAME.game_is_collection.boolValue;
+
         if (isCollect) {
-            [FFGameModel gameCollectWithType:@"2" GameID:self.gameID Comoletion:^(NSDictionary *content, BOOL success) {
+            [FFGameModel gameCollectWithType:@"2" GameID:CURRENT_GAME.game_id Comoletion:^(NSDictionary *content, BOOL success) {
                 //取消收藏
                 if (success) {
                     self.footerView.isCollection = NO;
-//                    syLog(@"collection  === %@",content);
+                    syLog(@"collection  === %@",content);
+                    CURRENT_GAME.game_is_collection = [NSString stringWithFormat:@"%u",NO];
                 } else {
-                    BOX_MESSAGE(content[@"msg"]);
+//                    BOX_MESSAGE(content[@"msg"]);
                 }
             }];
         } else {
-            [FFGameModel gameCollectWithType:@"1" GameID:self.gameID Comoletion:^(NSDictionary *content, BOOL success) {
-                //取消收藏
+            [FFGameModel gameCollectWithType:@"1" GameID:CURRENT_GAME.game_id Comoletion:^(NSDictionary *content, BOOL success) {
+                //收藏
                 if (success) {
                     self.footerView.isCollection = YES;
-//                    syLog(@"collection  === %@",content);
+                    CURRENT_GAME.game_is_collection = [NSString stringWithFormat:@"%u",YES];
+                    syLog(@"collection  == %@",content);
                 } else {
-                    BOX_MESSAGE(content[@"msg"]);
+//                    BOX_MESSAGE(content[@"msg"]);
                 }
             }];
         }
-    }
+
     syLog(@"收藏");
 }
 
@@ -274,48 +261,33 @@ static FFGameViewController *controller = nil;
     [self.gDetailViewController goToTop];
     [self.scrollView setContentOffset:CGPointMake(0, 0)];
 
-    if ([_gameID isEqualToString:gameID]) {
-//        if (_gameinfo == nil || _gameinfo.count == 0) {
-//            BOX_MESSAGE(@"加载失败");
-//            [self.navigationController popViewControllerAnimated:YES];
-//        }
-//        return;
-    } else {
-        _gameID = gameID;
-    }
+    _gameID = gameID;
+
+//    [self.hud showAnimated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+    WeakSelf;
+    [FFGameModel refreshCurrentGameWithGameID:gameID Completion:^(BOOL success) {
+        [hud hideAnimated:YES];
+        if (success) {
+            syLog(@"刷新游戏成功");
+            [self setUserInterface];
+        } else {
+            syLog(@"刷新游戏失败");
+            BOX_MESSAGE(@"加载失败");
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        }
+    }];
 
     self.gServiceViewController.gameID = gameID;
     self.gPackageViewController.gameID = gameID;
     self.gRaidersViewController.gameID = gameID;
     self.commentListController.gameID = _gameID;
 
-    syLog(@"new game ");
-    BOX_START_ANIMATION;
-    [FFGameModel gameInfoWithGameID:gameID Comoletion:^(NSDictionary *content, BOOL success) {
-//        BOX_START_ANIMATION;
+}
 
-
-
-        if (success) {
-            NSDictionary *dict = content[@"data"];
-            self.gameinfo = dict[@"gameinfo"];
-            self.headerView.gameInfo = dict[@"gameinfo"];
-            self.gDetailViewController.gameContent = dict;
-            //设置游戏名称
-            [self setGameName:dict[@"gameinfo"][@"gamename"]];
-
-        } else {
-            [self.navigationController popViewControllerAnimated:YES];
-            BOX_MESSAGE(@"加载失败");
-        }
-        BOX_STOP_ANIMATION;
-
-    }];
-
-    //获取评论
-    [self getGameComments];
-    //获取评论数
-    [self getGameCommentsNumber];
+- (void)setUserInterface {
+    [self.headerView setUserInterface];
+    [self.gDetailViewController setUserInterFace];
 }
 
 /** 设置 logo */
@@ -329,55 +301,6 @@ static FFGameViewController *controller = nil;
     }];
 }
 
-/** 获取游戏评论 */
-- (void)getGameComments {
-    //获取游戏评论
-    [ChangyanSDK loadTopic:@"" topicTitle:nil topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] pageSize:@"3" hotSize:nil orderBy:nil style:nil depth:nil subSize:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-
-        if (statusCode == 0) {
-            NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
-            NSError *err;
-            NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-            self.gDetailViewController.commentArray = dic[@"comments"];
-            self.gDetailViewController.gameID = _gameID;
-            self.gDetailViewController.topic_id = dic[@"topic_id"];
-            self.writeComment.gameName = dic[@"topic_id"];
-
-        } else {
-
-        }
-    }];
-}
-
-/** 获取评论数目 */
-- (void)getGameCommentsNumber {
-    [ChangyanSDK getCommentCount:@"" topicSourceID:[NSString stringWithFormat:@"game_%@",_gameID] topicUrl:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-
-            if (statusCode == 0) {
-                syLog(@"game comment number === %@", responseStr);
-                NSData *jsonData = [responseStr dataUsingEncoding:NSUTF8StringEncoding];
-                NSError *err;
-                NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&err];
-
-                if (dic != nil) {
-                    NSString *pinglun = nil;
-                    id dict1 = dic[@"result"];
-                    id dict2 = [dict1 allValues][0];
-                    if ([dict2 isKindOfClass:[NSDictionary class]]) {
-                        pinglun = [NSString stringWithFormat:@"评论(%@)",dict2[@"comments"]];
-                        syLog(@"????????????????????????????????????????????????");
-                    } else {
-                        pinglun = @"评论";
-                    }
-                    syLog(@"game comment numbe dict === %@",dic);
-                    self.headerView.selectView.btnNameArray = @[@"详情",pinglun,@"礼包",@"开服",@"攻略"];
-                }
-
-            } else {
-
-            }
-    }];
-}
 
 - (void)setGameinfo:(NSDictionary *)gameinfo {
     _gameinfo = gameinfo;
@@ -392,7 +315,6 @@ static FFGameViewController *controller = nil;
 //        return;
     } else {
         _gameLogo = gameLogo;
-        self.headerView.gameLogo.image = gameLogo;
         self.gServiceViewController.gameLogo = gameLogo;
         self.gPackageViewController.gameLogo = gameLogo;
         self.gRaidersViewController.gameLogo = gameLogo;
@@ -402,7 +324,6 @@ static FFGameViewController *controller = nil;
 /** 设置游戏名称 */
 - (void)setGameName:(NSString *)gameName {
     _gameName = gameName;
-    self.headerView.gameNameLabel.text = gameName;
     self.gServiceViewController.gameName = gameName;
     self.gPackageViewController.gameName = gameName;
     self.gRaidersViewController.gameName = gameName;
@@ -499,6 +420,13 @@ static FFGameViewController *controller = nil;
         _commentListController = [[FFCommentListController alloc] init];
     }
     return _commentListController;
+}
+
+- (MBProgressHUD *)hud {
+    if (!_hud) {
+        _hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
+    }
+    return _hud;
 }
 
 

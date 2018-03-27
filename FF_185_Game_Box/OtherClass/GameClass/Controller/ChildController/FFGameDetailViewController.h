@@ -24,4 +24,7 @@
 /** 返回顶部 */
 - (void)goToTop;
 
+/** 刷新信息 */
+- (void)setUserInterFace;
+
 @end

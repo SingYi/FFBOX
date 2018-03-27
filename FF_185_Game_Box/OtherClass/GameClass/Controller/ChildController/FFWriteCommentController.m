@@ -9,7 +9,6 @@
 #import "FFWriteCommentController.h"
 #import "FFCommentStarGradeView.h"
 #import "FFViewFactory.h"
-#import "ChangyanSDK.h"
 #import "FFGameModel.h"
 
 @interface FFWriteCommentController () <FFCommentStarGradeViewDelegate,UITextViewDelegate>
@@ -71,24 +70,26 @@
         return;
     }
 
-    BOX_START_ANIMATION;
-    [ChangyanSDK submitComment:self.gameName content:self.textView.text replyID:nil score:[NSString stringWithFormat:@"%.1lf",self.sorce] appType:40 picUrls:@[] metadata:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-        BOX_STOP_ANIMATION;
 
-        if (statusCode == 0) {
-            [self.navigationController popViewControllerAnimated:YES];
-            BOX_MESSAGE(@"评论成功");
-            [FFGameModel writeCommentGetCoinComoletion:^(NSDictionary *content, BOOL success) {
-                syLog(@"content === %@",content);
-            }];
-
-            [FFStatisticsModel customEventsWith:@"comments_game" Extra:nil];
-        } else {
-            BOX_MESSAGE(@"评论失败\n请稍后尝试");
-        }
-        syLog(@"comment respons === %@",responseStr);
-
-    }];
+#warning 发布评论
+//    BOX_START_ANIMATION;
+//    [ChangyanSDK submitComment:self.gameName content:self.textView.text replyID:nil score:[NSString stringWithFormat:@"%.1lf",self.sorce] appType:40 picUrls:@[] metadata:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
+//        BOX_STOP_ANIMATION;
+//
+//        if (statusCode == 0) {
+//            [self.navigationController popViewControllerAnimated:YES];
+//            BOX_MESSAGE(@"评论成功");
+//            [FFGameModel writeCommentGetCoinComoletion:^(NSDictionary *content, BOOL success) {
+//                syLog(@"content === %@",content);
+//            }];
+//
+//            [FFStatisticsModel customEventsWith:@"comments_game" Extra:nil];
+//        } else {
+//            BOX_MESSAGE(@"评论失败\n请稍后尝试");
+//        }
+//        syLog(@"comment respons === %@",responseStr);
+//
+//    }];
 
     /*
 

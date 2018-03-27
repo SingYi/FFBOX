@@ -12,7 +12,6 @@
 #import "WXApi.h"
 #import <TencentOpenAPI/TencentOAuth.h>
 #import "FFMapModel.h"
-#import "ChangyanSDK.h"
 #import "FFBoxModel.h"
 #import <UserNotifications/UserNotifications.h>
 #import "FFLaunchScreen.h"
@@ -120,13 +119,6 @@
     //注册QQ
     TencentOAuth *oAuth = [[TencentOAuth alloc] initWithAppId:QQAPPID andDelegate:nil];
     [oAuth isSessionValid];
-    //注册畅言SDK
-    BOXLOG(@"register ChagnyanSDK");
-    [ChangyanSDK registerApp:@"cysYKUClL"
-                      appKey:@"6c88968800e8b236e5c69b8634db704d"
-                 redirectUrl:nil
-        anonymousAccessToken:nil];
-
 
     //注册通知
     [self resignNotifacation];

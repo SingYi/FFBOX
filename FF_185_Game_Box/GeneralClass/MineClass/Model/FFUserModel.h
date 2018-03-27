@@ -7,7 +7,6 @@
 //
 
 #import "FFBasicModel.h"
-#import "ChangyanSDK.h"
 
 #define Uid [FFUserModel getUID]
 
@@ -60,8 +59,6 @@
 + (void)setAvatarData:(NSData *)data;
 
 #pragma mark =======================登录注册方法==============================
-/** 畅言单点登录 */
-+ (void)changyanLogin;
 /** 用户登录接口
  *  username:用户名或者手机号
  */
@@ -128,8 +125,7 @@
 
 #pragma mark - ======================= 上传头像 =======================
 /** 上传头像 */
-+ (void)userUploadPortraitWithImage:(UIImage *)image
-                         Completion:(void (^)(NSDictionary * content, BOOL success))completion;
++ (void)userUploadPortraitWithImage:(id)image Completion:(void (^)(NSDictionary * content, BOOL success))completion;
 
 
 #pragma mark - ======================= user coin =======================

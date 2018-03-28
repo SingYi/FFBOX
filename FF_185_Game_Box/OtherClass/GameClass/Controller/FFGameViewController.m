@@ -420,6 +420,7 @@ static FFGameViewController *controller = nil;
                     [weakSelf.commentListController.tableView.mj_header beginRefreshing];
                 }
                 [weakSelf.navigationController popViewControllerAnimated:YES];
+                [UIAlertController showAlertMessage:@"评论成功" dismissTime:0.7 dismissBlock:nil];
             } else {
                 [UIAlertController showAlertMessage:@"评论失败" dismissTime:0.7 dismissBlock:nil];
             }

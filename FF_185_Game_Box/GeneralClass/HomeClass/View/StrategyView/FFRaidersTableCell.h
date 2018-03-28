@@ -10,6 +10,9 @@
 
 @interface FFRaidersTableCell : UITableViewCell
 
+@property (weak, nonatomic) IBOutlet UIImageView *gameLogoImageView;
+
 @property (nonatomic, strong) NSDictionary *dict;
+
 
 @end

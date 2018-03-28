@@ -18,6 +18,8 @@
 
 typedef void(^RefreshCompleteBlock)(BOOL success);
 typedef void(^CommentNumberBlock)(NSString *commentNumber);
+typedef void(^CommentListBlock)(NSDictionary *content, BOOL success);
+typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
 
 @interface FFGameModel : FFBasicModel
 
@@ -97,6 +99,21 @@ typedef void(^CommentNumberBlock)(NSString *commentNumber);
 + (instancetype)refreshCurrentGameWithGameID:(NSString *)gameID Completion:(RefreshCompleteBlock)block;
 /** 根据游戏模型刷新数据 */
 + (instancetype)refreshCurrentGameWithGameModel:(FFGameModel *)gameModel Completion:(RefreshCompleteBlock)block;
+
+/** 获取当前游戏评论列表 */
+- (void)getCommentListWithPage:(NSString *)page Completion:(CommentListBlock)completion;
+/** 发表评论 */
+- (void)sendCommentWithText:(NSString *)text
+                      ToUid:(NSString *)toUid
+                    is_fake:(NSString *)is_fake
+                 Completion:(CommentListBlock)completion;
+/** 删除评论 */
+- (void)deleteCommentWithCommentID:(NSString *)commentId Completion:(GameCompletionBlck)completion;
+/** 赞评论接口 */
+- (void)likeCommentWithCommentID:(NSString *)commentid Completion:(GameCompletionBlck)completion;
+/** 取消赞接口 */
+- (void)cancelLikeCommentWithCommentID:(NSString *)commentid Type:(NSString *)type Completion:(GameCompletionBlck)completion;
+
 
 
 /** 游戏详情接口 */

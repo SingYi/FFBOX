@@ -7,8 +7,8 @@
 //
 
 #import "FFReplyToCommentController.h"
-#import "FFViewFactory.h"
-#import "FFMyNewsModel.h"
+#import "FFGameModel.h"
+#import "UIAlertController+FFAlertController.h"
 
 #define MODEL FFMyNewsModel
 
@@ -26,6 +26,13 @@
 @end
 
 @implementation FFReplyToCommentController
+
++ (instancetype)replyCommentWithCommentDict:(NSDictionary *)dict Completion:(ReplyCommentBlock)completion {
+    FFReplyToCommentController *controller = [[FFReplyToCommentController alloc] init];
+    controller.commentDict = dict;
+    controller.completion = completion;
+    return controller;
+}
 
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -58,24 +65,19 @@
 
 #pragma mark - respondsToCommentButton
 - (void)respondsToCommentButton {
+    [self.textView resignFirstResponder];
     if (self.textView.text.length == 0 || [self.textView.text isEqualToString:@"点击评论~"]) {
-        BOX_MESSAGE(@"还没有输入哦~");
+        [UIAlertController showAlertMessage:@"消息不能为空哦~" dismissTime:0.7 dismissBlock:nil];
         return;
     }
 
-    BOX_START_ANIMATION;
-    [MODEL ReplyToComment:_commentDict[@"topic_id"] content:self.textView.text replyID:_commentDict[@"comment_id"] completeBlock:^(NSDictionary *content, BOOL success) {
-        BOX_STOP_ANIMATION;
-        if (success) {
-            [self.navigationController popViewControllerAnimated:YES];
-            BOX_MESSAGE(@"回复成功");
-            self.textView.text = @"";
-        } else {
-            BOX_MESSAGE(@"回复失败\n请稍后尝试");
+    //回复评论
+    NSString *toUid = [NSString stringWithFormat:@"%@",self.commentDict[@"uid"]];
+    NSString *isFake = [NSString stringWithFormat:@"%@",self.commentDict[@"is_fake"]];
+    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:toUid is_fake:isFake Completion:^(NSDictionary *content, BOOL success) {
+        if (self.completion) {
+            self.completion(content, success);
         }
-
-        syLog(@"replay to comment === %@",content);
-
     }];
 
 
@@ -95,6 +97,7 @@
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
     if ([text isEqualToString:@"\n"]){ //判断输入的字是否是回车，即按下return
+        [self respondsToCommentButton];
         return NO; //这里返回NO，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
     }
     return YES;

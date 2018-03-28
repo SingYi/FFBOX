@@ -8,8 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^ReplyCommentBlock)(NSDictionary *content, BOOL success);
+
 @interface FFReplyToCommentController : UIViewController
 
 @property (nonatomic, strong) NSDictionary *commentDict;
+@property (nonatomic, strong) ReplyCommentBlock completion;
+
++ (instancetype)replyCommentWithCommentDict:(NSDictionary *)dict Completion:(ReplyCommentBlock)completion;
 
 @end

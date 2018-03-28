@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FFBasicViewController.h"
+#import "FFDriveAllInfoViewController.h"
 
-@interface FFCommentListController : FFBasicViewController
+@interface FFCommentListController : FFDriveAllInfoViewController
 
 @property (nonatomic, strong) NSString *gameID;
 

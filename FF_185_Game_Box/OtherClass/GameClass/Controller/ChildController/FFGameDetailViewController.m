@@ -409,31 +409,6 @@
             return 100;
         }
     }
-
-//    switch (indexPath.section) {
-//        case 0:
-//        case 1: {
-//            FFGameDetailTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-//            if (cell.isOpen) {
-//                return ((NSNumber *)_rowHeightArray[indexPath.section]).floatValue;
-//            } else {
-//                return 100;
-//            }
-//        }
-//        case 3:
-//            return 200;
-//        case 2: {
-//            if (_gifModel.integerValue == 0) {
-//                return 0;
-//            } else {
-//                return kSCREEN_WIDTH * 0.618;
-//            }
-//        }
-//        case 4:
-//            return 100;
-//        default:
-//            return 80;
-//    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

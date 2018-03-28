@@ -192,6 +192,14 @@ static FFGameModel *model;
 /** 游戏 logo 地址 */
 - (void)setGame_logo_url:(NSString *)game_logo_url {
     _game_logo_url = [NSString stringWithFormat:IMAGEURL,game_logo_url];
+
+    [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:_game_logo_url] options:(SDWebImageDownloaderLowPriority) progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
+        if (finished) {
+            _game_logo_image = image;
+        }
+
+    }];
+
 }
 
 /** 游戏标签 */
@@ -245,9 +253,86 @@ static FFGameModel *model;
 
 
 
+/** 获取当前游戏评论列表 */
+- (void)getCommentListWithPage:(NSString *)page Completion:(CommentListBlock)completion {
 
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:6];
+    if (SSKEYCHAIN_UID != nil && SSKEYCHAIN_UID.length != 0) {
+        [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    } else {
+        [dict setObject:@"0" forKey:@"uid"];
+    }
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:CURRENT_GAME.game_id forKey:@"dynamics_id"];
+    [dict setObject:@"2" forKey:@"type"];
+    [dict setObject:page forKey:@"page"];
+    [dict setObject:@"2" forKey:@"comment_type"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"dynamics_id",@"type",@"page"]))) forKey:@"sign"];
 
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_LIST params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
 
+/** 发表评论 */
+- (void)sendCommentWithText:(NSString *)text ToUid:(NSString *)toUid is_fake:(NSString *)is_fake Completion:(CommentListBlock)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    (toUid != nil) ? [dict setObject:toUid forKey:@"to_uid"] : [dict setObject:@"0" forKey:@"to_uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:CURRENT_GAME.game_id forKey:@"dynamics_id"];
+    [dict setObject:text forKey:@"content"];
+    [dict setObject:@"2" forKey:@"comment_type"];
+    if (is_fake) {
+        [dict setObject:is_fake forKey:@"is_fake"];
+    }
+
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"to_uid",@"channel",@"dynamics_id",@"content"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+/** 删除评论 */
+- (void)deleteCommentWithCommentID:(NSString *)commentId Completion:(GameCompletionBlck)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:commentId forKey:@"comment_id"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"comment_id"]))) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_DEL params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+/** 评论赞的接口 */
+- (void)likeCommentWithCommentID:(NSString *)commentid Completion:(GameCompletionBlck)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:commentid forKey:@"comment_id"];
+    [dict setObject:@"1" forKey:@"type"];
+
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"comment_id",@"type"]))) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT_LIKE params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
+
+/** 取消赞 */
+- (void)cancelLikeCommentWithCommentID:(NSString *)commentid Type:(NSString *)type Completion:(GameCompletionBlck)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:commentid forKey:@"comment_id"];
+    [dict setObject:type forKey:@"type"];
+    [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"channel",@"comment_id",@"type"]))) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].CANCEL_COMMENT_LIKE params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
 
 
 

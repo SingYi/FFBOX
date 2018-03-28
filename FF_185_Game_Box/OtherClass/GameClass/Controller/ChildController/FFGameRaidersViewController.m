@@ -7,11 +7,12 @@
 //
 
 #import "FFGameRaidersViewController.h"
-#import "FFRaidersCell.h"
+#import "FFRaidersTableCell.h"
 #import "FFGameModel.h"
 #import "FFWebViewController.h"
+#define CELL_IDE @"FFRaidersTableCell"
 
-#define CELL_IDE @"FFRaidersCell"
+#define CELL_IDE @"FFRaidersTableCell"
 
 @interface FFGameRaidersViewController ()
 
@@ -49,25 +50,22 @@
             }
             [self.tableView reloadData];
         }
-
-
-
         [self.tableView.mj_header endRefreshing];
     }];
 
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    FFRaidersCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
+    FFRaidersTableCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE];
 
     cell.dict = self.showArray[indexPath.row];
-    cell.gameLogo.image = self.gameLogo;
-    
+    cell.gameLogoImageView.image = CURRENT_GAME.game_logo_image;
+
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 150;
+    return 120;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

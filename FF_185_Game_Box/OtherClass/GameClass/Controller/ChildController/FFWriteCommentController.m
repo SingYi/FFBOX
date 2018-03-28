@@ -56,9 +56,9 @@
 - (void)initUserInterface {
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"发表评论";
-    [self.view addSubview:self.label];
-    [self.view addSubview:self.starGradeView];
-    [self.view addSubview:self.starGradeLabel];
+//    [self.view addSubview:self.label];
+//    [self.view addSubview:self.starGradeView];
+//    [self.view addSubview:self.starGradeLabel];
     [self.view addSubview:self.textView];
     self.navigationItem.rightBarButtonItem = self.commentButton;
 }
@@ -69,36 +69,19 @@
         BOX_MESSAGE(@"还没有输入哦~");
         return;
     }
-
-
 #warning 发布评论
-//    BOX_START_ANIMATION;
-//    [ChangyanSDK submitComment:self.gameName content:self.textView.text replyID:nil score:[NSString stringWithFormat:@"%.1lf",self.sorce] appType:40 picUrls:@[] metadata:nil completeBlock:^(CYStatusCode statusCode, NSString *responseStr) {
-//        BOX_STOP_ANIMATION;
-//
-//        if (statusCode == 0) {
-//            [self.navigationController popViewControllerAnimated:YES];
-//            BOX_MESSAGE(@"评论成功");
-//            [FFGameModel writeCommentGetCoinComoletion:^(NSDictionary *content, BOOL success) {
-//                syLog(@"content === %@",content);
-//            }];
-//
-//            [FFStatisticsModel customEventsWith:@"comments_game" Extra:nil];
-//        } else {
-//            BOX_MESSAGE(@"评论失败\n请稍后尝试");
-//        }
-//        syLog(@"comment respons === %@",responseStr);
-//
-//    }];
+    syLog(@"发布评论");
+    WeakSelf;
+    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:nil is_fake:nil Completion:^(NSDictionary *content, BOOL success) {
+        syLog(@"send comment === %@",content);
+        if (success) {
+            weakSelf.textView.text = @"";
+            [weakSelf.navigationController popViewControllerAnimated:YES];
+        } else {
 
-    /*
+        }
+    }];
 
-     CYSuccess           = 0,    成功
-     CYParamsError       = 1,     参数错误
-     CYLoginError        = 2,     登录错误
-     CYOtherError        = 3,     其他错误
-
-     */
 }
 
 #pragma mark - textViewDelegate

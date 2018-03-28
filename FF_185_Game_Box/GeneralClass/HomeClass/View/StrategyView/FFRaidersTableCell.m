@@ -11,7 +11,6 @@
 
 @interface FFRaidersTableCell ()
 
-@property (weak, nonatomic) IBOutlet UIImageView *gameLogoImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *gameNameLabel;
 
@@ -51,7 +50,9 @@
 }
 
 - (void)setGameLogo:(NSString *)string {
-    [self.gameLogoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:IMAGEURL,string]] placeholderImage:[UIImage imageNamed:@"aboutus_icon"]];
+    if (string) {
+        [self.gameLogoImageView sd_setImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:IMAGEURL,string]] placeholderImage:[UIImage imageNamed:@"aboutus_icon"]];
+    }
 }
 
 - (void)setAutor:(NSString *)string {

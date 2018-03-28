@@ -192,12 +192,10 @@ static FFGameModel *model;
 /** 游戏 logo 地址 */
 - (void)setGame_logo_url:(NSString *)game_logo_url {
     _game_logo_url = [NSString stringWithFormat:IMAGEURL,game_logo_url];
-
     [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:_game_logo_url] options:(SDWebImageDownloaderLowPriority) progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) {
         if (finished) {
             _game_logo_image = image;
         }
-
     }];
 
 }

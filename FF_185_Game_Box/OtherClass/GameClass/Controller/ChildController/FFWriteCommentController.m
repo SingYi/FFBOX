@@ -74,11 +74,12 @@
     WeakSelf;
     [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:nil is_fake:nil Completion:^(NSDictionary *content, BOOL success) {
         syLog(@"send comment === %@",content);
+        
+        if (weakSelf.sendCommentCallBack) {
+            weakSelf.sendCommentCallBack(content, success);
+        }
         if (success) {
             weakSelf.textView.text = @"";
-            [weakSelf.navigationController popViewControllerAnimated:YES];
-        } else {
-
         }
     }];
 

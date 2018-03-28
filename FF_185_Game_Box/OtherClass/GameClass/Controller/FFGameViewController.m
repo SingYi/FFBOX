@@ -22,6 +22,8 @@
 #import "FFLoginViewController.h"
 #import "FFSharedController.h"
 
+#import "UIAlertController+FFAlertController.h"
+
 #import "MBProgressHUD.h"
 
 
@@ -411,6 +413,17 @@ static FFGameViewController *controller = nil;
 - (FFWriteCommentController *)writeComment {
     if (!_writeComment) {
         _writeComment = [[FFWriteCommentController alloc] init];
+        WeakSelf;
+        [_writeComment setSendCommentCallBack:^(NSDictionary *dict, BOOL success) {
+            if (success) {
+                if (weakSelf.commentListController) {
+                    [weakSelf.commentListController.tableView.mj_header beginRefreshing];
+                }
+                [weakSelf.navigationController popViewControllerAnimated:YES];
+            } else {
+                [UIAlertController showAlertMessage:@"评论失败" dismissTime:0.7 dismissBlock:nil];
+            }
+        }];
     }
     return _writeComment;
 }

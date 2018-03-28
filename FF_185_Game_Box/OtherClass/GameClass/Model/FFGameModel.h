@@ -109,6 +109,8 @@ typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
                  Completion:(CommentListBlock)completion;
 /** 删除评论 */
 - (void)deleteCommentWithCommentID:(NSString *)commentId Completion:(GameCompletionBlck)completion;
+///** 获取评论数 */
+- (void)getCommentNumber;
 /** 赞评论接口 */
 - (void)likeCommentWithCommentID:(NSString *)commentid Completion:(GameCompletionBlck)completion;
 /** 取消赞接口 */

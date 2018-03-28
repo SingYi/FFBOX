@@ -65,8 +65,13 @@
 - (void)refreshNewData {
     _currentPage = 1;
     WeakSelf;
+
+
     [CURRENT_GAME getCommentListWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Completion:^(NSDictionary *content, BOOL success) {
         syLog(@"game comment ========== %@",content);
+        //刷新评论数
+        syLog(@"刷新评论数目");
+        [CURRENT_GAME getCommentNumber];
         if (success) {
             NSArray *array = content[@"data"][@"list"];
             if (array.count > 0) {

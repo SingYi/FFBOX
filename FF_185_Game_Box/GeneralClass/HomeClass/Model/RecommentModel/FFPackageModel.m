@@ -161,6 +161,30 @@
 //加载新礼包
 
 
+/** 礼包详情 */
++ (void)getPackageDetailInfoWithID:(NSString *)pid Completion:(Completion)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:pid forKey:@"pid"];
+
+    NSString *username = SSKEYCHAIN_USER_NAME;
+    if (username == nil) {
+        username = @"";
+    }
+    [dict setObject:username forKey:@"username"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:DeviceID forKey:@"machine_code"];
+    [dict setObject:@"2" forKey:@"terminal_type"];
+    [dict setObject:@"2" forKey:@"system"];
+
+    [dict setObject:BOX_SIGN(dict, (@[@"pid",@"username",@"channel",@"machine_code",@"terminal_type",@"system"])) forKey:@"sign"];
+
+    [FFBasicModel postRequestWithURL:[FFMapModel map].PACKAGE_INFO params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+
+
+}
+
 
 @end
 

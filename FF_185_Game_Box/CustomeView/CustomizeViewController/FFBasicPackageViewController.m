@@ -8,10 +8,13 @@
 
 #import "FFBasicPackageViewController.h"
 #import "FFpackageCell.h"
+#import "FFPackageDetailViewController.h"
 
 #define CELL_IDE @"FFpackageCell"
 
 @interface FFBasicPackageViewController () <FFpackageCellDelegate>
+
+@property (nonatomic, strong) FFPackageDetailViewController *detailViewController;
 
 @end
 
@@ -43,7 +46,13 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *dict = self.showArray[indexPath.row];
 
+    self.detailViewController.pid = [NSString stringWithFormat:@"%@",dict[@"id"]];
+
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:self.detailViewController animated:YES];
 }
 
 #pragma mark - cell delegate
@@ -80,6 +89,13 @@
         _model = [[FFPackageModel alloc] init];
     }
     return _model;
+}
+
+- (FFPackageDetailViewController *)detailViewController {
+    if (!_detailViewController) {
+        _detailViewController = [[FFPackageDetailViewController alloc] init];
+    }
+    return _detailViewController;
 }
 
 

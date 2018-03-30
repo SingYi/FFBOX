@@ -100,6 +100,7 @@
 		B5624074206CC56F0024DAA3 /* FFInviteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5624073206CC56F0024DAA3 /* FFInviteModel.m */; };
 		B5624078206CDBD30024DAA3 /* FFInviteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5624076206CDBD30024DAA3 /* FFInviteListCell.m */; };
 		B5624079206CDBD30024DAA3 /* FFInviteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5624077206CDBD30024DAA3 /* FFInviteListCell.xib */; };
+		B56240C6206E3EAC0024DAA3 /* FFPackageDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240C5206E3EAA0024DAA3 /* FFPackageDetailViewController.m */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
 		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
@@ -537,6 +538,8 @@
 		B5624075206CDBD30024DAA3 /* FFInviteListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteListCell.h; sourceTree = "<group>"; };
 		B5624076206CDBD30024DAA3 /* FFInviteListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteListCell.m; sourceTree = "<group>"; };
 		B5624077206CDBD30024DAA3 /* FFInviteListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FFInviteListCell.xib; sourceTree = "<group>"; };
+		B56240C4206E3EAA0024DAA3 /* FFPackageDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFPackageDetailViewController.h; sourceTree = "<group>"; };
+		B56240C5206E3EAA0024DAA3 /* FFPackageDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFPackageDetailViewController.m; sourceTree = "<group>"; };
 		B565146D1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FFSubscript.h"; sourceTree = "<group>"; };
 		B565146E1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FFSubscript.m"; sourceTree = "<group>"; };
 		B57B95EE20036C9500C39A5A /* Test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Test.c; sourceTree = "<group>"; };
@@ -1540,6 +1543,8 @@
 				B5971F621FAC65D600246640 /* FFBasicViewController.m */,
 				B5B95EA51FBEDB9700ACD7F7 /* FFBasicPackageViewController.h */,
 				B5B95EA61FBEDB9700ACD7F7 /* FFBasicPackageViewController.m */,
+				B56240C4206E3EAA0024DAA3 /* FFPackageDetailViewController.h */,
+				B56240C5206E3EAA0024DAA3 /* FFPackageDetailViewController.m */,
 				B535C6641FB05E8B0090DCC9 /* FFWebViewController.h */,
 				B535C6651FB05E8B0090DCC9 /* FFWebViewController.m */,
 				B5C1FC2E1FBAC1E9004A779B /* FFNavigationController.h */,
@@ -2985,6 +2990,7 @@
 				B51379AD1FB2DFB50025F00B /* FFCustomerServiceViewController.m in Sources */,
 				B59E3FD5202441C000F81F60 /* ZLProgressHUD.m in Sources */,
 				B51967051FA89A690046E391 /* FFYesterdayOpenServerViewController.m in Sources */,
+				B56240C6206E3EAC0024DAA3 /* FFPackageDetailViewController.m in Sources */,
 				B51379B91FB2E0350025F00B /* FFSettingViewController.m in Sources */,
 				B59E3F8F202441C000F81F60 /* CTAssetThumbnailView.m in Sources */,
 				B59E3F7A202441C000F81F60 /* CTAssetCollectionViewController.m in Sources */,

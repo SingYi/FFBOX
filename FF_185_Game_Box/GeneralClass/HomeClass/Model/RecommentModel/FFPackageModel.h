@@ -8,6 +8,8 @@
 
 #import "FFBasicModel.h"
 
+typedef void (^Completion)(NSDictionary *content, BOOL success);
+
 @interface FFPackageModel : FFBasicModel
 
 /** 请求新数据列表 */
@@ -25,6 +27,13 @@
 + (void)packageWithGameID:(NSString *)gameID Completion:(void (^)(NSDictionary *content, BOOL success))completion;
 
 /** 我的礼包 */
-+ (void)userPackageListWithPage:(NSString *)page Completion:(void (^)(NSDictionary *content, BOOL success))completion;
++ (void)userPackageListWithPage:(NSString *)page Completion:(Completion)completion;
+
+/** 礼包详情 */
++ (void)getPackageDetailInfoWithID:(NSString *)pid Completion:(Completion)completion;
+
+
+
+
 
 @end

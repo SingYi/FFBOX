@@ -209,7 +209,7 @@
 //检查版本更新
 - (void)cheackVersion {
     [FFBoxModel checkBoxVersionCompletion:^(NSDictionary *content, BOOL success) {
-        syLog(@"%@",content);
+
         NSString *update = content[@"data"];
         if ([update isKindOfClass:[NSNull class]] || update == nil || update.length == 0) {
             BOX_MESSAGE(@"当前为最新版本");

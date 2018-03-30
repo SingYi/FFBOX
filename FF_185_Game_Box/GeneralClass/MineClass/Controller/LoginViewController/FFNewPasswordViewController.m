@@ -69,7 +69,6 @@
         } else {
             BOX_MESSAGE(content[@"msg"]);
         }
-        syLog(@"%@",content);
     }];
 
 }

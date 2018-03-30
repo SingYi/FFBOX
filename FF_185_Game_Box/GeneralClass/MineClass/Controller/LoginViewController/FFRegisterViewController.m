@@ -9,6 +9,9 @@
 #import "FFRegisterViewController.h"
 #import "FFViewFactory.h"
 #import "FFUserModel.h"
+#import "UIAlertController+FFAlertController.h"
+#import "FFWebViewController.h"
+#import "FFMapModel.h"
 
 @interface FFRegisterViewController ()<UITextFieldDelegate>
 
@@ -38,6 +41,11 @@
 
 //当前的时间;
 @property (nonatomic, assign) NSInteger currnetTime;
+
+//勾选用户协议按钮
+@property (nonatomic, strong) UIButton *selectProtocolButton;
+//查看用户协议按钮
+@property (nonatomic, strong) UIButton *showProtocolButton;
 
 
 @property (nonatomic, assign) BOOL isUserRegister;
@@ -85,6 +93,8 @@
     [self.view addSubview:self.passWord];
     [self.view addSubview:self.registerBtn];
 //    [self.view addSubview:self.changeButton];
+    [self.view addSubview:self.selectProtocolButton];
+    [self.view addSubview:self.showProtocolButton];
     self.navigationItem.rightBarButtonItem = self.rightChangeButton;
     [self phoneView];
 }
@@ -106,6 +116,10 @@
     self.changeButton.frame = CGRectMake(CGRectGetMinX(self.passWord.frame), CGRectGetMaxY(self.registerBtn.frame), kSCREEN_WIDTH * 0.8, 30);
     self.rightChangeButton.title = @"用户名注册";
     self.userName.placeholder = @"请输入手机号";
+    self.selectProtocolButton.frame = CGRectMake(CGRectGetMinX(self.passWord.frame), CGRectGetMaxY(self.passWord.frame) + 10, 20, 20);
+    [self.selectProtocolButton sizeToFit];
+    self.showProtocolButton.frame = CGRectMake(CGRectGetMaxX(self.passWord.frame) - self.showProtocolButton.frame.size.width, CGRectGetMaxY(self.passWord.frame) + 10, self.showProtocolButton.frame.size.width, self.showProtocolButton.frame.size.height);
+    self.showProtocolButton.center = CGPointMake(self.showProtocolButton.center.x, self.selectProtocolButton.center.y);
 }
 
 - (void)setUserView {
@@ -118,6 +132,13 @@
         self.changeButton.frame = CGRectMake(CGRectGetMinX(self.passWord.frame), CGRectGetMaxY(self.registerBtn.frame), kSCREEN_WIDTH * 0.8, 30);
         self.rightChangeButton.title = @"快速注册";
         self.userName.placeholder = @"请输入用户名";
+        self.selectProtocolButton.frame = CGRectMake(CGRectGetMinX(self.passWord.frame), CGRectGetMaxY(self.passWord.frame) + 10, 20, 20);
+        [self.selectProtocolButton sizeToFit];
+
+        self.showProtocolButton.frame = CGRectMake(CGRectGetMaxX(self.passWord.frame) - self.showProtocolButton.frame.size.width, CGRectGetMaxY(self.passWord.frame) + 10, self.showProtocolButton.frame.size.width, self.showProtocolButton.frame.size.height);
+
+        self.showProtocolButton.center = CGPointMake(self.showProtocolButton.center.x, self.selectProtocolButton.center.y);
+
     } completion:^(BOOL finished) {
 
     }];
@@ -149,10 +170,54 @@
     }
     [_changeButton sizeToFit];
 }
+
 /** 注册 */
 - (void)respondsToRegisterBtn {
     syLog(@"用户名注册 %u",_isUserRegister);
+    [self registAccount];
+}
 
+/** 是否选择协议 */
+- (void)respondsToSelectProtocolButton {
+    self.selectProtocolButton.selected = !self.selectProtocolButton.selected;
+}
+
+/** 查看协议 */
+- (void)showAlowProtocol {
+    FFWebViewController *webVC = [FFWebViewController new];
+    webVC.webURL = [FFMapModel map].USER_AGREEMENT;
+    webVC.title = @"用户协议";
+    [self.navigationController pushViewController:webVC animated:YES];
+}
+
+
+
+- (void)resPondsToButtonIndex:(NSUInteger)index {
+    syLog(@"select index == %lu",index);
+    switch (index) {
+        case 0: {
+            //取消按钮
+            break;
+        }
+        case 1: {
+            //同意协议
+            [self registAccount];
+            break;
+        }
+        case 2: {
+            //查看协议
+            [self showAlowProtocol];
+            syLog(@"查看用户协议");
+            break;
+        }
+
+        default:
+            break;
+    }
+}
+
+/** 注册账号 */
+- (void)registAccount {
     if (_isRegisting) {
         return;
     }
@@ -162,14 +227,21 @@
     //用户名太短,返回
     if (self.userName.text.length < 6) {
         BOX_MESSAGE(@"用户名长度太短");
+        _isRegisting = NO;
         return;
     }
     //密码太短
     if (self.passWord.text.length < 6) {
         BOX_MESSAGE(@"密码长度太短");
+        _isRegisting = NO;
         return;
     }
-
+    //用户协议
+    if (self.selectProtocolButton.selected == NO) {
+        BOX_MESSAGE(@"请同意用户协议");
+        _isRegisting = NO;
+        return;
+    }
     NSString *userName = nil;
     NSString *code = nil;
     NSString *phoneNumber = nil;
@@ -188,11 +260,13 @@
         //手机号有误
         if (![regextestmobile evaluateWithObject:self.userName.text]) {
             BOX_MESSAGE(@"手机号码有误");
+            _isRegisting = NO;
             return;
         }
         //验证码长度不正确
         if (self.securityCode.text.length < 4) {
             BOX_MESSAGE(@"验证码长度有误");
+            _isRegisting = NO;
             return;
         }
         userName = @"";
@@ -205,54 +279,54 @@
 
     BOX_START_ANIMATION;
     [FFUserModel userRegisterWithUserName:userName Code:code PhoneNumber:phoneNumber PassWord:passWord Type:type Completion:^(NSDictionary *content, BOOL success)
-    {
+     {
 
          _isRegisting = NO;
-        BOX_STOP_ANIMATION;
-        if (success) {
-            NSString *loginName = nil;
-            if ([userName isEqualToString:@""] || userName.length == 0) {
-                loginName = phoneNumber;
-            } else {
-                loginName = userName;
-            }
+         BOX_STOP_ANIMATION;
+         if (success) {
+             NSString *loginName = nil;
+             if ([userName isEqualToString:@""] || userName.length == 0) {
+                 loginName = phoneNumber;
+             } else {
+                 loginName = userName;
+             }
 
-            [FFViewFactory showAlertMessage:@"注册成功" dismissTime:0.7 dismiss:^{
+             [FFViewFactory showAlertMessage:@"注册成功" dismissTime:0.7 dismiss:^{
 
-                BOX_MESSAGE(@"正在登陆");
-                BOX_START_ANIMATION;
-                [FFUserModel userLoginWithUserName:loginName PassWord:passWord Completion:^(NSDictionary *content, BOOL success) {
-                    BOX_STOP_ANIMATION;
-                    if (success) {
-                        NSDictionary *dict = CONTENT_DATA;
-                        //设置用户模型
-                        [[FFUserModel currentUser] setAllPropertyWithDict:dict];
-                        //登录
-                        [FFUserModel login:dict];
-                        //保存 UID
-                        [FFUserModel setUID:[FFUserModel currentUser].uid];
-                        [FFUserModel setUserName:[FFUserModel currentUser].username];
-                        [FFUserModel currentUser].isLogin = @"1";
-                        [FFUserModel setPassWord:passWord];
-                        BOX_MESSAGE(@"登陆成功");
+                 BOX_MESSAGE(@"正在登陆");
+                 BOX_START_ANIMATION;
+                 [FFUserModel userLoginWithUserName:loginName PassWord:passWord Completion:^(NSDictionary *content, BOOL success) {
+                     BOX_STOP_ANIMATION;
+                     if (success) {
+                         NSDictionary *dict = CONTENT_DATA;
+                         //设置用户模型
+                         [[FFUserModel currentUser] setAllPropertyWithDict:dict];
+                         //登录
+                         [FFUserModel login:dict];
+                         //保存 UID
+                         [FFUserModel setUID:[FFUserModel currentUser].uid];
+                         [FFUserModel setUserName:[FFUserModel currentUser].username];
+                         [FFUserModel currentUser].isLogin = @"1";
+                         [FFUserModel setPassWord:passWord];
+                         BOX_MESSAGE(@"登陆成功");
 
-                        [[NSNotificationCenter defaultCenter] postNotificationName:@"UserReigsterThanLogin" object:nil userInfo:nil];
+                         [[NSNotificationCenter defaultCenter] postNotificationName:@"UserReigsterThanLogin" object:nil userInfo:nil];
 
-                        [self.navigationController popToRootViewControllerAnimated:YES];
-                    } else {
-                        BOX_MESSAGE(@"登陆失败");
-                        [self.navigationController popViewControllerAnimated:YES];
-                    }
-                }];
-            }];
+                         [self.navigationController popToRootViewControllerAnimated:YES];
+                     } else {
+                         BOX_MESSAGE(@"登陆失败");
+                         [self.navigationController popViewControllerAnimated:YES];
+                     }
+                 }];
+             }];
 
 
 
-        } else {
-            BOX_MESSAGE(content[@"msg"]);
-        }
+         } else {
+             BOX_MESSAGE(content[@"msg"]);
+         }
 
-    }];
+     }];
 }
 
 /** 响应发送验证码按钮 */
@@ -428,6 +502,35 @@
         _email.keyboardType = UIKeyboardTypeEmailAddress;
     }
     return _email;
+}
+
+- (UIButton *)selectProtocolButton {
+    if (!_selectProtocolButton) {
+        _selectProtocolButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        _selectProtocolButton.frame = CGRectMake(CGRectGetMinX(self.passWord.frame), CGRectGetMaxY(self.passWord.frame) + 10, 20, 20);
+        [_selectProtocolButton setImage:[UIImage imageNamed:@"Protocol_select_yes"] forState:(UIControlStateSelected)];
+        [_selectProtocolButton setImage:[UIImage imageNamed:@"Protocol_select_no"] forState:(UIControlStateNormal)];
+        _selectProtocolButton.selected = YES;
+        [_selectProtocolButton setTitle:@"用户协议" forState:(UIControlStateNormal)];
+        [_selectProtocolButton setTitle:@"用户协议" forState:(UIControlStateSelected)];
+        [_selectProtocolButton setTitleColor:[UIColor blueColor] forState:(UIControlStateNormal)];
+        [_selectProtocolButton setTitleColor:[UIColor blueColor] forState:(UIControlStateSelected)];
+        [_selectProtocolButton addTarget:self action:@selector(respondsToSelectProtocolButton) forControlEvents:(UIControlEventTouchUpInside)];
+        _selectProtocolButton.titleLabel.font = [UIFont systemFontOfSize:13];
+    }
+    return _selectProtocolButton;
+}
+
+- (UIButton *)showProtocolButton {
+    if (!_showProtocolButton) {
+        _showProtocolButton = [UIButton buttonWithType:(UIButtonTypeCustom)];
+        [_showProtocolButton addTarget:self action:@selector(showAlowProtocol) forControlEvents:(UIControlEventTouchUpInside)];
+        [_showProtocolButton setTitle:@"查看用户协议>>>" forState:(UIControlStateNormal)];
+        _showProtocolButton.titleLabel.font = [UIFont systemFontOfSize:14];
+        [_showProtocolButton sizeToFit];
+        [_showProtocolButton setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
+    }
+    return _showProtocolButton;
 }
 
 - (UIButton *)registerBtn {

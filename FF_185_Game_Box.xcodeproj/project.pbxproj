@@ -95,6 +95,11 @@
 		B56240162068D9180024DAA3 /* FFRaidersTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B56240132068D9170024DAA3 /* FFRaidersTableCell.xib */; };
 		B56240192069E2120024DAA3 /* FFInviteRankListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */; };
 		B562401C206A31850024DAA3 /* FFDetailSectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = B562401B206A31850024DAA3 /* FFDetailSectionHeader.m */; };
+		B562406E206CBDBB0024DAA3 /* FFTodayInviteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B562406D206CBDB80024DAA3 /* FFTodayInviteListViewController.m */; };
+		B5624071206CC0750024DAA3 /* FFYesterDayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5624070206CC0750024DAA3 /* FFYesterDayListViewController.m */; };
+		B5624074206CC56F0024DAA3 /* FFInviteModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5624073206CC56F0024DAA3 /* FFInviteModel.m */; };
+		B5624078206CDBD30024DAA3 /* FFInviteListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5624076206CDBD30024DAA3 /* FFInviteListCell.m */; };
+		B5624079206CDBD30024DAA3 /* FFInviteListCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5624077206CDBD30024DAA3 /* FFInviteListCell.xib */; };
 		B58DB709200F399C00DBE381 /* FFDriveHotInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB708200F399C00DBE381 /* FFDriveHotInfoViewController.m */; };
 		B58DB70C20103DE500DBE381 /* FFDriveAttentionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70B20103DE500DBE381 /* FFDriveAttentionInfoViewController.m */; };
 		B58DB70F20104F2E00DBE381 /* FFDriveThroughInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DB70E20104F2E00DBE381 /* FFDriveThroughInfoViewController.m */; };
@@ -523,6 +528,15 @@
 		B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteRankListViewController.m; sourceTree = "<group>"; };
 		B562401A206A31850024DAA3 /* FFDetailSectionHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailSectionHeader.h; sourceTree = "<group>"; };
 		B562401B206A31850024DAA3 /* FFDetailSectionHeader.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailSectionHeader.m; sourceTree = "<group>"; };
+		B562406C206CBDB80024DAA3 /* FFTodayInviteListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFTodayInviteListViewController.h; sourceTree = "<group>"; };
+		B562406D206CBDB80024DAA3 /* FFTodayInviteListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFTodayInviteListViewController.m; sourceTree = "<group>"; };
+		B562406F206CC0750024DAA3 /* FFYesterDayListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFYesterDayListViewController.h; sourceTree = "<group>"; };
+		B5624070206CC0750024DAA3 /* FFYesterDayListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFYesterDayListViewController.m; sourceTree = "<group>"; };
+		B5624072206CC56F0024DAA3 /* FFInviteModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteModel.h; sourceTree = "<group>"; };
+		B5624073206CC56F0024DAA3 /* FFInviteModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteModel.m; sourceTree = "<group>"; };
+		B5624075206CDBD30024DAA3 /* FFInviteListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteListCell.h; sourceTree = "<group>"; };
+		B5624076206CDBD30024DAA3 /* FFInviteListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteListCell.m; sourceTree = "<group>"; };
+		B5624077206CDBD30024DAA3 /* FFInviteListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FFInviteListCell.xib; sourceTree = "<group>"; };
 		B565146D1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+FFSubscript.h"; sourceTree = "<group>"; };
 		B565146E1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+FFSubscript.m"; sourceTree = "<group>"; };
 		B57B95EE20036C9500C39A5A /* Test.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = Test.c; sourceTree = "<group>"; };
@@ -1015,8 +1029,6 @@
 		B5BC04D41FA70F930091EE4B /* FFRankListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFRankListViewController.m; sourceTree = "<group>"; };
 		B5BC04D61FA70FAB0091EE4B /* FFOpenServerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOpenServerViewController.h; sourceTree = "<group>"; };
 		B5BC04D71FA70FAB0091EE4B /* FFOpenServerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFOpenServerViewController.m; sourceTree = "<group>"; };
-		B5BC04D91FA70FBE0091EE4B /* FFMineViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFMineViewController.h; sourceTree = "<group>"; };
-		B5BC04DA1FA70FBE0091EE4B /* FFMineViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMineViewController.m; sourceTree = "<group>"; };
 		B5BC055D1FA7178B0091EE4B /* FFBasicModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFBasicModel.h; sourceTree = "<group>"; };
 		B5BC055E1FA7178B0091EE4B /* FFBasicModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFBasicModel.m; sourceTree = "<group>"; };
 		B5C1FC221FB93A80004A779B /* FFOpenVipViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFOpenVipViewController.h; sourceTree = "<group>"; };
@@ -1107,6 +1119,9 @@
 				B596AAAA1FCD10AE00C8F15E /* FFMyprizeCell.h */,
 				B596AAAB1FCD10AE00C8F15E /* FFMyprizeCell.m */,
 				B596AAAC1FCD10AE00C8F15E /* FFMyprizeCell.xib */,
+				B5624075206CDBD30024DAA3 /* FFInviteListCell.h */,
+				B5624076206CDBD30024DAA3 /* FFInviteListCell.m */,
+				B5624077206CDBD30024DAA3 /* FFInviteListCell.xib */,
 			);
 			path = ChildView;
 			sourceTree = "<group>";
@@ -1435,6 +1450,7 @@
 				B5C1FC231FB93A80004A779B /* FFOpenVipViewController.m */,
 				B5A1EEBE1FCC04B7003FC031 /* FFBindMobileViewController.h */,
 				B5A1EEBF1FCC04B7003FC031 /* FFBindMobileViewController.m */,
+				B562406B206CB9790024DAA3 /* FFInviteFriendChidlController */,
 				B5A5D4F11FC3C32B00EC951F /* FFCoinCenterChildController */,
 				B5137A511FB546220025F00B /* FFTransferServerChildController */,
 			);
@@ -1458,6 +1474,17 @@
 				B56240062068C88A0024DAA3 /* FFRaidersModel.m */,
 			);
 			path = RaidersModel;
+			sourceTree = "<group>";
+		};
+		B562406B206CB9790024DAA3 /* FFInviteFriendChidlController */ = {
+			isa = PBXGroup;
+			children = (
+				B562406C206CBDB80024DAA3 /* FFTodayInviteListViewController.h */,
+				B562406D206CBDB80024DAA3 /* FFTodayInviteListViewController.m */,
+				B562406F206CC0750024DAA3 /* FFYesterDayListViewController.h */,
+				B5624070206CC0750024DAA3 /* FFYesterDayListViewController.m */,
+			);
+			path = FFInviteFriendChidlController;
 			sourceTree = "<group>";
 		};
 		B59556B9200DDEA6007F3CC7 /* FFViewFactory */ = {
@@ -2455,8 +2482,6 @@
 		B5BC04C51FA70C4C0091EE4B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				B5BC04D91FA70FBE0091EE4B /* FFMineViewController.h */,
-				B5BC04DA1FA70FBE0091EE4B /* FFMineViewController.m */,
 				B5A5D56B1FC8002400EC951F /* FFNewMineViewController.h */,
 				B5A5D56C1FC8002400EC951F /* FFNewMineViewController.m */,
 				B5137A221FB43D230025F00B /* LoginViewController */,
@@ -2472,6 +2497,8 @@
 				B55DE0A01FB08EEF001437D5 /* FFUserModel.m */,
 				B5A5D4EC1FC2C94D00EC951F /* FFPayModel.h */,
 				B5A5D4ED1FC2C94D00EC951F /* FFPayModel.m */,
+				B5624072206CC56F0024DAA3 /* FFInviteModel.h */,
+				B5624073206CC56F0024DAA3 /* FFInviteModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2729,6 +2756,7 @@
 				B54E6B2D1FB03008009D0025 /* RebateTableViewCell.xib in Resources */,
 				B59E3F90202441C000F81F60 /* CTAssetsPicker.strings in Resources */,
 				B596AAAE1FCD10AE00C8F15E /* FFMyprizeCell.xib in Resources */,
+				B5624079206CDBD30024DAA3 /* FFInviteListCell.xib in Resources */,
 				B59556CA200DE12D007F3CC7 /* Community.xcassets in Resources */,
 				B5A5D5431FC59F2400EC951F /* FFTransferNotesCell.xib in Resources */,
 				B59E3F98202441C000F81F60 /* README.md in Resources */,
@@ -2778,6 +2806,7 @@
 				B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */,
 				B519674A1FAAC52A0046E391 /* FFRRebateViewController.m in Sources */,
 				B51967261FA9ACFF0046E391 /* FFNewGameController.m in Sources */,
+				B562406E206CBDBB0024DAA3 /* FFTodayInviteListViewController.m in Sources */,
 				B59E3FE3202441C000F81F60 /* SDWebImagePrefetcher.m in Sources */,
 				B5A5D4F51FC3C39800EC951F /* FFGoldCenterViewController.m in Sources */,
 				B59E3FB5202441C000F81F60 /* MJRefreshConst.m in Sources */,
@@ -2920,6 +2949,7 @@
 				B59E3FB7202441C000F81F60 /* UIScrollView+MJExtension.m in Sources */,
 				B52B11B8201B2BC40002475D /* FFMineViewCell.m in Sources */,
 				B51967501FAAC8CE0046E391 /* FFRPackageViewController.m in Sources */,
+				B5624074206CC56F0024DAA3 /* FFInviteModel.m in Sources */,
 				B51379B01FB2DFE80025F00B /* FFMyPackageViewController.m in Sources */,
 				B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */,
 				B5D108F62029AC0800E4D49F /* YBRectConst.m in Sources */,
@@ -2972,6 +3002,7 @@
 				B5BC04D51FA70F930091EE4B /* FFRankListViewController.m in Sources */,
 				B5A5D5001FC401D300EC951F /* FFLotteryViewController.m in Sources */,
 				B59E3F7F202441C000F81F60 /* CTAssetSelectionLabel.m in Sources */,
+				B5624071206CC0750024DAA3 /* FFYesterDayListViewController.m in Sources */,
 				B556B0F11FA6C930005DC871 /* FFMainTabbarViewController.m in Sources */,
 				B5B95EA41FBEB0C300ACD7F7 /* FFCommentListController.m in Sources */,
 				B5D108FC202C3F1000E4D49F /* FFMaskView.m in Sources */,
@@ -3002,6 +3033,7 @@
 				B5AB950C200310F00055D507 /* FFDriveModel.m in Sources */,
 				B59E3F88202441C000F81F60 /* CTAssetsPageViewController.m in Sources */,
 				B5B95E7F1FBD5F2700ACD7F7 /* FFSearchResultController.m in Sources */,
+				B5624078206CDBD30024DAA3 /* FFInviteListCell.m in Sources */,
 				B59E3FD2202441C000F81F60 /* ZLPhotoManager.m in Sources */,
 				B59E3FC9202441C000F81F60 /* ZLCustomCamera.m in Sources */,
 				B519673F1FA9FB5D0046E391 /* FFRecommentModel.m in Sources */,

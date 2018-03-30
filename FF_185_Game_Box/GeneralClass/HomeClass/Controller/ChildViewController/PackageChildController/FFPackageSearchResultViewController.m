@@ -99,7 +99,6 @@
                 BOX_MESSAGE(@"领取失败");
                 //                BOX_MESSAGE(content[@"msg"]);
             }
-            syLog(@"%@",content);
         }];
     } else {
         UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];

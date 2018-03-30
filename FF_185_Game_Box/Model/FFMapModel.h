@@ -126,9 +126,15 @@
 //礼包信息
 @property (nonatomic, strong) NSString *PACKAGE_INFO;
 
+//邀请排行榜
+@property (nonatomic, strong) NSString *RANKING_LIST;
+//接收奖励
+@property (nonatomic, strong) NSString *RECEIVE_REWARD;
+//用户协议
+@property (nonatomic, strong) NSString *USER_AGREEMENT;
+
 
 + (instancetype)map;
-
 
 + (void)getMap;
 

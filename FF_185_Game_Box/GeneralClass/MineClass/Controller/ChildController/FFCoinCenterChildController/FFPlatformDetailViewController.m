@@ -43,7 +43,7 @@
     _currentPage = 1;
     START_NET_WORK;
     [FFUserModel coinPlatformDetailWithPage:[NSString stringWithFormat:@"%ld",_currentPage] Completion:^(NSDictionary *content, BOOL success) {
-        syLog(@"%@",content);
+     
         STOP_NET_WORK;
         if (success) {
             self.showArray = [content[@"data"][@"list"] mutableCopy];

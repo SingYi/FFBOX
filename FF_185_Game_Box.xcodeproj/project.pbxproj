@@ -77,6 +77,9 @@
 		B53685A41FA81D72001836DC /* FFMapModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685A31FA81D72001836DC /* FFMapModel.m */; };
 		B53685A61FA84B69001836DC /* GameBoxConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = B53685A51FA84B69001836DC /* GameBoxConfig.plist */; };
 		B53685AA1FA85073001836DC /* FFViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B53685A91FA85073001836DC /* FFViewFactory.m */; };
+		B53E7DAB207318080098F87F /* FFDetailPackageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B53E7DAA207318080098F87F /* FFDetailPackageModel.m */; };
+		B53E7DAE2073268E0098F87F /* FFDetailPackHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = B53E7DAD2073268E0098F87F /* FFDetailPackHeaderView.m */; };
+		B53E7DB0207352590098F87F /* PackageDetailSB.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B53E7DAF207352590098F87F /* PackageDetailSB.storyboard */; };
 		B54E6B2C1FB03008009D0025 /* RebateTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B54E6B2A1FB03008009D0025 /* RebateTableViewCell.m */; };
 		B54E6B2D1FB03008009D0025 /* RebateTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B54E6B2B1FB03008009D0025 /* RebateTableViewCell.xib */; };
 		B54E6B301FB04FA7009D0025 /* FFActivityModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B54E6B2F1FB04FA7009D0025 /* FFActivityModel.m */; };
@@ -495,6 +498,11 @@
 		B53685A51FA84B69001836DC /* GameBoxConfig.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = GameBoxConfig.plist; sourceTree = "<group>"; };
 		B53685A81FA85073001836DC /* FFViewFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFViewFactory.h; sourceTree = "<group>"; };
 		B53685A91FA85073001836DC /* FFViewFactory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFViewFactory.m; sourceTree = "<group>"; };
+		B53E7DA9207318080098F87F /* FFDetailPackageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailPackageModel.h; sourceTree = "<group>"; };
+		B53E7DAA207318080098F87F /* FFDetailPackageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailPackageModel.m; sourceTree = "<group>"; };
+		B53E7DAC2073268E0098F87F /* FFDetailPackHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDetailPackHeaderView.h; sourceTree = "<group>"; };
+		B53E7DAD2073268E0098F87F /* FFDetailPackHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDetailPackHeaderView.m; sourceTree = "<group>"; };
+		B53E7DAF207352590098F87F /* PackageDetailSB.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PackageDetailSB.storyboard; sourceTree = "<group>"; };
 		B54E6B291FB03008009D0025 /* RebateTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RebateTableViewCell.h; sourceTree = "<group>"; };
 		B54E6B2A1FB03008009D0025 /* RebateTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RebateTableViewCell.m; sourceTree = "<group>"; };
 		B54E6B2B1FB03008009D0025 /* RebateTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RebateTableViewCell.xib; sourceTree = "<group>"; };
@@ -1254,6 +1262,8 @@
 				B54E6B2F1FB04FA7009D0025 /* FFActivityModel.m */,
 				B5C1FC3A1FBB0B20004A779B /* FFPackageModel.h */,
 				B5C1FC3B1FBB0B20004A779B /* FFPackageModel.m */,
+				B53E7DA9207318080098F87F /* FFDetailPackageModel.h */,
+				B53E7DAA207318080098F87F /* FFDetailPackageModel.m */,
 			);
 			path = RecommentModel;
 			sourceTree = "<group>";
@@ -1387,6 +1397,8 @@
 				B5971F651FAC7BA600246640 /* FFBasicSelectView.m */,
 				B565146D1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.h */,
 				B565146E1FEA53FA005A07CC /* UIBarButtonItem+FFSubscript.m */,
+				B53E7DAC2073268E0098F87F /* FFDetailPackHeaderView.h */,
+				B53E7DAD2073268E0098F87F /* FFDetailPackHeaderView.m */,
 			);
 			path = CustomeView;
 			sourceTree = "<group>";
@@ -1553,6 +1565,7 @@
 				B5A5D5151FC517FE00EC951F /* FFSharedController.m */,
 				B5A5D5681FC6B82600EC951F /* FFReplyToCommentController.h */,
 				B5A5D5691FC6B82600EC951F /* FFReplyToCommentController.m */,
+				B53E7DAF207352590098F87F /* PackageDetailSB.storyboard */,
 			);
 			path = CustomizeViewController;
 			sourceTree = "<group>";
@@ -2750,6 +2763,7 @@
 				B59E3DC82021BAEF00F81F60 /* FFDriveFansCell.xib in Resources */,
 				B5B95E991FBDB05900ACD7F7 /* FFRaidersCell.xib in Resources */,
 				B51379C91FB2FCE00025F00B /* FFpackageCell.xib in Resources */,
+				B53E7DB0207352590098F87F /* PackageDetailSB.storyboard in Resources */,
 				B5B95E521FBC3A1800ACD7F7 /* FFGameDetailTableViewCell.xib in Resources */,
 				B51395CB1FEB904800BAE477 /* FFSystemInfoCell.xib in Resources */,
 				B59E3F93202441C000F81F60 /* README.md in Resources */,
@@ -3019,6 +3033,7 @@
 				B59E3F87202441C000F81F60 /* CTAssetsPageView.m in Sources */,
 				B59E3FCF202441C000F81F60 /* ZLPhotoBrowser.m in Sources */,
 				B51967301FA9EA8E0046E391 /* FFClassifyModel.m in Sources */,
+				B53E7DAE2073268E0098F87F /* FFDetailPackHeaderView.m in Sources */,
 				B5C1FC241FB93A80004A779B /* FFOpenVipViewController.m in Sources */,
 				B519670B1FA8A9E50046E391 /* FFTodayOpenServerViewController.m in Sources */,
 				B55DE0A51FB14BF0001437D5 /* FFSignInViewController.m in Sources */,
@@ -3078,6 +3093,7 @@
 				B59E3FCB202441C000F81F60 /* ZLEditViewController.m in Sources */,
 				B59E3FAE202441C000F81F60 /* MJRefreshBackGifFooter.m in Sources */,
 				B59E3FEB202441C000F81F60 /* SYKeychain.m in Sources */,
+				B53E7DAB207318080098F87F /* FFDetailPackageModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

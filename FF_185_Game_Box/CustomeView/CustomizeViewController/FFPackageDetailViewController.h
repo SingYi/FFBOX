@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FFPackageDetailViewController : UIViewController
+@interface FFPackageDetailViewController : UITableViewController
 
 @property (nonatomic, strong) NSString *pid;
 

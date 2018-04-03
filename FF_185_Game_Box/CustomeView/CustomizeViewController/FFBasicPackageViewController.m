@@ -83,6 +83,7 @@
 }
 
 
+
 #pragma mark - getter
 - (FFPackageModel *)model {
     if (!_model) {
@@ -93,7 +94,9 @@
 
 - (FFPackageDetailViewController *)detailViewController {
     if (!_detailViewController) {
-        _detailViewController = [[FFPackageDetailViewController alloc] init];
+//        _detailViewController = [[FFPackageDetailViewController alloc] init];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MyStoryboard" bundle:nil];
+        _detailViewController = [storyboard instantiateViewControllerWithIdentifier:@"FFPackageDetailViewController"];
     }
     return _detailViewController;
 }

@@ -27,6 +27,8 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *likeButton;
 
+@property (weak, nonatomic) IBOutlet UIImageView *topButton;
+
 @end
 
 @implementation FFDriveCommentCell
@@ -41,6 +43,8 @@
 
     self.likeButton.tintColor = [UIColor grayColor];
     [self.likeButton setTitleColor:[UIColor lightGrayColor] forState:(UIControlStateNormal)];
+
+    self.topButton.hidden = YES;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -64,6 +68,7 @@
     [self setLikeWith:dict[@"likes"]];
     [self setLikeTypeWith:dict[@"like_type"]];
     [self setVipWith:dict[@"uid_vip"]];
+    [self setTopButtonWithHidden:dict[@"order"]];
 }
 
 - (void)setIconImageWith:(NSString *)str {
@@ -144,6 +149,15 @@
 
         default:
             break;
+    }
+}
+
+- (void)setTopButtonWithHidden:(NSString *)str {
+    NSString *top = [NSString stringWithFormat:@"%@",str];
+    if (top.integerValue == 1) {
+        self.topButton.hidden = NO;
+    } else {
+        self.topButton.hidden = YES;
     }
 }
 

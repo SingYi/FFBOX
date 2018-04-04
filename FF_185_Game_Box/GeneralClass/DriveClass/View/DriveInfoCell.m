@@ -52,6 +52,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *recommendButton;
 
 //@property (nonatomic, assign) CGFloat rowHeight;
+@property (weak, nonatomic) IBOutlet UILabel *EditCommentLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *EditCommentLabelHeight;
 
 @property (nonatomic, strong) NSMutableArray<UIImageView *> *imageViews;
 
@@ -124,6 +126,16 @@
 
 
     [self.contentView addSubview:self.verifyLabel];
+
+    CALayer *line = [CALayer new];
+    line.frame = CGRectMake(0, 0, kSCREEN_WIDTH - 32, 1);
+    line.backgroundColor = [UIColor lightGrayColor].CGColor;
+//    [self.contentView.layer addSublayer:line];
+    self.EditCommentLabel.textColor = NAVGATION_BAR_COLOR;
+//    self.EditCommentLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
+//    self.EditCommentLabel.layer.borderWidth = 1;
+    [self.EditCommentLabel.layer addSublayer:line];
+    self.EditCommentLabel.hidden = YES;
 }
 
 //点击关注
@@ -247,6 +259,8 @@
 
     //推荐显示
     [self setRecommend:model.ratings];
+    //小编点评
+    [self setEditCommentString:model.remark];
 }
 
 /** 设置推荐 */
@@ -545,6 +559,31 @@
     }
 
     [self.tableView reloadData];
+}
+
+/** 设置小编评论 */
+- (void)setEditCommentString:(NSString *)string {
+#warning 小编点评
+
+    if (string.length < 1 || string == nil || [string isKindOfClass:[NSNull class]] || [string isEqualToString:@"<null>"]) {
+        self.EditCommentLabel.hidden = YES;
+        self.EditCommentLabel.text = @"";
+        self.EditCommentLabelHeight.constant = 0.f;
+    } else {
+        self.EditCommentLabel.hidden = NO;
+        self.EditCommentLabel.text = [NSString stringWithFormat:@"小编点评 : %@",string];
+        [self.EditCommentLabel sizeToFit];
+        self.EditCommentLabelHeight.constant = self.EditCommentLabel.bounds.size.height + 4;
+
+        NSMutableAttributedString *attString = [[NSMutableAttributedString alloc] initWithString:self.EditCommentLabel.text];
+        [attString setValuesForKeysWithDictionary:@{}];
+        NSRange range1 = [self.EditCommentLabel.text rangeOfString:@"小编点评 :"];
+        [attString addAttribute:NSForegroundColorAttributeName value:NAVGATION_BAR_COLOR range:range1];
+        range1 = [self.EditCommentLabel.text rangeOfString:string];
+        [attString addAttribute:NSForegroundColorAttributeName value:[UIColor darkGrayColor] range:range1];
+
+        self.EditCommentLabel.attributedText = attString;
+    }
 }
 
 #pragma mark - tableview datasource

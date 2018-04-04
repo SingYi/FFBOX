@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -62,7 +63,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ClA-Zk-JCo">
-                        <rect key="frame" x="52" y="36" width="403" height="117"/>
+                        <rect key="frame" x="52" y="40" width="403" height="113"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -103,6 +104,12 @@
                         </constraints>
                         <state key="normal" image="Communtiy_Comment"/>
                     </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Community_Top" translatesAutoresizingMaskIntoConstraints="NO" id="06a-01-fTi">
+                        <rect key="frame" x="424" y="14" width="23" height="19"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="06a-01-fTi" secondAttribute="height" multiplier="11:9" id="m8X-CP-mGY"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="YHZ-zQ-z9i" firstAttribute="top" secondItem="ClA-Zk-JCo" secondAttribute="bottom" constant="8" id="2iF-R6-rvA"/>
@@ -115,10 +122,11 @@
                     <constraint firstAttribute="trailing" secondItem="Rqd-Qq-1Fp" secondAttribute="trailing" id="Dyx-zp-JGh"/>
                     <constraint firstAttribute="trailing" secondItem="ZFl-Qj-AWg" secondAttribute="trailing" constant="12" id="HOE-NL-yyp"/>
                     <constraint firstItem="YHZ-zQ-z9i" firstAttribute="leading" secondItem="ClA-Zk-JCo" secondAttribute="leading" id="NMq-YM-9HD"/>
-                    <constraint firstItem="ClA-Zk-JCo" firstAttribute="top" secondItem="uQ4-hT-sBZ" secondAttribute="bottom" constant="8" id="Obj-K7-yY1"/>
+                    <constraint firstItem="ClA-Zk-JCo" firstAttribute="top" secondItem="uQ4-hT-sBZ" secondAttribute="bottom" constant="12" id="Obj-K7-yY1"/>
                     <constraint firstItem="uQ4-hT-sBZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="Ohq-3V-F1J"/>
                     <constraint firstItem="WzF-ne-euA" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="PJA-fW-8i2"/>
                     <constraint firstItem="YHZ-zQ-z9i" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Quv-zV-leP"/>
+                    <constraint firstItem="06a-01-fTi" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="Roa-UF-bgN"/>
                     <constraint firstItem="aED-Ru-qje" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="S1i-A8-24r"/>
                     <constraint firstItem="aED-Ru-qje" firstAttribute="leading" secondItem="wd9-mT-KI2" secondAttribute="trailing" constant="8" id="cg0-Va-a0g"/>
                     <constraint firstItem="PPZ-Xi-etE" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="com-LP-cYq"/>
@@ -128,6 +136,7 @@
                     <constraint firstItem="wd9-mT-KI2" firstAttribute="centerY" secondItem="uQ4-hT-sBZ" secondAttribute="centerY" id="iIc-va-LvT"/>
                     <constraint firstItem="sl3-N0-a9I" firstAttribute="centerY" secondItem="YHZ-zQ-z9i" secondAttribute="centerY" constant="2" id="qxy-5C-2i7"/>
                     <constraint firstAttribute="bottom" secondItem="Rqd-Qq-1Fp" secondAttribute="bottom" id="wSz-gj-LC7"/>
+                    <constraint firstItem="06a-01-fTi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="yYF-un-M0T"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="aW0-zy-SZf"/>
@@ -139,6 +148,7 @@
                 <outlet property="replayLabel" destination="aED-Ru-qje" id="GNL-N4-XB8"/>
                 <outlet property="timeLabel" destination="YHZ-zQ-z9i" id="RGW-7q-oKn"/>
                 <outlet property="toUserNickNameLabel" destination="WzF-ne-euA" id="653-fk-Yb3"/>
+                <outlet property="topButton" destination="06a-01-fTi" id="2JS-uP-eEq"/>
                 <outlet property="vipImage" destination="wd9-mT-KI2" id="fdV-sV-23M"/>
             </connections>
             <point key="canvasLocation" x="-107.5" y="89"/>
@@ -146,6 +156,7 @@
     </objects>
     <resources>
         <image name="Community_Like" width="16" height="16"/>
+        <image name="Community_Top" width="22" height="19"/>
         <image name="Community_Vip" width="13" height="13"/>
         <image name="Communtiy_Comment" width="18" height="18"/>
     </resources>

@@ -73,6 +73,8 @@
 
 /** 评级 */
 @property (nonatomic, strong) NSString *ratings;
+/** 小编点评 */
+@property (nonatomic, strong) NSString *remark;
 
 /** dataArray */
 @property (nonatomic, strong) NSMutableArray<FFDynamicModel *> *dataArray;

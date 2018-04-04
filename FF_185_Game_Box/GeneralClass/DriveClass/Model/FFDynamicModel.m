@@ -78,6 +78,7 @@
     self.comments_Array = dynamics[@"comment_info"];
     self.verifyDynamics = dynamics[@"status"];
     self.ratings = [NSString stringWithFormat:@"%@",dynamics[@"level"]];
+    self.remark = [NSString stringWithFormat:@"%@",dynamics[@"remark"]];
 //     syLog(@"uid === %@",self.verifyDynamics);
 }
 

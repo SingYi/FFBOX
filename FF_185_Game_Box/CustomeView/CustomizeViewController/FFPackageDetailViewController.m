@@ -158,6 +158,13 @@
     }
 
     self.downloadGameBtn.hidden = !([FFDetailPackageModel sharedModel].download_url && [FFDetailPackageModel sharedModel].download_url.length > 5);
+
+    if ([FFDetailPackageModel sharedModel].game_content.length > 0) {
+        self.gameSubTitleLabel.text = [FFDetailPackageModel sharedModel].game_content;
+        self.gameSubTitleLabel.hidden = NO;
+    } else {
+        self.gameSubTitleLabel.hidden = YES;
+    }
 }
 
 #pragma mark - method

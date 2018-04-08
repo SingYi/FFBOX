@@ -42,7 +42,8 @@
 @property (nonatomic, strong) NSString *pack_notice;
 /** package used counts */
 @property (nonatomic, strong) NSString *pack_used_counts;
-
+/** game content */
+@property (nonatomic, strong) NSString *game_content;
 
 + (instancetype)sharedModel;
 

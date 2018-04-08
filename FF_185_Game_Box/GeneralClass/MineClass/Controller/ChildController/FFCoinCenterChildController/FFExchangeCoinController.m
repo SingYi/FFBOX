@@ -88,6 +88,12 @@
         return;
     }
 
+    if (self.exchangeTextfield.text.integerValue < 10) {
+        BOX_MESSAGE(@"请填写大于10的数字");
+        self.exchangeTextfield.text = @"";
+        return;
+    }
+
     [self.exchangeTextfield resignFirstResponder];
     START_NET_WORK;
     [FFUserModel coinExchangePlatformCounts:self.exchangeTextfield.text Completion:^(NSDictionary *content, BOOL success) {

@@ -89,7 +89,6 @@
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].PACKS_LINGQU params:dict completion:^(NSDictionary *content, BOOL success) {
         REQUEST_COMPLETION;
-        syLog(@"get package == %@",content);
     }];
 }
 

@@ -30,50 +30,44 @@
     NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
 
     //先从缓存中找 GIF 图,如果有就加载,没有就请求
-    NSData *gifImageData = [self imageDataFromDiskCacheWithKey:[imagePath stringByAppendingString:@"gif"]];
-    
-    
-    if (gifImageData) {
-        
-        self.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:gifImageData];
-        [self.label removeFromSuperview];
-    } else {
- 
-        NSURL *url = [NSURL URLWithString:imagePath];
-        
-        WeakSelf;
 
-        [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-            
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                CGFloat progress = receivedSize * 1.f / expectedSize * 1.f;
-                
-                weakSelf.label.text = [NSString stringWithFormat:@"加载中 %.2lf %%",progress * 100];
-                weakSelf.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.5];
-                if (progress >= 1) {
-                    [self.label removeFromSuperview];
-                }
+        NSData *gifImageData = [self imageDataFromDiskCacheWithKey:[imagePath stringByAppendingString:@"gif"]];
+
+        if (gifImageData) {
+            self.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:gifImageData];
+            [self.label removeFromSuperview];
+        } else {
+
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSURL *url = [NSURL URLWithString:imagePath];
+
+            WeakSelf;
+
+            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:url options:0 progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    CGFloat progress = receivedSize * 1.f / expectedSize * 1.f;
+
+                    weakSelf.label.text = [NSString stringWithFormat:@"加载中 %.2lf %%",progress * 100];
+                    weakSelf.backgroundColor = [UIColor colorWithWhite:0.2 alpha:0.5];
+                    if (progress >= 1) {
+                        [self.label removeFromSuperview];
+                    }
+                });
+
+            }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
+
+                //缓存 gif 图
+                [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
+
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    weakSelf.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:data];
+                });
+
+            }];
             });
+        }
 
-
-            
-            
-        }  completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
-
-                
-            //缓存 gif 图
-            [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
-
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                weakSelf.gifImageView.animatedImage = [FLAnimatedImage animatedImageWithGIFData:data];
-            });
-
-
-        }];
-
-    }
 }
 
 

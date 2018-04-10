@@ -2354,8 +2354,8 @@
 			isa = PBXGroup;
 			children = (
 				B5B95E891FBD8B5000ACD7F7 /* FFGameDetailViewController.h */,
-				B5B95E2A1FBC37F000ACD7F7 /* Model */,
 				B5B95E8A1FBD8B5000ACD7F7 /* FFGameDetailViewController.m */,
+				B5B95E2A1FBC37F000ACD7F7 /* Model */,
 				B5B95E8C1FBD8B8000ACD7F7 /* FFGameRaidersViewController.h */,
 				B5B95E8D1FBD8B8000ACD7F7 /* FFGameRaidersViewController.m */,
 				B5B95E8F1FBD8B9000ACD7F7 /* FFGamePackageViewController.h */,

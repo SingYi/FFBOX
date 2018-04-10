@@ -23,6 +23,8 @@
 #import "FFSharedController.h"
 
 #import "UIAlertController+FFAlertController.h"
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
 
 #import "MBProgressHUD.h"
 
@@ -68,6 +70,7 @@ static FFGameViewController *controller = nil;
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
+    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLayoutSubviews {

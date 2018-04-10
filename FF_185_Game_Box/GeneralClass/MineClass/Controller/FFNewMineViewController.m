@@ -22,6 +22,7 @@
 
 #import "FFSignInViewController.h"          //每日签到
 #import "FFInviteFriendViewController.h"    //邀请好友
+#import "FFInviteRankListViewController.h"  //邀请排行榜
 #import "FFCustomerServiceViewController.h" //客服中心
 #import "FFMyPackageViewController.h"       //我的礼包
 #import "FFMyCollectionViewController.h"    //我的收藏
@@ -733,7 +734,7 @@ break;\
         if (self.is185) {
             _showArray = [@[@[@"FFResignViewController"],
                             @[@"FFSignInViewController",@"FFEvervDayComment",@"FFDrivePostStatusViewController",
-                              @"FFInviteFriendViewController"],
+                              @"FFInviteFriendViewController",@"FFInviteRankListViewController"],
                             @[@"FFExchangeCoinController",@"FFLotteryViewController",@"FFGoldDetailViewController",
                               @"FFPlatformDetailViewController"],
                             @[@"FFRRebateViewController",@"FFTransferServerViewController"],
@@ -760,14 +761,17 @@ break;\
         _infoDict = [@{@"FFResignViewController":       @{@"title":@"闪退修复",
                                                           @"subimage":@"Mine_subimage_Fix"
                                                           },
+
                        @"FFSignInViewController":       @{@"title":@"签到",@"subTitle":@"+5金币,坚持有惊喜",
                                                           @"subimage":@"Mine_subimage_sign"},
-                      @"FFEvervDayComment":             @{@"title":@"每日评论",@"subTitle":@"+3到10金币,每日一次",
+                       @"FFEvervDayComment":             @{@"title":@"每日评论",@"subTitle":@"+3到10金币,每日一次",
                                                           @"subimage":@"Mine_subimage_comment"},
-                      @"FFDrivePostStatusViewController":@{@"title":@"每日发车",@"subTitle":@"每次成功发车可获得5-30金币",
+                       @"FFDrivePostStatusViewController":@{@"title":@"每日发车",@"subTitle":@"每次成功发车可获得5-30金币",
                                                            @"subimage":@"Mine_subimage_Post_Status"},
-                      @"FFInviteFriendViewController":  @{@"title":@"邀请好友",@"subTitle":@"最高奖励2000金币/人",
+                       @"FFInviteFriendViewController":  @{@"title":@"邀请好友",@"subTitle":@"最高奖励2000金币/人",
                                                           @"subimage":@"Mine_subimage_invite"},
+                       @"FFInviteRankListViewController":@{@"title":@"邀请排行榜",@"subTitle":@"",
+                                                           @"subimage":@"Mine_subimage_invite"},
 
                       @"FFExchangeCoinController":      @{@"title":@"金币兑换",
                                                           @"subimage":@"Mine_subimage_changecoin"},

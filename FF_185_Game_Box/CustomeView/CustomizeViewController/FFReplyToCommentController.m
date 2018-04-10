@@ -10,6 +10,7 @@
 #import "FFGameModel.h"
 #import "UIAlertController+FFAlertController.h"
 
+
 #define MODEL FFMyNewsModel
 
 @interface FFReplyToCommentController () <UITextViewDelegate>

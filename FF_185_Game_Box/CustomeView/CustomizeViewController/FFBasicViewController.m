@@ -8,6 +8,9 @@
 
 #import "FFBasicViewController.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 #define CELL_IDE @"FFCustomizeCell"
 
 
@@ -26,6 +29,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    self.navBarBgAlpha = @"1.0";
 }
 
 

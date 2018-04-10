@@ -32,7 +32,9 @@
 
 @end
 
-@implementation FFInviteListCell
+@implementation FFInviteListCell {
+    NSString *__userName;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -98,7 +100,9 @@
 }
 
 - (void)setUserName:(NSString *)userName {
-    self.userNameLabel.text = [NSString stringWithFormat:@"%@",userName];
+    __userName = [NSString stringWithFormat:@"%@",userName];
+    NSString *subName = [userName substringToIndex:3];
+    self.userNameLabel.text = [NSString stringWithFormat:@"%@****",subName];
 }
 
 - (void)setSex:(NSString *)string {
@@ -138,6 +142,12 @@
         self.remindLabel.hidden = NO;
     } else {
         self.remindLabel.hidden = YES;
+    }
+
+    if ([uid isEqualToString:SSKEYCHAIN_UID]) {
+        self.userNameLabel.text = __userName;
+    } else {
+        self.userNameLabel.text = self.userNameLabel.text;
     }
 }
 

@@ -30,12 +30,12 @@
 }
 
 - (void)setDict:(NSDictionary *)dict {
-//    syLog(@"cell dict == %@",dict);
+    syLog(@"cell dict == %@",dict);
     //who
-    [self setWho:dict[@"passport"][@"nickname"]];
-    //time
-    [self setTime:dict[@"create_time"]];
-    //content
+    [self setWho:[NSString stringWithFormat:@"%@",dict[@"nick_name"]]];
+//    //time
+    [self setTime:[NSString stringWithFormat:@"%@",dict[@"create_time"]]];
+//    //content
     [self setContent:dict[@"content"]];
 }
 
@@ -46,7 +46,7 @@
 
 - (void)setTime:(NSString *)time {
 //    syLog(@"time === %@",time);
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time.integerValue / 1000];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:time.integerValue];
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"YYYY-MM-dd HH:mm";
     time = [formatter stringFromDate:date];

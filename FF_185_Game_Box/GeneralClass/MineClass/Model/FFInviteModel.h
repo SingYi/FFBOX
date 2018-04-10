@@ -15,6 +15,8 @@ typedef enum : NSUInteger {
 
 typedef void(^FFInviewRefresCompletion)(BOOL success,First_list_enum listEnum);
 typedef void(^FFinviteRewardCompletion)(BOOL success);
+typedef void(^FFInviteUserRankingList)(BOOL success, NSDictionary *content);
+typedef void(^FFInviewNotesCompleteBlock)(BOOL success, NSDictionary *content);
 
 @interface FFInviteModel : FFBasicModel
 
@@ -23,12 +25,17 @@ typedef void(^FFinviteRewardCompletion)(BOOL success);
 @property (nonatomic, strong) NSArray *yesterDayList;
 @property (nonatomic, strong) FFInviewRefresCompletion completion;
 @property (nonatomic, strong) FFinviteRewardCompletion rewardBlock;
+@property (nonatomic, strong) FFInviteUserRankingList userRankingList;
 
 + (instancetype)sharedModel;
 
 - (void)refreshList;
 
 - (void)gotInviteReward;
+
+- (void)getUserRankingListWithType:(NSString *)type;
+
++ (void)getNoticeWithBlock:(FFInviewNotesCompleteBlock)completion;
 
 
 @end

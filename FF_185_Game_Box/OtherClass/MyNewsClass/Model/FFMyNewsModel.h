@@ -14,13 +14,7 @@ typedef void (^FFCompleteBlock)(NSDictionary *content, BOOL success);
 
 /** 获取用户最新回复 */ 
 + (void)getUserNewsWithPage:(NSString *)page
-              CompleteBlock:(FFCompleteBlock)completeBlock;
-
-/** 回复评论 */
-+ (void)ReplyToComment:(NSString *)topicID
-               content:(NSString *)content
-               replyID:(NSString *)replyID
-         completeBlock:(FFCompleteBlock)completeBlock;
+              CompleteBlock:(FFCompleteBlock)completion;
 
 
 /** 消息列表 */

@@ -284,7 +284,7 @@ static FFGameModel *model;
     if (is_fake) {
         [dict setObject:is_fake forKey:@"is_fake"];
     }
-
+    [dict setObject:@"1" forKey:@"is_game_id"];
     [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"to_uid",@"channel",@"dynamics_id",@"content"]))) forKey:@"sign"];
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT params:dict completion:^(NSDictionary *content, BOOL success) {

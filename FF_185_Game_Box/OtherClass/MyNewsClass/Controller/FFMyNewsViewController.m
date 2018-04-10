@@ -19,12 +19,12 @@
 @property (nonatomic, strong) FFRebateSelectView *selectView;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
-/** 我的消息 */
-@property (nonatomic, strong) FFNewsViewController *newsController;
-/** 我的通知 */
-@property (nonatomic, strong) FFNotificationViewController *noticicationController;
 /** 系统通知 */
 @property (nonatomic, strong) FFSystemInfoController *systemInfoController;
+/** 评论回复 */
+@property (nonatomic, strong) FFNewsViewController *newsController;
+/** 开服通知 */
+@property (nonatomic, strong) FFNotificationViewController *noticicationController;
 
 @end
 
@@ -115,6 +115,16 @@ static FFMyNewsViewController *controller = nil;
     return _scrollView;
 }
 
+- (FFSystemInfoController *)systemInfoController {
+    if (!_systemInfoController) {
+        _systemInfoController = [[FFSystemInfoController alloc] init];
+        _systemInfoController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT - CGRectGetMaxY(self.selectView.frame));
+        [_systemInfoController willMoveToParentViewController:self];
+        [self addChildViewController:_systemInfoController];
+    }
+    return _systemInfoController;
+}
+
 - (FFNewsViewController *)newsController {
     if (!_newsController) {
         _newsController = [[FFNewsViewController alloc] init];
@@ -135,15 +145,7 @@ static FFMyNewsViewController *controller = nil;
     return _noticicationController;
 }
 
-- (FFSystemInfoController *)systemInfoController {
-    if (!_systemInfoController) {
-        _systemInfoController = [[FFSystemInfoController alloc] init];
-        _systemInfoController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT - CGRectGetMaxY(self.selectView.frame));
-        [_systemInfoController willMoveToParentViewController:self];
-        [self addChildViewController:_systemInfoController];
-    }
-    return _systemInfoController;
-}
+
 
 
 

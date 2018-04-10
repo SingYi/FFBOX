@@ -10,6 +10,9 @@
 #import "FFUserModel.h"
 #import "FFViewFactory.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 #define BOX_ORANG_COLOR RGBCOLOR(251, 158, 52)
 
 @interface FFSignInViewController()
@@ -61,6 +64,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    self.navBarBgAlpha = @"1.0";
 //            self.navigationController.navigationBar.backgroundColor = NAVGATION_BAR_COLOR;
     [self signInit];
 }

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^CallBackBlock)(NSInteger btnIndex);
-typedef void(^dismissBlock)(void);
+typedef void(^CallBackBlock)(NSInteger btnIndex);
+typedef void(^DismissBlock)(void);
 
 @interface UIAlertController (FFAlertController)
 
@@ -62,12 +62,12 @@ typedef void(^dismissBlock)(void);
 + (void)showAlertWithTitle:(NSString *)title
                    Message:(NSString *)message
                dismissTime:(CGFloat)second
-              dismissBlock:(dismissBlock)block;
+              dismissBlock:(DismissBlock)block;
 
 
 + (void)showAlertMessage:(NSString *)message
              dismissTime:(CGFloat)second
-            dismissBlock:(dismissBlock)block;
+            dismissBlock:(DismissBlock)block;
 
 
 

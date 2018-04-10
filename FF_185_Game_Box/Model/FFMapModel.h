@@ -133,6 +133,11 @@
 //用户协议
 @property (nonatomic, strong) NSString *USER_AGREEMENT;
 
+//
+@property (nonatomic, strong) NSString *COMMENT_REPLY_LIST;
+@property (nonatomic, strong) NSString * USER_RANKING;
+@property (nonatomic, strong) NSString *RANKNOTICE;
+
 
 + (instancetype)map;
 

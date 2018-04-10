@@ -65,6 +65,28 @@ static FFInviteModel *model = nil;
     }];
 }
 
+- (void)getUserRankingListWithType:(NSString *)type {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+//    [dict ]
+
+    NSString *sign = BOX_SIGN(@{@"uid":SSKEYCHAIN_UID}, @[@"uid"]);
+    [FFBasicModel postRequestWithURL:[FFMapModel map].RECEIVE_REWARD params:@{@"uid":SSKEYCHAIN_UID,@"sign":sign} completion:^(NSDictionary *content, BOOL success) {
+        REQUEST_STATUS;
+        syLog(@"invite reward === %@", content);
+        if (success && status.integerValue == 1) {
+            if (self.rewardBlock) {
+                self.rewardBlock(YES);
+                [self refreshList];
+            }
+        } else {
+            if (self.rewardBlock) {
+                self.rewardBlock(NO);
+            }
+        }
+    }];
+}
+
 - (First_list_enum)cheackGotWithArray:(NSArray *)array {
     for (NSDictionary *dict in array) {
         NSString *uid = [NSString stringWithFormat:@"%@",dict[@"uid"]];
@@ -77,4 +99,24 @@ static FFInviteModel *model = nil;
 }
 
 
++ (void)getNoticeWithBlock:(FFInviewNotesCompleteBlock)completion {
+    [FFBasicModel postRequestWithURL:[FFMapModel map].RANKNOTICE params:nil completion:^(NSDictionary *content, BOOL success) {
+        if (completion) {
+            completion(success,content);
+        }
+    }];
+}
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+

@@ -135,7 +135,7 @@
 }
 
 
-- (void)dismissWithSecond:(CGFloat)second dismissBlock:(dismissBlock)block {
+- (void)dismissWithSecond:(CGFloat)second dismissBlock:(DismissBlock)block {
     if (second > 0) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(second * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             [self dismissViewControllerAnimated:YES completion:^{
@@ -155,12 +155,12 @@
     }
 }
 
-+ (void)showAlertWithTitle:(NSString *)title Message:(NSString *)message dismissTime:(CGFloat)second dismissBlock:(dismissBlock)block {
++ (void)showAlertWithTitle:(NSString *)title Message:(NSString *)message dismissTime:(CGFloat)second dismissBlock:(DismissBlock)block {
     UIAlertController *alertController = [UIAlertController showAlertControllerWithViewController:[UIAlertController rooViewController] alertControllerStyle:(UIAlertControllerStyleAlert) title:title message:message cancelButtonTitle:nil destructiveButtonTitle:nil CallBackBlock:nil otherButtonTitles:nil];
     [alertController dismissWithSecond:second dismissBlock:block];
 }
 
-+ (void)showAlertMessage:(NSString *)message dismissTime:(CGFloat)second dismissBlock:(dismissBlock)block {
++ (void)showAlertMessage:(NSString *)message dismissTime:(CGFloat)second dismissBlock:(DismissBlock)block {
     [UIAlertController showAlertWithTitle:nil Message:message dismissTime:second dismissBlock:block];
 }
 

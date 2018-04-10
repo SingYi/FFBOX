@@ -10,7 +10,8 @@
 #import "FFMyNewsModel.h"
 #import "FFMyNewsCell.h"
 #import "FFReplyToCommentController.h"
-
+#import "FFGameModel.h"
+#import "UIAlertController+FFAlertController.h"
 
 #define CELL_IDE @"FFMyNewsCell"
 
@@ -31,18 +32,14 @@
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
+    self.tableView.frame = self.view.bounds;
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    self.tableView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.view.bounds.size.height);
-}
 
 - (void)initUserInterface {
     [super initUserInterface];
     self.view.layer.masksToBounds = YES;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
-    self.tableView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.view.bounds.size.height);
 }
 
 - (void)initDataSource {
@@ -61,7 +58,7 @@
         [self.tableView.mj_footer endRefreshing];
 
         if (success) {
-            self.showArray = [content[@"replies"] mutableCopy];
+            self.showArray = [content[@"data"][@"list"] mutableCopy];
         } else {
             self.showArray = nil;
             BOX_MESSAGE(@"暂无数据");
@@ -77,7 +74,7 @@
         STOP_NET_WORK;
         if (success) {
             //            syLog(@"contetn $ %@",content);
-            NSArray *array = content[@"replies"];
+            NSArray *array = content[@"data"][@"list"];
             if (array == nil ||array.count == 0) {
                 [self.tableView.mj_footer endRefreshingWithNoMoreData];
             } else {
@@ -89,6 +86,8 @@
             [self.tableView.mj_footer endRefreshingWithNoMoreData];
         }
     }];
+
+    [self.tableView.mj_footer endRefreshing];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -105,6 +104,15 @@
     NSDictionary *dict = self.showArray[indexPath.row];
     FFReplyToCommentController *replyController = [[FFReplyToCommentController alloc] init];
     replyController.commentDict = dict;
+    replyController.completion = ^(NSDictionary *content, BOOL success) {
+        [self.navigationController popViewControllerAnimated:YES];
+        if (success) {
+            [UIAlertController showAlertMessage:@"回复成功" dismissTime:0.7 dismissBlock:nil];
+        } else {
+            [UIAlertController showAlertMessage:@"回复失败,请稍后尝试" dismissTime:0.7 dismissBlock:nil];
+        }
+    };
+    CURRENT_GAME.game_id = [NSString stringWithFormat:@"%@",dict[@"dynamics_id"]];
     HIDE_TABBAR;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:replyController animated:YES];

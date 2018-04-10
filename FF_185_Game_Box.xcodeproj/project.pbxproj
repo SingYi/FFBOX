@@ -362,6 +362,7 @@
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
+		B5F29303207C91E9001AEE53 /* FFInviteListNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F29302207C91E9001AEE53 /* FFInviteListNotesController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -1074,6 +1075,8 @@
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
 		B5D75A8B2008526C00600B3D /* DriveInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriveInfoCell.m; sourceTree = "<group>"; };
 		B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DriveInfoCell.xib; sourceTree = "<group>"; };
+		B5F29301207C91E9001AEE53 /* FFInviteListNotesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteListNotesController.h; sourceTree = "<group>"; };
+		B5F29302207C91E9001AEE53 /* FFInviteListNotesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteListNotesController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1447,6 +1450,8 @@
 				B51379A91FB2DF940025F00B /* FFInviteFriendViewController.m */,
 				B56240172069E2120024DAA3 /* FFInviteRankListViewController.h */,
 				B56240182069E2120024DAA3 /* FFInviteRankListViewController.m */,
+				B5F29301207C91E9001AEE53 /* FFInviteListNotesController.h */,
+				B5F29302207C91E9001AEE53 /* FFInviteListNotesController.m */,
 				B51379AB1FB2DFB50025F00B /* FFCustomerServiceViewController.h */,
 				B51379AC1FB2DFB50025F00B /* FFCustomerServiceViewController.m */,
 				B51379AE1FB2DFE80025F00B /* FFMyPackageViewController.h */,
@@ -2275,7 +2280,6 @@
 		B5B95E281FBC37F000ACD7F7 /* GameClass */ = {
 			isa = PBXGroup;
 			children = (
-				B5B95E2A1FBC37F000ACD7F7 /* Model */,
 				B5B95E291FBC37F000ACD7F7 /* Controller */,
 				B5B95E2B1FBC37F000ACD7F7 /* VIew */,
 			);
@@ -2350,6 +2354,7 @@
 			isa = PBXGroup;
 			children = (
 				B5B95E891FBD8B5000ACD7F7 /* FFGameDetailViewController.h */,
+				B5B95E2A1FBC37F000ACD7F7 /* Model */,
 				B5B95E8A1FBD8B5000ACD7F7 /* FFGameDetailViewController.m */,
 				B5B95E8C1FBD8B8000ACD7F7 /* FFGameRaidersViewController.h */,
 				B5B95E8D1FBD8B8000ACD7F7 /* FFGameRaidersViewController.m */,
@@ -2882,6 +2887,7 @@
 				B59E3F9A202441C000F81F60 /* MASCompositeConstraint.m in Sources */,
 				B556B0E61FA6BD88005DC871 /* main.m in Sources */,
 				B59E3F97202441C000F81F60 /* NSLayoutConstraint+PureLayout.m in Sources */,
+				B5F29303207C91E9001AEE53 /* FFInviteListNotesController.m in Sources */,
 				B59E3FB8202441C000F81F60 /* UIScrollView+MJRefresh.m in Sources */,
 				B59E3F6C202441C000F81F60 /* AFURLSessionManager.m in Sources */,
 				B519674D1FAAC8790046E391 /* FFRActivityViewController.m in Sources */,

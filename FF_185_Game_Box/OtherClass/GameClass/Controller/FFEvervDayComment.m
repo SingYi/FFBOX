@@ -11,6 +11,9 @@
 #import "FFViewFactory.h"
 #import "SDWebImageDownloader.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 @interface FFEvervDayComment ()
 
 @end
@@ -28,6 +31,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBar.hidden = NO;
+    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLoad {

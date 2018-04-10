@@ -15,6 +15,9 @@
 #import "MBProgressHUD.h"
 #import "FFPostStatusModel.h"
 
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
+
 #define CELL_IDE @"FFPostStatusImageCell"
 
 
@@ -49,6 +52,11 @@
 @implementation FFDrivePostStatusViewController {
     CGRect textViewFrame;
     CGRect imageContentViewFrame;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.navBarBgAlpha = @"1.0";
 }
 
 - (void)viewDidLoad {

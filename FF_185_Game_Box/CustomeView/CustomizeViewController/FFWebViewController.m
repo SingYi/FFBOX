@@ -32,10 +32,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.webView];
-    self.automaticallyAdjustsScrollViewInsets = NO;
-//    if (@available(iOS 11.0, *)) {
-//        self.webView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentScrollableAxes;
-//    }
+    self.automaticallyAdjustsScrollViewInsets = YES;
 }
 
 - (void)setWebURL:(NSString *)webURL {

@@ -10,27 +10,25 @@
 #import "FFMapModel.h"
 #import "SYKeychain.h"
 
-/**
- CYSuccess           = 0,         成功
- CYParamsError       = 1,         参数错误
- CYLoginError        = 2,         登录错误
- CYOtherError        = 3,         其他错误
- */
 
 @implementation FFMyNewsModel
 
 
-+ (void)getUserNewsWithPage:(NSString *)page CompleteBlock:(FFCompleteBlock)completeBlock {
++ (void)getUserNewsWithPage:(NSString *)page CompleteBlock:(FFCompleteBlock)completion {
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
+    [dict setObject:@"2" forKey:@"comment_type"];
+    [dict setObject:Channel forKey:@"channel"];
+    [dict setObject:page forKey:@"page"];
+    [dict setObject:BOX_SIGN(dict, (@[@"uid",@"comment_type",@"channel",@"page"])) forKey:@"sign"];
+
+    [FFMapModel postRequestWithURL:[FFMapModel map].COMMENT_REPLY_LIST  params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
 
 }
 
-/** dic[@"topic_id"] */
-+ (void)ReplyToComment:(NSString *)topicID
-               content:(NSString *)content
-               replyID:(NSString *)replyID
-         completeBlock:(FFCompleteBlock)completeBlock {
-
-}
 
 
 

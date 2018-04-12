@@ -21,6 +21,8 @@ typedef void(^CommentNumberBlock)(NSString *commentNumber);
 typedef void(^CommentListBlock)(NSDictionary *content, BOOL success);
 typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
 
+typedef void(^GameActivityCallBackBlock)(NSDictionary *content, BOOL success);
+
 @interface FFGameModel : FFBasicModel
 
 /** 游戏 ID */
@@ -89,6 +91,8 @@ typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
 
 @property (nonatomic, strong) CommentNumberBlock commentNumberBlock;
 
+/** 游戏活动回调 */
+@property (nonatomic, strong) GameActivityCallBackBlock activityCallBackBlock;
 
 
 
@@ -115,7 +119,8 @@ typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
 - (void)likeCommentWithCommentID:(NSString *)commentid Completion:(GameCompletionBlck)completion;
 /** 取消赞接口 */
 - (void)cancelLikeCommentWithCommentID:(NSString *)commentid Type:(NSString *)type Completion:(GameCompletionBlck)completion;
-
+/** 请求游戏活动 */
+- (void)getGameActivity;
 
 
 /** 游戏详情接口 */
@@ -133,7 +138,8 @@ typedef void(^GameCompletionBlck)(NSDictionary *content, BOOL success);
 /** 子渠道下载 */
 + (void)gameDownloadWithTag:(NSString *)gameTag Comoletion:(void(^)(NSDictionary *  content, BOOL success))completion;
 
-
+/** 游戏相关活动 */
++ (void)activityWithGameID:(NSString *)gameID Comoletion:(void (^)(NSDictionary *, BOOL))completion;
 
 
 

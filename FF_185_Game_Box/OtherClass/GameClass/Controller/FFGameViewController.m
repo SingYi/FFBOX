@@ -268,6 +268,8 @@ static FFGameViewController *controller = nil;
 
     _gameID = gameID;
 
+    self.gDetailViewController.gameID = gameID;
+
 //    [self.hud showAnimated:YES];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     WeakSelf;
@@ -275,6 +277,8 @@ static FFGameViewController *controller = nil;
         [hud hideAnimated:YES];
         if (success) {
             syLog(@"刷新游戏成功");
+            //请求游戏活动
+            [CURRENT_GAME getGameActivity];
             [self setUserInterface];
         } else {
             syLog(@"刷新游戏失败");
@@ -286,7 +290,7 @@ static FFGameViewController *controller = nil;
     self.gServiceViewController.gameID = gameID;
     self.gPackageViewController.gameID = gameID;
     self.gRaidersViewController.gameID = gameID;
-    self.commentListController.gameID = _gameID;
+    self.commentListController.gameID = gameID;
 
 }
 

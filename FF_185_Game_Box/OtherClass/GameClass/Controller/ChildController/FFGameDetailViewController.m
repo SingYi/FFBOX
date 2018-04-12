@@ -16,6 +16,7 @@
 #import "FFGameGifTableViewCell.h"
 #import "FFClassifyTableCell.h"
 #import "FFGameCommentCell.h"
+#import "FFWebViewController.h"
 
 #import "FFCommentListController.h"
 #import "FFReplyToCommentController.h"
@@ -44,6 +45,23 @@
 //    ReachableViaWiFi,
 //    ReachableViaWWAN
 //} NetworkStatus;
+
+
+typedef enum : NSUInteger {
+    GameIntroductionCell = 0,
+    GameFeaturesCell,
+    ExclusiveEvent,
+    GameGifCell,
+    GameVipCell,
+    UserLike
+} DetailCellIndex;
+
+
+typedef enum : NSUInteger {
+    SectionModel1 = 0,
+    SectionModel2
+} SectionModel;
+
 
 
 @interface FFGameDetailViewController () <UITableViewDelegate, UITableViewDataSource>
@@ -89,10 +107,32 @@
 /** 更多评论页码 */
 @property (nonatomic, strong) FFCommentListController *commentListController;
 
+
+@property (nonatomic, strong) NSArray *sectionDict;
+@property (nonatomic, strong) NSArray *sectionRowHight;
+@property (nonatomic, assign) SectionModel sectionModel;
+
 @end
 
-@implementation FFGameDetailViewController
+@implementation FFGameDetailViewController {
+    NSDictionary *_gameAvtivity;
+}
 
+- (NSArray *)sectionDict {
+    if (!_sectionDict) {
+        _sectionDict = @[@[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"],
+                         @[@"    游戏简介:",@"    游戏特征:",@"    独家活动:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"]];
+    }
+    return _sectionDict;
+}
+
+- (NSArray *)sectionRowHight {
+    if (!_sectionRowHight) {
+        _sectionRowHight = @[@[@100.f,@100.f,@100.f,@100.f],
+                             @[@100.f,@100.f,@44.f,@100.f,@100.f]];
+    }
+    return _sectionRowHight;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -109,40 +149,33 @@
     self.view.backgroundColor = [UIColor orangeColor];
     [self.view addSubview:self.tableView];
 
-
 }
 
 - (void)initDataSource {
-//    _sectionTitleArray = @[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:",@"    用户评论:"];
-    _sectionTitleArray = @[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"];
-    _rowHeightArray = [@[@100.f,@100.f,@100.f,@100.f] mutableCopy];
-//    _rowHeightArray = [@[@100.f,@100.f,@100.f] mutableCopy];
-    _commentArray = @[];
 
-    _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionHeaderArray.count];
-    [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
-        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
-        label.backgroundColor = [UIColor whiteColor];
-        label.text = obj;
-        [view addSubview:label];
-        [_sectionHeaderArray addObject:view];
+     self.sectionModel = SectionModel1;
+
+
+    //游戏活动回调
+    [CURRENT_GAME setActivityCallBackBlock:^(NSDictionary *content, BOOL success) {
+        syLog(@"游戏活动 == %@",content);
+        NSArray *array = content[@"data"][@"list"];
+        if (success && ![array isKindOfClass:[NSNull class]]) {
+            _gameAvtivity = array.firstObject;
+            self.sectionModel = SectionModel2;
+            [self setActivityCell];
+        }
     }];
+
 }
+
+
 
 - (void)goToTop {
     [self.tableView setContentOffset:CGPointMake(0, 0)];
 }
 
 #pragma mark - responds
-//- (void)respondsToMoreCommentBtn {
-//    HIDE_TABBAR;
-//    HIDE_PARNENT_TABBAR;
-//    self.commentListController.gameID = _gameID;
-//    self.commentListController.tableView.frame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, kSCREEN_HEIGHT - kNAVIGATION_HEIGHT);
-//    [self.navigationController pushViewController:self.commentListController animated:YES];
-//}
 
 #pragma mark - tableviewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -150,42 +183,43 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    if (section == _sectionTitleArray.count - 1) {
-//        return _commentArray.count;
-//    }
     return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     FFGameDetailTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_GAMEDETAIL];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.layer.masksToBounds = YES;
     switch (indexPath.section) {
-        case 0:
+        case GameIntroductionCell:
             [self setAbstractCell:cell IndexPath:indexPath];
             return cell;
-        case 1: {
+        case GameFeaturesCell: {
             [self setFeatureCell:cell IndexPath:indexPath];
             return cell;
         }
-        case 2: {
+        case ExclusiveEvent: {
+            UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExclusiveEventCell" forIndexPath:indexPath];
+            cell.textLabel.text = _gameAvtivity[@"title"];
+
+            cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+            return cell;
+        }
+        case GameGifCell: {
             FFGameGifTableViewCell *gifCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_GAMEGIF];
             [self setGifCell:gifCell IndexPath:indexPath];
             return gifCell;
         }
-        case 3:
+        case GameVipCell: {
             [self setVipCell:cell IndexPath:indexPath];
             return cell;
-        case 4: {
+        }
+        case UserLike: {
             FFClassifyTableCell *likeCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_CLASSIFY];
             [self setLikeCell:likeCell IndexPath:indexPath];
             return likeCell;
         }
         default: {
-//            FFGameCommentCell *commentCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_COMMENT];
-//            [self setCommentCell:commentCell IndePath:indexPath];
-//            return commentCell;
             return nil;
         }
             break;
@@ -226,36 +260,34 @@
     if ([_gifModel isEqualToString:@"1"]) {
         cell.gifImageView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_WIDTH * 0.618);
     } else {
-
         cell.gifImageView.frame = CGRectMake(0, 0, kSCREEN_WIDTH * 0.618 * 0.618, kSCREEN_WIDTH * 0.618);
-
         cell.gifImageView.center = CGPointMake(kSCREEN_WIDTH / 2, kSCREEN_WIDTH * 0.618 / 2);
     }
+
 
     NSString *states = [self getNetWorkStates];
 
     if ([states isEqualToString:@"wifi"]) {
-        NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
-        //先从缓存中找 GIF 图,如果有就加载,没有就请求
-        NSString *path = [[[SDWebImageManager sharedManager] imageCache] defaultCachePathForKey:[imagePath stringByAppendingString:@"gif"]];
-        NSData *gifImageData = [NSData dataWithContentsOfFile:path];
-        if (gifImageData) {
-            cell.gifImageView.image = [UIImage imageWithData:gifImageData];
-        } else {
-            cell.gifImageView.image = nil;
-            [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:IMAGEURL,_gifUrl]] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
 
-                cell.gifImageView.image = image;
-                //缓存 gif 图
-                NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
+            NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
+            //先从缓存中找 GIF 图,如果有就加载,没有就请求
+            NSString *path = [[[SDWebImageManager sharedManager] imageCache] defaultCachePathForKey:[imagePath stringByAppendingString:@"gif"]];
+            NSData *gifImageData = [NSData dataWithContentsOfFile:path];
+            if (gifImageData) {
+                cell.gifImageView.image = [UIImage imageWithData:gifImageData];
+            } else {
+                cell.gifImageView.image = nil;
+                [[SDWebImageDownloader sharedDownloader] downloadImageWithURL:[NSURL URLWithString:[NSString stringWithFormat:IMAGEURL,_gifUrl]] options:0 progress:nil completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished) {
 
-                [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
-            }];
+                       cell.gifImageView.image = image;
 
-        }
+                    //缓存 gif 图
+                    NSString *imagePath = [NSString stringWithFormat:IMAGEURL,_gifUrl];
+                    [[[SDWebImageManager sharedManager] imageCache] storeImageDataToDisk:data forKey:[imagePath stringByAppendingString:@"gif"]];
+                }];
+            }
+            cell.gifImageView.animatedImage = nil;
 
-
-        cell.gifImageView.animatedImage = nil;
 
     } else {
 
@@ -322,91 +354,107 @@
 
 #pragma mark - tableViewdelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
-        FFGameGifTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (cell.isLoadGif) {
-
-        } else {
-            cell.gifUrl = _gifUrl;
-            cell.isLoadGif = YES;
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    switch (indexPath.section) {
+        case GameGifCell: {
+            FFGameGifTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if (!cell.isLoadGif) {
+                cell.gifUrl = _gifUrl;
+                cell.isLoadGif = YES;
+            }
+            break;
         }
+        case ExclusiveEvent: {
+            [self showEventDetail];
+            break;
+        }
+        case GameIntroductionCell:
+        case GameFeaturesCell:
+        case GameVipCell: {
+            [self openOrCloseCellWithIndexPath:indexPath];
+            break;
+        }
+        case UserLike: {
+
+            break;
+        }
+        default:
+            break;
     }
+}
 
-    if (indexPath.section < 4 && indexPath.section != 2) {
-
-        FFGameDetailTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-
-        [tableView beginUpdates];
-
-        if (_lastCell) {
-//            if (cell.tag == _lastCell.tag) {
-//                cell.isOpen = !cell.isOpen;
-//            } else {
-//                _lastCell.isOpen = NO;
-//                cell.isOpen = YES;
-//                _lastCell = cell;
-//            }
-
-            if (cell == _lastCell) {
-                if (cell.isOpen) {
-                    cell.isOpen = NO;
-                    _lastCell = nil;
-                } else {
-                    cell.isOpen = YES;
-                    _lastCell = cell;
-                }
+- (void)openOrCloseCellWithIndexPath:(NSIndexPath *)indexPath {
+    FFGameDetailTableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
+    [self.tableView beginUpdates];
+    if (_lastCell) {
+        if (cell == _lastCell) {
+            if (cell.isOpen) {
+                cell.isOpen = NO;
+                _lastCell = nil;
             } else {
-                _lastCell.isOpen = NO;
                 cell.isOpen = YES;
                 _lastCell = cell;
             }
         } else {
+            _lastCell.isOpen = NO;
             cell.isOpen = YES;
             _lastCell = cell;
         }
-        
-        if (cell.isOpen) {
-            cell.detail.lineBreakMode = NSLineBreakByWordWrapping;
-        } else {
-            cell.detail.lineBreakMode = NSLineBreakByTruncatingMiddle;
-        }
-
-        [tableView endUpdates];
-        [tableView setContentOffset:CGPointMake(tableView.contentOffset.x, tableView.contentOffset.y + 1)];
+    } else {
+        cell.isOpen = YES;
+        _lastCell = cell;
     }
 
-    if (indexPath.section == 5) {
-        [tableView deselectRowAtIndexPath:indexPath animated:YES];
-        FFReplyToCommentController *replyController = [[FFReplyToCommentController alloc] init];
-        NSMutableDictionary *dict = [_commentArray[indexPath.row] mutableCopy];
-        [dict setObject:self.topic_id forKey:@"topic_id"];
-        replyController.commentDict = dict;
-        HIDE_TABBAR;
-        HIDE_PARNENT_TABBAR;
-        [self.navigationController pushViewController:replyController animated:YES];
+    if (cell.isOpen) {
+        cell.detail.lineBreakMode = NSLineBreakByWordWrapping;
+    } else {
+        cell.detail.lineBreakMode = NSLineBreakByTruncatingMiddle;
     }
+    if (indexPath.section == GameGifCell && cell.isOpen) {
+        [self.tableView setContentOffset:CGPointMake(0, self.tableView.contentSize.height)];
+    }
+    [self.tableView endUpdates];
+}
 
+- (void)setActivityCell {
+    NSMutableString *str = [_gameAvtivity[@"title"] mutableCopy];
+    if (str.length > 0) {
+        [_rowHeightArray replaceObjectAtIndex:ExclusiveEvent withObject:@44.f];
+    } else {
+        [_rowHeightArray replaceObjectAtIndex:ExclusiveEvent withObject:@0.f];
+    }
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:ExclusiveEvent]] withRowAnimation:(UITableViewRowAnimationNone)];
+}
+
+- (void)showEventDetail {
+    NSString *url = _gameAvtivity[@"info_url"];
+    FFWebViewController *webVC = [FFWebViewController new];
+    webVC.webURL = url;
+    HIDE_TABBAR;
+    HIDE_PARNENT_TABBAR;
+    [self.navigationController pushViewController:webVC animated:YES];
 }
 
 
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 2) {
-        switch (_gifModel.integerValue) {
-            case 0:
-                return 0;
-            default:
-                return kSCREEN_WIDTH * 0.618;
+    switch (indexPath.section) {
+        case ExclusiveEvent: {
+            return (_gameAvtivity[@"title"] != nil) ? 66 : 0;
         }
-    } else if (indexPath.section == 4) {
-        return 100;
-    } else if (indexPath.section == 5) {
-        return 80;
-    } else {
-        FFGameDetailTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        if (cell.isOpen) {
-            return ((NSNumber *)_rowHeightArray[indexPath.section]).floatValue;
-        } else {
-            return 100;
+        case GameGifCell: {
+            return ((_gifModel.integerValue == 0) ? 0: kSCREEN_WIDTH * 0.618);
+        }
+        case UserLike: {
+            return  80;
+        }
+        default: {
+            FFGameDetailTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+            if (cell.isOpen) {
+                return ((NSNumber *)_rowHeightArray[indexPath.section]).floatValue;
+            } else {
+                return 100;
+            }
         }
     }
 }
@@ -426,7 +474,27 @@
 #pragma mark - setter
 - (void)setGameID:(NSString *)gameID {
     _gameID = gameID;
+    self.sectionModel = SectionModel1;
     [self goToTop];
+}
+
+- (void)setSectionModel:(SectionModel)sectionModel {
+    _sectionModel = sectionModel;
+    _sectionTitleArray = self.sectionDict[1];
+    _rowHeightArray = [self.sectionRowHight[1] mutableCopy];
+
+    _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionTitleArray.count];
+    [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
+        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
+        label.backgroundColor = [UIColor whiteColor];
+        label.text = obj;
+        [view addSubview:label];
+        [_sectionHeaderArray addObject:view];
+    }];
+
+    [self.tableView reloadData];
 }
 
 - (void)setUserInterFace {
@@ -449,22 +517,6 @@
 
     syLog(@"game Content === %@",gameContent);
 }
-
-//- (void)setGameInfo:(NSDictionary *)gameInfo {
-//    if (_gameInfo != gameInfo) {
-//        _gameInfo = gameInfo;
-//        syLog(@"game detail view game info \n =======================================================\n %@",_gameInfo);
-//        self.imagasArray = gameInfo[@"imgs"];
-//        self.abstract = gameInfo[@"abstract"];
-//        self.feature = gameInfo[@"feature"];
-//        self.gifModel = gameInfo[@"gif_model"];
-//        self.rebate = gameInfo[@"rebate"];
-//        self.vip = gameInfo[@"vip"];
-//        self.gifUrl = gameInfo[@"gif"];
-//    }
-//}
-
-
 
 //游戏展示的5张图片
 - (void)setImagasArray:(NSArray *)imagasArray {
@@ -505,13 +557,12 @@
     }
     CGSize size = [self sizeForString:str Width:kSCREEN_WIDTH Height:MAXFLOAT];
     if ((size.height + 10.f) > 100.f) {
-        [_rowHeightArray replaceObjectAtIndex:0 withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
+        [_rowHeightArray replaceObjectAtIndex:GameIntroductionCell withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
     } else {
-        [_rowHeightArray replaceObjectAtIndex:0 withObject:@100.f];
+        [_rowHeightArray replaceObjectAtIndex:GameIntroductionCell withObject:@100.f];
     }
     _abstract = str;
-//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:0]] withRowAnimation:(UITableViewRowAnimationNone)];
-    [self.tableView reloadData];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameIntroductionCell]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 //游戏特征
@@ -519,12 +570,12 @@
     NSMutableString *str = [feature mutableCopy];
     CGSize size = [self sizeForString:str Width:kSCREEN_WIDTH Height:MAXFLOAT];
     if ((size.height + 10.f) > 100.f) {
-        [_rowHeightArray replaceObjectAtIndex:1 withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
+        [_rowHeightArray replaceObjectAtIndex:GameFeaturesCell withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
     } else {
-        [_rowHeightArray replaceObjectAtIndex:1 withObject:@100.f];
+        [_rowHeightArray replaceObjectAtIndex:GameFeaturesCell withObject:@100.f];
     }
     _feature = str;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:1]] withRowAnimation:(UITableViewRowAnimationNone)];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameFeaturesCell]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 //游戏返利
@@ -550,21 +601,13 @@
 //gifUrl
 - (void)setGifUrl:(NSString *)gifUrl {
     _gifUrl = gifUrl;
-    //    GifTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-    //
-    //    cell.isLoadGif = NO;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:(UITableViewRowAnimationNone)];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameGifCell]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 //gifModel
 - (void)setGifModel:(NSString *)gifModel {
     _gifModel = gifModel;
-    //    syLog(@"%@",_gifUrl);
-    //
-    //    GifTableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-    //
-    //    cell.isLoadGif = NO;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:(UITableViewRowAnimationNone)];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameGifCell]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 // vip
@@ -572,21 +615,17 @@
     NSMutableString *str = [vip mutableCopy];
     CGSize size = [self sizeForString:str Width:kSCREEN_WIDTH Height:MAXFLOAT];
     if ((size.height + 10.f) > 100.f) {
-        [_rowHeightArray replaceObjectAtIndex:3 withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
+        [_rowHeightArray replaceObjectAtIndex:GameVipCell withObject:[NSNumber numberWithFloat:(size.height + 30.f)]];
     } else {
-        [_rowHeightArray replaceObjectAtIndex:3 withObject:@100.f];
+        [_rowHeightArray replaceObjectAtIndex:GameVipCell withObject:@100.f];
     }
     _vip = str;
-//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:3]] withRowAnimation:(UITableViewRowAnimationNone)];
-    [self.tableView reloadData];
+    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameVipCell]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 //评论
 - (void)setCommentArray:(NSArray *)commentArray {
     _commentArray = commentArray;
-
-//    syLog(@"comment ===== %@",commentArray);
-//    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:_sectionTitleArray.count - 1] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 
@@ -598,20 +637,16 @@
         _tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, kSCREEN_HEIGHT - 245) style:(UITableViewStylePlain)];
 
         _tableView.tableHeaderView = self.tableHeaderView;
-//        _tableView.tableFooterView = self.footerView;
         _tableView.tableFooterView = [UIView new];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_GAMEDETAIL bundle:nil] forCellReuseIdentifier:CELL_IDE_GAMEDETAIL];
         [_tableView registerClass:[FFGameGifTableViewCell class] forCellReuseIdentifier:CELL_IDE_GAMEGIF];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_CLASSIFY bundle:nil] forCellReuseIdentifier:CELL_IDE_CLASSIFY];
         [_tableView registerNib:[UINib nibWithNibName:CELL_IDE_COMMENT bundle:nil] forCellReuseIdentifier:CELL_IDE_COMMENT];
-//        [_tableView registerClass:[FFDetailSectionHeader class] forHeaderFooterViewReuseIdentifier:@"headerSection"];
-
+        [_tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"ExclusiveEventCell"];
         _tableView.delegate = self;
         _tableView.dataSource = self;
-
         _tableView.estimatedRowHeight = 100;
         _tableView.autoresizesSubviews = YES;
-
         _tableView.showsVerticalScrollIndicator = NO;
         _tableView.showsHorizontalScrollIndicator = NO;
     }
@@ -638,10 +673,6 @@
         button.frame = CGRectMake(0, 1, kSCREEN_WIDTH, 44);
         [button setTitle:@"点击查看更多评论>" forState:(UIControlStateNormal)];
         [button setTitleColor:[UIColor blackColor] forState:(UIControlStateNormal)];
-
-//        [button addTarget:self action:@selector(respondsToMoreCommentBtn) forControlEvents:(UIControlEventTouchUpInside)];
-//        button.backgroundColor = [UIColor whiteColor];
-
         [_footerView addSubview:button];
 
     }
@@ -655,28 +686,21 @@
     return _commentListController;
 }
 
-
 - (NSString *)getNetWorkStates {
     NSString *stateString = nil;
     int netStatusNumber = 0;
     switch ([[Reachability reachabilityForInternetConnection] currentReachabilityStatus]) {
-
         case NotReachable: {
-
             stateString = @"无网络";
             netStatusNumber = 0;
         }
             break;
-
         case ReachableViaWiFi: {
-
             stateString = @"wifi";
             netStatusNumber = 1;
         }
             break;
-
         default: {
-
             stateString = @"不可识别的网络";
             netStatusNumber = -1;
         }
@@ -684,6 +708,11 @@
     }
     return stateString;
 }
+
+
+
+
+
 
 @end
 

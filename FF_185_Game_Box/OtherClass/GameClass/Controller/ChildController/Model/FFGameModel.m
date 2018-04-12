@@ -332,7 +332,14 @@ static FFGameModel *model;
     }];
 }
 
-
+/** 请求游戏功率 */
+- (void)getGameActivity {
+    [FFGameModel activityWithGameID:self.game_id Comoletion:^(NSDictionary *content, BOOL success) {
+        if (self.activityCallBackBlock) {
+            self.activityCallBackBlock(content, success);
+        }
+    }];
+}
 
 
 /** 游戏详情 */
@@ -357,17 +364,29 @@ static FFGameModel *model;
 
 /** 游戏相关攻略 */
 + (void)raidersWithGameID:(NSString *)gameID Comoletion:(void (^)(NSDictionary *, BOOL))completion {
-    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:gameID forKey:@"game_id"];
     [dict setObject:@"1" forKey:@"type"];
     [dict setObject:Channel forKey:@"channel_id"];
     [dict setObject:@"1" forKey:@"page"];
-
     [FFBasicModel postRequestWithURL:[FFMapModel map].GAME_GONGLUE params:dict completion:^(NSDictionary *content, BOOL success) {
         REQUEST_COMPLETION;
     }];
 }
+
+/** 游戏相关攻略 */
++ (void)activityWithGameID:(NSString *)gameID Comoletion:(void (^)(NSDictionary *, BOOL))completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:gameID forKey:@"game_id"];
+    [dict setObject:@"2" forKey:@"type"];
+    [dict setObject:Channel forKey:@"channel_id"];
+    [dict setObject:@"1" forKey:@"page"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].GAME_GONGLUE params:dict completion:^(NSDictionary *content, BOOL success) {
+        REQUEST_COMPLETION;
+    }];
+}
+
+
 
 /** 收藏接口 type = 1 收藏  type = 2 取消*/
 + (void)gameCollectWithType:(NSString *)type GameID:(NSString *)gameID Comoletion:(void (^)(NSDictionary *, BOOL))completion {

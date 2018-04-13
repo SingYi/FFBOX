@@ -7,6 +7,7 @@
 //
 
 #import "FFGameFooterView.h"
+#import "FFBasicModel.h"
 
 @interface FFGameFooterView ()
 
@@ -38,7 +39,12 @@
     self.backgroundColor = TABBARCOLOR;
     [self addSubview:self.collectionBtn];
     [self addSubview:self.downLoadBtn];
-    [self addSubview:self.shardBtn];
+
+    if ([Channel isEqualToString:@"185"]) {
+        [self addSubview:self.shardBtn];
+    } else {
+        [self.shardBtn removeFromSuperview];
+    }
 }
 
 #pragma mark - respondToButton

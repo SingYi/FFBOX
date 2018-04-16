@@ -44,6 +44,8 @@
 @property (nonatomic, strong) NSString *pack_used_counts;
 /** game content */
 @property (nonatomic, strong) NSString *game_content;
+/** game  android_pack*/
+@property (nonatomic, strong) NSString *android_pack;
 
 + (instancetype)sharedModel;
 

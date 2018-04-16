@@ -75,7 +75,7 @@
     //回复评论
     NSString *toUid = [NSString stringWithFormat:@"%@",self.commentDict[@"uid"]];
     NSString *isFake = [NSString stringWithFormat:@"%@",self.commentDict[@"is_fake"]];
-    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:toUid is_fake:isFake Completion:^(NSDictionary *content, BOOL success) {
+    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:toUid is_fake:isFake isGameID:@"1" Completion:^(NSDictionary *content, BOOL success) {
         if (self.completion) {
             self.completion(content, success);
         }

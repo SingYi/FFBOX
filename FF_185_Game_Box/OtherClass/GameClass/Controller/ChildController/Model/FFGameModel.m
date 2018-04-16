@@ -273,7 +273,7 @@ static FFGameModel *model;
 }
 
 /** 发表评论 */
-- (void)sendCommentWithText:(NSString *)text ToUid:(NSString *)toUid is_fake:(NSString *)is_fake Completion:(CommentListBlock)completion {
+- (void)sendCommentWithText:(NSString *)text ToUid:(NSString *)toUid is_fake:(NSString *)is_fake isGameID:(NSString *)is_gameID Completion:(CommentListBlock)completion {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
     [dict setObject:SSKEYCHAIN_UID forKey:@"uid"];
     (toUid != nil) ? [dict setObject:toUid forKey:@"to_uid"] : [dict setObject:@"0" forKey:@"to_uid"];
@@ -284,8 +284,14 @@ static FFGameModel *model;
     if (is_fake) {
         [dict setObject:is_fake forKey:@"is_fake"];
     }
-    [dict setObject:@"1" forKey:@"is_game_id"];
+
+    if (is_gameID) {
+        [dict setObject:@"1" forKey:@"is_game_id"];
+    }
+    
     [dict setObject:(BOX_SIGN(dict, (@[@"uid",@"to_uid",@"channel",@"dynamics_id",@"content"]))) forKey:@"sign"];
+
+    syLog(@"write comment === %@",dict);
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].COMMENT params:dict completion:^(NSDictionary *content, BOOL success) {
         NEW_REQUEST_COMPLETION;
@@ -438,7 +444,15 @@ static FFGameModel *model;
     }];
 }
 
-
++ (void)gameIsLoginWithGameID:(NSString *)gameID Completion:(GameCompletionBlck)completion {
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:SSKEYCHAIN_USER_NAME forKey:@"username"];
+    [dict setObject:CURRENT_GAME.game_id forKey:@"appid"];
+    [dict setObject:BOX_SIGN(dict, (@[@"username",@"appid"])) forKey:@"sign"];
+    [FFBasicModel postRequestWithURL:[FFMapModel map].USER_APP_LOGIN params:dict completion:^(NSDictionary *content, BOOL success) {
+        NEW_REQUEST_COMPLETION;
+    }];
+}
 
 
 

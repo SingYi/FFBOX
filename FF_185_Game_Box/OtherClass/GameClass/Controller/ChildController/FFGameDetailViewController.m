@@ -7,6 +7,7 @@
 //
 
 #import "FFGameDetailViewController.h"
+#import "FFGameViewController.h"
 
 #import "FFGameDetailTableHeader.h"
 
@@ -64,7 +65,7 @@ typedef enum : NSUInteger {
 
 
 
-@interface FFGameDetailViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface FFGameDetailViewController () <UITableViewDelegate, UITableViewDataSource, FFClassifyTableCellDelegate>
 
 /**展示图数组*/
 @property (nonatomic, strong) NSArray * imagasArray;
@@ -129,7 +130,7 @@ typedef enum : NSUInteger {
 - (NSArray *)sectionRowHight {
     if (!_sectionRowHight) {
         _sectionRowHight = @[@[@100.f,@100.f,@100.f,@100.f],
-                             @[@100.f,@100.f,@44.f,@100.f,@100.f]];
+                             @[@100.f,@100.f,@44.f,@100.f,@120.f]];
     }
     return _sectionRowHight;
 }
@@ -216,6 +217,7 @@ typedef enum : NSUInteger {
         }
         case UserLike: {
             FFClassifyTableCell *likeCell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE_CLASSIFY];
+            likeCell.delegate = self;
             [self setLikeCell:likeCell IndexPath:indexPath];
             return likeCell;
         }
@@ -351,6 +353,14 @@ typedef enum : NSUInteger {
     cell.time = [formatter stringFromDate:creatDate];
 }
 
+#pragma mark  delegate
+- (void)FFClassifyTableCell:(FFClassifyTableCell *)cell clickGame:(NSDictionary *)dict {
+    syLog(@"classify cell == =%@", dict);
+    NSString *gameID = [NSString stringWithFormat:@"%@",dict[@"id"]];
+    [[FFGameViewController sharedController] setGameID:gameID];
+}
+
+
 
 #pragma mark - tableViewdelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -446,7 +456,7 @@ typedef enum : NSUInteger {
             return ((_gifModel.integerValue == 0) ? 0: kSCREEN_WIDTH * 0.618);
         }
         case UserLike: {
-            return  80;
+            return  100;
         }
         default: {
             FFGameDetailTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];

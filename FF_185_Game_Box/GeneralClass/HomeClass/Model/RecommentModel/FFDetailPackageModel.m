@@ -28,6 +28,11 @@ static FFDetailPackageModel *model = nil;
     NSMutableDictionary *mudict = [NSMutableDictionary dictionaryWithDictionary:dict];
     [mudict setValue:dict[@"id"] forKey:@"package_id"];
     [mudict removeObjectForKey:@"id"];
+//    id card = mudict[@"card"];
+//    if ([card isKindOfClass:[NSNull class]]) {
+//        [mudict setObject:@"" forKey:@"card"];
+//        [mudict removeObjectForKey:@"card"];
+//    }
     [self setValuesForKeysWithDictionary:mudict];
 }
 

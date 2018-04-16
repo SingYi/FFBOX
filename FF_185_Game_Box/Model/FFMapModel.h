@@ -135,8 +135,9 @@
 
 //
 @property (nonatomic, strong) NSString *COMMENT_REPLY_LIST;
-@property (nonatomic, strong) NSString * USER_RANKING;
+@property (nonatomic, strong) NSString *USER_RANKING;
 @property (nonatomic, strong) NSString *RANKNOTICE;
+@property (nonatomic, strong) NSString *USER_APP_LOGIN;
 
 
 + (instancetype)map;

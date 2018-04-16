@@ -72,7 +72,7 @@
 #warning 发布评论
     syLog(@"发布评论");
     WeakSelf;
-    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:nil is_fake:nil Completion:^(NSDictionary *content, BOOL success) {
+    [CURRENT_GAME sendCommentWithText:self.textView.text ToUid:nil is_fake:nil isGameID:nil Completion:^(NSDictionary *content, BOOL success) {
         syLog(@"send comment === %@",content);
         
         if (weakSelf.sendCommentCallBack) {

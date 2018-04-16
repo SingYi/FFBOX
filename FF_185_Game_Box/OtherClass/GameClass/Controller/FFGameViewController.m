@@ -118,7 +118,25 @@ static FFGameViewController *controller = nil;
 - (void)respondsToRightButton {
     HIDE_TABBAR;
     if (SSKEYCHAIN_UID) {
-        [self.navigationController pushViewController:self.writeComment animated:YES];
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [FFGameModel gameIsLoginWithGameID:nil Completion:^(NSDictionary *content, BOOL success) {
+            syLog(@"game is login -=== %@",content);
+            [hud hideAnimated:YES];
+            if (success) {
+                [self.navigationController pushViewController:self.writeComment animated:YES];
+            } else {
+                NSString *msg ;
+                if ([content[@"msg"] isEqualToString:@"404"]) {
+                    msg = @"网络不知道飞哪里去了";
+                } else {
+                    msg = [NSString stringWithFormat:@"%@",content[@"msg"]];
+                }
+                [UIAlertController showAlertMessage:msg dismissTime:0.9 dismissBlock:nil];
+            }
+        }];
+
+
+
         return;
     } else {
         [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];
@@ -266,12 +284,12 @@ static FFGameViewController *controller = nil;
     [self.gDetailViewController goToTop];
     [self.scrollView setContentOffset:CGPointMake(0, 0)];
 
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     _gameID = gameID;
 
     self.gDetailViewController.gameID = gameID;
 
 //    [self.hud showAnimated:YES];
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow.rootViewController.view animated:YES];
     WeakSelf;
     [FFGameModel refreshCurrentGameWithGameID:gameID Completion:^(BOOL success) {
         [hud hideAnimated:YES];

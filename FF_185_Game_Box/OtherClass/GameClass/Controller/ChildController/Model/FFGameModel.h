@@ -110,6 +110,7 @@ typedef void(^GameActivityCallBackBlock)(NSDictionary *content, BOOL success);
 - (void)sendCommentWithText:(NSString *)text
                       ToUid:(NSString *)toUid
                     is_fake:(NSString *)is_fake
+                   isGameID:(NSString *)is_gameID
                  Completion:(CommentListBlock)completion;
 /** 删除评论 */
 - (void)deleteCommentWithCommentID:(NSString *)commentId Completion:(GameCompletionBlck)completion;
@@ -140,6 +141,9 @@ typedef void(^GameActivityCallBackBlock)(NSDictionary *content, BOOL success);
 
 /** 游戏相关活动 */
 + (void)activityWithGameID:(NSString *)gameID Comoletion:(void (^)(NSDictionary *, BOOL))completion;
+
+/** 请求是否可以评论 */
++ (void)gameIsLoginWithGameID:(NSString *)gameID Completion:(GameCompletionBlck)completion;
 
 
 

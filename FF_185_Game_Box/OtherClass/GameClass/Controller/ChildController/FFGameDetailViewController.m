@@ -112,6 +112,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *sectionDict;
 @property (nonatomic, strong) NSArray *sectionRowHight;
 @property (nonatomic, assign) SectionModel sectionModel;
+@property (nonatomic, strong) NSArray *activityArray;
+
 
 @end
 
@@ -157,14 +159,31 @@ typedef enum : NSUInteger {
      self.sectionModel = SectionModel1;
 
 
+    _sectionTitleArray = self.sectionDict[1];
+    _rowHeightArray = [self.sectionRowHight[1] mutableCopy];
+
+    _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionTitleArray.count];
+    [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
+        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
+        label.backgroundColor = [UIColor whiteColor];
+        label.text = obj;
+        [view addSubview:label];
+        [_sectionHeaderArray addObject:view];
+    }];
     //游戏活动回调
     [CURRENT_GAME setActivityCallBackBlock:^(NSDictionary *content, BOOL success) {
         syLog(@"游戏活动 == %@",content);
         NSArray *array = content[@"data"][@"list"];
         if (success && ![array isKindOfClass:[NSNull class]]) {
-            _gameAvtivity = array.firstObject;
-            self.sectionModel = SectionModel2;
+            self.activityArray = [array copy];
+//            self.sectionModel = SectionModel2;
             [self setActivityCell];
+        } else {
+            self.activityArray = nil;
+//            [self setActivityCell];
+//            [self.tableView reloadData];
         }
     }];
 
@@ -184,7 +203,11 @@ typedef enum : NSUInteger {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1;
+    if (section == ExclusiveEvent) {
+        return self.activityArray.count;
+    } else {
+        return 1;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -201,8 +224,7 @@ typedef enum : NSUInteger {
         }
         case ExclusiveEvent: {
             UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ExclusiveEventCell" forIndexPath:indexPath];
-            cell.textLabel.text = _gameAvtivity[@"title"];
-
+            cell.textLabel.text = self.activityArray[indexPath.row][@"title"];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             return cell;
         }
@@ -375,7 +397,7 @@ typedef enum : NSUInteger {
             break;
         }
         case ExclusiveEvent: {
-            [self showEventDetail];
+            [self showEventDetailWithIndex:indexPath];
             break;
         }
         case GameIntroductionCell:
@@ -433,11 +455,12 @@ typedef enum : NSUInteger {
     } else {
         [_rowHeightArray replaceObjectAtIndex:ExclusiveEvent withObject:@0.f];
     }
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:ExclusiveEvent]] withRowAnimation:(UITableViewRowAnimationNone)];
+//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:ExclusiveEvent]] withRowAnimation:(UITableViewRowAnimationNone)];
+    [self.tableView reloadSections:[NSIndexSet indexSetWithIndex:ExclusiveEvent] withRowAnimation:UITableViewRowAnimationNone];
 }
 
-- (void)showEventDetail {
-    NSString *url = _gameAvtivity[@"info_url"];
+- (void)showEventDetailWithIndex:(NSIndexPath *)indexPath {
+    NSString *url = self.activityArray[indexPath.row][@"info_url"];
     FFWebViewController *webVC = [FFWebViewController new];
     webVC.webURL = url;
     HIDE_TABBAR;
@@ -450,7 +473,7 @@ typedef enum : NSUInteger {
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     switch (indexPath.section) {
         case ExclusiveEvent: {
-            return (_gameAvtivity[@"title"] != nil) ? 66 : 0;
+            return (self.activityArray[indexPath.row][@"title"] != nil) ? 66 : 0;
         }
         case GameGifCell: {
             return ((_gifModel.integerValue == 0) ? 0: kSCREEN_WIDTH * 0.618);
@@ -485,24 +508,13 @@ typedef enum : NSUInteger {
 - (void)setGameID:(NSString *)gameID {
     _gameID = gameID;
     self.sectionModel = SectionModel1;
+    self.activityArray = nil;
+//    [self.tableView reloadData];
     [self goToTop];
 }
 
 - (void)setSectionModel:(SectionModel)sectionModel {
     _sectionModel = sectionModel;
-    _sectionTitleArray = self.sectionDict[1];
-    _rowHeightArray = [self.sectionRowHight[1] mutableCopy];
-
-    _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionTitleArray.count];
-    [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
-        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
-        label.backgroundColor = [UIColor whiteColor];
-        label.text = obj;
-        [view addSubview:label];
-        [_sectionHeaderArray addObject:view];
-    }];
 
     [self.tableView reloadData];
 }
@@ -516,6 +528,7 @@ typedef enum : NSUInteger {
     self.vip            = CURRENT_GAME.game_vip_amount;
     self.gifUrl         = CURRENT_GAME.gif_url;
     self.likes          = CURRENT_GAME.like;
+    [self.tableView reloadData];
 }
 
 - (void)setGameContent:(NSDictionary *)gameContent {
@@ -572,7 +585,8 @@ typedef enum : NSUInteger {
         [_rowHeightArray replaceObjectAtIndex:GameIntroductionCell withObject:@100.f];
     }
     _abstract = str;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameIntroductionCell]] withRowAnimation:(UITableViewRowAnimationNone)];
+//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:GameIntroductionCell]] withRowAnimation:(UITableViewRowAnimationNone)];
+    [self.tableView reloadData];
 }
 
 //游戏特征
@@ -605,7 +619,7 @@ typedef enum : NSUInteger {
         [_rowHeightArray replaceObjectAtIndex:2 withObject:@100.f];
     }
     _rebate = str;
-    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:(UITableViewRowAnimationNone)];
+//    [self.tableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:2]] withRowAnimation:(UITableViewRowAnimationNone)];
 }
 
 //gifUrl

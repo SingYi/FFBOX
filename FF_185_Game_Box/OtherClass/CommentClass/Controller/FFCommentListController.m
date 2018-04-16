@@ -67,7 +67,7 @@
     WeakSelf;
 
 
-    [CURRENT_GAME getCommentListWithPage:[NSString stringWithFormat:@"%lu",_currentPage] Completion:^(NSDictionary *content, BOOL success) {
+    [CURRENT_GAME getCommentListWithPage:[NSString stringWithFormat:@"%lu",(long)_currentPage] Completion:^(NSDictionary *content, BOOL success) {
         syLog(@"game comment ========== %@",content);
         //刷新评论数
         syLog(@"刷新评论数目");

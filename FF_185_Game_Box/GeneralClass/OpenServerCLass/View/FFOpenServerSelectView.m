@@ -137,6 +137,18 @@ attributes:attribute context:nil].size
     _lastBtn = _buttons[_index];
 }
 
+- (void)changeTitleWith:(NSArray *)array {
+    if (array.count == _btnNameArray.count) {
+        _btnNameArray = array.mutableCopy;
+    }
+
+    [_buttons enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [obj setTitle:_btnNameArray[idx] forState:(UIControlStateNormal)];
+//        [obj setTitle:_btnNameArray[idx] forState:(UIControlStateHighlighted)];
+//        [obj setTitle:_btnNameArray[idx] forState:(UIControlStateNormal)];
+    }];
+
+}
 
 
 

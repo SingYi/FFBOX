@@ -33,6 +33,7 @@
 
 /** header view */
 @property (nonatomic, strong) FFGameHeaderView *headerView;
+@property (nonatomic, assign) NSUInteger headerCurrentIndex;
 /** footer view */
 @property (nonatomic, strong) FFGameFooterView *footerView;
 /** scroll view */
@@ -110,7 +111,9 @@ static FFGameViewController *controller = nil;
     WeakSelf;
     [CURRENT_GAME setCommentNumberBlock:^(NSString *commentNumber) {
         NSString *comment = [NSString stringWithFormat:@"评论(%@)",commentNumber];
-        weakSelf.headerView.selectView.btnNameArray = @[@"详情",comment,@"礼包",@"开服",@"攻略"];
+//        weakSelf.headerView.selectView.btnNameArray = @[@"详情",comment,@"礼包",@"开服",@"攻略"];
+        [weakSelf.headerView.selectView changeTitleWith:@[@"详情",comment,@"礼包",@"开服",@"攻略"]];
+//        [self.headerView.selectView reomveLabelWithX:_headerCurrentIndex];
     }];
 }
 
@@ -148,7 +151,7 @@ static FFGameViewController *controller = nil;
     CGFloat x = scrollView.contentOffset.x;
     //设置选择视图的浮标
     [self.headerView.selectView reomveLabelWithX:(x / scrollView.contentSize.width * kSCREEN_WIDTH)];
-
+    _headerCurrentIndex = (NSInteger)(x / scrollView.contentSize.width * kSCREEN_WIDTH);
     CGFloat index = x / kSCREEN_WIDTH;
     NSInteger afterIndex = index * 10000;
     NSInteger i = afterIndex / 10000;
@@ -204,6 +207,8 @@ static FFGameViewController *controller = nil;
     if (_isAnimation || self.lastController == _gChildControllers[idx]) {
         return;
     }
+
+    _headerCurrentIndex = idx;
 
     if (self.lastController != nil) {
         [self hAddChildViewController:_gChildControllers[idx]];
@@ -288,6 +293,10 @@ static FFGameViewController *controller = nil;
     _gameID = gameID;
 
     self.gDetailViewController.gameID = gameID;
+    self.gServiceViewController.gameID = gameID;
+    self.gPackageViewController.gameID = gameID;
+    self.gRaidersViewController.gameID = gameID;
+    self.commentListController.gameID = gameID;
 
 //    [self.hud showAnimated:YES];
     WeakSelf;
@@ -298,6 +307,7 @@ static FFGameViewController *controller = nil;
             //请求游戏活动
             [CURRENT_GAME getGameActivity];
             [self setUserInterface];
+//            self.gDetailViewController.tableview
         } else {
             syLog(@"刷新游戏失败");
             BOX_MESSAGE(@"加载失败");
@@ -305,10 +315,7 @@ static FFGameViewController *controller = nil;
         }
     }];
 
-    self.gServiceViewController.gameID = gameID;
-    self.gPackageViewController.gameID = gameID;
-    self.gRaidersViewController.gameID = gameID;
-    self.commentListController.gameID = gameID;
+
 
 }
 
@@ -365,7 +372,7 @@ static FFGameViewController *controller = nil;
 
     [self.scrollView setContentSize:CGSizeMake(kSCREEN_WIDTH * self.gChildControllers.count, self.scrollView.frame.size.height)];
 
-    self.gDetailViewController.view.frame = self.scrollView.bounds;
+    self.gDetailViewController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);;
     self.commentListController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.commentListController.tableView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.gPackageViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);

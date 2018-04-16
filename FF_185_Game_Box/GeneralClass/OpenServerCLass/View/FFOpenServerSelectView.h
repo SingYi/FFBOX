@@ -42,6 +42,8 @@
 /** 移动标签 */
 - (void)reomveLabelWithX:(CGFloat)x;
 
+- (void)changeTitleWith:(NSArray *)array;
+
 
 
 

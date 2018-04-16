@@ -256,7 +256,8 @@
     self.selectView.frame = CGRectMake(0, kNAVIGATION_HEIGHT, kSCREEN_WIDTH, 44);
     self.scrollView.frame = CGRectMake(0, CGRectGetMaxY(self.selectView.frame), kSCREEN_WIDTH, kSCREEN_HEIGHT - CGRectGetMaxY(self.selectView.frame) - self.tabBarController.tabBar.frame.size.height);
     [self.scrollView setContentSize:CGSizeMake(kSCREEN_WIDTH * self.childeTitles.count, self.scrollView.frame.size.height)];
-    self.hRecommentController.view.frame = self.scrollView.bounds;
+
+    self.hRecommentController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);;
     self.hNewGamesController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.hradiersViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
     self.hClassifyController.view.frame = CGRectMake(kSCREEN_WIDTH * 3, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);

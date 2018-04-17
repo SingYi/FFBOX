@@ -23,6 +23,7 @@
 #import "UIBarButtonItem+FFSubscript.h"
 //#import <PTFakeTouch/PTFakeTouch.h>
 
+
 @interface FFHomeViewController ()<FFOpenServerSelectViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, FFSearchShowDelegate>
 
 @property (nonatomic, strong) NSArray *childeTitles;
@@ -339,7 +340,7 @@
 
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:@"homePage_message"] forState:UIControlStateNormal];
-        button.bounds = CGRectMake(0, 0, button.currentImage.size.width, button.currentImage.size.height);
+        button.bounds = CGRectMake(0, 0, 40, 40);
         [button addTarget:self action:@selector(clickMessageBtn) forControlEvents:UIControlEventTouchDown];
         // 添加角标
         _messageBtn = [[UIBarButtonItem alloc] initWithCustomView:button];

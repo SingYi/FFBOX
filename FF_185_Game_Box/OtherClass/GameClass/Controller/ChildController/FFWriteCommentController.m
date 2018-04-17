@@ -65,7 +65,7 @@
 
 #pragma mark - respondsToCommentButton
 - (void)respondsToCommentButton {
-    if (self.textView.text.length == 0 || [self.textView.text isEqualToString:@"点击评论~"]) {
+    if (self.textView.text.length == 0) {
         BOX_MESSAGE(@"还没有输入哦~");
         return;
     }
@@ -124,8 +124,8 @@
     _sorce = 5.0;
     self.starGradeView.starGrade = 5.0;
 
-    self.textView.text = @"点击评论~";
-    self.textView.textColor = [UIColor lightGrayColor];
+    self.textView.text = @"良心平台,很不错的游戏~";
+    self.textView.textColor = [UIColor blackColor];
 
 }
 
@@ -140,14 +140,14 @@
 
         _textView.textAlignment = NSTextAlignmentJustified;
 
-        _textView.textColor = [UIColor lightGrayColor];
+        _textView.textColor = [UIColor blackColor];
         // 设置自动纠错方式
         _textView.autocorrectionType = UITextAutocorrectionTypeNo;
         // 设置自动大写方式
         _textView.autocapitalizationType = UITextAutocapitalizationTypeNone;
         _textView.delegate = self;
         _textView.font = [UIFont systemFontOfSize:16];
-        _textView.text = @"点击评论~";
+        _textView.text = @"良心平台,很不错的游戏~";
 
         _textView.returnKeyType = UIReturnKeySend;
 

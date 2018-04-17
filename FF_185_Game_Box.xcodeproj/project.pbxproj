@@ -182,7 +182,6 @@
 		B59E3F96202441C000F81F60 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E58202441BF00F81F60 /* NSArray+PureLayout.m */; };
 		B59E3F97202441C000F81F60 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E5A202441BF00F81F60 /* NSLayoutConstraint+PureLayout.m */; };
 		B59E3F98202441C000F81F60 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B59E3E5E202441BF00F81F60 /* README.md */; };
-		B59E3F99202441C000F81F60 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = B59E3E60202441BF00F81F60 /* LICENSE */; };
 		B59E3F9A202441C000F81F60 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E63202441BF00F81F60 /* MASCompositeConstraint.m */; };
 		B59E3F9B202441C000F81F60 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E66202441BF00F81F60 /* MASConstraint.m */; };
 		B59E3F9C202441C000F81F60 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E68202441BF00F81F60 /* MASConstraintMaker.m */; };
@@ -193,7 +192,6 @@
 		B59E3FA1202441C000F81F60 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E75202441BF00F81F60 /* NSLayoutConstraint+MASDebugAdditions.m */; };
 		B59E3FA2202441C000F81F60 /* View+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E77202441BF00F81F60 /* View+MASAdditions.m */; };
 		B59E3FA3202441C000F81F60 /* ViewController+MASAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E7A202441BF00F81F60 /* ViewController+MASAdditions.m */; };
-		B59E3FA4202441C000F81F60 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B59E3E7B202441BF00F81F60 /* README.md */; };
 		B59E3FA5202441C000F81F60 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E7D202441BF00F81F60 /* MBProgressHUD.m */; };
 		B59E3FA6202441C000F81F60 /* MJRefreshAutoFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E81202441BF00F81F60 /* MJRefreshAutoFooter.m */; };
 		B59E3FA7202441C000F81F60 /* MJRefreshBackFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = B59E3E83202441BF00F81F60 /* MJRefreshBackFooter.m */; };
@@ -731,7 +729,6 @@
 		B59E3E5C202441BF00F81F60 /* PureLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayout.h; sourceTree = "<group>"; };
 		B59E3E5D202441BF00F81F60 /* PureLayoutDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PureLayoutDefines.h; sourceTree = "<group>"; };
 		B59E3E5E202441BF00F81F60 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		B59E3E60202441BF00F81F60 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		B59E3E62202441BF00F81F60 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		B59E3E63202441BF00F81F60 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		B59E3E64202441BF00F81F60 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -757,7 +754,6 @@
 		B59E3E78202441BF00F81F60 /* View+MASShorthandAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "View+MASShorthandAdditions.h"; sourceTree = "<group>"; };
 		B59E3E79202441BF00F81F60 /* ViewController+MASAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewController+MASAdditions.h"; sourceTree = "<group>"; };
 		B59E3E7A202441BF00F81F60 /* ViewController+MASAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ViewController+MASAdditions.m"; sourceTree = "<group>"; };
-		B59E3E7B202441BF00F81F60 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		B59E3E7C202441BF00F81F60 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		B59E3E7D202441BF00F81F60 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		B59E3E80202441BF00F81F60 /* MJRefreshAutoFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefreshAutoFooter.h; sourceTree = "<group>"; };
@@ -1795,9 +1791,7 @@
 		B59E3E5F202441BF00F81F60 /* Masonry */ = {
 			isa = PBXGroup;
 			children = (
-				B59E3E60202441BF00F81F60 /* LICENSE */,
 				B59E3E61202441BF00F81F60 /* Masonry */,
-				B59E3E7B202441BF00F81F60 /* README.md */,
 			);
 			path = Masonry;
 			sourceTree = "<group>";
@@ -2784,8 +2778,6 @@
 				B59556CA200DE12D007F3CC7 /* Community.xcassets in Resources */,
 				B5A5D5431FC59F2400EC951F /* FFTransferNotesCell.xib in Resources */,
 				B59E3F98202441C000F81F60 /* README.md in Resources */,
-				B59E3FA4202441C000F81F60 /* README.md in Resources */,
-				B59E3F99202441C000F81F60 /* LICENSE in Resources */,
 				B5A1EEC21FCC0FE1003FC031 /* NewImage.xcassets in Resources */,
 				B5D108EC2029A3D100E4D49F /* FFDriveMyNewsCell.xib in Resources */,
 				B5A5D5131FC4543900EC951F /* FFPlatformCell.xib in Resources */,

@@ -357,6 +357,8 @@
 		B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */; };
 		B5D108FC202C3F1000E4D49F /* FFMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FB202C3F0F00E4D49F /* FFMaskView.m */; };
 		B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */; };
+		B5D505E52089CCAC000B7B50 /* GDTActionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */; };
+		B5D505E72089CDE4000B7B50 /* GDTActionSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
@@ -372,6 +374,16 @@
 			files = (
 			);
 			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5D505E62089CDBD000B7B50 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B5D505E72089CDE4000B7B50 /* GDTActionSDK.framework in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1066,6 +1078,8 @@
 		B5D108FB202C3F0F00E4D49F /* FFMaskView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFMaskView.m; sourceTree = "<group>"; };
 		B5D108FD202D3D3100E4D49F /* FFFlashBackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFFlashBackView.h; sourceTree = "<group>"; };
 		B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFFlashBackView.m; sourceTree = "<group>"; };
+		B5D505E02089C933000B7B50 /* GDTActionSDK-1.0.2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "GDTActionSDK-1.0.2.framework"; path = "FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork/GDTActionSDK-1.0.2.framework"; sourceTree = "<group>"; };
+		B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GDTActionSDK.framework; sourceTree = "<group>"; };
 		B5D75A8720070C0B00600B3D /* FFDriveAllInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDriveAllInfoViewController.h; sourceTree = "<group>"; };
 		B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDriveAllInfoViewController.m; sourceTree = "<group>"; };
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
@@ -1089,6 +1103,7 @@
 				B52B115A201835C60002475D /* Photos.framework in Frameworks */,
 				B59E3FD8202441C000F81F60 /* TencentOpenAPI.framework in Frameworks */,
 				B52B1158201835BA0002475D /* PhotosUI.framework in Frameworks */,
+				B5D505E52089CCAC000B7B50 /* GDTActionSDK.framework in Frameworks */,
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,
@@ -1589,6 +1604,7 @@
 		B59E3DDA202441BF00F81F60 /* ThiredLibrary */ = {
 			isa = PBXGroup;
 			children = (
+				B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */,
 				B59E3DDB202441BF00F81F60 /* AFNetWorking */,
 				B59E3DE9202441BF00F81F60 /* FLAnimatedImage */,
 				B59E3DEE202441BF00F81F60 /* ImagePicker */,
@@ -2101,6 +2117,7 @@
 		B5A5D51D1FC5242800EC951F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5D505E02089C933000B7B50 /* GDTActionSDK-1.0.2.framework */,
 				B59E4020202445C300F81F60 /* CoreMotion.framework */,
 				B59E401E202445B200F81F60 /* SystemConfiguration.framework */,
 				B59E401C2024459F00F81F60 /* AdSupport.framework */,
@@ -2663,6 +2680,7 @@
 				B556B0D01FA6BD88005DC871 /* Frameworks */,
 				B556B0D11FA6BD88005DC871 /* Resources */,
 				B5A3357F1FF6407400A4526F /* Embed Frameworks */,
+				B5D505E62089CDBD000B7B50 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -3256,6 +3274,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/FF_185_Game_Box/Other/FFPerFixHeader.pch";
 				INFOPLIST_FILE = FF_185_Game_Box/Other/Info.plist;
@@ -3263,7 +3282,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/ChangyanSDK",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/trackingio",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechtSDK1.8.2_NoPay",
@@ -3294,6 +3312,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/QQFrameWork",
+					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/FF_185_Game_Box/Other/FFPerFixHeader.pch";
 				INFOPLIST_FILE = FF_185_Game_Box/Other/Info.plist;
@@ -3301,7 +3320,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/ChangyanSDK",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/trackingio",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary",
 					"$(PROJECT_DIR)/FF_185_Game_Box/Other/ThiredLibrary/WechtSDK1.8.2_NoPay",

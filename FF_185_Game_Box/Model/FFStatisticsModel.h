@@ -10,6 +10,14 @@
 
 typedef void(^StatisticsBlock)(NSDictionary *content,  BOOL success);
 
+typedef enum : NSUInteger {
+    other = 0,
+    selfBackGround = 1,
+    reyun = 2,
+    guangdiantong = 3,
+} FFStatisticsState;
+
+
 @interface FFStatisticsModel : NSObject
 
 /** 请求是否统计 */

@@ -255,7 +255,7 @@
         passWord = self.passWord.text;
         type = @"1";
     } else {
-        NSString *MOBILE = @"^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[06-8])\\d{8}$";
+        NSString *MOBILE = @"^1\\d{10}$";
         NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
         //手机号有误
         if (![regextestmobile evaluateWithObject:self.userName.text]) {
@@ -332,7 +332,7 @@
 /** 响应发送验证码按钮 */
 - (void)respondsToSendMessageBtn {
 
-    NSString *MOBILE = @"^1(3[0-9]|4[57]|5[0-35-9]|8[0-9]|7[06-8])\\d{8}$";
+    NSString *MOBILE = @"^1\\d{10}$";
 
     NSPredicate *regextestmobile = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", MOBILE];
 
@@ -560,9 +560,9 @@
         _sendMessageBtn.layer.cornerRadius = 2;
         _sendMessageBtn.layer.masksToBounds = YES;
     }
-
     return _sendMessageBtn;
 }
+
 
 - (UIButton *)changeButton {
     if (!_changeButton) {

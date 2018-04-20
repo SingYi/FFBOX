@@ -200,7 +200,6 @@
 
     if ([[url host] isEqualToString:@"app.185sy.box"]) {
 
-
     }
 
     if ([[url query] hasPrefix:@"dynamicId="]) {

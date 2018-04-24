@@ -89,37 +89,26 @@
 }
 
 - (NSMutableArray *)clearUpData:(NSMutableArray *)array {
-
     NSMutableSet *set = [NSMutableSet set];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
-
     [array enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *timeStr = obj[@"addtime"];
         NSDate *date = [NSDate dateWithTimeIntervalSince1970:timeStr.integerValue];
         NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
         formatter.dateFormat = @"YYYY-MM-dd";
         timeStr = [formatter stringFromDate:date];
-
         NSMutableArray *array = dict[timeStr];
         if (array == nil) {
             array = [NSMutableArray array];
         }
         [array addObject:obj];
-
         [dict setObject:array forKey:timeStr];
-
         [set addObject:timeStr];
-
     }];
-
 
     NSArray *sortDesc = @[[[NSSortDescriptor alloc] initWithKey:nil ascending:NO]];
     self.timeArray = [set sortedArrayUsingDescriptors:sortDesc];
-
-
     self.dataDictionary = [dict mutableCopy];
-
     [self.timeArray enumerateObjectsUsingBlock:^(NSString * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         NSMutableArray *array = self.dataDictionary[obj];
         [self.dataDictionary setObject:array forKey:obj];
@@ -134,11 +123,8 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 20)];
-
     label.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-
     label.text = [NSString stringWithFormat:@"   %@",self.timeArray[section]];
-
     return label;
 }
 
@@ -153,13 +139,9 @@
 }
 
 - (FFCustomizeCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
     FFCustomizeCell *cell = [tableView dequeueReusableCellWithIdentifier:CELL_IDE forIndexPath:indexPath];
-
     NSArray *array = self.dataDictionary[self.timeArray[indexPath.section]];
-
     cell.dict = array[indexPath.row];
-
     return cell;
 }
 

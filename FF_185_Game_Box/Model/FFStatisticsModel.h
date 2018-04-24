@@ -47,7 +47,39 @@ typedef enum : NSUInteger {
 + (void)profile:(NSDictionary*)dataDic;
 
 
+#pragma mark - new statistics
+/** init */
++ (void)initStatistics;
+
+/** page access */
++ (void)pageAccessWithPageName:(NSString *)pageName;
+
+/** log in  */
++ (void)loginWithAccount:(NSString *)account;
+
+/** registered */
++ (void)registeredWithAccount:(NSString *)account;
+
+/** ready to pay */
++ (void)readyToPayWithOrderID:(NSString *)orderID
+                  PaymentType:(NSString *)payMentType
+                       Amount:(NSString *)amount;
+
+/** already paid */
++ (void)alreadyPaidWithOrderID:(NSString *)orderID
+                   PaymentType:(NSString *)payMentType
+                        Amount:(NSString *)amount;
+
 
 
 @end
+
+
+
+
+
+
+
+
+
 

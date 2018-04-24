@@ -237,9 +237,14 @@ static FFGameViewController *controller = nil;
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:CURRENT_GAME.game_download_url]];
     } else {
         [FFGameModel gameDownloadWithTag:CURRENT_GAME.game_tag Comoletion:^(NSDictionary *content, BOOL success) {
-            NSString *url = content[@"data"][@"download_url"];
-            syLog(@"downLoadUrl == %@",url);
-            ([url isKindOfClass:[NSString class]]) ? ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) : (BOX_MESSAGE(@"链接出错,请稍后尝试"));
+            id contentData = content[@"data"];
+            if (contentData == nil || [contentData isKindOfClass:[NSNull class]] || ((NSArray *)contentData).count == 0) {
+                BOX_MESSAGE(@"暂无下载链接,请联系客服");
+            } else {
+                NSString *url = content[@"data"][@"download_url"];
+                syLog(@"downLoadUrl == %@",url);
+                ([url isKindOfClass:[NSString class]]) ? ([[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]]) : (BOX_MESSAGE(@"链接出错,请稍后尝试"));
+            }
 
         }];
     }

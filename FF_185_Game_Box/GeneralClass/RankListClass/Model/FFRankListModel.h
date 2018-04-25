@@ -15,7 +15,6 @@
 /** 刷新页面 */
 - (void)loadNewRankListWithCompletion:(void (^)(NSDictionary * content, BOOL success))completion;
 
-
 /** 加载更多 */
 - (void)loadMoreRankListWithCompletion:(void (^)(NSDictionary * content, BOOL success))completion;
 

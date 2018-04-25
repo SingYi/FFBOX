@@ -46,8 +46,6 @@
 - (void)refreshNewData {
     WeakSelf;
     [self.rankModel loadNewRankListWithCompletion:^(NSDictionary *content, BOOL success) {
-
-
         syLog(@"new game == %@",content);
         if (success) {
             weakSelf.showArray = [content[@"data"] mutableCopy];

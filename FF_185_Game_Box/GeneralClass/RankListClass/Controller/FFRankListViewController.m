@@ -194,9 +194,11 @@
     }];
 }
 
+
 - (void)hideNavigationButton {
     self.navigationItem.rightBarButtonItem = self.cancelBtn;
 }
+
 
 - (void)clickCancelBtn {
     [self.searchBar resignFirstResponder];
@@ -224,6 +226,8 @@
 }
 
 
+
+
 #pragma mark - getter
 - (FFRankListModel *)rankListModel {
     if (!_rankListModel) {
@@ -231,6 +235,7 @@
     }
     return _rankListModel;
 }
+
 
 //- (UISearchController *)searchController {
 //    if (!_searchController) {

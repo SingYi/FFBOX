@@ -33,7 +33,9 @@
 /** 头部视图 */
 @property (nonatomic, strong) UIView *headerView;
 
+
 @property (nonatomic, strong) FFClassifyModel *model;
+
 
 @end
 
@@ -172,7 +174,6 @@
 
 #pragma makr - setter
 - (void)setClassifyArray:(NSMutableArray *)classifyArray {
-
     if (classifyArray) {
         _classifyArray = classifyArray;
         NSMutableArray *titleArray = [NSMutableArray arrayWithCapacity:_classifyArray.count];
@@ -274,7 +275,6 @@
     if (!_headerView) {
         _headerView = [[UIView alloc]init];
         _headerView.frame = CGRectMake(0, 0, kSCREEN_WIDTH, 0);
-
     }
     return _headerView;
 }

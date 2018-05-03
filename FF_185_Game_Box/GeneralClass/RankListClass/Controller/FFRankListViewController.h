@@ -13,6 +13,10 @@
 
 - (void)setGameType:(NSString *)gameType;
 
+/** 1 -> bt服务器 2 -> 折扣服 */
+- (void)setGameDiscCount:(NSString *)discount;
+
+
 - (void)tableViewBegainRefreshData;
 
 

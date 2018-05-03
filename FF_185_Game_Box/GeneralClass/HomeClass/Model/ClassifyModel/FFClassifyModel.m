@@ -16,8 +16,8 @@
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:Channel forKey:@"channel"];
-
     [dict setObject:@"2" forKey:@"system"];
+    [dict setObject:self.platform forKey:@"platform"];
     [dict setObject:page forKey:@"page"];
 
     [FFClassifyModel postRequestWithURL:[FFMapModel map].GAME_CLASS params:dict completion:^(NSDictionary *content, BOOL success) {
@@ -39,6 +39,7 @@
 
 /** 分类详情 */
 + (void)ClassifyWithID:(NSString *)classifyID
+              Platform:(NSString *)platform
                   Page:(NSString *)page
             Completion:(void (^)(NSDictionary * _Nullable, BOOL))completion {
 
@@ -47,6 +48,7 @@
     [dict setObject:classifyID forKey:@"classId"];
     [dict setObject:Channel forKey:@"channel"];
     [dict setObject:@"2" forKey:@"system"];
+    [dict setObject:platform forKey:@"platform"];
     [dict setObject:page forKey:@"page"];
 
     [FFBasicModel postRequestWithURL:[FFMapModel map].GAME_CLASS_INFO params:dict completion:^(NSDictionary *content, BOOL success) {
@@ -55,7 +57,13 @@
 }
 
 
-
+#pragma mark - getter
+- (NSString *)platform {
+    if (!_platform) {
+        _platform = @"1";
+    }
+    return _platform;
+}
 
 
 

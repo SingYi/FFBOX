@@ -29,6 +29,8 @@
     [dict setObject:page forKey:@"page"];
     //渠道ID
     [dict setObject:Channel forKey:@"channel"];
+    //游戏平台: 1为bt服, 2为折扣服
+    [dict setObject:@"1" forKey:@"platform"];
     //设备ID
     [dict setObject:@"2" forKey:@"system"];
 

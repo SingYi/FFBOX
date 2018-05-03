@@ -35,6 +35,8 @@
     [dict setObject:Channel forKey:@"channel"];
     //系统
     [dict setObject:@"2" forKey:@"system"];
+
+    [dict setObject:self.discount forKey:@"platform"];
     //游戏类型
     [dict setObject:self.gameType forKey:@"type"];
 
@@ -46,5 +48,13 @@
 
 }
 
+
+#pragma mark -
+- (NSString *)discount {
+    if (!_discount) {
+        _discount = @"1";
+    }
+    return _discount;
+}
 
 @end

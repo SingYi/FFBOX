@@ -113,7 +113,7 @@ typedef enum : NSUInteger {
 @property (nonatomic, strong) NSArray *sectionRowHight;
 @property (nonatomic, assign) SectionModel sectionModel;
 @property (nonatomic, strong) NSArray *activityArray;
-
+@property (nonatomic, strong) NSDictionary *sectionTitleDict;
 
 @end
 
@@ -121,13 +121,8 @@ typedef enum : NSUInteger {
     NSDictionary *_gameAvtivity;
 }
 
-- (NSArray *)sectionDict {
-    if (!_sectionDict) {
-        _sectionDict = @[@[@"    游戏简介:",@"    游戏特征:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"],
-                         @[@"    游戏简介:",@"    游戏特征:",@"    独家活动:",@"    精彩时刻:",@"     VIP价格:",@"    猜你喜欢:"]];
-    }
-    return _sectionDict;
-}
+
+
 
 - (NSArray *)sectionRowHight {
     if (!_sectionRowHight) {
@@ -165,11 +160,26 @@ typedef enum : NSUInteger {
     _sectionHeaderArray = [NSMutableArray arrayWithCapacity:_sectionTitleArray.count];
     [_sectionTitleArray enumerateObjectsUsingBlock:^(NSString *obj, NSUInteger idx, BOOL * _Nonnull stop) {
         UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 30)];
-        view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1];
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 1, kSCREEN_WIDTH, 28)];
+        view.backgroundColor = [UIColor colorWithWhite:1 alpha:1];
+
+        UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 1, 28, 28)];
+        imageView.backgroundColor = [UIColor blackColor];
+        [view addSubview:imageView];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(38, 1, kSCREEN_WIDTH - 38, 28)];
         label.backgroundColor = [UIColor whiteColor];
         label.text = obj;
         [view addSubview:label];
+
+        CALayer *line1 = [[CALayer alloc] init];
+        line1.frame = CGRectMake(0, 0, kSCREEN_WIDTH, 1);
+        line1.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
+        [view.layer addSublayer:line1];
+
+        CALayer *line2 = [[CALayer alloc] init];
+        line2.frame = CGRectMake(0, 29, kSCREEN_WIDTH, 1);
+        line2.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1].CGColor;
+        [view.layer addSublayer:line2];
+
         [_sectionHeaderArray addObject:view];
     }];
     //游戏活动回调
@@ -733,6 +743,26 @@ typedef enum : NSUInteger {
     return stateString;
 }
 
+
+- (NSArray *)sectionDict {
+    if (!_sectionDict) {
+        _sectionDict = @[@[@" 游戏简介:",@" 游戏特征:",@" 精彩时刻:",@" VIP价格:",@" 猜你喜欢:"],
+                         @[@" 游戏简介:",@" 游戏特征:",@" 独家活动:",@" 精彩时刻:",@" VIP价格:",@" 猜你喜欢:"]];
+    }
+    return _sectionDict;
+}
+
+- (NSDictionary *)sectionTitleDict {
+    if (!_sectionTitleDict) {
+        _sectionTitleDict = @{@" 游戏简介:" : @"Game_Introduction",
+                              @" 游戏特征:" : @"Game_Feture",
+                              @" 独家活动:" : @"Game_Activity",
+                              @" 精彩时刻:" : @"Game_Time",
+                              @" VIP价格:" : @"Game_VIP",
+                              @" 猜你喜欢:" : @"Gmae_Like"};
+    }
+    return _sectionTitleDict;
+}
 
 
 

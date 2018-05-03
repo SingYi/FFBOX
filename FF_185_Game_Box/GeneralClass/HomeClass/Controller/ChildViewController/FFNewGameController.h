@@ -7,8 +7,13 @@
 //
 
 #import "FFRankListViewController.h"
+#import "FFRankListModel.h"
+
 
 @interface FFNewGameController : FFRankListViewController
+
+
+@property (nonatomic, strong) FFRankListModel *rankModel;
 
 
 

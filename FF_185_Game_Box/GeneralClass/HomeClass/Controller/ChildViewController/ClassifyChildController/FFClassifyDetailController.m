@@ -50,7 +50,7 @@
 #pragma mark - method
 - (void)refreshData {
     _currentPage = 1;
-    [FFClassifyModel ClassifyWithID:_dict[@"id"] Page:[NSString stringWithFormat:@"%ld",_currentPage] Completion:^(NSDictionary * _Nullable content, BOOL success) {
+    [FFClassifyModel ClassifyWithID:_dict[@"id"] Platform:self.platform Page:[NSString stringWithFormat:@"%ld",_currentPage] Completion:^(NSDictionary * _Nullable content, BOOL success) {
         if (success) {
             _showArray = [content[@"data"] mutableCopy];
         } else {
@@ -66,7 +66,7 @@
 
 - (void)loadMoreData {
     _currentPage++;
-    [FFClassifyModel ClassifyWithID:_dict[@"id"] Page:[NSString stringWithFormat:@"%ld",_currentPage] Completion:^(NSDictionary * _Nullable content, BOOL success) {
+    [FFClassifyModel ClassifyWithID:_dict[@"id"]  Platform:self.platform Page:[NSString stringWithFormat:@"%ld",_currentPage] Completion:^(NSDictionary * _Nullable content, BOOL success) {
         if (success) {
             NSMutableArray *array = [content[@"data"] mutableCopy];
             if (array == nil || array.count == 0) {
@@ -170,6 +170,14 @@
 
     }
     return _tableView;
+}
+
+
+- (NSString *)platform {
+    if (!_platform) {
+        _platform = @"1";
+    }
+    return _platform;
 }
 
 @end

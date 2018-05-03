@@ -10,4 +10,13 @@
 
 @interface FFClassifyController : UIViewController
 
+@property (nonatomic, strong) NSString *platform;
+
+- (void)refrehTableView;
+- (void)initDataSource;
+
+- (void)setPlatform:(NSString *)platform;
+
+
+
 @end

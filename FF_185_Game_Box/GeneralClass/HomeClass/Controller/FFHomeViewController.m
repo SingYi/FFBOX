@@ -15,6 +15,7 @@
 #import "FFHotGameController.h"
 #import "FFClassifyController.h"
 #import "FFRaidersViewController.h"
+#import "FFDiscountViewController.h"
 
 #import "FFMyNewsViewController.h"
 #import "FFLoginViewController.h"
@@ -34,6 +35,7 @@
 @property (nonatomic, strong) UIViewController *lastController;
 
 @property (nonatomic, strong) FFRecommentController     *hRecommentController;
+@property (nonatomic, strong) FFDiscountViewController  *hDiscountController;
 @property (nonatomic, strong) FFNewGameController       *hNewGamesController;
 @property (nonatomic, strong) FFHotGameController       *hHotGamesController;
 @property (nonatomic, strong) FFClassifyController      *hClassifyController;
@@ -72,8 +74,9 @@
 }
 
 - (void)initDataSource {
-    _hChildControllers = [@[self.hRecommentController,self.hNewGamesController,self.hradiersViewController,self.hClassifyController] copy];
+//    _hChildControllers = [@[self.hRecommentController,self.hNewGamesController,self.hradiersViewController,self.hClassifyController] copy];
 
+    _hChildControllers = [@[self.hRecommentController,self.hDiscountController] copy];
     [self addChildViewController:_hChildControllers[0]];
     [self.scrollView addSubview:_hChildControllers[0].view];
     [_hChildControllers[0] didMoveToParentViewController:self];
@@ -258,16 +261,17 @@
     self.scrollView.frame = CGRectMake(0, CGRectGetMaxY(self.selectView.frame), kSCREEN_WIDTH, kSCREEN_HEIGHT - CGRectGetMaxY(self.selectView.frame) - self.tabBarController.tabBar.frame.size.height);
     [self.scrollView setContentSize:CGSizeMake(kSCREEN_WIDTH * self.childeTitles.count, self.scrollView.frame.size.height)];
 
-    self.hRecommentController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);;
-    self.hNewGamesController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
-    self.hradiersViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
-    self.hClassifyController.view.frame = CGRectMake(kSCREEN_WIDTH * 3, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+    self.hRecommentController.view.frame = CGRectMake(0, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+    self.hDiscountController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+//    self.hNewGamesController.view.frame = CGRectMake(kSCREEN_WIDTH, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+//    self.hradiersViewController.view.frame = CGRectMake(kSCREEN_WIDTH * 2, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
+//    self.hClassifyController.view.frame = CGRectMake(kSCREEN_WIDTH * 3, 0, kSCREEN_WIDTH, self.scrollView.frame.size.height);
 }
 
 #pragma mark - getter
 - (NSArray *)childeTitles {
     if (!_childeTitles) {
-        _childeTitles = @[@"推荐",@"新游",@"攻略",@"分类"];
+        _childeTitles = @[@"BT服",@"折扣服"];
     }
     return _childeTitles;
 }
@@ -325,6 +329,13 @@
         _hradiersViewController = [[FFRaidersViewController alloc] init];
     }
     return _hradiersViewController;
+}
+
+- (FFDiscountViewController *)hDiscountController {
+    if (!_hDiscountController) {
+        _hDiscountController = [[FFDiscountViewController alloc] init];
+    }
+    return _hDiscountController;
 }
 
 - (UIBarButtonItem *)downLoadBtn {

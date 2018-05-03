@@ -12,13 +12,6 @@
 
 #import "FFRecommentCollectionCell.h"
 #import "FFCustomizeCell.h"
-#import "FFRecommentCarouselView.h"
-
-//四个子视图
-#import "FFRRebateViewController.h"
-#import "FFRActivityViewController.h"
-#import "FFRPackageViewController.h"
-#import "FFRHeightVipViewController.h"
 
 #import "FFLoginViewController.h"
 
@@ -34,26 +27,10 @@
 
 
 
-@interface FFRecommentController ()<UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, FFRecommentCarouselViewDelegate>
+@interface FFRecommentController ()
 
 @property (nonatomic, strong) FFRecommentModel *model;
 
-/** 本地游戏 */
-@property (nonatomic, strong) NSArray *localArray;
-/**轮播图*/
-@property (nonatomic, strong) FFRecommentCarouselView *carouselView;
-/**头部视图*/
-
-@property (nonatomic, strong) NSArray *collectionArray;
-@property (nonatomic, strong) NSArray *collectionImage;
-@property (nonatomic, strong) UICollectionView *collectionView;
-
-//
-@property (nonatomic, strong) NSArray<UIViewController *> *childControllers;
-@property (nonatomic, strong) FFRRebateViewController *rebateViewController;
-@property (nonatomic, strong) FFRActivityViewController *activityViewController;
-@property (nonatomic, strong) FFRPackageViewController *packageViewController;
-@property (nonatomic, strong) FFRHeightVipViewController *heightVipViewController;
 
 
 
@@ -63,8 +40,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-//    self.view.frame = CGRectMake(0, <#CGFloat y#>, kSCREEN_WIDTH, kSCREEN_HEIGHT);
-//    self.tableView.frame = self.view.bounds;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -81,9 +56,25 @@
 
 - (void)initDataSource {
     [super initDataSource];
-    _collectionArray = @[@"申请返利",@"活动",@"礼包",@"满V游戏"];
+    _collectionArray = @[@"新游",@"满V",@"活动",@"分类"];
     _collectionImage = @[@"New_recomment_rebate",@"New_recomment_activity",@"New_recomment_package",@"New_recomment_hightvip"];
-    _childControllers = @[self.rebateViewController, self.activityViewController, self.packageViewController, self.heightVipViewController];
+
+    NSArray<NSString *> *controllerName = @[@"FFNewGameController",
+                                            @"FFRHeightVipViewController",
+                                            @"FFRActivityViewController",
+                                            @"FFClassifyController"];
+
+    _childControllers = [NSMutableArray arrayWithCapacity:controllerName.count];
+    for (NSString *vcName in controllerName) {
+        Class ViewController = NSClassFromString(vcName);
+        id vc = [[ViewController alloc] init];
+        if (vc != nil) {
+            [_childControllers addObject:vc];
+        } else {
+            printf("%s error :  View Controller does not exist",__func__);
+            [_childControllers addObject:[UIViewController new]];
+        }
+    }
     //刷新视图
     [self.tableView.mj_header beginRefreshing];
 }
@@ -242,7 +233,8 @@
     if (!_collectionView) {
         UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc] init];
 
-        layout.itemSize = CGSizeMake(kSCREEN_WIDTH / 4, kSCREEN_WIDTH * 0.218 - 2);
+        CGFloat item_width = (_collectionArray.count > 0) ? (kSCREEN_WIDTH / _collectionArray.count) : (kSCREEN_WIDTH / 4);
+        layout.itemSize = CGSizeMake(item_width, kSCREEN_WIDTH * 0.218 - 2);
 
         layout.minimumLineSpacing = 0;
         layout.minimumInteritemSpacing = 0;
@@ -259,36 +251,6 @@
     }
     return _collectionView;
 }
-
-- (FFRRebateViewController *)rebateViewController {
-    if (!_rebateViewController) {
-        _rebateViewController = [[FFRRebateViewController alloc] init];
-    }
-    return _rebateViewController;
-}
-
-- (FFRActivityViewController *)activityViewController {
-    if (!_activityViewController) {
-        _activityViewController = [[FFRActivityViewController alloc] init];
-    }
-    return _activityViewController;
-}
-
-- (FFRPackageViewController *)packageViewController {
-    if (!_packageViewController) {
-        _packageViewController = [[FFRPackageViewController alloc] init];
-    }
-    return _packageViewController;
-}
-
-- (FFRHeightVipViewController *)heightVipViewController {
-    if (!_heightVipViewController) {
-        _heightVipViewController = [[FFRHeightVipViewController alloc] init];
-    }
-    return _heightVipViewController;
-}
-
-
 
 - (FFRecommentModel *)model {
     if (!_model) {

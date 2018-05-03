@@ -137,9 +137,6 @@ static FFGameViewController *controller = nil;
                 [UIAlertController showAlertMessage:msg dismissTime:0.9 dismissBlock:nil];
             }
         }];
-
-
-
         return;
     } else {
         [self.navigationController pushViewController:[FFLoginViewController new] animated:YES];

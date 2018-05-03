@@ -34,7 +34,7 @@
 @property (nonatomic, strong) FFTodayOpenServerViewController *todayOpenServerController;
 @property (nonatomic, strong) FFTomorrowOpenServerViewController *tomorrowOpenserverController;
 
-@property (nonatomic, strong) UISearchBar *searchBar;
+//@property (nonatomic, strong) UISearchBar *searchBar;
 /** 应用按钮(左边按钮) */
 @property (nonatomic, strong) UIBarButtonItem *downLoadBtn;
 /** 消息按钮(右边按钮) */
@@ -51,7 +51,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self showNavigationButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -80,19 +79,55 @@
     self.navigationController.navigationBar.barTintColor = NAVGATION_BAR_COLOR;
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = self.searchBar;
-    [self showNavigationButton];
+//    self.navigationItem.titleView = self.searchBar;
+//    [self showNavigationButton];
 
     
     [self.view addSubview:self.collectionView];
     [self.view addSubview:self.selectView];
+
+
+    NSArray *array = @[@"BT服",@"折扣服"];
+    //初始化UISegmentedControl
+    UISegmentedControl *segment = [[UISegmentedControl alloc]initWithItems:array];
+    //设置frame
+    segment.frame = CGRectMake(10, 4, kSCREEN_WIDTH * 0.4, self.navigationController.navigationBar.bounds.size.height - 8);
+    //添加到视图
+    //根据内容定分段宽度
+    segment.apportionsSegmentWidthsByContent = YES;
+    //开始时默认选中下标(第一个下标默认是0)
+    segment.selectedSegmentIndex = 0;
+    //控件渲染色(也就是外观字体颜色)
+    segment.tintColor = [UIColor whiteColor];
+    //按下是否会自动释放：
+    //segment.momentary = YES;
+    [segment addTarget:self action:@selector(change:) forControlEvents:UIControlEventValueChanged];
+
+//    self.navigationItem.titleView = segment;
+
+    [self.navigationController.navigationBar addSubview:segment];
+    self.navigationItem.title = @"";
+
+}
+
+- (void)change:(UISegmentedControl *)sender{
+    NSLog(@"测试");
+    if (sender.selectedSegmentIndex == 0) {
+        NSLog(@"0");
+    }else if (sender.selectedSegmentIndex == 1) {
+        NSLog(@"1");
+    }else if (sender.selectedSegmentIndex == 2) {
+        NSLog(@"2");
+    }else if (sender.selectedSegmentIndex == 3) {
+        NSLog(@"4");
+    }
 }
 
 - (void)clickCancelBtn {
-    [self.searchBar resignFirstResponder];
-    self.searchBar.text = @"";
+//    [self.searchBar resignFirstResponder];
+//    self.searchBar.text = @"";
     [FFSearchShowControllerViewController hideSearchController];
-    [self showNavigationButton];
+
 }
 
 /** 我的应用 */
@@ -138,7 +173,7 @@
 
 #pragma mark - search show delegate
 - (void)FFSearchShowControllerViewController:(FFSearchShowControllerViewController *)controller didSelectRow:(id)info {
-    [self.searchBar resignFirstResponder];
+//    [self.searchBar resignFirstResponder];
 }
 
 #pragma mark - responds
@@ -346,24 +381,24 @@
     return _cancelBtn;
 }
 
-
-- (UISearchBar *)searchBar {
-    if (!_searchBar) {
-        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 20)];
-
-        _searchBar.barTintColor = NAVGATION_BAR_COLOR;
-        _searchBar.tintColor = [UIColor grayColor];
-        _searchBar.placeholder = @"搜索游戏";
-        _searchBar.delegate = self;
-
-        UITextField *searchField = [_searchBar valueForKey:@"searchField"];
-        if (searchField) {
-            [searchField setBackgroundColor:[UIColor whiteColor]];
-        }
-
-    }
-    return _searchBar;
-}
+//
+//- (UISearchBar *)searchBar {
+//    if (!_searchBar) {
+//        _searchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, kSCREEN_WIDTH, 20)];
+//
+//        _searchBar.barTintColor = NAVGATION_BAR_COLOR;
+//        _searchBar.tintColor = [UIColor grayColor];
+//        _searchBar.placeholder = @"搜索游戏";
+//        _searchBar.delegate = self;
+//
+//        UITextField *searchField = [_searchBar valueForKey:@"searchField"];
+//        if (searchField) {
+//            [searchField setBackgroundColor:[UIColor whiteColor]];
+//        }
+//
+//    }
+//    return _searchBar;
+//}
 
 
 

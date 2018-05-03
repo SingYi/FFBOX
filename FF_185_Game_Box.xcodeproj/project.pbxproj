@@ -362,6 +362,11 @@
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
+		B5E29C9A209AAC6200AFE368 /* FFDiscountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E29C99209AAC6200AFE368 /* FFDiscountViewController.m */; };
+		B5E29C9E209AB1D400AFE368 /* FFDiscountModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E29C9D209AB1D400AFE368 /* FFDiscountModel.m */; };
+		B5E29CA2209AF8E900AFE368 /* FFNewDiscountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E29CA1209AF8E900AFE368 /* FFNewDiscountViewController.m */; };
+		B5E29CA5209AFA7700AFE368 /* FFLowDiscountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E29CA4209AFA7700AFE368 /* FFLowDiscountViewController.m */; };
+		B5E29CA8209B030200AFE368 /* FFDiscountClassifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E29CA7209B030200AFE368 /* FFDiscountClassifyViewController.m */; };
 		B5F29303207C91E9001AEE53 /* FFInviteListNotesController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F29302207C91E9001AEE53 /* FFInviteListNotesController.m */; };
 /* End PBXBuildFile section */
 
@@ -1085,6 +1090,16 @@
 		B5D75A8A2008526C00600B3D /* DriveInfoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DriveInfoCell.h; sourceTree = "<group>"; };
 		B5D75A8B2008526C00600B3D /* DriveInfoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DriveInfoCell.m; sourceTree = "<group>"; };
 		B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DriveInfoCell.xib; sourceTree = "<group>"; };
+		B5E29C98209AAC6200AFE368 /* FFDiscountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDiscountViewController.h; sourceTree = "<group>"; };
+		B5E29C99209AAC6200AFE368 /* FFDiscountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDiscountViewController.m; sourceTree = "<group>"; };
+		B5E29C9C209AB1D400AFE368 /* FFDiscountModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDiscountModel.h; sourceTree = "<group>"; };
+		B5E29C9D209AB1D400AFE368 /* FFDiscountModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDiscountModel.m; sourceTree = "<group>"; };
+		B5E29CA0209AF8E900AFE368 /* FFNewDiscountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFNewDiscountViewController.h; sourceTree = "<group>"; };
+		B5E29CA1209AF8E900AFE368 /* FFNewDiscountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFNewDiscountViewController.m; sourceTree = "<group>"; };
+		B5E29CA3209AFA7700AFE368 /* FFLowDiscountViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFLowDiscountViewController.h; sourceTree = "<group>"; };
+		B5E29CA4209AFA7700AFE368 /* FFLowDiscountViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFLowDiscountViewController.m; sourceTree = "<group>"; };
+		B5E29CA6209B030200AFE368 /* FFDiscountClassifyViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFDiscountClassifyViewController.h; sourceTree = "<group>"; };
+		B5E29CA7209B030200AFE368 /* FFDiscountClassifyViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFDiscountClassifyViewController.m; sourceTree = "<group>"; };
 		B5F29301207C91E9001AEE53 /* FFInviteListNotesController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FFInviteListNotesController.h; sourceTree = "<group>"; };
 		B5F29302207C91E9001AEE53 /* FFInviteListNotesController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FFInviteListNotesController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1230,6 +1245,14 @@
 				B519672B1FA9AD230046E391 /* FFClassifyController.m */,
 				B5623FFB2068C6A10024DAA3 /* FFRaidersViewController.h */,
 				B5623FFC2068C6A10024DAA3 /* FFRaidersViewController.m */,
+				B5E29C98209AAC6200AFE368 /* FFDiscountViewController.h */,
+				B5E29C99209AAC6200AFE368 /* FFDiscountViewController.m */,
+				B5E29CA0209AF8E900AFE368 /* FFNewDiscountViewController.h */,
+				B5E29CA1209AF8E900AFE368 /* FFNewDiscountViewController.m */,
+				B5E29CA3209AFA7700AFE368 /* FFLowDiscountViewController.h */,
+				B5E29CA4209AFA7700AFE368 /* FFLowDiscountViewController.m */,
+				B5E29CA6209B030200AFE368 /* FFDiscountClassifyViewController.h */,
+				B5E29CA7209B030200AFE368 /* FFDiscountClassifyViewController.m */,
 				B5A1EEC71FCC4523003FC031 /* ClassifyChildController */,
 				B51967471FAAC4D40046E391 /* RecommentChildController */,
 			);
@@ -2482,6 +2505,7 @@
 		B5BC04C21FA70C4C0091EE4B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B5E29C9B209AB1B600AFE368 /* DiscountModel */,
 				B56240042068C86E0024DAA3 /* RaidersModel */,
 				B5B95E231FBC1BDF00ACD7F7 /* RebateModel */,
 				B519673C1FA9FB4D0046E391 /* RecommentModel */,
@@ -2667,6 +2691,15 @@
 				B52B115F20188BA40002475D /* FFGifThumbnailViewController.m */,
 			);
 			path = ChildClass;
+			sourceTree = "<group>";
+		};
+		B5E29C9B209AB1B600AFE368 /* DiscountModel */ = {
+			isa = PBXGroup;
+			children = (
+				B5E29C9C209AB1D400AFE368 /* FFDiscountModel.h */,
+				B5E29C9D209AB1D400AFE368 /* FFDiscountModel.m */,
+			);
+			path = DiscountModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2903,6 +2936,7 @@
 				B519674D1FAAC8790046E391 /* FFRActivityViewController.m in Sources */,
 				B59E3FAB202441C000F81F60 /* MJRefreshAutoGifFooter.m in Sources */,
 				B59E3DC020201AE900F81F60 /* FFDrivePersonalHeader.m in Sources */,
+				B5E29C9E209AB1D400AFE368 /* FFDiscountModel.m in Sources */,
 				B54E6B301FB04FA7009D0025 /* FFActivityModel.m in Sources */,
 				B5137A4F1FB484FB0025F00B /* FFTransferRecordCell.m in Sources */,
 				B51379B61FB2E0210025F00B /* FFTransferServerViewController.m in Sources */,
@@ -2929,6 +2963,7 @@
 				B5B95E851FBD788600ACD7F7 /* FFGameHeaderView.m in Sources */,
 				B59E3F6E202441C000F81F60 /* FLAnimatedImage.m in Sources */,
 				B5BC04D81FA70FAB0091EE4B /* FFOpenServerViewController.m in Sources */,
+				B5E29CA5209AFA7700AFE368 /* FFLowDiscountViewController.m in Sources */,
 				B5B95E911FBD8B9000ACD7F7 /* FFGamePackageViewController.m in Sources */,
 				B59E3F84202441C000F81F60 /* CTAssetsGridViewFooter.m in Sources */,
 				B59E3FB3202441C000F81F60 /* MJRefreshStateHeader.m in Sources */,
@@ -2968,6 +3003,7 @@
 				B5B95E8B1FBD8B5000ACD7F7 /* FFGameDetailViewController.m in Sources */,
 				B5A5D5661FC6AD6700EC951F /* FFMyNewsCell.m in Sources */,
 				B519670E1FA8AA0B0046E391 /* FFTomorrowOpenServerViewController.m in Sources */,
+				B5E29CA8209B030200AFE368 /* FFDiscountClassifyViewController.m in Sources */,
 				B59E3FD1202441C000F81F60 /* ZLPhotoConfiguration.m in Sources */,
 				B5BC055F1FA7178B0091EE4B /* FFBasicModel.m in Sources */,
 				B59E3FDD202441C000F81F60 /* SDImageCacheConfig.m in Sources */,
@@ -3094,8 +3130,10 @@
 				B5D108E0202988C400E4D49F /* FFDriveMyNewsViewController.m in Sources */,
 				B59E3FD3202441C000F81F60 /* ZLPhotoModel.m in Sources */,
 				B5A5D4E71FC2A46100EC951F /* FFResetNickNameView.m in Sources */,
+				B5E29CA2209AF8E900AFE368 /* FFNewDiscountViewController.m in Sources */,
 				B59E3FE7202441C000F81F60 /* UIImageView+HighlightedWebCache.m in Sources */,
 				B5A5D5071FC40FB600EC951F /* FFCoinDetailCell.m in Sources */,
+				B5E29C9A209AAC6200AFE368 /* FFDiscountViewController.m in Sources */,
 				B5B95E511FBC3A1800ACD7F7 /* FFGameDetailTableViewCell.m in Sources */,
 				B5B95E791FBD2E6200ACD7F7 /* FFSearchShowControllerViewController.m in Sources */,
 				B5B95E7C1FBD2EFB00ACD7F7 /* FFSearchModel.m in Sources */,

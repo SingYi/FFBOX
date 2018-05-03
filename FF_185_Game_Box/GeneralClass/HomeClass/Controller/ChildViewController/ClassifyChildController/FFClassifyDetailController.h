@@ -13,4 +13,7 @@
 /** 分类 */
 @property (nonatomic, strong) NSDictionary *dict;
 
+/**  */
+@property (nonatomic, strong) NSString *platform;
+
 @end

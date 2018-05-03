@@ -11,6 +11,7 @@
 @interface FFRankListModel : FFBasicModel
 
 @property (nonatomic, strong) NSString *gameType;
+@property (nonatomic, strong) NSString *discount;
 
 /** 刷新页面 */
 - (void)loadNewRankListWithCompletion:(void (^)(NSDictionary * content, BOOL success))completion;

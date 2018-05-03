@@ -10,6 +10,7 @@
 
 @interface FFClassifyModel : FFBasicModel
 
+@property (nonatomic, strong) NSString *platform;
 
 /** 刷新页面 */
 - (void)loadNewClassifyWithCompletion:(void (^)(NSDictionary * content, BOOL success))completion;
@@ -21,6 +22,7 @@
 
 /** 分类详情 */
 + (void)ClassifyWithID:(NSString *)classifyID
+              Platform:(NSString *)platform
                   Page:(NSString *)page
             Completion:(void (^)(NSDictionary *, BOOL))completion;
 

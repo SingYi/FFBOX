@@ -7,7 +7,6 @@
 //
 
 #import "FFNewGameController.h"
-#import "FFRankListModel.h"
 #import "FFCustomizeCell.h"
 #import "FFGameViewController.h"
 
@@ -21,7 +20,6 @@
 /**游戏数组*/
 @property (nonatomic, strong) NSMutableDictionary * dataDictionary;
 
-@property (nonatomic, strong) FFRankListModel *rankModel;
 
 @end
 
@@ -35,7 +33,9 @@
 - (void)initDataSource {
     [super initDataSource];
     self.rankModel.gameType = @"0";
+    [self setGameDiscCount:@"1"];
     [self tableViewBegainRefreshData];
+    self.navigationItem.title = @"新游";
 }
 
 - (void)viewDidLayoutSubviews {

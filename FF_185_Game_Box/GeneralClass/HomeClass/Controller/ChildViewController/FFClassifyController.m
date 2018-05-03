@@ -51,9 +51,21 @@
 
 - (void)initUserInterface {
     [self.view addSubview:self.tableView];
+    self.navigationItem.title = @"分类";
 }
 
 - (void)initDataSource {
+    [self setPlatform:@"1"];
+    [self refrehTableView];
+}
+
+- (void)setPlatform:(NSString *)platform {
+    _platform = platform;
+    syLog(@"classify  set platfor ==== %@",platform);
+    self.model.platform = platform;
+}
+
+- (void)refrehTableView {
     [self.tableView.mj_header beginRefreshing];
 }
 
@@ -234,6 +246,7 @@
 /** 按钮响应事件 */
 - (void)respondsToBtn:(UIButton *)sender {
     HIDE_PARNENT_TABBAR;
+    self.classifyDetailController.platform = self.platform;
     self.classifyDetailController.dict = self.classifyArray[sender.tag - BTNTAG];
     [self.navigationController pushViewController:self.classifyDetailController animated:YES];
     SHOW_PARNENT_TABBAR;
@@ -243,6 +256,7 @@
 - (void)respondstoSectionBtn:(UIButton *)button {
     NSString *classifyId = _showArray[button.tag - SECTIONTAG][@"list"][0][@"tid"];
     NSDictionary *dict = @{@"id":classifyId,@"name":_showArray[button.tag - SECTIONTAG][@"className"]};
+    self.classifyDetailController.platform = self.platform;
     self.classifyDetailController.dict = dict;
     HIDE_PARNENT_TABBAR;
     [self.navigationController pushViewController:self.classifyDetailController animated:YES];

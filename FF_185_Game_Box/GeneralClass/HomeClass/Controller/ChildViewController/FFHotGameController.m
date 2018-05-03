@@ -21,6 +21,7 @@
 - (void)initDataSource {
     [super initDataSource];
     [self setGameType:@"1"];
+    [self setGameDiscCount:@"1"];
     [self tableViewBegainRefreshData];
 }
 

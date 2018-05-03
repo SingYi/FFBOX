@@ -52,7 +52,6 @@
         }
         [self.tableView.mj_header endRefreshing];
     }];
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

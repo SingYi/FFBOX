@@ -7,8 +7,19 @@
 //
 
 #import "FFBasicViewController.h"
+#import "FFRecommentCarouselView.h"
 
+@interface FFRecommentController : FFBasicViewController<UITableViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource, FFRecommentCarouselViewDelegate>
 
-@interface FFRecommentController : FFBasicViewController
+/**轮播图*/
+@property (nonatomic, strong) FFRecommentCarouselView *carouselView;
+/**头部视图*/
+
+@property (nonatomic, strong) NSArray *collectionArray;
+@property (nonatomic, strong) NSArray *collectionImage;
+@property (nonatomic, strong) UICollectionView *collectionView;
+
+//
+@property (nonatomic, strong) NSMutableArray<UIViewController *> *childControllers;
 
 @end

@@ -357,7 +357,6 @@
 		B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */; };
 		B5D108FC202C3F1000E4D49F /* FFMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FB202C3F0F00E4D49F /* FFMaskView.m */; };
 		B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */; };
-		B5D505E72089CDE4000B7B50 /* GDTActionSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
 		B5D75A8E2008526C00600B3D /* DriveInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B5D75A8C2008526C00600B3D /* DriveInfoCell.xib */; };
@@ -378,16 +377,6 @@
 			files = (
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B5D505E62089CDBD000B7B50 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				B5D505E72089CDE4000B7B50 /* GDTActionSDK.framework in CopyFiles */,
-			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2711,7 +2700,6 @@
 				B556B0D01FA6BD88005DC871 /* Frameworks */,
 				B556B0D11FA6BD88005DC871 /* Resources */,
 				B5A3357F1FF6407400A4526F /* Embed Frameworks */,
-				B5D505E62089CDBD000B7B50 /* CopyFiles */,
 			);
 			buildRules = (
 			);

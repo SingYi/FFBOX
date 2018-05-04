@@ -357,7 +357,6 @@
 		B5D108F9202AAC3F00E4D49F /* FFDynamicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108F8202AAC3F00E4D49F /* FFDynamicModel.m */; };
 		B5D108FC202C3F1000E4D49F /* FFMaskView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FB202C3F0F00E4D49F /* FFMaskView.m */; };
 		B5D108FF202D3D3100E4D49F /* FFFlashBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D108FE202D3D3100E4D49F /* FFFlashBackView.m */; };
-		B5D505E52089CCAC000B7B50 /* GDTActionSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */; };
 		B5D505E72089CDE4000B7B50 /* GDTActionSDK.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = B5D505E42089CCAB000B7B50 /* GDTActionSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B5D75A8920070C0B00600B3D /* FFDriveAllInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8820070C0B00600B3D /* FFDriveAllInfoViewController.m */; };
 		B5D75A8D2008526C00600B3D /* DriveInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B5D75A8B2008526C00600B3D /* DriveInfoCell.m */; };
@@ -1118,7 +1117,6 @@
 				B52B115A201835C60002475D /* Photos.framework in Frameworks */,
 				B59E3FD8202441C000F81F60 /* TencentOpenAPI.framework in Frameworks */,
 				B52B1158201835BA0002475D /* PhotosUI.framework in Frameworks */,
-				B5D505E52089CCAC000B7B50 /* GDTActionSDK.framework in Frameworks */,
 				B5A5D5321FC5274900EC951F /* libsqlite3.tbd in Frameworks */,
 				B5A5D53E1FC5293E00EC951F /* libz.tbd in Frameworks */,
 				B5A5D52D1FC5268700EC951F /* libstdc++.tbd in Frameworks */,

@@ -10,7 +10,7 @@
 #import "TrackingIO.h"
 #import "FFMapModel.h"
 #import "FFPayModel.h"
-#import <GDTActionSDK/GDTAction.h>
+//#import <GDTActionSDK/GDTAction.h>
 
 #define TrackingIOID @"ffcaffb5979b3df9ff12751857fc88fa"
 #define TrackingIOToken @"506D348071C391675943F5754F6AF056"
@@ -84,7 +84,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction init:GDTActionID secretKey:GDTActionSecretKey];
+//            [GDTAction init:GDTActionID secretKey:GDTActionSecretKey];
             break;
         }
 
@@ -112,7 +112,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNameRegister actionParam:@{@"register":[NSString stringWithFormat:@"%@",account]}];
+//            [GDTAction logAction:GDTSDKActionNameRegister actionParam:@{@"register":[NSString stringWithFormat:@"%@",account]}];
             break;
         }
 
@@ -135,7 +135,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:@{@"login":[NSString stringWithFormat:@"%@",account]}];
+//            [GDTAction logAction:@"CUSTOM" actionParam:@{@"login":[NSString stringWithFormat:@"%@",account]}];
             break;
         }
 
@@ -183,10 +183,10 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNameAddToCart actionParam:@{@"transactionID":transactionID,
-                                                     @"payType":pay,
-                                                     @"cuurentType":@"CNY",
-                                                     @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
+//            [GDTAction logAction:GDTSDKActionNameAddToCart actionParam:@{@"transactionID":transactionID,
+//                                                     @"payType":pay,
+//                                                     @"cuurentType":@"CNY",
+//                                                     @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
             break;
         }
 
@@ -231,10 +231,10 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNamePurchase actionParam:@{@"transactionID":transactionID,
-                                                       @"payType":pay,
-                                                       @"cuurentType":@"CNY",
-                                                       @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
+//            [GDTAction logAction:GDTSDKActionNamePurchase actionParam:@{@"transactionID":transactionID,
+//                                                       @"payType":pay,
+//                                                       @"cuurentType":@"CNY",
+//                                                       @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
             break;
         }
 
@@ -258,7 +258,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:dict];
+//            [GDTAction logAction:@"CUSTOM" actionParam:dict];
             break;
         }
 
@@ -281,7 +281,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:dataDic];
+//            [GDTAction logAction:@"CUSTOM" actionParam:dataDic];
             break;
         }
 

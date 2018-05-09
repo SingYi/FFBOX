@@ -84,7 +84,6 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction init:GDTActionID secretKey:GDTActionSecretKey];
             break;
         }
 
@@ -112,7 +111,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNameRegister actionParam:@{@"register":[NSString stringWithFormat:@"%@",account]}];
+
             break;
         }
 
@@ -135,7 +134,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:@{@"login":[NSString stringWithFormat:@"%@",account]}];
+
             break;
         }
 
@@ -183,10 +182,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNameAddToCart actionParam:@{@"transactionID":transactionID,
-                                                     @"payType":pay,
-                                                     @"cuurentType":@"CNY",
-                                                     @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
+
             break;
         }
 
@@ -231,10 +227,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:GDTSDKActionNamePurchase actionParam:@{@"transactionID":transactionID,
-                                                       @"payType":pay,
-                                                       @"cuurentType":@"CNY",
-                                                       @"mount":[NSNumber numberWithFloat:amount.floatValue]}];
+
             break;
         }
 
@@ -258,7 +251,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:dict];
+
             break;
         }
 
@@ -281,7 +274,7 @@ static FFStatisticsModel *model = nil;
             break;
         }
         case guangdiantong: {
-            [GDTAction logAction:@"CUSTOM" actionParam:dataDic];
+
             break;
         }
 

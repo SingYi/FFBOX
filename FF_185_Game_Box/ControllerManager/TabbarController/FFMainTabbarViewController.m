@@ -61,9 +61,10 @@
 
 //        FFNavigationController *nav = [[FFNavigationController alloc] initWithRootViewController:viewController];
         UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:viewController];
+//        nav.navigationBar.hidden = YES;
         //设置title
         viewController.navigationItem.title = titles[idx];
-        viewController.navigationController.tabBarItem.title = titles[idx];
+//        viewController.navigationController.tabBarItem.title = titles[idx];
 
         viewController.tabBarItem = [[UITabBarItem alloc] initWithTitle:titles[idx] image:[[UIImage imageNamed:images[idx]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] selectedImage:[[UIImage imageNamed:selectImages[idx]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal]];
 

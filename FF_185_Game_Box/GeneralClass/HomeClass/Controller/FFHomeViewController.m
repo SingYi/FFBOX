@@ -22,7 +22,9 @@
 
 #import "SYKeychain.h"
 #import "UIBarButtonItem+FFSubscript.h"
-//#import <PTFakeTouch/PTFakeTouch.h>
+
+#import "UINavigationController+Cloudox.h"
+#import "UIViewController+Cloudox.h"
 
 
 @interface FFHomeViewController ()<FFOpenServerSelectViewDelegate, UIScrollViewDelegate, UISearchBarDelegate, FFSearchShowDelegate>
@@ -55,6 +57,10 @@
 @implementation FFHomeViewController
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+
+    [self.navigationController.navigationBar setHidden:YES];
+    self.navBarBgAlpha = @"0.0";
+
     [self showNavigationButton];
 }
 
@@ -89,12 +95,19 @@
     self.navigationController.navigationBar.barTintColor = NAVGATION_BAR_COLOR;
     self.navigationController.navigationBar.translucent = YES;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    self.navigationItem.titleView = self.searchBar;
+//    self.navigationItem.titleView = self.searchBar;
     [self showNavigationButton];
 
 
     [self.view addSubview:self.selectView];
     [self.view addSubview:self.scrollView];
+
+//    self.navigationController.
+//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, -20, kSCREEN_WIDTH, self.navigationController.navigationBar.bounds.size.height + 20)];
+//    view.backgroundColor = NAVGATION_BAR_COLOR;
+//    [self.navigationController.navigationBar addSubview:view];
+
+
 }
 
 - (void)clickCancelBtn {

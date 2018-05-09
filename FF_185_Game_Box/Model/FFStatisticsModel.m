@@ -10,7 +10,6 @@
 #import "TrackingIO.h"
 #import "FFMapModel.h"
 #import "FFPayModel.h"
-#import <GDTActionSDK/GDTAction.h>
 
 #define TrackingIOID @"ffcaffb5979b3df9ff12751857fc88fa"
 #define TrackingIOToken @"506D348071C391675943F5754F6AF056"

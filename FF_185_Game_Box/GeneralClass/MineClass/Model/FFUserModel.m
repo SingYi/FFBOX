@@ -45,21 +45,16 @@ static FFUserModel *model;
 
 + (NSDictionary *)getUserDict {
     NSArray *keys = OBJECT_FOR_USERDEFAULTS(USER_INFO_KEYS);
-
     if (keys == nil || keys.count == 0) {
         return nil;
     }
-
-//    syLog(@"keys === %@",keys);
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
     [keys enumerateObjectsUsingBlock:^(NSString * key, NSUInteger idx, BOOL * _Nonnull stop) {
         NSString *value = [SYKeychain passwordForService:KEYCHAINSERVICE account:key];
         if (value != nil) {
             [dict setObject:value forKey:key];
         }
     }];
-
     return [dict copy];
 }
 
@@ -200,8 +195,6 @@ static FFUserModel *model;
     NSString *filePath = [path stringByAppendingPathComponent:@"avatarData"];
     return filePath;
 }
-
-
 
 #pragma mark - method ===============================================================
 - (void)setAllPropertyWithDict:(NSDictionary *)dict {

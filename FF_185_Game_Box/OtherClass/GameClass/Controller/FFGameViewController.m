@@ -456,7 +456,7 @@ static FFGameViewController *controller = nil;
                 [weakSelf.navigationController popViewControllerAnimated:YES];
                 [UIAlertController showAlertMessage:@"评论成功" dismissTime:0.7 dismissBlock:nil];
             } else {
-                [UIAlertController showAlertMessage:@"评论失败" dismissTime:0.7 dismissBlock:nil];
+                [UIAlertController showAlertMessage:dict[@"msg"] dismissTime:0.7 dismissBlock:nil];
             }
         }];
     }
